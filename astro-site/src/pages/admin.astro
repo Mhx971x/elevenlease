@@ -279,7 +279,10 @@
     <div class="logo">
       <span class="logo-icon" role="img" aria-label="Eleven Lease"></span>      <span class="logo-tag">Espace admin</span>
     </div>
-    <button class="btn-ghost" id="logoutBtn" style="display:none;">Se déconnecter</button>
+    <div style="display:flex;align-items:center;gap:14px;">
+      <span class="logo-tag" id="roleBadge" style="display:none;">Lecture seule</span>
+      <button class="btn-ghost" id="logoutBtn" style="display:none;">Se déconnecter</button>
+    </div>
   </div>
 </header>
 
@@ -288,7 +291,8 @@
     <h1>Accès réservé</h1>
     <p>Entrez le mot de passe admin pour consulter les demandes reçues.</p>
     <form id="loginForm">
-      <input type="password" id="passwordInput" placeholder="Mot de passe" autocomplete="current-password" autofocus>
+      <input type="text" id="usernameInput" placeholder="Identifiant (partenaires uniquement)" autocomplete="username" autofocus style="margin-bottom:10px;">
+      <input type="password" id="passwordInput" placeholder="Mot de passe" autocomplete="current-password">
       <button type="submit" class="btn-primary" id="loginBtn">Se connecter</button>
       <div class="login-error" id="loginError"></div>
     </form>
@@ -516,8 +520,10 @@
   const loginScreen = document.getElementById('loginScreen') as HTMLElement;
   const dashboard = document.getElementById('dashboard') as HTMLElement;
   const loginForm = document.getElementById('loginForm') as HTMLFormElement;
+  const usernameInput = document.getElementById('usernameInput') as HTMLInputElement;
   const passwordInput = document.getElementById('passwordInput') as HTMLInputElement;
   const loginBtn = document.getElementById('loginBtn') as HTMLButtonElement;
+  const roleBadge = document.getElementById('roleBadge') as HTMLElement;
   const loginError = document.getElementById('loginError')!;
   const logoutBtn = document.getElementById('logoutBtn') as HTMLElement;
   const refreshBtn = document.getElementById('refreshBtn')!;
@@ -607,6 +613,19 @@
   function showLoginError(message: string){
     loginError.textContent = message;
     loginError.classList.add('show');
+  }
+
+  // Identifiants mémorisés pour la session en cours. Un partenaire fournit
+  // un identifiant en plus du mot de passe (voir supabase/functions/_shared/auth.ts) ;
+  // un admin historique n'en fournit pas.
+  function authPayload(){
+    return {
+      password: sessionStorage.getItem('adminPassword'),
+      username: sessionStorage.getItem('adminUsername') || undefined,
+    };
+  }
+  function isPartner(){
+    return sessionStorage.getItem('adminRole') === 'partner';
   }
 
   async function callAdminFunction(body: Record<string, unknown>): Promise<any>{
@@ -808,13 +827,13 @@
               '<div class="quick-actions">' +
                 (telHref ? '<a class="quick-btn" href="' + telHref + '">' + PHONE_SVG + 'Appeler</a>' : '') +
                 (mailHref ? '<a class="quick-btn" href="' + mailHref + '">' + MAIL_SVG + 'Email</a>' : '') +
-                '<button type="button" class="edit-btn" data-id="' + lead.id + '">Modifier</button>' +
-                '<button type="button" class="delete-btn" data-id="' + lead.id + '">Supprimer</button>' +
+                (isPartner() ? '' : '<button type="button" class="edit-btn" data-id="' + lead.id + '">Modifier</button>') +
+                (isPartner() ? '' : '<button type="button" class="delete-btn" data-id="' + lead.id + '">Supprimer</button>') +
               '</div>' +
-              '<button class="status-btn ' + status + '" data-id="' + lead.id + '" data-status="' + status + '"><span class="dot"></span>' + (status === 'traite' ? 'Marquer comme à traiter' : 'Marquer comme traité') + '</button>' +
+              (isPartner() ? '' : '<button class="status-btn ' + status + '" data-id="' + lead.id + '" data-status="' + status + '"><span class="dot"></span>' + (status === 'traite' ? 'Marquer comme à traiter' : 'Marquer comme traité') + '</button>') +
             '</div>' +
             '</div>' +
-            buildEditForm(lead) +
+            (isPartner() ? '' : buildEditForm(lead)) +
           '</div>' +
         '</div>' +
       '</div>'
@@ -904,7 +923,7 @@
     const cancelBtn = card.querySelector('.cancel-edit-btn') as HTMLButtonElement | null;
     if(cancelBtn) cancelBtn.disabled = true;
     try{
-      await callAdminFunction({ password: sessionStorage.getItem('adminPassword'), action: 'update-details', id, fields });
+      await callAdminFunction({ ...authPayload(), action: 'update-details', id, fields });
       const lead = allLeads.find(l => String(l.id) === String(id));
       if(lead) Object.assign(lead, fields);
       updateStats();
@@ -925,7 +944,7 @@
     if(!confirm('Supprimer définitivement la demande de "' + name + '" ? Cette action est irréversible.')) return;
     btn.disabled = true;
     try{
-      await callAdminFunction({ password: sessionStorage.getItem('adminPassword'), action: 'delete', id });
+      await callAdminFunction({ ...authPayload(), action: 'delete', id });
       allLeads = allLeads.filter(l => String(l.id) !== String(id));
       renderLeads();
     }catch(err: any){
@@ -980,7 +999,7 @@
     const newStatus = currentStatus === 'traite' ? 'nouveau' : 'traite';
     btn.disabled = true;
     try{
-      await callAdminFunction({ password: sessionStorage.getItem('adminPassword'), action: 'update-status', id, status: newStatus });
+      await callAdminFunction({ ...authPayload(), action: 'update-status', id, status: newStatus });
       const lead = allLeads.find(l => String(l.id) === String(id));
       if(lead) lead.status = newStatus;
       renderLeads();
@@ -997,7 +1016,7 @@
     leadList.style.display = 'none';
     emptyState.style.display = 'none';
     try{
-      const data = await callAdminFunction({ password: sessionStorage.getItem('adminPassword') });
+      const data = await callAdminFunction({ ...authPayload() });
       allLeads = data.leads || [];
       loadingState.style.display = 'none';
       renderLeads();
@@ -1047,9 +1066,9 @@
               '<div class="quick-actions">' +
                 (telHref ? '<a class="quick-btn" href="' + telHref + '">' + PHONE_SVG + 'Appeler</a>' : '') +
                 (mailHref ? '<a class="quick-btn" href="' + mailHref + '">' + MAIL_SVG + 'Email</a>' : '') +
-                '<button type="button" class="delete-btn" data-id="' + msg.id + '">Supprimer</button>' +
+                (isPartner() ? '' : '<button type="button" class="delete-btn" data-id="' + msg.id + '">Supprimer</button>') +
               '</div>' +
-              '<button class="status-btn ' + status + '" data-id="' + msg.id + '" data-status="' + status + '"><span class="dot"></span>' + (status === 'traite' ? 'Marquer comme à traiter' : 'Marquer comme traité') + '</button>' +
+              (isPartner() ? '' : '<button class="status-btn ' + status + '" data-id="' + msg.id + '" data-status="' + status + '"><span class="dot"></span>' + (status === 'traite' ? 'Marquer comme à traiter' : 'Marquer comme traité') + '</button>') +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -1125,7 +1144,7 @@
     const newStatus = currentStatus === 'traite' ? 'nouveau' : 'traite';
     btn.disabled = true;
     try{
-      await callAdminFunction({ password: sessionStorage.getItem('adminPassword'), resource: 'messages', action: 'update-status', id, status: newStatus });
+      await callAdminFunction({ ...authPayload(), resource: 'messages', action: 'update-status', id, status: newStatus });
       const msg = allMessages.find(m => String(m.id) === String(id));
       if(msg) msg.status = newStatus;
       renderMessages();
@@ -1144,7 +1163,7 @@
     if(!confirm('Supprimer définitivement le message de "' + name + '" ? Cette action est irréversible.')) return;
     btn.disabled = true;
     try{
-      await callAdminFunction({ password: sessionStorage.getItem('adminPassword'), resource: 'messages', action: 'delete', id });
+      await callAdminFunction({ ...authPayload(), resource: 'messages', action: 'delete', id });
       allMessages = allMessages.filter(m => String(m.id) !== String(id));
       renderMessages();
     }catch(err: any){
@@ -1160,7 +1179,7 @@
     messageList.style.display = 'none';
     messagesEmptyState.style.display = 'none';
     try{
-      const data = await callAdminFunction({ password: sessionStorage.getItem('adminPassword'), resource: 'messages' });
+      const data = await callAdminFunction({ ...authPayload(), resource: 'messages' });
       allMessages = data.messages || [];
       messagesLoadingState.style.display = 'none';
       renderMessages();
@@ -1233,10 +1252,10 @@
             '<div class="lead-actions">' +
               '<div class="quick-actions">' +
                 '<a class="quick-btn" href="/vehicule/' + escapeHtml(v.slug) + '.html" target="_blank" rel="noopener">Voir la fiche</a>' +
-                '<button type="button" class="edit-btn" data-id="' + v.id + '">Modifier</button>' +
-                '<button type="button" class="delete-btn" data-id="' + v.id + '">Supprimer</button>' +
+                (isPartner() ? '' : '<button type="button" class="edit-btn" data-id="' + v.id + '">Modifier</button>') +
+                (isPartner() ? '' : '<button type="button" class="delete-btn" data-id="' + v.id + '">Supprimer</button>') +
               '</div>' +
-              '<button class="status-btn ' + statusCls + '" data-id="' + v.id + '" data-active="' + isActive + '"><span class="dot"></span>' + (isActive ? 'Désactiver (masquer)' : 'Activer (afficher)') + '</button>' +
+              (isPartner() ? '' : '<button class="status-btn ' + statusCls + '" data-id="' + v.id + '" data-active="' + isActive + '"><span class="dot"></span>' + (isActive ? 'Désactiver (masquer)' : 'Activer (afficher)') + '</button>') +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -1306,7 +1325,7 @@
     const newActive = btn.dataset.active !== 'true';
     btn.disabled = true;
     try{
-      await callAdminVehiclesFunction({ password: sessionStorage.getItem('adminPassword'), action: 'update-status', id, active: newActive });
+      await callAdminVehiclesFunction({ ...authPayload(), action: 'update-status', id, active: newActive });
       const vehicle = allVehicles.find(v => String(v.id) === String(id));
       if(vehicle) vehicle.active = newActive;
       renderVehicles();
@@ -1325,7 +1344,7 @@
     if(!confirm('Supprimer définitivement "' + name + '" ainsi que ses photos ? Cette action est irréversible.')) return;
     btn.disabled = true;
     try{
-      await callAdminVehiclesFunction({ password: sessionStorage.getItem('adminPassword'), action: 'delete', id });
+      await callAdminVehiclesFunction({ ...authPayload(), action: 'delete', id });
       allVehicles = allVehicles.filter(v => String(v.id) !== String(id));
       renderVehicles();
     }catch(err: any){
@@ -1341,7 +1360,7 @@
     vehicleList.style.display = 'none';
     vehiclesEmptyState.style.display = 'none';
     try{
-      const data = await callAdminVehiclesFunction({ password: sessionStorage.getItem('adminPassword') });
+      const data = await callAdminVehiclesFunction({ ...authPayload() });
       allVehicles = data.vehicles || [];
       vehiclesLoadingState.style.display = 'none';
       renderVehicles();
@@ -1379,7 +1398,7 @@
     saveVehicleBtn.disabled = true;
     try{
       const res = await callAdminVehiclesFunction({
-        password: sessionStorage.getItem('adminPassword'),
+        ...authPayload(),
         action: 'create-upload-url',
         folder: currentUploadFolder,
         filename: file.name,
@@ -1467,9 +1486,9 @@
     saveVehicleBtn.textContent = 'Enregistrement…';
     try{
       if(editingVehicleId){
-        await callAdminVehiclesFunction({ password: sessionStorage.getItem('adminPassword'), action: 'update-details', id: editingVehicleId, fields });
+        await callAdminVehiclesFunction({ ...authPayload(), action: 'update-details', id: editingVehicleId, fields });
       } else {
-        await callAdminVehiclesFunction({ password: sessionStorage.getItem('adminPassword'), action: 'create', fields });
+        await callAdminVehiclesFunction({ ...authPayload(), action: 'create', fields });
       }
       closeVehicleForm();
       await loadVehicles();
@@ -1486,10 +1505,17 @@
   vehiclesStatusFilter.addEventListener('change', renderVehicles);
   vehiclesSortSelect.addEventListener('change', renderVehicles);
 
+  function applyRoleRestrictions(){
+    const partner = isPartner();
+    roleBadge.style.display = partner ? 'inline-flex' : 'none';
+    addVehicleBtn.style.display = partner ? 'none' : 'inline-flex';
+  }
+
   function showDashboard(){
     loginScreen.style.display = 'none';
     dashboard.style.display = 'block';
     logoutBtn.style.display = 'inline-block';
+    applyRoleRestrictions();
     loadLeads();
     loadMessages();
     loadVehicles();
@@ -1498,16 +1524,19 @@
   loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     loginError.classList.remove('show');
+    const username = usernameInput.value.trim();
     const password = passwordInput.value;
     if(!password) return;
     loginBtn.disabled = true;
     loginBtn.textContent = 'Vérification…';
     try{
-      await callAdminFunction({ password });
+      const data = await callAdminFunction({ username: username || undefined, password });
       sessionStorage.setItem('adminPassword', password);
+      if(username) sessionStorage.setItem('adminUsername', username);
+      sessionStorage.setItem('adminRole', data.role || 'admin');
       showDashboard();
     }catch(err: any){
-      showLoginError(err.message === 'Mot de passe incorrect' ? 'Mot de passe incorrect.' : err.message);
+      showLoginError(err.message === 'Identifiants incorrects' ? 'Identifiants incorrects.' : err.message);
     }finally{
       loginBtn.disabled = false;
       loginBtn.textContent = 'Se connecter';
@@ -1516,6 +1545,8 @@
 
   logoutBtn.addEventListener('click', () => {
     sessionStorage.removeItem('adminPassword');
+    sessionStorage.removeItem('adminUsername');
+    sessionStorage.removeItem('adminRole');
     location.reload();
   });
 

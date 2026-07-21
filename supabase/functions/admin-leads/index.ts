@@ -3,10 +3,15 @@
 // ici, côté serveur, et seule cette fonction détient la clé service_role
 // capable d'écrire sur `leads` / `contact_messages`.
 //
+// Deux rôles : "admin" (mot de passe seul, accès complet) et "partner"
+// (identifiant + mot de passe, table `partners`, accès en LECTURE SEULE —
+// voir supabase/functions/_shared/auth.ts).
+//
 // Déploiement : supabase functions deploy admin-leads
 // Secret requis : supabase secrets set ADMIN_PASSWORD=votre-mot-de-passe
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { authenticate } from '../_shared/auth.ts'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -50,11 +55,23 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json()
-    const adminPassword = Deno.env.get('ADMIN_PASSWORD')
 
-    if (!adminPassword || body.password !== adminPassword) {
-      return new Response(JSON.stringify({ error: 'Mot de passe incorrect' }), {
+    const supabase = createClient(
+      Deno.env.get('SUPABASE_URL')!,
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    )
+
+    const role = await authenticate(supabase, body)
+    if (!role) {
+      return new Response(JSON.stringify({ error: 'Identifiants incorrects' }), {
         status: 401,
+        headers: jsonHeaders,
+      })
+    }
+    const isWriteAction = ['update-status', 'update-details', 'delete'].includes(body.action)
+    if (role === 'partner' && isWriteAction) {
+      return new Response(JSON.stringify({ error: 'Accès en lecture seule' }), {
+        status: 403,
         headers: jsonHeaders,
       })
     }
@@ -62,18 +79,13 @@ Deno.serve(async (req) => {
     const resourceKey = body.resource === 'messages' ? 'messages' : 'leads'
     const { table, editableFields, listKey } = RESOURCES[resourceKey]
 
-    const supabase = createClient(
-      Deno.env.get('SUPABASE_URL')!,
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-    )
-
     if (body.action === 'update-status') {
       const { error } = await supabase
         .from(table)
         .update({ status: body.status })
         .eq('id', body.id)
       if (error) throw error
-      return new Response(JSON.stringify({ ok: true }), { headers: jsonHeaders })
+      return new Response(JSON.stringify({ ok: true, role }), { headers: jsonHeaders })
     }
 
     if (body.action === 'update-details') {
@@ -92,7 +104,7 @@ Deno.serve(async (req) => {
         .update(update)
         .eq('id', body.id)
       if (error) throw error
-      return new Response(JSON.stringify({ ok: true }), { headers: jsonHeaders })
+      return new Response(JSON.stringify({ ok: true, role }), { headers: jsonHeaders })
     }
 
     if (body.action === 'delete') {
@@ -102,7 +114,7 @@ Deno.serve(async (req) => {
         .delete()
         .eq('id', body.id)
       if (error) throw error
-      return new Response(JSON.stringify({ ok: true }), { headers: jsonHeaders })
+      return new Response(JSON.stringify({ ok: true, role }), { headers: jsonHeaders })
     }
 
     const { data, error } = await supabase
@@ -112,7 +124,7 @@ Deno.serve(async (req) => {
 
     if (error) throw error
 
-    return new Response(JSON.stringify({ [listKey]: data }), { headers: jsonHeaders })
+    return new Response(JSON.stringify({ [listKey]: data, role }), { headers: jsonHeaders })
   } catch (err) {
     return new Response(JSON.stringify({ error: String(err) }), {
       status: 500,

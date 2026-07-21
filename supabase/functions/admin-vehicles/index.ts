@@ -4,12 +4,17 @@
 // serveur, et seule cette fonction détient la clé service_role capable
 // d'écrire sur `vehicles` / le bucket Storage.
 //
+// Deux rôles : "admin" (mot de passe seul, accès complet) et "partner"
+// (identifiant + mot de passe, table `partners`, accès en LECTURE SEULE —
+// voir supabase/functions/_shared/auth.ts).
+//
 // Déploiement : supabase functions deploy admin-vehicles
 // Secrets requis :
 //   supabase secrets set ADMIN_PASSWORD=votre-mot-de-passe (déjà utilisé par admin-leads)
 //   supabase secrets set VERCEL_DEPLOY_HOOK_URL=https://api.vercel.com/v1/integrations/deploy/...
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { authenticate } from '../_shared/auth.ts'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -63,19 +68,26 @@ Deno.serve(async (req) => {
 
   try {
     const body = await req.json()
-    const adminPassword = Deno.env.get('ADMIN_PASSWORD')
-
-    if (!adminPassword || body.password !== adminPassword) {
-      return new Response(JSON.stringify({ error: 'Mot de passe incorrect' }), {
-        status: 401,
-        headers: jsonHeaders,
-      })
-    }
 
     const supabase = createClient(
       Deno.env.get('SUPABASE_URL')!,
       Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
     )
+
+    const role = await authenticate(supabase, body)
+    if (!role) {
+      return new Response(JSON.stringify({ error: 'Identifiants incorrects' }), {
+        status: 401,
+        headers: jsonHeaders,
+      })
+    }
+    const isWriteAction = ['create-upload-url', 'create', 'update-details', 'update-status', 'delete'].includes(body.action)
+    if (role === 'partner' && isWriteAction) {
+      return new Response(JSON.stringify({ error: 'Accès en lecture seule' }), {
+        status: 403,
+        headers: jsonHeaders,
+      })
+    }
 
     if (body.action === 'create-upload-url') {
       const folder = String(body.folder || '').replace(/[^a-zA-Z0-9-]/g, '')
@@ -185,7 +197,7 @@ Deno.serve(async (req) => {
       .order('created_at', { ascending: false })
     if (error) throw error
 
-    return new Response(JSON.stringify({ vehicles: data }), { headers: jsonHeaders })
+    return new Response(JSON.stringify({ vehicles: data, role }), { headers: jsonHeaders })
   } catch (err) {
     return new Response(JSON.stringify({ error: String(err) }), {
       status: 500,
