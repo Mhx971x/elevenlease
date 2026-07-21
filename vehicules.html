@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eleven Lease — Véhicules disponibles</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<meta name="description" content="Découvrez les véhicules disponibles via le réseau de partenaires Eleven Lease : citadines, SUV, électriques, en LOA ou LLD partout en France.">
+<link rel="canonical" href="https://elevenlease.fr/vehicules.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Eleven Lease">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Eleven Lease — Véhicules disponibles">
+<meta property="og:description" content="Découvrez les véhicules disponibles via le réseau de partenaires Eleven Lease : citadines, SUV, électriques, en LOA ou LLD partout en France.">
+<meta property="og:image" content="https://elevenlease.fr/eleven-lease-logo.png">
+<meta property="og:url" content="https://elevenlease.fr/vehicules.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Eleven Lease — Véhicules disponibles">
+<meta name="twitter:description" content="Découvrez les véhicules disponibles via le réseau de partenaires Eleven Lease : citadines, SUV, électriques, en LOA ou LLD partout en France.">
+<meta name="twitter:image" content="https://elevenlease.fr/eleven-lease-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --surface:#141414;
+    --surface-2:#1c1c1c;
+    --border:#2a2a2a;
+    --text:#ffffff;
+    --text-dim:#9a9a9a;
+    --text-faint:#5c5c5c;
+    --accent-1:#ff007f;
+    --accent-2:#8d0a32;
+    --accent:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    letter-spacing:-0.02em;
+    line-height:1.05;
+  }
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  @media(max-width:768px){ .wrap{padding:0 20px;} }
+
+  /* logo */
+  .logo{display:flex;align-items:center;gap:10px;transition:opacity .2s ease;}
+  .logo:hover{opacity:.8;}
+  .logo-icon{width:106px;height:46px;background-image:url('eleven-lease-logo.png');background-repeat:no-repeat;background-size:contain;background-position:center;flex:none;}
+
+  /* nav */
+  header{
+    position:sticky;top:0;z-index:100;
+    background:rgba(10,10,10,0.85);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1180px;margin:0 auto;}
+  .nav-links{display:flex;gap:36px;font-size:14px;color:var(--text-dim);}
+  .nav-links a{position:relative;padding-bottom:4px;}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);transition:width .3s cubic-bezier(.16,1,.3,1);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-links a:hover{color:var(--accent-1);}
+  .nav-links a.active{color:var(--text);}
+  .nav-links a.active::after{width:100%;background:var(--accent);}
+  .nav-cta{background:var(--accent);color:#fff;padding:10px 20px;border-radius:100px;font-size:14px;font-weight:600;transition:filter .2s ease, transform .2s ease;}
+  .nav-cta:hover{filter:brightness(1.12);transform:translateY(-1px);}
+  .nav-cta:active{transform:scale(.95);}
+  @media(max-width:768px){ .nav-links{display:none;} }
+  @media(max-width:480px){
+    nav{padding:16px 20px;}
+    .logo{gap:7px;}
+    .logo-icon{width:83px;height:36px;}
+    .nav-cta{padding:9px 15px;font-size:13px;}
+  }
+
+  /* nav right group + mobile menu toggle */
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .menu-toggle{
+    display:none;position:relative;width:24px;height:18px;flex:none;
+    background:none;border:none;cursor:pointer;padding:0;
+  }
+  .menu-toggle span{
+    position:absolute;left:0;width:100%;height:2px;background:var(--text);border-radius:2px;
+    transition:transform .35s cubic-bezier(.16,1,.3,1), opacity .25s ease, top .35s cubic-bezier(.16,1,.3,1);
+  }
+  .menu-toggle span:nth-child(1){top:0;}
+  .menu-toggle span:nth-child(2){top:8px;}
+  .menu-toggle span:nth-child(3){top:16px;}
+  .menu-toggle.active span:nth-child(1){top:8px;transform:rotate(45deg);}
+  .menu-toggle.active span:nth-child(2){opacity:0;}
+  .menu-toggle.active span:nth-child(3){top:8px;transform:rotate(-45deg);}
+  @media(max-width:768px){ .menu-toggle{display:block;} }
+
+  /* full-screen mobile menu */
+  .mobile-menu{
+    position:fixed;inset:0;background:var(--bg);z-index:200;
+    display:flex;flex-direction:column;
+    opacity:0;visibility:hidden;transform:translateY(-14px);
+    transition:opacity .4s cubic-bezier(.16,1,.3,1), transform .4s cubic-bezier(.16,1,.3,1), visibility 0s linear .4s;
+  }
+  .mobile-menu.open{
+    opacity:1;visibility:visible;transform:translateY(0);
+    transition:opacity .4s cubic-bezier(.16,1,.3,1), transform .4s cubic-bezier(.16,1,.3,1);
+  }
+  .mobile-menu-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--border);}
+  .mobile-menu-close{
+    background:none;border:none;color:var(--text);cursor:pointer;padding:6px;display:flex;
+    transition:transform .35s cubic-bezier(.16,1,.3,1);
+  }
+  .mobile-menu-close:hover{transform:rotate(90deg);}
+  .mobile-menu-list{
+    flex:1;display:flex;flex-direction:column;overflow-y:auto;
+    width:100%;max-width:none;margin:0;padding:0;justify-content:flex-start;align-items:stretch;
+  }
+  .mobile-menu-list a{
+    display:block;width:100%;padding:15px 20px;font-size:19px;font-family:'Space Grotesk',sans-serif;font-weight:600;
+    border-bottom:1px solid var(--border);color:var(--text-dim);text-align:center;
+    opacity:0;transform:translateY(10px);
+    transition:opacity .45s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1), color .2s ease, background .2s ease;
+  }
+  .mobile-menu.open .mobile-menu-list a{opacity:1;transform:translateY(0);}
+  .mobile-menu.open .mobile-menu-list a:nth-child(1){transition-delay:.08s;}
+  .mobile-menu.open .mobile-menu-list a:nth-child(2){transition-delay:.13s;}
+  .mobile-menu.open .mobile-menu-list a:nth-child(3){transition-delay:.18s;}
+  .mobile-menu.open .mobile-menu-list a:nth-child(4){transition-delay:.23s;}
+  .mobile-menu.open .mobile-menu-list a:nth-child(5){transition-delay:.28s;}
+  .mobile-menu-list a:hover, .mobile-menu-list a.active{color:var(--accent-1);background:var(--surface);}
+  .mobile-menu-cta{padding:24px 20px 32px;}
+  .mobile-menu-cta .btn-primary, .mobile-menu-cta .nav-cta{display:block;text-align:center;width:100%;padding:16px 22px;font-size:15px;}
+  @media(min-width:769px){ .mobile-menu{display:none;} }
+  body.menu-open{overflow:hidden;}
+
+  /* page hero */
+  .page-hero{padding:64px 0 40px;border-bottom:1px solid var(--border);}
+  .page-hero .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);
+    border:1px solid var(--border);padding:6px 14px;border-radius:100px;margin-bottom:20px;width:fit-content;
+  }
+  .page-hero .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-1);}
+  .page-hero h1{font-size:clamp(32px,5vw,52px);max-width:700px;}
+  .page-hero p{color:var(--text-dim);font-size:16px;margin-top:14px;max-width:560px;}
+
+  /* filter bar */
+  .filter-bar{
+    display:flex;gap:12px;flex-wrap:wrap;align-items:center;
+    padding:20px 0;
+  }
+  .filter-select{
+    background:var(--surface);border:1px solid var(--border);color:var(--text);
+    padding:11px 16px;border-radius:100px;font-size:13.5px;font-family:'Inter',sans-serif;
+    cursor:pointer;transition:border-color .2s ease, box-shadow .2s ease;
+    -webkit-appearance:none;appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239a9a9a' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 14px center;
+    padding-right:34px;
+  }
+  .filter-select:hover{border-color:#444;}
+  .filter-select:focus{outline:none;border-color:var(--accent-1);box-shadow:0 0 0 3px rgba(255,0,127,0.15);}
+  .filter-count{margin-left:auto;font-size:13.5px;color:var(--text-faint);}
+  @media(max-width:640px){ .filter-count{margin-left:0;width:100%;} }
+
+  .filter-search{
+    background:var(--surface);border:1px solid var(--border);color:var(--text);
+    padding:11px 18px;border-radius:100px;font-size:13.5px;font-family:'Inter',sans-serif;
+    flex:1;min-width:220px;transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .filter-search::placeholder{color:var(--text-faint);}
+  .filter-search:focus{outline:none;border-color:var(--accent-1);box-shadow:0 0 0 3px rgba(255,0,127,0.15);}
+  @media(max-width:640px){ .filter-search{width:100%;flex:none;} }
+
+  /* catalogue grid */
+  .catalogue{padding:24px 0 100px;}
+  .veh-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+  }
+  @media(max-width:980px){ .veh-grid{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:640px){ .veh-grid{grid-template-columns:1fr;} }
+
+  .veh-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:18px;
+    overflow:hidden;
+    opacity:0;transform:translateY(20px);
+    transition:opacity .5s cubic-bezier(.16,1,.3,1), transform .5s cubic-bezier(.16,1,.3,1), border-color .3s ease, box-shadow .3s ease;
+    display:flex;flex-direction:column;
+    cursor:pointer;
+  }
+  .veh-card:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+  .veh-card.show{opacity:1;transform:translateY(0);}
+  .veh-card.show:hover{transform:translateY(-4px);}
+  .veh-card:hover{border-color:#444;box-shadow:0 16px 40px rgba(0,0,0,0.35);}
+  .veh-card:hover .veh-visual svg{transform:scale(1.06);}
+
+  .veh-visual{
+    position:relative;
+    aspect-ratio:16/9;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,255,255,0.05), transparent),
+      linear-gradient(180deg, var(--surface-2), var(--surface));
+    display:flex;align-items:center;justify-content:center;
+    border-bottom:1px solid var(--border);
+    overflow:hidden;
+  }
+  .veh-visual svg{width:64%;transition:transform .4s cubic-bezier(.16,1,.3,1);}
+  .veh-visual img{width:100%;height:100%;object-fit:cover;transition:transform .4s cubic-bezier(.16,1,.3,1);}
+  .veh-card:hover .veh-visual img{transform:scale(1.06);}
+  .veh-badge{
+    position:absolute;top:14px;left:14px;
+    font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;
+    padding:5px 10px;border-radius:100px;
+    background:var(--accent);color:#fff;
+  }
+  .veh-badge.occasion{background:transparent;border:1px solid var(--text-dim);color:var(--text-dim);}
+
+  .veh-body{padding:20px;flex:1;display:flex;flex-direction:column;}
+  .veh-brand{font-size:12px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}
+  .veh-name{font-size:19px;margin-bottom:12px;}
+  .veh-specs{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--text-dim);margin-bottom:18px;}
+  .veh-specs span{display:flex;align-items:center;gap:5px;}
+  .veh-specs svg{opacity:0.6;}
+
+  .veh-footer{
+    margin-top:auto;padding-top:16px;border-top:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .veh-price .amount{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;}
+  .veh-price .period{font-size:12px;color:var(--text-faint);}
+  .veh-cta{
+    font-size:13px;font-weight:600;color:var(--text);
+    display:flex;align-items:center;gap:6px;
+    transition:gap .25s ease;
+  }
+  .veh-card:hover .veh-cta{gap:10px;}
+
+  /* skeleton loading state */
+  .veh-card.skeleton{opacity:1;transform:none;cursor:default;pointer-events:none;}
+  .skel{
+    background:linear-gradient(100deg, var(--surface-2) 30%, var(--border) 45%, var(--surface-2) 60%);
+    background-size:250% 100%;
+    animation:skelShine 1.6s ease-in-out infinite;
+  }
+  @keyframes skelShine{
+    0%{background-position:120% 0;}
+    100%{background-position:-20% 0;}
+  }
+  .skel-line{border-radius:6px;}
+  .skel-line.brand{width:38%;height:10px;margin-bottom:10px;}
+  .skel-line.name{width:68%;height:16px;margin-bottom:18px;}
+  .skel-specs{display:flex;gap:10px;margin-bottom:22px;}
+  .skel-specs .skel{width:54px;height:12px;border-radius:6px;}
+  .skel-footer{display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid var(--border);}
+  .skel-footer .skel.price{width:66px;height:18px;border-radius:6px;}
+  .skel-footer .skel.cta{width:92px;height:12px;border-radius:6px;}
+  @media(prefers-reduced-motion:reduce){
+    .skel{animation:none;background:var(--surface-2);}
+  }
+
+  .empty-state{
+    text-align:center;padding:80px 20px;color:var(--text-dim);
+    display:none;
+  }
+  .empty-state.show{display:block;}
+  .empty-state h3{font-size:20px;margin-bottom:8px;color:var(--text);}
+
+  .cta-band{
+    border:1px solid var(--border);border-radius:24px;padding:56px 40px;text-align:center;
+    background:radial-gradient(ellipse at 50% 0%, var(--surface), var(--bg));
+    margin-top:60px;
+  }
+  .cta-band h2{font-size:clamp(24px,3.5vw,34px);margin-bottom:14px;}
+  .cta-band p{color:var(--text-dim);margin-bottom:28px;}
+  .btn-primary{
+    background:var(--accent);color:#fff;padding:15px 26px;border-radius:100px;
+    font-weight:600;font-size:14.5px;display:inline-block;
+    transition:transform .2s ease, filter .2s ease, box-shadow .3s ease;
+  }
+  .btn-primary:hover{filter:brightness(1.12);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,0,127,0.25);}
+  .btn-primary:active{transform:scale(.96);box-shadow:0 4px 12px rgba(255,0,127,0.2);}
+
+  footer{border-top:1px solid var(--border);padding:48px 0 32px;margin-top:0;}
+  .footer-bottom{font-size:13px;color:var(--text-faint);text-align:center;}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="logo">
+      <span class="logo-icon" role="img" aria-label="Eleven Lease"></span>    </a>
+    <div class="nav-links">
+      <a href="index.html#comment-ca-marche">Comment ça marche</a>
+      <a href="loa.html">Guide LOA</a>
+      <a href="vehicules.html" class="active">Nos offres</a>
+      <a href="index.html#avis">Avis</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-right">
+      <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="simulation.html" class="nav-cta">Simuler mon leasing</a>
+    </div>
+  </nav>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-head">
+    <div class="logo">
+      <span class="logo-icon" role="img" aria-label="Eleven Lease"></span>    </div>
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Fermer le menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+  <nav class="mobile-menu-list">
+    <a href="index.html#comment-ca-marche">Comment ça marche</a>
+    <a href="loa.html">Guide LOA</a>
+    <a href="vehicules.html" class="active">Nos offres</a>
+    <a href="index.html#avis">Avis</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+  <div class="mobile-menu-cta">
+    <a href="simulation.html" class="nav-cta">Simuler mon leasing</a>
+  </div>
+</div>
+
+<section class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> Mis à jour régulièrement</div>
+    <h1>Véhicules disponibles via notre réseau.</h1>
+    <p>Une sélection d'offres de leasing actuellement disponibles chez nos partenaires. Chaque véhicule est proposé à titre indicatif — le loyer final dépend de votre profil et de votre apport.</p>
+  </div>
+</section>
+
+<section class="catalogue">
+  <div class="wrap">
+    <div class="filter-bar">
+      <input type="search" class="filter-search" id="filterSearch" placeholder="Rechercher une marque, un modèle…">
+      <select class="filter-select" id="filterType">
+        <option value="all">Tous les modèles</option>
+        <option value="citadine">Citadines</option>
+        <option value="berline">Berlines</option>
+        <option value="suv">SUV</option>
+        <option value="electrique">Électriques</option>
+      </select>
+      <select class="filter-select" id="filterCondition">
+        <option value="all">Neuf & occasion</option>
+        <option value="neuf">Neuf</option>
+        <option value="occasion">Occasion</option>
+      </select>
+      <select class="filter-select" id="filterPrice">
+        <option value="all">Tous budgets</option>
+        <option value="0-250">Jusqu'à 250€/mois</option>
+        <option value="250-400">250€ – 400€/mois</option>
+        <option value="400-9999">400€ et plus</option>
+      </select>
+      <select class="filter-select" id="filterSort">
+        <option value="default">Trier par</option>
+        <option value="price-asc">Prix croissant</option>
+        <option value="price-desc">Prix décroissant</option>
+      </select>
+      <div class="filter-count" id="filterCount">— véhicules</div>
+    </div>
+
+    <div class="veh-grid" id="vehGrid"></div>
+
+    <div class="empty-state" id="emptyState">
+      <h3>Aucun véhicule ne correspond à ces filtres</h3>
+      <p>Essayez d'élargir votre recherche, ou contactez-nous directement pour un besoin spécifique.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="cta-band">
+    <h2>Le véhicule que vous cherchez n'est pas dans la liste ?</h2>
+    <p>Décrivez votre projet, notre réseau de partenaires vous trouve la bonne offre.</p>
+    <a href="simulation.html" class="btn-primary">Simuler mon leasing</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-bottom">
+    © 2026 Eleven Lease. Les véhicules et loyers affichés sont donnés à titre indicatif et soumis à acceptation du dossier par nos partenaires financiers.
+  </div>
+</footer>
+
+<script>
+  // mobile menu (hamburger)
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileMenuClose = document.getElementById('mobileMenuClose');
+  function openMobileMenu(){
+    mobileMenu.classList.add('open');
+    menuToggle.classList.add('active');
+    menuToggle.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('menu-open');
+  }
+  function closeMobileMenu(){
+    mobileMenu.classList.remove('open');
+    menuToggle.classList.remove('active');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
+  }
+  if(menuToggle && mobileMenu){
+    menuToggle.addEventListener('click', ()=>{
+      mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
+    });
+    if(mobileMenuClose) mobileMenuClose.addEventListener('click', closeMobileMenu);
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileMenu));
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeMobileMenu(); });
+  }
+
+  // magnetic buttons (desktop only)
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+  if(!isTouch){
+    document.querySelectorAll('.btn-primary').forEach(btn=>{
+      btn.addEventListener('mousemove', (e)=>{
+        const r = btn.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width/2;
+        const y = e.clientY - r.top - r.height/2;
+        btn.style.transform = `translate(${x*0.18}px, ${y*0.35}px)`;
+      });
+      btn.addEventListener('mouseleave', ()=>{ btn.style.transform = 'translate(0,0)'; });
+    });
+  }
+
+  const carIcon = `<svg viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M20 68 L32 40 Q38 30 52 30 L140 30 Q154 30 160 40 L172 68 L172 80 Q172 84 168 84 L158 84 Q158 92 150 92 Q142 92 142 84 L58 84 Q58 92 50 92 Q42 92 42 84 L32 84 Q28 84 28 80 Z" stroke="#ffffff" stroke-width="2.5" fill="rgba(255,255,255,0.03)"/>
+    <path d="M46 40 L54 40 L50 30" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+    <line x1="52" y1="30" x2="52" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+    <line x1="86" y1="30" x2="86" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+    <line x1="120" y1="30" x2="120" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+    <circle cx="58" cy="84" r="10" stroke="#ffffff" stroke-width="2.5" fill="#0a0a0a"/>
+    <circle cx="142" cy="84" r="10" stroke="#ffffff" stroke-width="2.5" fill="#0a0a0a"/>
+    <circle cx="58" cy="84" r="3" fill="#ffffff"/>
+    <circle cx="142" cy="84" r="3" fill="#ffffff"/>
+  </svg>`;
+
+  // ============================================================
+  // SOURCE DES DONNÉES : Google Sheet publié en CSV.
+  //
+  // Comment configurer (une seule fois) :
+  // 1. Crée un Google Sheet avec une ligne d'en-têtes contenant
+  //    exactement (l'ordre n'a pas d'importance) :
+  //    Marque | Modele | Type | Etat | Prix | Km | Duree | Carburant | Photo | Photo2 | Photo3 | Photo4 | Photo5 | Transmission | Places | Finition | Description | OptionsConfort | OptionsExterieur | OptionsInterieur | OptionsTechnologie | Actif | Annee | Puissance | Moteur | AutonomieElectrique | AutonomieCumulee | RechargeDC | RechargeAC | TempsCharge | Consommation | CO2 | Coffre
+  //      - Type    : citadine / berline / suv / electrique
+  //      - Etat    : neuf / occasion
+  //      - Prix    : un nombre (ex: 249)
+  //      - Km      : texte libre (ex: 10 000 km/an)
+  //      - Duree   : texte libre (ex: 37 mois)
+  //      - Carburant : texte libre (ex: Essence, Diesel, Hybride, Électrique)
+  //      - Photo à Photo5 : URLs d'images (Photo obligatoire pour une image,
+  //        les 4 autres optionnelles, servent au carrousel de la fiche véhicule)
+  //      - Transmission : texte libre (ex: Manuelle, Automatique)
+  //      - Places  : nombre (ex: 5)
+  //      - Finition : texte libre (ex: S Line, GT Line)
+  //      - Description : texte libre affiché dans la fiche détaillée (optionnel)
+  //      - OptionsConfort / OptionsExterieur / OptionsInterieur / OptionsTechnologie :
+  //        liste d'équipements séparés par des virgules (ex: "Clim auto, Sièges chauffants")
+  //      - Actif   : oui / non (optionnel — "non" masque la ligne du site)
+  //
+  //    Colonnes de la fiche technique détaillée (toutes facultatives —
+  //    une ligne vide n'affiche simplement pas la ligne correspondante
+  //    sur la fiche véhicule) :
+  //      - Annee    : ex "2025"
+  //      - Puissance : ex "204 ch"
+  //      - Moteur   : motorisation précise, ex "1.5 TSI eHybrid"
+  //      - AutonomieElectrique : pour les hybrides/électriques, ex "128 km"
+  //      - AutonomieCumulee    : pour les hybrides, ex "932 km"
+  //      - RechargeDC / RechargeAC : ex "50kW DC" / "11kW AC"
+  //      - TempsCharge : ex "80% en 26 min (DC)"
+  //      - Consommation : ex "1,4 L/100 km"
+  //      - CO2      : ex "27 g CO2/km"
+  //      - Coffre   : ex "490 litres"
+  // 2. Fichier > Partager > Publier sur le Web.
+  // 3. Choisis l'onglet du Sheet, format "Valeurs séparées par des
+  //    virgules (.csv)", puis clique sur "Publier".
+  // 4. Copie l'URL fournie et colle-la ci-dessous entre les guillemets.
+  // ============================================================
+  const SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRcPk7ROWwg42D6Iwos4AdvE66hiSEX3vw4mM3d2s6e72meg6qaZ7AClW8M3Tj8j7-qHYccrLL9Id2r/pub?output=csv";
+
+  let vehicles = [];
+
+  const grid = document.getElementById('vehGrid');
+  const emptyState = document.getElementById('emptyState');
+  const filterCount = document.getElementById('filterCount');
+  const fType = document.getElementById('filterType');
+  const fCondition = document.getElementById('filterCondition');
+  const fPrice = document.getElementById('filterPrice');
+  const fSort = document.getElementById('filterSort');
+  const fSearch = document.getElementById('filterSearch');
+
+  const specIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+  const fuelIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 21V6a2 2 0 012-2h6a2 2 0 012 2v15M4 21h10M4 10h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 8l2.5 2.5A2 2 0 0117 12v5a1.5 1.5 0 003 0V9l-3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+  const roadIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 21L9 3h6l5 18M9 15h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+  function escapeHtml(s){
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function stripAccents(s){
+    return String(s == null ? '' : s).normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+  function normalizeKey(s){ return stripAccents(s).toLowerCase().trim(); }
+  function normalizeValue(s){ return stripAccents(s).toLowerCase().trim(); }
+  function slugify(s){
+    return stripAccents(s).toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+  function parseOptionsList(s){
+    return (s || '').split(',').map(x => x.trim()).filter(Boolean);
+  }
+
+  function parseCSV(text){
+    const rows = [];
+    let row = [], field = '', inQuotes = false;
+    for(let i = 0; i < text.length; i++){
+      const c = text[i];
+      if(inQuotes){
+        if(c === '"'){
+          if(text[i+1] === '"'){ field += '"'; i++; }
+          else inQuotes = false;
+        } else field += c;
+      } else {
+        if(c === '"') inQuotes = true;
+        else if(c === ',') { row.push(field); field = ''; }
+        else if(c === '\r'){ /* ignore */ }
+        else if(c === '\n'){ row.push(field); rows.push(row); row = []; field = ''; }
+        else field += c;
+      }
+    }
+    if(field.length || row.length){ row.push(field); rows.push(row); }
+    return rows.filter(r => r.some(f => f.trim() !== ''));
+  }
+
+  function showEmptyState(title, message){
+    grid.innerHTML = '';
+    emptyState.querySelector('h3').textContent = title;
+    emptyState.querySelector('p').textContent = message;
+    emptyState.classList.add('show');
+    filterCount.textContent = '— véhicules';
+  }
+
+  function renderSkeleton(count){
+    grid.innerHTML = Array.from({length: count}).map(() => `
+      <div class="veh-card skeleton" aria-hidden="true">
+        <div class="veh-visual skel"></div>
+        <div class="veh-body">
+          <div class="skel skel-line brand"></div>
+          <div class="skel skel-line name"></div>
+          <div class="skel-specs">
+            <div class="skel"></div><div class="skel"></div><div class="skel"></div>
+          </div>
+          <div class="skel-footer">
+            <div class="skel price"></div>
+            <div class="skel cta"></div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // cache local : affichage instantané au retour sur la page pendant
+  // qu'on revérifie le Google Sheet en arrière-plan
+  const CACHE_KEY = 'ev_vehicles_cache_v1';
+
+  function readVehiclesCache(){
+    try{
+      const data = JSON.parse(localStorage.getItem(CACHE_KEY));
+      return (data && Array.isArray(data.vehicles) && data.vehicles.length) ? data.vehicles : null;
+    }catch(e){ return null; }
+  }
+
+  function writeVehiclesCache(list){
+    try{ localStorage.setItem(CACHE_KEY, JSON.stringify({savedAt: Date.now(), vehicles: list})); }
+    catch(e){ /* quota pleine ou navigation privée : tant pis */ }
+  }
+
+  async function loadVehicles(){
+    if(!SHEET_CSV_URL){
+      showEmptyState(
+        'Catalogue non configuré',
+        "Connecte un Google Sheet publié en CSV : renseigne la constante SHEET_CSV_URL dans le code de cette page (voir les instructions juste au-dessus)."
+      );
+      return;
+    }
+
+    const cached = readVehiclesCache();
+    if(cached){
+      vehicles = cached;
+      emptyState.classList.remove('show');
+      render();
+    } else {
+      renderSkeleton(6);
+    }
+
+    try{
+      const sep = SHEET_CSV_URL.includes('?') ? '&' : '?';
+      const res = await fetch(SHEET_CSV_URL + sep + 'cachebust=' + Date.now());
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      const text = await res.text();
+      const rows = parseCSV(text);
+      if(rows.length < 2) throw new Error('Feuille vide');
+
+      const headers = rows[0].map(normalizeKey);
+      const idx = name => headers.indexOf(name);
+      const iMarque = idx('marque'), iModele = idx('modele'), iType = idx('type'),
+            iEtat = idx('etat'), iPrix = idx('prix'), iKm = idx('km'),
+            iDuree = idx('duree'), iCarburant = idx('carburant'), iPhoto = idx('photo'),
+            iPhoto2 = idx('photo2'), iPhoto3 = idx('photo3'), iPhoto4 = idx('photo4'), iPhoto5 = idx('photo5'),
+            iTransmission = idx('transmission'), iPlaces = idx('places'), iFinition = idx('finition'),
+            iDescription = idx('description'),
+            iOptConfort = idx('optionsconfort'), iOptExterieur = idx('optionsexterieur'),
+            iOptInterieur = idx('optionsinterieur'), iOptTechnologie = idx('optionstechnologie'),
+            iActif = idx('actif'),
+            iAnnee = idx('annee'), iPuissance = idx('puissance'),
+            iConsommation = idx('consommation'), iCoffre = idx('coffre');
+
+      vehicles = rows.slice(1).map(r => {
+        const actif = iActif >= 0 ? normalizeValue(r[iActif]) : 'oui';
+        if(actif === 'non') return null;
+        const priceRaw = (iPrix >= 0 ? r[iPrix] : '') || '';
+        const price = parseFloat(priceRaw.replace(',', '.').replace(/[^\d.]/g, ''));
+        const brand = (iMarque >= 0 ? r[iMarque] : '').trim();
+        const name = (iModele >= 0 ? r[iModele] : '').trim();
+        const photos = [iPhoto, iPhoto2, iPhoto3, iPhoto4, iPhoto5]
+          .map(i => i >= 0 ? (r[i] || '').trim() : '')
+          .filter(Boolean);
+        return {
+          brand, name,
+          type: normalizeValue(iType >= 0 ? r[iType] : ''),
+          condition: normalizeValue(iEtat >= 0 ? r[iEtat] : ''),
+          price: isNaN(price) ? 0 : price,
+          km: (iKm >= 0 ? r[iKm] : '').trim(),
+          duration: (iDuree >= 0 ? r[iDuree] : '').trim(),
+          fuel: (iCarburant >= 0 ? r[iCarburant] : '').trim(),
+          photos,
+          photo: photos[0] || '',
+          transmission: (iTransmission >= 0 ? r[iTransmission] : '').trim(),
+          places: (iPlaces >= 0 ? r[iPlaces] : '').trim(),
+          finition: (iFinition >= 0 ? r[iFinition] : '').trim(),
+          description: (iDescription >= 0 ? r[iDescription] : '').trim(),
+          options: {
+            confort: parseOptionsList(iOptConfort >= 0 ? r[iOptConfort] : ''),
+            exterieur: parseOptionsList(iOptExterieur >= 0 ? r[iOptExterieur] : ''),
+            interieur: parseOptionsList(iOptInterieur >= 0 ? r[iOptInterieur] : ''),
+            technologie: parseOptionsList(iOptTechnologie >= 0 ? r[iOptTechnologie] : ''),
+          },
+          annee: (iAnnee >= 0 ? r[iAnnee] : '').trim(),
+          puissance: (iPuissance >= 0 ? r[iPuissance] : '').trim(),
+          consommation: (iConsommation >= 0 ? r[iConsommation] : '').trim(),
+          coffre: (iCoffre >= 0 ? r[iCoffre] : '').trim(),
+          slug: slugify(brand + ' ' + name),
+        };
+      }).filter(v => v && v.brand);
+
+      if(vehicles.length === 0) throw new Error('Aucun véhicule actif');
+
+      render();
+      writeVehiclesCache(vehicles);
+    }catch(err){
+      console.error('Erreur de chargement du Google Sheet :', err);
+      if(!cached){
+        showEmptyState(
+          'Catalogue momentanément indisponible',
+          "Impossible de charger les véhicules depuis le Google Sheet. Vérifie que le Sheet est bien publié sur le web au format CSV et que le lien dans SHEET_CSV_URL est correct."
+        );
+      }
+      // si un catalogue en cache est déjà affiché, on le laisse tel quel
+      // plutôt que d'écraser un contenu valide par un écran d'erreur
+    }
+  }
+
+  function render(){
+    const type = fType.value;
+    const condition = fCondition.value;
+    const priceRange = fPrice.value;
+    const sort = fSort.value;
+    const query = normalizeValue(fSearch.value.trim());
+
+    let filtered = vehicles.filter(v=>{
+      if(type !== 'all' && v.type !== type) return false;
+      if(condition !== 'all' && v.condition !== condition) return false;
+      if(priceRange !== 'all'){
+        const [min,max] = priceRange.split('-').map(Number);
+        if(v.price < min || v.price > max) return false;
+      }
+      if(query){
+        const haystack = normalizeValue(v.brand + ' ' + v.name + ' ' + v.finition);
+        if(!haystack.includes(query)) return false;
+      }
+      return true;
+    });
+
+    if(sort === 'price-asc') filtered.sort((a,b)=>a.price-b.price);
+    if(sort === 'price-desc') filtered.sort((a,b)=>b.price-a.price);
+
+    filterCount.textContent = filtered.length + (filtered.length > 1 ? ' véhicules' : ' véhicule');
+
+    grid.innerHTML = filtered.map(v=>`
+      <a class="veh-card" href="vehicule.html?v=${encodeURIComponent(v.slug)}" aria-label="Voir les détails : ${escapeHtml(v.brand + ' ' + v.name)}">
+        <div class="veh-visual">
+          <span class="veh-badge ${v.condition === 'occasion' ? 'occasion' : ''}">${v.condition === 'neuf' ? 'Neuf' : 'Occasion'}</span>
+          ${v.photo ? `<img src="${escapeHtml(v.photo)}" alt="${escapeHtml(v.brand + ' ' + v.name)}" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'), {innerHTML: carIcon}).firstElementChild)">` : carIcon}
+        </div>
+        <div class="veh-body">
+          <div class="veh-brand">${escapeHtml(v.brand)}</div>
+          <div class="veh-name">${escapeHtml(v.name)}</div>
+          <div class="veh-specs">
+            <span>${fuelIcon} ${escapeHtml(v.fuel)}</span>
+            <span>${roadIcon} ${escapeHtml(v.km)}</span>
+            <span>${specIcon} ${escapeHtml(v.duration)}</span>
+          </div>
+          <div class="veh-footer">
+            <div class="veh-price">
+              <span class="amount">${v.price}€</span>
+              <span class="period">/mois dès</span>
+            </div>
+            <span class="veh-cta">Voir les détails →</span>
+          </div>
+        </div>
+      </a>
+    `).join('');
+
+    if(filtered.length === 0){
+      emptyState.querySelector('h3').textContent = 'Aucun véhicule ne correspond à ces filtres';
+      emptyState.querySelector('p').textContent = "Essayez d'élargir votre recherche, ou contactez-nous directement pour un besoin spécifique.";
+    }
+    emptyState.classList.toggle('show', filtered.length === 0);
+
+    requestAnimationFrame(()=>{
+      document.querySelectorAll('.veh-card').forEach((card, i)=>{
+        setTimeout(()=> card.classList.add('show'), i * 40);
+      });
+    });
+
+  }
+
+  [fType, fCondition, fPrice, fSort].forEach(el => el.addEventListener('change', render));
+  let searchTimer;
+  fSearch.addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(render, 200);
+  });
+
+  loadVehicles();
+</script>
+
+</body>
+</html>

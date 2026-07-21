@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nous contacter | Eleven Lease</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="favicon.png">
+<meta name="description" content="Une question sur votre projet de leasing ? Contactez l'équipe Eleven Lease par formulaire ou WhatsApp, réponse sous 24h.">
+<link rel="canonical" href="https://elevenlease.fr/contact.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Eleven Lease">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="Nous contacter | Eleven Lease">
+<meta property="og:description" content="Une question sur votre projet de leasing ? Contactez l'équipe Eleven Lease par formulaire ou WhatsApp, réponse sous 24h.">
+<meta property="og:image" content="https://elevenlease.fr/eleven-lease-logo.png">
+<meta property="og:url" content="https://elevenlease.fr/contact.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Nous contacter | Eleven Lease">
+<meta name="twitter:description" content="Une question sur votre projet de leasing ? Contactez l'équipe Eleven Lease par formulaire ou WhatsApp, réponse sous 24h.">
+<meta name="twitter:image" content="https://elevenlease.fr/eleven-lease-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0a;
+    --surface:#141414;
+    --surface-2:#1c1c1c;
+    --border:#2a2a2a;
+    --text:#ffffff;
+    --text-dim:#9a9a9a;
+    --text-faint:#5c5c5c;
+    --accent-1:#ff007f;
+    --accent-2:#8d0a32;
+    --accent:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.5;overflow-x:hidden;}
+  h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.02em;line-height:1.05;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  @media(max-width:768px){ .wrap{padding:0 20px;} }
+
+  /* logo */
+  .logo{display:flex;align-items:center;gap:10px;transition:opacity .2s ease;}
+  .logo:hover{opacity:.8;}
+  .logo-icon{width:106px;height:46px;background-image:url('eleven-lease-logo.png');background-repeat:no-repeat;background-size:contain;background-position:center;flex:none;}
+
+  /* nav */
+  header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,0.7);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1180px;margin:0 auto;}
+  .nav-links{display:flex;gap:36px;font-size:14px;color:var(--text-dim);}
+  .nav-links a{position:relative;padding-bottom:4px;}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);transition:width .3s cubic-bezier(.16,1,.3,1);}
+  .nav-links a:hover::after, .nav-links a.active::after{width:100%;}
+  .nav-links a:hover, .nav-links a.active{color:var(--accent-1);}
+  .nav-cta{background:var(--accent);color:#fff;padding:10px 20px;border-radius:100px;font-size:14px;font-weight:600;transition:filter .2s ease, transform .2s ease;}
+  .nav-cta:hover{filter:brightness(1.12);transform:translateY(-1px);}
+  .nav-cta:active{transform:scale(.95);}
+  @media(max-width:768px){ .nav-links{display:none;} }
+  @media(max-width:480px){
+    nav{padding:16px 20px;}
+    .logo{gap:7px;}
+    .logo-icon{width:83px;height:36px;}
+    .nav-cta{padding:9px 15px;font-size:13px;}
+  }
+
+  /* nav right group + mobile menu toggle */
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .menu-toggle{display:none;position:relative;width:24px;height:18px;flex:none;background:none;border:none;cursor:pointer;padding:0;}
+  .menu-toggle span{position:absolute;left:0;width:100%;height:2px;background:var(--text);border-radius:2px;transition:transform .35s cubic-bezier(.16,1,.3,1), opacity .25s ease, top .35s cubic-bezier(.16,1,.3,1);}
+  .menu-toggle span:nth-child(1){top:0;}
+  .menu-toggle span:nth-child(2){top:8px;}
+  .menu-toggle span:nth-child(3){top:16px;}
+  .menu-toggle.active span:nth-child(1){top:8px;transform:rotate(45deg);}
+  .menu-toggle.active span:nth-child(2){opacity:0;}
+  .menu-toggle.active span:nth-child(3){top:8px;transform:rotate(-45deg);}
+  @media(max-width:768px){ .menu-toggle{display:block;} }
+
+  /* full-screen mobile menu */
+  .mobile-menu{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateY(-14px);transition:opacity .4s cubic-bezier(.16,1,.3,1), transform .4s cubic-bezier(.16,1,.3,1), visibility 0s linear .4s;}
+  .mobile-menu.open{opacity:1;visibility:visible;transform:translateY(0);transition:opacity .4s cubic-bezier(.16,1,.3,1), transform .4s cubic-bezier(.16,1,.3,1);}
+  .mobile-menu-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--border);}
+  .mobile-menu-close{background:none;border:none;color:var(--text);cursor:pointer;padding:6px;display:flex;transition:transform .35s cubic-bezier(.16,1,.3,1);}
+  .mobile-menu-close:hover{transform:rotate(90deg);}
+  .mobile-menu-list{flex:1;display:flex;flex-direction:column;overflow-y:auto;width:100%;max-width:none;margin:0;padding:0;justify-content:flex-start;align-items:stretch;}
+  .mobile-menu-list a{display:block;width:100%;padding:15px 20px;font-size:19px;font-family:'Space Grotesk',sans-serif;font-weight:600;border-bottom:1px solid var(--border);color:var(--text-dim);text-align:center;opacity:0;transform:translateY(10px);transition:opacity .45s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1), color .2s ease, background .2s ease;}
+  .mobile-menu.open .mobile-menu-list a{opacity:1;transform:translateY(0);}
+  .mobile-menu.open .mobile-menu-list a:nth-child(1){transition-delay:.08s;}
+  .mobile-menu.open .mobile-menu-list a:nth-child(2){transition-delay:.13s;}
+  .mobile-menu.open .mobile-menu-list a:nth-child(3){transition-delay:.18s;}
+  .mobile-menu.open .mobile-menu-list a:nth-child(4){transition-delay:.23s;}
+  .mobile-menu.open .mobile-menu-list a:nth-child(5){transition-delay:.28s;}
+  .mobile-menu-list a:hover, .mobile-menu-list a.active{color:var(--accent-1);background:var(--surface);}
+  .mobile-menu-cta{padding:24px 20px 32px;}
+  .mobile-menu-cta .btn-primary, .mobile-menu-cta .nav-cta{display:block;text-align:center;width:100%;padding:16px 22px;font-size:15px;}
+  @media(min-width:769px){ .mobile-menu{display:none;} }
+  body.menu-open{overflow:hidden;}
+
+  /* intro hero */
+  .contact-hero{padding:150px 0 40px;border-bottom:1px solid var(--border);}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);border:1px solid var(--border);padding:6px 14px;border-radius:100px;margin-bottom:24px;width:fit-content;}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-1);}
+  .contact-hero h1{font-size:clamp(30px,5vw,48px);max-width:640px;}
+  .contact-hero p{color:var(--text-dim);font-size:15.5px;max-width:520px;margin-top:16px;}
+
+  /* form section */
+  .contact-body{padding:64px 0 100px;}
+  .contact-panel{
+    border:1px solid var(--border);border-radius:24px;padding:56px;max-width:600px;margin:0 auto;
+    background:radial-gradient(ellipse at 50% 0%, var(--surface), var(--bg));
+  }
+  @media(max-width:640px){ .contact-panel{padding:36px 24px;} }
+  .contact-form{display:flex;flex-direction:column;gap:18px;}
+  .field-item{display:flex;flex-direction:column;gap:6px;}
+  .field-item label{font-size:13.5px;color:var(--text-dim);}
+  .contact-form input, .contact-form textarea{
+    background:var(--surface-2);border:1px solid var(--border);color:var(--text);
+    padding:16px 18px;border-radius:14px;font-size:15.5px;font-family:'Inter',sans-serif;width:100%;
+    transition:border-color .25s ease, background .25s ease, box-shadow .25s ease;
+  }
+  .contact-form input::placeholder, .contact-form textarea::placeholder{color:var(--text-faint);}
+  .contact-form input:hover, .contact-form textarea:hover{border-color:#444;}
+  .contact-form input:focus, .contact-form textarea:focus{
+    outline:none;border-color:var(--accent-1);background:#202020;box-shadow:0 0 0 3px rgba(255,0,127,0.15);
+  }
+  .contact-form textarea{resize:vertical;min-height:130px;font-family:'Inter',sans-serif;line-height:1.55;}
+  .btn-primary{
+    background:var(--accent);color:#fff;padding:16px 28px;border-radius:100px;font-weight:600;font-size:15px;
+    transition:transform .2s ease, filter .2s ease, box-shadow .3s ease;display:inline-block;
+    border:none;font-family:inherit;cursor:pointer;width:fit-content;
+  }
+  .btn-primary:hover{filter:brightness(1.12);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,0,127,0.25);}
+  .btn-primary:active{transform:scale(.96);}
+  .btn-primary:disabled{opacity:0.6;cursor:not-allowed;transform:none;box-shadow:none;}
+  .form-error{font-size:12.5px;color:var(--text-dim);display:none;margin-top:-6px;}
+  .form-error.show{display:block;}
+  .form-note{font-size:12.5px;color:var(--text-faint);text-align:center;margin-top:4px;}
+
+  /* écran de succès */
+  .success-screen{display:none;text-align:center;}
+  .success-screen.show{display:block;animation:fadeUp .5s cubic-bezier(.16,1,.3,1);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .success-icon{font-size:40px;margin-bottom:14px;}
+  .success-screen h2{font-size:clamp(22px,3.2vw,28px);margin-bottom:12px;}
+  .success-screen > p{color:var(--text-dim);font-size:15px;max-width:420px;margin:0 auto 28px;}
+  .success-contact p{color:var(--text-dim);font-size:14.5px;margin-bottom:14px;}
+  .whatsapp-btn{
+    display:inline-flex;align-items:center;gap:9px;background:#20263a;color:#fff;
+    padding:14px 24px;border-radius:100px;font-weight:600;font-size:14.5px;
+    border:1px solid var(--border);transition:transform .2s ease, border-color .2s ease;
+  }
+  .whatsapp-btn svg{color:#25D366;flex:none;}
+  .whatsapp-btn:hover{transform:translateY(-2px);border-color:#25D366;}
+  .btn-outline{
+    display:inline-block;border:1px solid var(--border);color:var(--text-dim);
+    padding:14px 24px;border-radius:100px;font-weight:600;font-size:14.5px;
+    transition:border-color .2s ease, color .2s ease, transform .2s ease;
+  }
+  .btn-outline:hover{border-color:#666;color:var(--text);transform:translateY(-2px);}
+  .success-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px;}
+  .restart-link{font-size:13.5px;color:var(--text-dim);cursor:pointer;background:none;border:none;font-family:inherit;padding:0;text-decoration:underline;margin-top:22px;display:inline-block;}
+  .restart-link:hover{color:var(--text);}
+
+  /* contact CTA (bas de page) */
+  .contact-cta{padding:100px 0;text-align:center;border-top:1px solid var(--border);}
+  @media(max-width:768px){ .contact-cta{padding:64px 0;} }
+  .contact-cta h2{font-size:clamp(26px,4vw,36px);}
+  .contact-cta > .wrap > p{color:var(--text-dim);font-size:15.5px;max-width:520px;margin:16px auto 32px;}
+  .contact-cta-btn{margin-bottom:56px;}
+  .contact-cta-info{
+    display:flex;justify-content:center;gap:48px;flex-wrap:wrap;
+    padding-top:40px;border-top:1px solid var(--border);margin-bottom:40px;
+  }
+  .cta-info-item .cta-info-label{font-size:12px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+  .cta-info-item a{color:var(--text-dim);font-size:15px;transition:color .2s ease;}
+  .cta-info-item a:hover{color:var(--accent-1);}
+  .cta-socials{display:flex;justify-content:center;gap:14px;}
+  .social-btn{
+    width:44px;height:44px;border-radius:50%;border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;color:var(--text-dim);
+    transition:border-color .2s ease, color .2s ease, transform .2s ease;
+  }
+  .social-btn:hover{border-color:var(--accent-1);color:var(--accent-1);transform:translateY(-2px);}
+
+  /* footer */
+  footer{border-top:1px solid var(--border);padding:64px 0 32px;}
+  .footer-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:48px;margin-bottom:48px;}
+  .footer-col h4{font-size:13px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;}
+  .footer-col a, .footer-col p{display:block;font-size:14px;color:var(--text-dim);margin-bottom:10px;}
+  .footer-col a:hover{color:var(--accent-1);}
+  .footer-bottom{border-top:1px solid var(--border);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--text-faint);}
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <a href="index.html" class="logo">
+      <span class="logo-icon" role="img" aria-label="Eleven Lease"></span>    </a>
+    <div class="nav-links">
+      <a href="index.html#comment-ca-marche">Comment ça marche</a>
+      <a href="loa.html">Guide LOA</a>
+      <a href="vehicules.html">Nos offres</a>
+      <a href="index.html#avis">Avis</a>
+      <a href="contact.html" class="active">Contact</a>
+    </div>
+    <div class="nav-right">
+      <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="simulation.html" class="nav-cta">Simuler mon leasing</a>
+    </div>
+  </nav>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-head">
+    <div class="logo">
+      <span class="logo-icon" role="img" aria-label="Eleven Lease"></span>    </div>
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Fermer le menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+  <nav class="mobile-menu-list">
+    <a href="index.html#comment-ca-marche">Comment ça marche</a>
+    <a href="loa.html">Guide LOA</a>
+    <a href="vehicules.html">Nos offres</a>
+    <a href="contact.html" class="active">Contact</a>
+  </nav>
+  <div class="mobile-menu-cta">
+    <a href="simulation.html" class="nav-cta">Simuler mon leasing</a>
+  </div>
+</div>
+
+<section class="contact-hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> Une réponse sous 24h</div>
+    <h1>Une question ? Écrivez-nous.</h1>
+    <p>Pas le temps de faire la simulation complète ? Laissez-nous un message, un conseiller de notre réseau de partenaires vous répond sous 24h.</p>
+  </div>
+</section>
+
+<section class="contact-body">
+  <div class="wrap">
+    <div class="contact-panel" id="contactPanel">
+      <form class="contact-form" id="contactForm" novalidate>
+        <div class="field-item">
+          <label for="cNom">Nom complet</label>
+          <input type="text" id="cNom" name="nom" autocomplete="name">
+        </div>
+        <div class="field-item">
+          <label for="cEmail">Email</label>
+          <input type="email" id="cEmail" name="email" autocomplete="email">
+        </div>
+        <div class="field-item">
+          <label for="cTelephone">Téléphone <span style="color:var(--text-faint);">(optionnel)</span></label>
+          <input type="tel" id="cTelephone" name="telephone" autocomplete="tel">
+        </div>
+        <div class="field-item">
+          <label for="cMessage">Votre message</label>
+          <textarea id="cMessage" name="message" rows="5" placeholder="Décrivez votre projet ou votre question..."></textarea>
+        </div>
+        <p class="form-error" id="formError"></p>
+        <button type="submit" class="btn-primary" id="contactSubmit">Envoyer mon message</button>
+        <p class="form-note">En envoyant ce message, vous acceptez d'être recontacté par notre réseau de partenaires.</p>
+      </form>
+
+      <div class="success-screen" id="successScreen">
+        <div class="success-icon">🎉</div>
+        <h2>Message envoyé !</h2>
+        <p>Merci, nous avons bien reçu votre message. Un conseiller de notre réseau vous répond sous 24h.</p>
+        <div class="success-contact">
+          <p>📞 Besoin d'aller plus vite ?</p>
+          <div class="success-actions">
+            <a class="whatsapp-btn" href="https://taap.it/elevenleasewhatsapp" target="_blank" rel="noopener">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A8.86 8.86 0 0012.05 4c-4.9 0-8.9 4-8.9 8.9 0 1.57.42 3.1 1.2 4.44L3 22l4.8-1.26a8.9 8.9 0 004.25 1.08h0c4.9 0 8.9-4 8.9-8.9 0-2.38-.93-4.62-2.35-6.6zm-5.55 13.7h0a7.4 7.4 0 01-3.77-1.03l-.27-.16-2.8.74.75-2.73-.18-.28a7.38 7.38 0 01-1.13-3.94c0-4.08 3.32-7.4 7.4-7.4 1.98 0 3.84.77 5.24 2.17a7.35 7.35 0 012.16 5.23c0 4.08-3.32 7.4-7.4 7.4zm4.06-5.54c-.22-.11-1.31-.65-1.52-.72-.2-.08-.35-.11-.5.11-.15.22-.57.72-.7.87-.13.15-.26.16-.48.05-.22-.11-.94-.35-1.79-1.1-.66-.6-1.1-1.33-1.24-1.55-.13-.22-.01-.34.1-.45.1-.1.22-.26.33-.39.11-.13.15-.22.22-.37.07-.15.04-.28-.02-.39-.06-.11-.5-1.21-.69-1.66-.18-.43-.36-.38-.5-.38h-.43c-.15 0-.39.05-.59.28-.2.22-.78.76-.78 1.86s.8 2.16.91 2.31c.11.15 1.57 2.4 3.81 3.36.53.23.95.37 1.27.47.53.17 1.02.15 1.4.09.43-.06 1.31-.53 1.49-1.05.18-.51.18-.95.13-1.05-.05-.1-.2-.16-.42-.27z"/></svg>
+              Discuter sur WhatsApp
+            </a>
+            <a class="btn-outline" href="index.html">← Retour à l'accueil</a>
+          </div>
+        </div>
+        <button type="button" class="restart-link" id="sendAnotherBtn">← Envoyer un autre message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact-cta">
+  <div class="wrap">
+    <h2>Parler directement à un conseiller ?</h2>
+    <p>Envie d'une réponse immédiate ? Discutez en direct avec notre équipe sur WhatsApp, sans attendre.</p>
+    <div class="contact-cta-btn">
+      <a href="https://taap.it/elevenleasewhatsapp" target="_blank" rel="noopener" class="btn-primary">Discuter sur WhatsApp →</a>
+    </div>
+    <div class="contact-cta-info">
+      <div class="cta-info-item">
+        <div class="cta-info-label">Email</div>
+        <a href="mailto:contact@elevenlease.fr">contact@elevenlease.fr</a>
+      </div>
+    </div>
+    <div class="cta-socials">
+      <a class="social-btn" href="https://taap.it/elevenleasewhatsapp" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A8.86 8.86 0 0012.05 4c-4.9 0-8.9 4-8.9 8.9 0 1.57.42 3.1 1.2 4.44L3 22l4.8-1.26a8.9 8.9 0 004.25 1.08h0c4.9 0 8.9-4 8.9-8.9 0-2.38-.93-4.62-2.35-6.6zm-5.55 13.7h0a7.4 7.4 0 01-3.77-1.03l-.27-.16-2.8.74.75-2.73-.18-.28a7.38 7.38 0 01-1.13-3.94c0-4.08 3.32-7.4 7.4-7.4 1.98 0 3.84.77 5.24 2.17a7.35 7.35 0 012.16 5.23c0 4.08-3.32 7.4-7.4 7.4zm4.06-5.54c-.22-.11-1.31-.65-1.52-.72-.2-.08-.35-.11-.5.11-.15.22-.57.72-.7.87-.13.15-.26.16-.48.05-.22-.11-.94-.35-1.79-1.1-.66-.6-1.1-1.33-1.24-1.55-.13-.22-.01-.34.1-.45.1-.1.22-.26.33-.39.11-.13.15-.22.22-.37.07-.15.04-.28-.02-.39-.06-.11-.5-1.21-.69-1.66-.18-.43-.36-.38-.5-.38h-.43c-.15 0-.39.05-.59.28-.2.22-.78.76-.78 1.86s.8 2.16.91 2.31c.11.15 1.57 2.4 3.81 3.36.53.23.95.37 1.27.47.53.17 1.02.15 1.4.09.43-.06 1.31-.53 1.49-1.05.18-.51.18-.95.13-1.05-.05-.1-.2-.16-.42-.27z"/></svg>
+      </a>
+      <a class="social-btn" href="https://www.instagram.com/elevenlease" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/></svg>
+      </a>
+      <a class="social-btn" href="https://www.tiktok.com/@elevenlease" target="_blank" rel="noopener" aria-label="TikTok">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82a4.28 4.28 0 01-2.66-1.28A4.53 4.53 0 0112.9 2H10.1v13.6a2.6 2.6 0 11-2.1-2.55V10.3a5.4 5.4 0 105.1 5.38V9.4a7 7 0 003.5 1.02V7.6a4.3 4.3 0 01-.9-.18v.02c-1.34-.42-.09 0 0 0z"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-col" style="max-width:280px;">
+        <div class="logo" style="margin-bottom:16px;">
+          <span class="logo-icon" role="img" aria-label="Eleven Lease"></span>        </div>
+        <p>Les meilleures offres de leasing automobile, partout en France.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Navigation</h4>
+        <a href="index.html#comment-ca-marche">Comment ça marche</a>
+        <a href="loa.html">Guide LOA</a>
+        <a href="vehicules.html">Nos offres</a>
+        <a href="index.html#avis">Avis clients</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:contact@elevenlease.fr">contact@elevenlease.fr</a>
+        <a href="https://taap.it/elevenleasewhatsapp" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://www.instagram.com/elevenlease" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.tiktok.com/@elevenlease" target="_blank" rel="noopener">TikTok</a>
+      </div>
+      <div class="footer-col">
+        <h4>Légal</h4>
+        <a href="mentions-legales.html">Mentions légales</a>
+        <a href="confidentialite.html">Confidentialité</a>
+        <a href="cgu.html">CGU</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Eleven Lease. Tous droits réservés.</span>
+      <span>Eleven Lease n'est pas un établissement de crédit et ne finance aucun véhicule directement.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mobile menu (hamburger) — identique aux autres pages du site
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileMenuClose = document.getElementById('mobileMenuClose');
+  function openMobileMenu(){
+    mobileMenu.classList.add('open');
+    menuToggle.classList.add('active');
+    menuToggle.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('menu-open');
+  }
+  function closeMobileMenu(){
+    mobileMenu.classList.remove('open');
+    menuToggle.classList.remove('active');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
+  }
+  if(menuToggle && mobileMenu){
+    menuToggle.addEventListener('click', ()=>{
+      mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
+    });
+    if(mobileMenuClose) mobileMenuClose.addEventListener('click', closeMobileMenu);
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileMenu));
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeMobileMenu(); });
+  }
+
+  // magnetic buttons (desktop only) — cohérent avec simulation.html
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+  if(!isTouch){
+    document.querySelectorAll('.btn-primary').forEach(btn=>{
+      btn.addEventListener('mousemove', (e)=>{
+        const r = btn.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width/2;
+        const y = e.clientY - r.top - r.height/2;
+        btn.style.transform = `translate(${x*0.18}px, ${y*0.35}px)`;
+      });
+      btn.addEventListener('mouseleave', ()=>{ btn.style.transform = 'translate(0,0)'; });
+    });
+  }
+
+  // ============================================================
+  // FORMULAIRE DE CONTACT SIMPLE : envoie chaque message vers le même
+  // Google Apps Script que le simulateur (avec formType:'contact', voir
+  // le commentaire de doc dans simulation.html pour le code doPost à
+  // jour) et vers Supabase (table `contact_messages`, lecture uniquement
+  // depuis l'espace admin via la fonction admin-leads).
+  // ============================================================
+  const LEADS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4VdDWwJoaqpudvU3Y2pGNyBt0zkYRSYKaZ9syNELViJdWoIoeDtb9Axu0ecA5B4bU/exec";
+  const SUPABASE_URL = "https://syzlvsfhdmegmebsvscm.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_aF6YEQBB5UrjOrNo9RTMjw_SM3MPKvM";
+
+  function sendContactToSupabase(payload){
+    fetch(SUPABASE_URL + '/rest/v1/contact_messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        nom: payload.nom,
+        email: payload.email,
+        telephone: payload.telephone,
+        message: payload.message
+      })
+    }).catch(err => console.error('Erreur enregistrement Supabase (non bloquant) :', err));
+  }
+
+  const contactForm = document.getElementById('contactForm');
+  const contactSubmit = document.getElementById('contactSubmit');
+  const formError = document.getElementById('formError');
+  const successScreen = document.getElementById('successScreen');
+  const sendAnotherBtn = document.getElementById('sendAnotherBtn');
+
+  function showError(message){
+    formError.textContent = message;
+    formError.classList.add('show');
+  }
+
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formError.classList.remove('show');
+    formError.textContent = '';
+
+    const nom = document.getElementById('cNom').value.trim();
+    const emailEl = document.getElementById('cEmail');
+    const email = emailEl.value.trim();
+    const telephone = document.getElementById('cTelephone').value.trim();
+    const message = document.getElementById('cMessage').value.trim();
+
+    if(nom === '') return showError('Merci d\'indiquer votre nom.');
+    if(email === '' || !emailEl.checkValidity()) return showError('Merci d\'indiquer une adresse email valide.');
+    if(message === '') return showError('Merci d\'écrire votre message.');
+
+    contactSubmit.disabled = true;
+    contactSubmit.textContent = 'Envoi en cours…';
+
+    const payload = { nom, email, telephone, message, formType: 'contact' };
+    try{
+      sendContactToSupabase(payload);
+      const res = await fetch(LEADS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      contactForm.style.display = 'none';
+      successScreen.classList.add('show');
+    }catch(err){
+      console.error('Erreur envoi formulaire de contact :', err);
+      showError("Une erreur est survenue lors de l'envoi. Merci de réessayer, ou contactez-nous directement à contact@elevenlease.fr.");
+      contactSubmit.disabled = false;
+      contactSubmit.textContent = 'Envoyer mon message';
+    }
+  });
+
+  sendAnotherBtn.addEventListener('click', () => {
+    contactForm.reset();
+    contactForm.style.display = '';
+    successScreen.classList.remove('show');
+    contactSubmit.disabled = false;
+    contactSubmit.textContent = 'Envoyer mon message';
+  });
+</script>
+
+</body>
+</html>
