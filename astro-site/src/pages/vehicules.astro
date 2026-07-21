@@ -1,0 +1,315 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { fetchVehicles, type Vehicle } from '../lib/vehicles';
+
+let vehicles: Vehicle[] = [];
+try {
+  vehicles = await fetchVehicles();
+} catch (e) {
+  console.error('Erreur de chargement du catalogue véhicules au build :', e);
+}
+
+const carIcon = `<svg viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M20 68 L32 40 Q38 30 52 30 L140 30 Q154 30 160 40 L172 68 L172 80 Q172 84 168 84 L158 84 Q158 92 150 92 Q142 92 142 84 L58 84 Q58 92 50 92 Q42 92 42 84 L32 84 Q28 84 28 80 Z" stroke="#ffffff" stroke-width="2.5" fill="rgba(255,255,255,0.03)"/>
+  <path d="M46 40 L54 40 L50 30" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+  <line x1="52" y1="30" x2="52" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  <line x1="86" y1="30" x2="86" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  <line x1="120" y1="30" x2="120" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  <circle cx="58" cy="84" r="10" stroke="#ffffff" stroke-width="2.5" fill="#0a0a0a"/>
+  <circle cx="142" cy="84" r="10" stroke="#ffffff" stroke-width="2.5" fill="#0a0a0a"/>
+  <circle cx="58" cy="84" r="3" fill="#ffffff"/>
+  <circle cx="142" cy="84" r="3" fill="#ffffff"/>
+</svg>`;
+const specIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+const fuelIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 21V6a2 2 0 012-2h6a2 2 0 012 2v15M4 21h10M4 10h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 8l2.5 2.5A2 2 0 0117 12v5a1.5 1.5 0 003 0V9l-3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const roadIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 21L9 3h6l5 18M9 15h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+---
+<BaseLayout
+  title="Eleven Lease — Véhicules disponibles"
+  description="Découvrez les véhicules disponibles via le réseau de partenaires Eleven Lease : citadines, SUV, électriques, en LOA ou LLD partout en France."
+  path="/vehicules.html"
+  active="vehicules"
+>
+<section class="page-hero">
+  <div class="wrap">
+    <div class="eyebrow"><span class="dot"></span> Mis à jour régulièrement</div>
+    <h1>Véhicules disponibles via notre réseau.</h1>
+    <p>Une sélection d'offres de leasing actuellement disponibles chez nos partenaires. Chaque véhicule est proposé à titre indicatif — le loyer final dépend de votre profil et de votre apport.</p>
+  </div>
+</section>
+
+<section class="catalogue">
+  <div class="wrap">
+    <div class="filter-bar">
+      <input type="search" class="filter-search" id="filterSearch" placeholder="Rechercher une marque, un modèle…">
+      <select class="filter-select" id="filterType">
+        <option value="all">Tous les modèles</option>
+        <option value="citadine">Citadines</option>
+        <option value="berline">Berlines</option>
+        <option value="suv">SUV</option>
+        <option value="electrique">Électriques</option>
+      </select>
+      <select class="filter-select" id="filterCondition">
+        <option value="all">Neuf &amp; occasion</option>
+        <option value="neuf">Neuf</option>
+        <option value="occasion">Occasion</option>
+      </select>
+      <select class="filter-select" id="filterPrice">
+        <option value="all">Tous budgets</option>
+        <option value="0-250">Jusqu'à 250€/mois</option>
+        <option value="250-400">250€ – 400€/mois</option>
+        <option value="400-9999">400€ et plus</option>
+      </select>
+      <select class="filter-select" id="filterSort">
+        <option value="default">Trier par</option>
+        <option value="price-asc">Prix croissant</option>
+        <option value="price-desc">Prix décroissant</option>
+      </select>
+      <div class="filter-count" id="filterCount">{vehicles.length}{vehicles.length > 1 ? ' véhicules' : ' véhicule'}</div>
+    </div>
+
+    <div class="veh-grid" id="vehGrid">
+      {vehicles.map(v => (
+        <a
+          class="veh-card show"
+          href={`/vehicule/${v.slug}.html`}
+          data-type={v.type}
+          data-condition={v.condition}
+          data-price={v.price}
+          data-search={`${v.brand} ${v.name} ${v.finition}`.toLowerCase()}
+          aria-label={`Voir les détails : ${v.brand} ${v.name}`}
+        >
+          <div class="veh-visual">
+            <span class={`veh-badge ${v.condition === 'occasion' ? 'occasion' : ''}`}>{v.condition === 'neuf' ? 'Neuf' : 'Occasion'}</span>
+            {v.photo
+              ? <img src={v.photo} alt={`${v.brand} ${v.name}`} loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'), {innerHTML: window.__vehCarIcon}).firstElementChild)" />
+              : <Fragment set:html={carIcon} />
+            }
+          </div>
+          <div class="veh-body">
+            <div class="veh-brand">{v.brand}</div>
+            <div class="veh-name">{v.name}</div>
+            <div class="veh-specs">
+              <span><Fragment set:html={fuelIcon} /> {v.fuel}</span>
+              <span><Fragment set:html={roadIcon} /> {v.km}</span>
+              <span><Fragment set:html={specIcon} /> {v.duration}</span>
+            </div>
+            <div class="veh-footer">
+              <div class="veh-price">
+                <span class="amount">{v.price}€</span>
+                <span class="period">/mois dès</span>
+              </div>
+              <span class="veh-cta">Voir les détails →</span>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div id="emptyState" class:list={['empty-state', { show: vehicles.length === 0 }]}>
+      <h3>{vehicles.length === 0 ? 'Catalogue momentanément indisponible' : 'Aucun véhicule ne correspond à ces filtres'}</h3>
+      <p>{vehicles.length === 0
+        ? "Impossible de charger les véhicules pour le moment. Contactez-nous directement pour connaître nos offres en cours."
+        : "Essayez d'élargir votre recherche, ou contactez-nous directement pour un besoin spécifique."}</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="cta-band">
+    <h2>Le véhicule que vous cherchez n'est pas dans la liste ?</h2>
+    <p>Décrivez votre projet, notre réseau de partenaires vous trouve la bonne offre.</p>
+    <a href="/simulation.html" class="btn-primary">Simuler mon leasing</a>
+  </div>
+</section>
+
+<script define:vars={{ carIcon }}>
+  window.__vehCarIcon = carIcon;
+</script>
+
+<script>
+  const grid = document.getElementById('vehGrid')!;
+  const emptyState = document.getElementById('emptyState')!;
+  const filterCount = document.getElementById('filterCount')!;
+  const fType = document.getElementById('filterType') as HTMLSelectElement;
+  const fCondition = document.getElementById('filterCondition') as HTMLSelectElement;
+  const fPrice = document.getElementById('filterPrice') as HTMLSelectElement;
+  const fSort = document.getElementById('filterSort') as HTMLSelectElement;
+  const fSearch = document.getElementById('filterSearch') as HTMLInputElement;
+
+  function normalizeValue(s: string){
+    return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  }
+
+  const allCards = Array.from(grid.querySelectorAll<HTMLAnchorElement>('.veh-card'));
+  const totalLabel = (n: number) => n + (n > 1 ? ' véhicules' : ' véhicule');
+
+  function render(){
+    const type = fType.value;
+    const condition = fCondition.value;
+    const priceRange = fPrice.value;
+    const sort = fSort.value;
+    const query = normalizeValue(fSearch.value.trim());
+
+    let visible = allCards.filter(card => {
+      if(type !== 'all' && card.dataset.type !== type) return false;
+      if(condition !== 'all' && card.dataset.condition !== condition) return false;
+      if(priceRange !== 'all'){
+        const [min, max] = priceRange.split('-').map(Number);
+        const price = Number(card.dataset.price || 0);
+        if(price < min || price > max) return false;
+      }
+      if(query && !(card.dataset.search || '').includes(query)) return false;
+      return true;
+    });
+
+    if(sort === 'price-asc') visible.sort((a,b) => Number(a.dataset.price) - Number(b.dataset.price));
+    if(sort === 'price-desc') visible.sort((a,b) => Number(b.dataset.price) - Number(a.dataset.price));
+
+    allCards.forEach(card => { card.style.display = 'none'; });
+    visible.forEach(card => {
+      card.style.display = '';
+      grid.appendChild(card);
+    });
+
+    filterCount.textContent = totalLabel(visible.length);
+
+    if(visible.length === 0 && allCards.length > 0){
+      emptyState.querySelector('h3')!.textContent = 'Aucun véhicule ne correspond à ces filtres';
+      emptyState.querySelector('p')!.textContent = "Essayez d'élargir votre recherche, ou contactez-nous directement pour un besoin spécifique.";
+    }
+    emptyState.classList.toggle('show', visible.length === 0);
+  }
+
+  if(allCards.length > 0){
+    [fType, fCondition, fPrice, fSort].forEach(el => el.addEventListener('change', render));
+    let searchTimer: ReturnType<typeof setTimeout>;
+    fSearch.addEventListener('input', () => {
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(render, 200);
+    });
+  }
+</script>
+
+<style>
+  /* page hero */
+  .page-hero{padding:150px 0 40px;border-bottom:1px solid var(--border);}
+  .page-hero .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);
+    border:1px solid var(--border);padding:6px 14px;border-radius:100px;margin-bottom:20px;width:fit-content;
+  }
+  .page-hero .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-1);}
+  .page-hero h1{font-size:clamp(32px,5vw,52px);max-width:700px;}
+  .page-hero p{color:var(--text-dim);font-size:16px;margin-top:14px;max-width:560px;}
+
+  /* filter bar */
+  .filter-bar{
+    display:flex;gap:12px;flex-wrap:wrap;align-items:center;
+    padding:20px 0;
+  }
+  .filter-select{
+    background:var(--surface);border:1px solid var(--border);color:var(--text);
+    padding:11px 16px;border-radius:100px;font-size:13.5px;font-family:'Inter',sans-serif;
+    cursor:pointer;transition:border-color .2s ease, box-shadow .2s ease;
+    -webkit-appearance:none;appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239a9a9a' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 14px center;
+    padding-right:34px;
+  }
+  .filter-select:hover{border-color:#444;}
+  .filter-select:focus{outline:none;border-color:var(--accent-1);box-shadow:0 0 0 3px rgba(255,0,127,0.15);}
+  .filter-count{margin-left:auto;font-size:13.5px;color:var(--text-faint);}
+  @media(max-width:640px){ .filter-count{margin-left:0;width:100%;} }
+
+  .filter-search{
+    background:var(--surface);border:1px solid var(--border);color:var(--text);
+    padding:11px 18px;border-radius:100px;font-size:13.5px;font-family:'Inter',sans-serif;
+    flex:1;min-width:220px;transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .filter-search::placeholder{color:var(--text-faint);}
+  .filter-search:focus{outline:none;border-color:var(--accent-1);box-shadow:0 0 0 3px rgba(255,0,127,0.15);}
+  @media(max-width:640px){ .filter-search{width:100%;flex:none;} }
+
+  /* catalogue grid */
+  .catalogue{padding:24px 0 100px;}
+  .veh-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
+  }
+  @media(max-width:980px){ .veh-grid{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:640px){ .veh-grid{grid-template-columns:1fr;} }
+
+  .veh-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:18px;
+    overflow:hidden;
+    transition:border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+    display:flex;flex-direction:column;
+    cursor:pointer;
+  }
+  .veh-card:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+  .veh-card:hover{transform:translateY(-4px);border-color:#444;box-shadow:0 16px 40px rgba(0,0,0,0.35);}
+  .veh-card:hover .veh-visual svg{transform:scale(1.06);}
+
+  .veh-visual{
+    position:relative;
+    aspect-ratio:16/9;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,255,255,0.05), transparent),
+      linear-gradient(180deg, var(--surface-2), var(--surface));
+    display:flex;align-items:center;justify-content:center;
+    border-bottom:1px solid var(--border);
+    overflow:hidden;
+  }
+  .veh-visual svg{width:64%;transition:transform .4s cubic-bezier(.16,1,.3,1);}
+  .veh-visual img{width:100%;height:100%;object-fit:cover;transition:transform .4s cubic-bezier(.16,1,.3,1);}
+  .veh-card:hover .veh-visual img{transform:scale(1.06);}
+  .veh-badge{
+    position:absolute;top:14px;left:14px;
+    font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;
+    padding:5px 10px;border-radius:100px;
+    background:var(--accent);color:#fff;
+  }
+  .veh-badge.occasion{background:transparent;border:1px solid var(--text-dim);color:var(--text-dim);}
+
+  .veh-body{padding:20px;flex:1;display:flex;flex-direction:column;}
+  .veh-brand{font-size:12px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}
+  .veh-name{font-size:19px;margin-bottom:12px;}
+  .veh-specs{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--text-dim);margin-bottom:18px;}
+  .veh-specs span{display:flex;align-items:center;gap:5px;}
+  .veh-specs :global(svg){opacity:0.6;}
+
+  .veh-footer{
+    margin-top:auto;padding-top:16px;border-top:1px solid var(--border);
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .veh-price .amount{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;}
+  .veh-price .period{font-size:12px;color:var(--text-faint);}
+  .veh-cta{
+    font-size:13px;font-weight:600;color:var(--text);
+    display:flex;align-items:center;gap:6px;
+    transition:gap .25s ease;
+  }
+  .veh-card:hover .veh-cta{gap:10px;}
+
+  .empty-state{
+    text-align:center;padding:80px 20px;color:var(--text-dim);
+    display:none;
+  }
+  .empty-state.show{display:block;}
+  .empty-state h3{font-size:20px;margin-bottom:8px;color:var(--text);}
+
+  .cta-band{
+    border:1px solid var(--border);border-radius:24px;padding:56px 40px;text-align:center;
+    background:radial-gradient(ellipse at 50% 0%, var(--surface), var(--bg));
+    margin-top:60px;margin-bottom:80px;
+  }
+  .cta-band h2{font-size:clamp(24px,3.5vw,34px);margin-bottom:14px;}
+  .cta-band p{color:var(--text-dim);margin-bottom:28px;}
+  .btn-primary{
+    background:var(--accent);color:#fff;padding:15px 26px;border-radius:100px;
+    font-weight:600;font-size:14.5px;display:inline-block;
+    transition:transform .2s ease, filter .2s ease, box-shadow .3s ease;
+  }
+  .btn-primary:hover{filter:brightness(1.12);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,0,127,0.25);}
+  .btn-primary:active{transform:scale(.96);box-shadow:0 4px 12px rgba(255,0,127,0.2);}
+</style>
+</BaseLayout>

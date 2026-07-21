@@ -1,0 +1,490 @@
+---
+import MinimalLayout from '../../layouts/MinimalLayout.astro';
+import { fetchVehicles, parseDureeMonths, type Vehicle } from '../../lib/vehicles';
+
+export async function getStaticPaths() {
+  const vehicles = await fetchVehicles();
+  return vehicles.map(v => ({
+    params: { slug: v.slug },
+    props: { vehicle: v },
+  }));
+}
+
+const { vehicle: v } = Astro.props as { vehicle: Vehicle };
+
+const pageTitle = `${v.brand} ${v.name} — Eleven Lease`;
+const pageDescription = (v.description && v.description.trim())
+  ? v.description.trim().slice(0, 155)
+  : `Découvrez le ${v.brand} ${v.name} disponible en leasing (LOA/LLD) via le réseau de partenaires Eleven Lease. Simulez votre offre en 2 minutes.`;
+const canonicalPath = `/vehicule/${v.slug}.html`;
+
+const photos = v.photos.length ? v.photos : [];
+const baseDuree = parseDureeMonths(v.duration);
+
+const DUREE_STEPS = [36, 48, 60];
+const APPORT_STEPS = [0, 2000, 5000];
+
+const includedItems = ['Entretien constructeur', 'Garantie constructeur', 'Assistance 24/7', 'Taxes de mise en circulation'];
+
+const carIcon = `<svg viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M20 68 L32 40 Q38 30 52 30 L140 30 Q154 30 160 40 L172 68 L172 80 Q172 84 168 84 L158 84 Q158 92 150 92 Q142 92 142 84 L58 84 Q58 92 50 92 Q42 92 42 84 L32 84 Q28 84 28 80 Z" stroke="#ffffff" stroke-width="2.5" fill="rgba(255,255,255,0.03)"/>
+  <path d="M46 40 L54 40 L50 30" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+  <line x1="52" y1="30" x2="52" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  <line x1="86" y1="30" x2="86" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  <line x1="120" y1="30" x2="120" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  <circle cx="58" cy="84" r="10" stroke="#ffffff" stroke-width="2.5" fill="#0a0a0a"/>
+  <circle cx="142" cy="84" r="10" stroke="#ffffff" stroke-width="2.5" fill="#0a0a0a"/>
+  <circle cx="58" cy="84" r="3" fill="#ffffff"/>
+  <circle cx="142" cy="84" r="3" fill="#ffffff"/>
+</svg>`;
+const backIcon = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const shareIcon = `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="18" cy="5" r="3" stroke="currentColor" stroke-width="1.8"/><circle cx="6" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><circle cx="18" cy="19" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M8.6 10.6l6.8-3.9M8.6 13.4l6.8 3.9" stroke="currentColor" stroke-width="1.8"/></svg>`;
+const chevronIcon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const checkIcon = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="var(--accent-1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+const specIcons: Record<string, string> = {
+  fuel: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  calendar: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="16" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 10h18M8 3v4M16 3v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
+  gauge: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="13" r="8" stroke="currentColor" stroke-width="1.6"/><path d="M12 13l4-4M12 5v1.5M4.5 13H6M18 13h1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
+  gear: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.6"/><path d="M12 3v2.4M12 18.6V21M21 12h-2.4M5.4 12H3M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7M18.4 18.4l-1.7-1.7M7.3 7.3L5.6 5.6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
+  engine: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 21V6a2 2 0 012-2h6a2 2 0 012 2v15M4 21h10M4 10h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 8l2.5 2.5A2 2 0 0117 12v5a1.5 1.5 0 003 0V9l-3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  battery: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="2" y="8" width="18" height="8" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M22 10v4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M11.5 10l-2 3h3l-2 3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  road: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M8 3L4 21M16 3l4 18M12 3v3M12 10v3M12 17v3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  plug: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 3v5M15 3v5M7 8h10v3a5 5 0 01-5 5 5 5 0 01-5-5V8z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 16v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
+  clock: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3.5 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  leaf: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M4 20c0-9 6-15 16-15 0 10-6 15-16 15z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 20c4-4 8-7 16-15" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
+  trunk: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="13" rx="2" stroke="currentColor" stroke-width="1.6"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`,
+  seats: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M6 17V6a2 2 0 012-2h2a2 2 0 012 2v11M6 17h6M16 10v7M16 10h3a2 2 0 012 2v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+};
+
+function buildSpecRows(v: Vehicle): [string, string][] {
+  const rows: [string, string][] = [];
+  if (v.fuel) rows.push([specIcons.fuel, v.fuel]);
+  if (v.annee) rows.push([specIcons.calendar, v.annee]);
+  if (v.puissance) rows.push([specIcons.gauge, /^\d+$/.test(v.puissance) ? v.puissance + ' ch' : v.puissance]);
+  if (v.transmission) rows.push([specIcons.gear, v.transmission]);
+  if (v.moteur) rows.push([specIcons.engine, v.moteur]);
+  if (v.places) rows.push([specIcons.seats, v.places + ' places']);
+  if (v.autonomieElec) rows.push([specIcons.battery, v.autonomieElec + ' (autonomie électrique)']);
+  if (v.autonomieCumulee) rows.push([specIcons.road, v.autonomieCumulee + ' (autonomie cumulée)']);
+  if (v.rechargeDC || v.rechargeAC) rows.push([specIcons.plug, 'Recharge : ' + [v.rechargeDC, v.rechargeAC].filter(Boolean).join(' / ')]);
+  if (v.tempsCharge) rows.push([specIcons.clock, v.tempsCharge]);
+  if (v.consommation || v.co2) rows.push([specIcons.leaf, [v.consommation, v.co2].filter(Boolean).join(', ')]);
+  if (v.coffre) rows.push([specIcons.trunk, /^\d+$/.test(v.coffre) ? 'Coffre : ' + v.coffre + ' litres' : 'Coffre : ' + v.coffre]);
+  return rows;
+}
+
+const specRows = buildSpecRows(v);
+const optionEntries = Object.entries(v.options).filter(([, items]) => items.length > 0);
+---
+<MinimalLayout title={pageTitle} description={pageDescription} path={canonicalPath}>
+<div id="pageContent">
+  <div class="wrap">
+    <div class="detail-header-row">
+      <div class="detail-header-left">
+        <a href="/vehicules.html" class="share-link back-link"><Fragment set:html={backIcon} /> Retour au catalogue</a>
+        <div class="veh-brand-label">{v.brand}</div>
+        <h1>{v.name}{v.finition ? ` ${v.finition}` : ''}</h1>
+      </div>
+      <button type="button" class="share-link" id="shareBtn"><Fragment set:html={shareIcon} /> Partager</button>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-media">
+        <div class="carousel" id="carousel">
+          {photos.length
+            ? <img id="carouselImg" src={photos[0]} alt={`${v.brand} ${v.name}`} onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'carousel-icon',innerHTML:window.__vehCarIcon}))" />
+            : <div class="carousel-icon"><Fragment set:html={carIcon} /></div>
+          }
+          <span class={`carousel-badge ${v.condition === 'occasion' ? 'occasion' : ''}`}>{v.condition === 'neuf' ? 'Neuf' : 'Occasion'}</span>
+          {photos.length > 1 && (
+            <>
+              <button type="button" class="carousel-arrow prev" id="prevBtn" aria-label="Photo précédente"><Fragment set:html={chevronIcon} /></button>
+              <button type="button" class="carousel-arrow next" id="nextBtn" aria-label="Photo suivante"><Fragment set:html={chevronIcon} /></button>
+              <div class="carousel-dots">
+                {photos.map((_, i) => <span class={`carousel-dot ${i === 0 ? 'active' : ''}`} data-index={i}></span>)}
+              </div>
+            </>
+          )}
+        </div>
+        {photos.length > 1 && (
+          <div class="photo-grid">
+            {photos.slice(1, 5).map((p, i) => (
+              <button type="button" class="photo-grid-item" data-index={i + 1} aria-label={`Voir la photo ${i + 2}`}>
+                <img src={p} alt={`${v.brand} ${v.name} — photo ${i + 2}`} loading="lazy" />
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div class="detail-config">
+        <div class="config-panel">
+          <h2>Configuration du leasing</h2>
+
+          <div class="config-row">
+            <div class="config-label">Durée <span class="config-info">?</span></div>
+            <div class="config-value" id="dureeValue">{DUREE_STEPS[1]} mois</div>
+            <input type="range" class="config-slider" id="dureeSlider" min="0" max={DUREE_STEPS.length - 1} step="1" value="1" />
+            <div class="config-slider-labels">{DUREE_STEPS.map(d => <span>{d} mois</span>)}</div>
+          </div>
+
+          <div class="config-row">
+            <div class="config-label">Apport <span class="config-info">?</span></div>
+            <div class="config-value" id="apportValue">{APPORT_STEPS[0].toLocaleString('fr-FR')} €</div>
+            <input type="range" class="config-slider" id="apportSlider" min="0" max={APPORT_STEPS.length - 1} step="1" value="0" />
+            <div class="config-slider-labels">{APPORT_STEPS.map(a => <span>{a.toLocaleString('fr-FR')} €</span>)}</div>
+          </div>
+
+          <div class="config-static-row">
+            <span>Forfait kilométrique</span>
+            <span>{v.km || '—'}</span>
+          </div>
+
+          <div class="config-included">
+            <div class="config-included-title">Compris dans le leasing</div>
+            <div class="included-list">
+              {includedItems.map(i => <div class="included-item"><Fragment set:html={checkIcon} /> {i}</div>)}
+            </div>
+          </div>
+
+          <p class="config-note">Estimation indicative hors frais de dossier. Le loyer définitif dépend de votre profil et sera confirmé par notre partenaire financier après étude de votre dossier.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-below">
+      {specRows.length > 0 && (
+        <>
+          <h2 class="section-title">Détails du véhicule</h2>
+          <div class="spec-card">
+            {specRows.map(([icon, label]) => (
+              <div class="spec-row"><span class="spec-icon"><Fragment set:html={icon} /></span><span class="spec-label">{label}</span></div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {v.description && (
+        <>
+          <h2 class="section-title">Description du véhicule</h2>
+          <p class="veh-description">{v.description}</p>
+        </>
+      )}
+
+      {optionEntries.length > 0 && (
+        <>
+          <h2 class="section-title">Options</h2>
+          <div>
+            {optionEntries.map(([cat, items]) => (
+              <details class="options-group">
+                <summary>{cat}</summary>
+                <div class="options-list">{items.map(o => <span>{o}</span>)}</div>
+              </details>
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap footer-bottom">
+      © 2026 Eleven Lease. Les véhicules et loyers affichés sont donnés à titre indicatif et soumis à acceptation du dossier par nos partenaires financiers.
+    </div>
+  </footer>
+
+  <div class="sticky-bar">
+    <div class="sticky-bar-price">
+      <span class="amount" id="stickyPrice">{v.price}€</span>
+      <span class="period"> /mois</span>
+    </div>
+    <a href={`/simulation.html?vehicule=${encodeURIComponent(v.brand + ' ' + v.name)}`} class="btn-primary">Vérifier mon éligibilité</a>
+  </div>
+</div>
+
+<div class="toast" id="toast">Lien copié</div>
+
+<script define:vars={{ carIcon, photos, basePrice: v.price, baseDuree, DUREE_STEPS, APPORT_STEPS }}>
+  window.__vehCarIcon = carIcon;
+
+  const toast = document.getElementById('toast');
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1800);
+  }
+
+  // carousel
+  if (photos.length > 1) {
+    let current = 0;
+    const img = document.getElementById('carouselImg');
+    const dots = Array.from(document.querySelectorAll('.carousel-dot'));
+    function showPhoto(i) {
+      current = (i + photos.length) % photos.length;
+      img.src = photos[current];
+      dots.forEach((d, di) => d.classList.toggle('active', di === current));
+    }
+    dots.forEach(d => d.addEventListener('click', () => showPhoto(Number(d.dataset.index))));
+    document.getElementById('prevBtn').addEventListener('click', () => showPhoto(current - 1));
+    document.getElementById('nextBtn').addEventListener('click', () => showPhoto(current + 1));
+    document.querySelectorAll('.photo-grid-item').forEach(btn => {
+      btn.addEventListener('click', () => {
+        showPhoto(Number(btn.dataset.index));
+        document.getElementById('carousel').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    });
+  }
+
+  // share
+  const shareBtn = document.getElementById('shareBtn');
+  shareBtn.addEventListener('click', async () => {
+    const url = window.location.href;
+    if (navigator.share) {
+      try { await navigator.share({ title: document.title, url }); } catch (e) { /* annulé */ }
+    } else {
+      try {
+        await navigator.clipboard.writeText(url);
+        showToast('Lien copié');
+      } catch (e) { showToast(url); }
+    }
+  });
+
+  // configurateur de prix indicatif
+  function computeIndicativePrice(basePrice, baseDuree, duree, apport) {
+    if (!basePrice) return 0;
+    let price = basePrice * (baseDuree / duree);
+    price = price - apport / duree;
+    price = Math.max(price, basePrice * 0.35);
+    return Math.round(price);
+  }
+
+  const dureeSlider = document.getElementById('dureeSlider');
+  const apportSlider = document.getElementById('apportSlider');
+  const dureeValue = document.getElementById('dureeValue');
+  const apportValue = document.getElementById('apportValue');
+  const stickyPrice = document.getElementById('stickyPrice');
+
+  function updatePrice() {
+    const duree = DUREE_STEPS[Number(dureeSlider.value)];
+    const apport = APPORT_STEPS[Number(apportSlider.value)];
+    dureeValue.textContent = duree + ' mois';
+    apportValue.textContent = apport.toLocaleString('fr-FR') + ' €';
+    const price = computeIndicativePrice(basePrice, baseDuree, duree, apport);
+    stickyPrice.textContent = price + '€';
+  }
+  dureeSlider.addEventListener('input', updatePrice);
+  apportSlider.addEventListener('input', updatePrice);
+
+  // magnetic CTA button (desktop only)
+  if (!window.matchMedia('(pointer: coarse)').matches) {
+    const ctaBtn = document.querySelector('.sticky-bar .btn-primary');
+    if (ctaBtn) {
+      ctaBtn.addEventListener('mousemove', (e) => {
+        const r = ctaBtn.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width / 2;
+        const y = e.clientY - r.top - r.height / 2;
+        ctaBtn.style.transform = `translate(${x * 0.18}px, ${y * 0.35}px)`;
+      });
+      ctaBtn.addEventListener('mouseleave', () => { ctaBtn.style.transform = 'translate(0,0)'; });
+    }
+  }
+</script>
+
+<style>
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    padding-bottom:96px;
+  }
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    letter-spacing:-0.02em;
+    line-height:1.05;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+  @media(max-width:640px){ .wrap{padding:0 18px;} }
+
+  /* two-column layout: photos left, configurateur right */
+  .detail-header-row{
+    display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
+    padding:28px 0 20px;flex-wrap:wrap;
+  }
+  .detail-header-left{display:flex;flex-direction:column;gap:8px;}
+  .detail-header-left .back-link{margin-bottom:4px;}
+  .detail-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:32px;align-items:start;}
+  @media(max-width:900px){ .detail-grid{grid-template-columns:1fr;} }
+  .detail-config{position:sticky;top:24px;}
+  .detail-below{max-width:700px;}
+
+  /* carousel */
+  .carousel{position:relative;width:100%;aspect-ratio:16/10;background:linear-gradient(180deg, var(--surface-2), var(--surface));overflow:hidden;border-radius:20px;}
+  .carousel img{width:100%;height:100%;object-fit:cover;display:block;}
+  .carousel-icon{width:100%;height:100%;display:flex;align-items:center;justify-content:center;}
+  .carousel-icon :global(svg){width:36%;}
+  .carousel-arrow{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:36px;height:36px;border-radius:50%;
+    background:rgba(10,10,10,0.5);backdrop-filter:blur(6px);
+    border:1px solid rgba(255,255,255,0.12);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:4;
+    transition:background .2s ease, border-color .2s ease, transform .2s ease;
+  }
+  .carousel-arrow.prev{left:14px;transform:translateY(-50%) rotate(180deg);}
+  .carousel-arrow.next{right:14px;}
+  .carousel-arrow.prev:hover{background:rgba(10,10,10,0.8);border-color:rgba(255,255,255,0.3);transform:translateY(-50%) rotate(180deg) scale(1.08);}
+  .carousel-arrow.next:hover{background:rgba(10,10,10,0.8);border-color:rgba(255,255,255,0.3);transform:translateY(-50%) scale(1.08);}
+  .carousel-arrow.prev:active{transform:translateY(-50%) rotate(180deg) scale(.92);}
+  .carousel-arrow.next:active{transform:translateY(-50%) scale(.92);}
+  .carousel-dots{position:absolute;bottom:16px;left:0;right:0;display:flex;justify-content:center;gap:7px;z-index:4;}
+  .carousel-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.35);cursor:pointer;transition:background .2s ease, transform .2s ease;}
+  .carousel-dot.active{background:var(--accent-1);transform:scale(1.3);}
+  .carousel-badge{position:absolute;top:14px;left:14px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;padding:6px 12px;border-radius:100px;background:var(--accent);color:#fff;z-index:4;}
+  .carousel-badge.occasion{background:rgba(10,10,10,0.55);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,0.2);color:#fff;}
+
+  /* thumbnail grid — desktop only, mirrors the carousel photos */
+  .photo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px;}
+  .photo-grid-item{
+    position:relative;aspect-ratio:16/10;border-radius:14px;overflow:hidden;
+    border:1px solid var(--border);padding:0;cursor:pointer;background:var(--surface-2);
+    transition:border-color .2s ease, transform .2s ease;
+  }
+  .photo-grid-item:hover{border-color:#444;transform:translateY(-3px);}
+  .photo-grid-item:active{transform:scale(.97);}
+  .photo-grid-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s cubic-bezier(.16,1,.3,1);}
+  .photo-grid-item:hover img{transform:scale(1.06);}
+  @media(max-width:900px){ .photo-grid{display:none;} }
+
+  /* toast */
+  .toast{
+    position:fixed;bottom:100px;left:50%;transform:translateX(-50%) translateY(10px);
+    background:#fff;color:#0a0a0a;padding:10px 18px;border-radius:100px;font-size:13.5px;font-weight:600;
+    opacity:0;pointer-events:none;transition:opacity .25s ease, transform .25s ease;z-index:200;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  /* title block */
+  .veh-brand-label{font-size:12.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:6px;}
+  .detail-header-row h1{font-size:clamp(24px,3.4vw,32px);}
+  .share-link{
+    display:inline-flex;align-items:center;gap:7px;font-size:14px;color:var(--text-dim);
+    cursor:pointer;background:none;border:none;font-family:'Inter',sans-serif;padding:6px 0;
+    transition:color .2s ease, gap .2s ease;
+  }
+  .share-link:hover{color:var(--accent-1);gap:10px;}
+
+  /* config panel */
+  .config-panel{
+    border:1px solid var(--border);border-radius:20px;padding:28px;
+    background:radial-gradient(ellipse at 50% 0%, var(--surface), var(--bg));
+  }
+  .config-panel h2{font-size:19px;margin-bottom:22px;}
+  .config-row{margin-bottom:26px;}
+  .config-row:last-of-type{margin-bottom:0;}
+  .config-label{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--text-dim);margin-bottom:12px;}
+  .config-info{
+    width:16px;height:16px;border-radius:50%;border:1px solid var(--text-faint);
+    display:flex;align-items:center;justify-content:center;font-size:10.5px;color:var(--text-faint);
+    flex:none;
+  }
+  .config-value{
+    background:var(--surface-2);border:1px solid var(--border);border-radius:12px;
+    padding:14px 16px;text-align:center;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;
+    margin-bottom:10px;
+  }
+  .config-slider{
+    -webkit-appearance:none;appearance:none;width:100%;height:3px;
+    background:var(--border);border-radius:100px;outline:none;cursor:pointer;
+  }
+  .config-slider::-webkit-slider-thumb{
+    -webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--accent-1);cursor:pointer;
+    box-shadow:0 0 0 4px rgba(255,0,127,0.15);
+    transition:box-shadow .2s ease, transform .2s ease;
+  }
+  .config-slider:hover::-webkit-slider-thumb{box-shadow:0 0 0 6px rgba(255,0,127,0.22);transform:scale(1.1);}
+  .config-slider:active::-webkit-slider-thumb{box-shadow:0 0 0 8px rgba(255,0,127,0.28);}
+  .config-slider::-moz-range-thumb{
+    width:18px;height:18px;border-radius:50%;background:var(--accent-1);border:none;cursor:pointer;
+    box-shadow:0 0 0 4px rgba(255,0,127,0.15);
+    transition:box-shadow .2s ease, transform .2s ease;
+  }
+  .config-slider:hover::-moz-range-thumb{box-shadow:0 0 0 6px rgba(255,0,127,0.22);transform:scale(1.1);}
+  .config-slider-labels{display:flex;justify-content:space-between;font-size:11.5px;color:var(--text-faint);margin-top:8px;}
+  .config-static-row{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:12px 0;border-top:1px solid var(--border);font-size:14px;
+  }
+  .config-static-row span:first-child{color:var(--text-dim);}
+  .config-static-row span:last-child{font-weight:600;}
+  .config-included{margin-top:22px;padding-top:18px;border-top:1px solid var(--border);}
+  .config-included-title{font-size:12px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;}
+  .included-list{display:flex;flex-direction:column;gap:9px;}
+  .included-item{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--text-dim);}
+  .included-item :global(svg){flex:none;opacity:0.8;}
+  .config-note{font-size:12px;color:var(--text-faint);margin-top:18px;line-height:1.6;}
+
+  /* spec card */
+  .section-title{font-size:19px;margin:36px 0 16px;}
+  .spec-card{
+    background:var(--surface);border:1px solid var(--border);border-radius:20px;
+    padding:4px 28px;max-width:600px;
+  }
+  .spec-row{
+    display:flex;align-items:center;gap:16px;
+    padding:16px 0;border-bottom:1px solid var(--border);
+  }
+  .spec-row:last-child{border-bottom:none;}
+  .spec-icon{
+    width:34px;height:34px;border-radius:10px;background:var(--surface-2);
+    display:flex;align-items:center;justify-content:center;color:var(--text-dim);flex:none;
+  }
+  .spec-label{font-size:14.5px;color:var(--text-dim);}
+  @media(max-width:640px){ .spec-card{padding:4px 20px;} }
+
+  /* description */
+  .veh-description{color:var(--text-dim);font-size:15px;line-height:1.7;}
+
+  /* options */
+  .options-group{border-top:1px solid var(--border);padding:16px 0;}
+  .options-group summary{
+    cursor:pointer;font-size:15px;font-weight:500;list-style:none;
+    display:flex;justify-content:space-between;align-items:center;
+    transition:color .2s ease;
+  }
+  .options-group summary:hover{color:var(--accent-1);}
+  .options-group summary::-webkit-details-marker{display:none;}
+  .options-group summary::after{content:'+';font-size:18px;color:var(--text-faint);transition:transform .2s ease, color .2s ease;}
+  .options-group summary:hover::after{color:var(--accent-1);transform:rotate(90deg);}
+  .options-group[open] summary::after{content:'−';}
+  .options-group[open] summary:hover::after{transform:rotate(0deg);}
+  .options-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+  .options-list span{
+    background:var(--surface-2);border:1px solid var(--border);border-radius:100px;
+    padding:7px 14px;font-size:13px;color:var(--text-dim);
+  }
+
+  /* sticky bottom bar */
+  .sticky-bar{
+    position:fixed;bottom:0;left:0;right:0;z-index:100;
+    background:rgba(10,10,10,0.92);backdrop-filter:blur(14px);
+    border-top:1px solid var(--border);
+    padding:16px 24px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .sticky-bar-price .amount{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;}
+  .sticky-bar-price .period{font-size:12px;color:var(--text-faint);}
+  .btn-primary{
+    background:var(--accent);color:#fff;padding:14px 24px;border-radius:100px;
+    font-weight:600;font-size:14.5px;display:inline-block;white-space:nowrap;
+    transition:transform .2s ease, filter .2s ease, box-shadow .3s ease;
+  }
+  .btn-primary:hover{filter:brightness(1.12);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,0,127,0.25);}
+  .btn-primary:active{transform:scale(.96);box-shadow:0 4px 12px rgba(255,0,127,0.2);}
+
+  footer{border-top:1px solid var(--border);padding:32px 0;margin-top:48px;}
+  .footer-bottom{font-size:12.5px;color:var(--text-faint);text-align:center;}
+</style>
+</MinimalLayout>

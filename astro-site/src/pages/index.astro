@@ -1,5 +1,25 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { fetchVehicles, type Vehicle } from '../lib/vehicles';
+
+let fleetVehicles: Vehicle[] = [];
+try {
+  fleetVehicles = await fetchVehicles();
+} catch (e) {
+  console.error('Erreur de chargement du catalogue (accueil) au build :', e);
+}
+
+const fleetCarIcon = `<svg viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M20 68 L32 40 Q38 30 52 30 L140 30 Q154 30 160 40 L172 68 L172 80 Q172 84 168 84 L158 84 Q158 92 150 92 Q142 92 142 84 L58 84 Q58 92 50 92 Q42 92 42 84 L32 84 Q28 84 28 80 Z" stroke="#ffffff" stroke-width="2.5" fill="rgba(255,255,255,0.03)"/>
+  <path d="M46 40 L54 40 L50 30" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+  <line x1="52" y1="30" x2="52" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  <line x1="86" y1="30" x2="86" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  <line x1="120" y1="30" x2="120" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
+  <circle cx="58" cy="84" r="10" stroke="#ffffff" stroke-width="2.5" fill="#0a0a0a"/>
+  <circle cx="142" cy="84" r="10" stroke="#ffffff" stroke-width="2.5" fill="#0a0a0a"/>
+  <circle cx="58" cy="84" r="3" fill="#ffffff"/>
+  <circle cx="142" cy="84" r="3" fill="#ffffff"/>
+</svg>`;
 
 const orgSchema = {
   "@context": "https://schema.org",
@@ -69,12 +89,29 @@ const orgSchema = {
           <button class="fleet-arrow" id="fleetNext" aria-label="Véhicule suivant">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </button>
-          <span class="fleet-counter"><span id="fleetIndex">01</span> / <span id="fleetTotal">00</span></span>
+          <span class="fleet-counter"><span id="fleetIndex">01</span> / <span id="fleetTotal">{String(fleetVehicles.length).padStart(2, '0')}</span></span>
         </div>
       </div>
       <div class="fleet-track-wrap reveal">
         <div class="fleet-track" id="fleetTrack">
-          <p class="fleet-loading">Chargement des véhicules…</p>
+          {fleetVehicles.length === 0 && <p class="fleet-loading">Catalogue momentanément indisponible.</p>}
+          {fleetVehicles.map(v => (
+            <a class="fleet-card" href={`/vehicule/${v.slug}.html`} aria-label={`Voir les détails : ${v.brand} ${v.name}`}>
+              <div class="fleet-visual">
+                <span class={`fleet-badge ${v.condition === 'occasion' ? 'occasion' : ''}`}>{v.condition === 'neuf' ? 'Neuf' : 'Occasion'}</span>
+                {v.photo
+                  ? <img src={v.photo} alt={`${v.brand} ${v.name}`} loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'), {innerHTML: window.__fleetCarIcon}).firstElementChild)" />
+                  : <Fragment set:html={fleetCarIcon} />
+                }
+              </div>
+              <div class="fleet-body">
+                <div class="fleet-brand">{v.brand}</div>
+                <div class="fleet-name">{v.name}</div>
+                <div class="fleet-price-label">À partir de</div>
+                <div class="fleet-price"><span class="amount">{v.price} €</span><span class="period"> / mois</span></div>
+              </div>
+            </a>
+          ))}
         </div>
       </div>
       <div class="fleet-foot reveal">
@@ -713,110 +750,14 @@ const orgSchema = {
   },{threshold:0.5});
   counters.forEach(c=>counterIO.observe(c));
 
-  // fleet teaser (catalogue preview carousel) — lit le même Google Sheet que la page véhicules
+  // fleet teaser (catalogue preview carousel) — véhicules déjà rendus au
+  // build ; ce script ne gère plus que le défilement horizontal.
   (function(){
-    const FLEET_CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRcPk7ROWwg42D6Iwos4AdvE66hiSEX3vw4mM3d2s6e72meg6qaZ7AClW8M3Tj8j7-qHYccrLL9Id2r/pub?output=csv";
     const track = document.getElementById('fleetTrack');
     const prevBtn = document.getElementById('fleetPrev') as HTMLButtonElement;
     const nextBtn = document.getElementById('fleetNext') as HTMLButtonElement;
     const indexEl = document.getElementById('fleetIndex')!;
-    const totalEl = document.getElementById('fleetTotal')!;
-    if(!track) return;
-
-    const carIcon = `<svg viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20 68 L32 40 Q38 30 52 30 L140 30 Q154 30 160 40 L172 68 L172 80 Q172 84 168 84 L158 84 Q158 92 150 92 Q142 92 142 84 L58 84 Q58 92 50 92 Q42 92 42 84 L32 84 Q28 84 28 80 Z" stroke="#ffffff" stroke-width="2.5" fill="rgba(255,255,255,0.03)"/>
-      <path d="M46 40 L54 40 L50 30" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
-      <line x1="52" y1="30" x2="52" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
-      <line x1="86" y1="30" x2="86" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
-      <line x1="120" y1="30" x2="120" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
-      <circle cx="58" cy="84" r="10" stroke="#ffffff" stroke-width="2.5" fill="#0a0a0a"/>
-      <circle cx="142" cy="84" r="10" stroke="#ffffff" stroke-width="2.5" fill="#0a0a0a"/>
-      <circle cx="58" cy="84" r="3" fill="#ffffff"/>
-      <circle cx="142" cy="84" r="3" fill="#ffffff"/>
-    </svg>`;
-    (window as any).__fleetCarIcon = carIcon;
-
-    function escapeHtml(s: any){ return String(s==null?'':s).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c] as string)); }
-    function stripAccents(s: any){ return String(s==null?'':s).normalize('NFD').replace(/[̀-ͯ]/g,''); }
-    function normalizeKey(s: any){ return stripAccents(s).toLowerCase().trim(); }
-    function normalizeValue(s: any){ return stripAccents(s).toLowerCase().trim(); }
-    function slugify(s: any){ return stripAccents(s).toLowerCase().trim().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,''); }
-
-    function parseCSV(text: string){
-      const rows: string[][] = [];
-      let row: string[] = [], field = '', inQuotes = false;
-      for(let i=0;i<text.length;i++){
-        const c = text[i];
-        if(inQuotes){
-          if(c === '"'){ if(text[i+1]==='"'){field+='"';i++;} else inQuotes=false; }
-          else field += c;
-        } else {
-          if(c === '"') inQuotes = true;
-          else if(c === ',') { row.push(field); field=''; }
-          else if(c === '\r'){}
-          else if(c === '\n'){ row.push(field); rows.push(row); row=[]; field=''; }
-          else field += c;
-        }
-      }
-      if(field.length || row.length){ row.push(field); rows.push(row); }
-      return rows.filter(r => r.some(f => f.trim() !== ''));
-    }
-
-    async function loadFleet(){
-      try{
-        const sep = FLEET_CSV_URL.includes('?') ? '&' : '?';
-        const res = await fetch(FLEET_CSV_URL + sep + 'cachebust=' + Date.now());
-        if(!res.ok) throw new Error('HTTP ' + res.status);
-        const text = await res.text();
-        const rows = parseCSV(text);
-        if(rows.length < 2) throw new Error('Feuille vide');
-        const headers = rows[0].map(normalizeKey);
-        const idx = (name: string) => headers.indexOf(name);
-        const iMarque=idx('marque'), iModele=idx('modele'), iEtat=idx('etat'), iPrix=idx('prix'), iPhoto=idx('photo'), iActif=idx('actif');
-
-        const vehicles = rows.slice(1).map(r=>{
-          const actif = iActif>=0 ? normalizeValue(r[iActif]) : 'oui';
-          if(actif === 'non') return null;
-          const priceRaw = (iPrix>=0 ? r[iPrix] : '') || '';
-          const price = parseFloat(priceRaw.replace(',','.').replace(/[^\d.]/g,''));
-          const brand = (iMarque>=0 ? r[iMarque] : '').trim();
-          const name = (iModele>=0 ? r[iModele] : '').trim();
-          const photo = (iPhoto>=0 ? r[iPhoto] : '').trim();
-          return {
-            brand, name,
-            condition: normalizeValue(iEtat>=0 ? r[iEtat] : ''),
-            price: isNaN(price) ? 0 : price,
-            photo,
-            slug: slugify(brand + ' ' + name),
-          };
-        }).filter(v => v && v.brand) as any[];
-
-        if(vehicles.length === 0) throw new Error('Aucun véhicule actif');
-        renderFleet(vehicles);
-      }catch(err){
-        console.error('Erreur de chargement du catalogue (accueil) :', err);
-        track.innerHTML = '<p class="fleet-loading">Catalogue momentanément indisponible.</p>';
-      }
-    }
-
-    function renderFleet(vehicles: any[]){
-      totalEl.textContent = String(vehicles.length).padStart(2,'0');
-      track!.innerHTML = vehicles.map(v => `
-        <a class="fleet-card" href="/vehicule.html?v=${encodeURIComponent(v.slug)}" aria-label="Voir les détails : ${escapeHtml(v.brand + ' ' + v.name)}">
-          <div class="fleet-visual">
-            <span class="fleet-badge ${v.condition === 'occasion' ? 'occasion' : ''}">${v.condition === 'neuf' ? 'Neuf' : 'Occasion'}</span>
-            ${v.photo ? `<img src="${escapeHtml(v.photo)}" alt="${escapeHtml(v.brand + ' ' + v.name)}" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'), {innerHTML: window.__fleetCarIcon}).firstElementChild)">` : carIcon}
-          </div>
-          <div class="fleet-body">
-            <div class="fleet-brand">${escapeHtml(v.brand)}</div>
-            <div class="fleet-name">${escapeHtml(v.name)}</div>
-            <div class="fleet-price-label">À partir de</div>
-            <div class="fleet-price"><span class="amount">${v.price} €</span><span class="period"> / mois</span></div>
-          </div>
-        </a>
-      `).join('');
-      updateNav();
-    }
+    if(!track || !track.querySelector('.fleet-card')) return;
 
     function cardStep(){
       const card = track!.querySelector('.fleet-card');
@@ -840,6 +781,10 @@ const orgSchema = {
       scrollTimer = setTimeout(updateNav, 80);
     }, {passive:true});
 
-    loadFleet();
+    updateNav();
   })();
+</script>
+
+<script define:vars={{ fleetCarIcon }}>
+  window.__fleetCarIcon = fleetCarIcon;
 </script>
