@@ -1,0 +1,922 @@
+---
+import MinimalLayout from '../layouts/MinimalLayout.astro';
+---
+<MinimalLayout
+  title="Eleven Lease — Simulez votre leasing"
+  description="Simulez votre leasing en 2 minutes : décrivez votre projet, notre réseau de partenaires vous trouve la meilleure offre LOA/LLD sous 24h."
+  path="/simulation.html"
+>
+
+<header>
+  <nav>
+    <a href="/" class="logo">
+      <span class="logo-icon" role="img" aria-label="Eleven Lease"></span>
+    </a>
+    <a href="/" class="back-link">← Retour à l'accueil</a>
+  </nav>
+</header>
+
+<section class="simulation-screen">
+  <div class="wrap">
+    <div class="contact-panel">
+      <div class="contact-intro" id="contactIntro">
+        <h1>Obtenez votre offre de leasing en moins de 2 minutes.</h1>
+        <div class="trust-badges">
+          <span class="trust-badge">✓ Sans engagement</span>
+          <span class="trust-badge">✓ Réponse sous 24h</span>
+          <span class="trust-badge">✓ Réseau de partenaires spécialisés</span>
+        </div>
+        <p>Quelques questions rapides pour une offre sur-mesure de notre réseau de partenaires, sans engagement.</p>
+      </div>
+      <form id="leadForm" class="lead-form" novalidate>
+        <div class="stepper-progress" id="stepperProgress">
+          <div class="stepper-bar-track"><div class="stepper-bar-fill" id="stepperBarFill"></div></div>
+          <div class="stepper-meta">
+            <div class="stepper-label" id="stepperLabel">Question 1 / 17</div>
+            <div class="stepper-time" id="stepperTime">~2 min restantes</div>
+          </div>
+        </div>
+
+        <div class="form-step active" data-step="1">
+          <label for="fVehicule"><span class="step-icon" aria-hidden="true">🚗</span>Quel véhicule vous intéresse ?</label>
+          <input type="text" id="fVehicule" name="vehicule" placeholder="Ex : Renault Clio (laissez vide si vous hésitez)">
+        </div>
+
+        <div class="form-step" data-step="2">
+          <label><span class="step-icon" aria-hidden="true">👤</span>Ce financement est-il à titre personnel ou professionnel ?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="profil" value="Particulier" checked> Particulier</label>
+            <label class="radio-option"><input type="radio" name="profil" value="Professionnel"> Professionnel</label>
+          </div>
+        </div>
+
+        <div class="form-step" data-step="3">
+          <label><span class="step-icon" aria-hidden="true">💳</span>Quel type de financement souhaitez-vous ?</label>
+          <div class="choice-grid">
+            <label class="radio-option"><input type="radio" name="financement" value="Leasing (LOA/LLD)" checked> Leasing (LOA/LLD)</label>
+            <label class="radio-option"><input type="radio" name="financement" value="Achat"> Achat</label>
+            <label class="radio-option"><input type="radio" name="financement" value="Je ne sais pas encore"> Je ne sais pas encore</label>
+          </div>
+        </div>
+
+        <div class="form-step" data-step="4">
+          <label><span class="step-icon" aria-hidden="true">🚘</span>Vos préférences véhicule</label>
+          <div class="field-stack">
+            <div class="field-item">
+              <label><span class="step-icon" aria-hidden="true">🚙</span>Type de véhicule souhaité</label>
+              <div class="choice-grid">
+                <label class="radio-option"><input type="radio" name="typeVehicule" value="Citadine"> Citadine</label>
+                <label class="radio-option"><input type="radio" name="typeVehicule" value="Berline"> Berline</label>
+                <label class="radio-option"><input type="radio" name="typeVehicule" value="SUV"> SUV</label>
+                <label class="radio-option"><input type="radio" name="typeVehicule" value="Électrique"> Électrique</label>
+              </div>
+            </div>
+            <div class="field-item" id="budgetMensuelField">
+              <label><span class="step-icon" aria-hidden="true">💶</span>Budget mensuel souhaité</label>
+              <div class="choice-grid">
+                <label class="radio-option"><input type="radio" name="budget" value="Moins de 300 €/mois"> Moins de 300 €/mois</label>
+                <label class="radio-option"><input type="radio" name="budget" value="300 à 500 €/mois"> 300 à 500 €/mois</label>
+                <label class="radio-option"><input type="radio" name="budget" value="500 à 700 €/mois"> 500 à 700 €/mois</label>
+                <label class="radio-option"><input type="radio" name="budget" value="700 à 1 000 €/mois"> 700 à 1 000 €/mois</label>
+                <label class="radio-option"><input type="radio" name="budget" value="Plus de 1 000 €/mois"> Plus de 1 000 €/mois</label>
+              </div>
+            </div>
+            <div class="field-item" id="budgetAchatField" style="display:none;">
+              <label><span class="step-icon" aria-hidden="true">💰</span>Budget d'achat souhaité</label>
+              <div class="choice-grid">
+                <label class="radio-option"><input type="radio" name="budgetAchat" value="Moins de 10 000€"> Moins de 10 000€</label>
+                <label class="radio-option"><input type="radio" name="budgetAchat" value="10 000€ – 20 000€"> 10 000€ – 20 000€</label>
+                <label class="radio-option"><input type="radio" name="budgetAchat" value="20 000€ – 35 000€"> 20 000€ – 35 000€</label>
+                <label class="radio-option"><input type="radio" name="budgetAchat" value="Plus de 35 000€"> Plus de 35 000€</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-step" data-step="5">
+          <label><span class="step-icon" aria-hidden="true">🆕</span>Le véhicule recherché est-il :</label>
+          <div class="choice-grid">
+            <label class="radio-option"><input type="radio" name="neufOccasion" value="Neuf"> Neuf</label>
+            <label class="radio-option"><input type="radio" name="neufOccasion" value="Occasion"> Occasion</label>
+            <label class="radio-option"><input type="radio" name="neufOccasion" value="Peu importe"> Peu importe</label>
+          </div>
+        </div>
+
+        <div class="form-step" data-step="6" data-hide-if-achat="true">
+          <label><span class="step-icon" aria-hidden="true">🛣️</span>Quel kilométrage annuel prévoyez-vous ?</label>
+          <div class="choice-grid">
+            <label class="radio-option"><input type="radio" name="kilometrage" value="Moins de 10 000 km"> Moins de 10 000 km</label>
+            <label class="radio-option"><input type="radio" name="kilometrage" value="10 000 à 20 000 km"> 10 000 à 20 000 km</label>
+            <label class="radio-option"><input type="radio" name="kilometrage" value="20 000 à 30 000 km"> 20 000 à 30 000 km</label>
+            <label class="radio-option"><input type="radio" name="kilometrage" value="Plus de 30 000 km"> Plus de 30 000 km</label>
+          </div>
+        </div>
+
+        <div class="form-step" data-step="7" data-hide-if-achat="true">
+          <label><span class="step-icon" aria-hidden="true">📆</span>Quelle durée de contrat souhaitez-vous ?</label>
+          <div class="choice-grid">
+            <label class="radio-option"><input type="radio" name="dureeContrat" value="36 mois"> 36 mois</label>
+            <label class="radio-option"><input type="radio" name="dureeContrat" value="48 mois"> 48 mois</label>
+            <label class="radio-option"><input type="radio" name="dureeContrat" value="60 mois"> 60 mois</label>
+            <label class="radio-option"><input type="radio" name="dureeContrat" value="Je ne sais pas encore"> Je ne sais pas encore</label>
+          </div>
+        </div>
+
+        <div class="form-step" data-step="8">
+          <label><span class="step-icon" aria-hidden="true">💰</span>Disposez-vous d'un apport ?</label>
+          <div class="choice-grid">
+            <label class="radio-option"><input type="radio" name="apport" value="0 €"> 0 €</label>
+            <label class="radio-option"><input type="radio" name="apport" value="Moins de 2 000 €"> Moins de 2 000 €</label>
+            <label class="radio-option"><input type="radio" name="apport" value="2 000 à 5 000 €"> 2 000 à 5 000 €</label>
+            <label class="radio-option"><input type="radio" name="apport" value="Plus de 5 000 €"> Plus de 5 000 €</label>
+          </div>
+        </div>
+
+        <div class="form-step" data-step="9">
+          <label><span class="step-icon" aria-hidden="true">🚚</span>Quand souhaitez-vous recevoir votre véhicule ?</label>
+          <div class="choice-grid">
+            <label class="radio-option"><input type="radio" name="dateLivraison" value="Dès que possible"> Dès que possible</label>
+            <label class="radio-option"><input type="radio" name="dateLivraison" value="Dans 1 mois"> Dans 1 mois</label>
+            <label class="radio-option"><input type="radio" name="dateLivraison" value="Dans 3 mois"> Dans 3 mois</label>
+            <label class="radio-option"><input type="radio" name="dateLivraison" value="Plus tard"> Plus tard</label>
+          </div>
+        </div>
+
+        <div class="form-step" data-step="10">
+          <label><span class="step-icon" aria-hidden="true">🔄</span>Avez-vous un véhicule à faire reprendre ?</label>
+          <div class="field-stack">
+            <div class="field-item">
+              <div class="radio-group">
+                <label class="radio-option"><input type="radio" name="vehiculeReprise" value="Oui"> Oui</label>
+                <label class="radio-option"><input type="radio" name="vehiculeReprise" value="Non" checked> Non</label>
+              </div>
+            </div>
+            <div class="field-item" id="vehiculeRepriseField" style="display:none;">
+              <label for="fVehiculeRepriseDetails">Véhicule concerné</label>
+              <input type="text" id="fVehiculeRepriseDetails" name="vehiculeRepriseDetails" placeholder="Ex : Peugeot 208, 2019, 45 000 km">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-step" data-step="11" data-eligibility-only="true">
+          <label><span class="step-icon" aria-hidden="true">💼</span>Quel est votre statut professionnel ?</label>
+          <div class="choice-grid">
+            <label class="radio-option"><input type="radio" name="statutPro" value="CDI"> CDI</label>
+            <label class="radio-option"><input type="radio" name="statutPro" value="CDD"> CDD</label>
+            <label class="radio-option"><input type="radio" name="statutPro" value="Indépendant"> Indépendant / Freelance</label>
+            <label class="radio-option"><input type="radio" name="statutPro" value="Retraité"> Retraité</label>
+            <label class="radio-option"><input type="radio" name="statutPro" value="Étudiant"> Étudiant</label>
+            <label class="radio-option"><input type="radio" name="statutPro" value="Sans emploi"> Sans emploi</label>
+          </div>
+        </div>
+
+        <div class="form-step" data-step="12" data-eligibility-only="true">
+          <label for="fRevenus"><span class="step-icon" aria-hidden="true">💵</span>Quels sont vos revenus mensuels nets ?</label>
+          <input type="number" id="fRevenus" name="revenus" min="0" step="50" placeholder="Ex : 1800">
+          <div class="field-hint">En euros, avant impôt sur le revenu.</div>
+        </div>
+
+        <div class="form-step" data-step="13" data-eligibility-only="true">
+          <label for="fCharges"><span class="step-icon" aria-hidden="true">🧾</span>Quel est le montant de vos charges mensuelles ?</label>
+          <input type="number" id="fCharges" name="charges" min="0" step="10" placeholder="Ex : 400">
+          <div class="field-hint">Loyer, crédits en cours, pension alimentaire versée...</div>
+        </div>
+
+        <div class="form-step" data-step="14" data-eligibility-only="true">
+          <label><span class="step-icon" aria-hidden="true">⏳</span>Depuis combien de temps êtes-vous dans votre emploi / activité actuelle ?</label>
+          <div class="choice-grid">
+            <label class="radio-option"><input type="radio" name="anciennete" value="Moins de 6 mois"> Moins de 6 mois</label>
+            <label class="radio-option"><input type="radio" name="anciennete" value="6 mois à 2 ans"> 6 mois à 2 ans</label>
+            <label class="radio-option"><input type="radio" name="anciennete" value="Plus de 2 ans"> Plus de 2 ans</label>
+          </div>
+        </div>
+
+        <div class="form-step" data-step="15" data-eligibility-only="true">
+          <label><span class="step-icon" aria-hidden="true">🏦</span>Avez-vous vérifié si vous êtes fiché à la Banque de France (FICP) ?</label>
+          <div class="choice-grid">
+            <label class="radio-option"><input type="radio" name="ficp" value="Non, pas fiché" checked> Non, je ne suis pas fiché</label>
+            <label class="radio-option"><input type="radio" name="ficp" value="Oui, fiché"> Oui, je suis fiché</label>
+            <label class="radio-option"><input type="radio" name="ficp" value="Je n'ai pas vérifié"> Je n'ai pas vérifié</label>
+          </div>
+        </div>
+
+        <div class="form-step" data-step="16">
+          <label><span class="step-icon" aria-hidden="true">📇</span>Vos coordonnées</label>
+          <div class="field-grid">
+            <div class="field-item">
+              <label for="fPrenom">Prénom</label>
+              <input type="text" id="fPrenom" name="prenom" autocomplete="given-name">
+            </div>
+            <div class="field-item">
+              <label for="fNom">Nom</label>
+              <input type="text" id="fNom" name="nom" autocomplete="family-name">
+            </div>
+            <div class="field-item">
+              <label for="fAge">Âge</label>
+              <input type="number" id="fAge" name="age" min="1" max="120" placeholder="Ex : 32">
+            </div>
+            <div class="field-item">
+              <label for="fTelephone">Téléphone</label>
+              <input type="tel" id="fTelephone" name="telephone" autocomplete="tel">
+            </div>
+            <div class="field-item full">
+              <label for="fEmail">Email</label>
+              <input type="email" id="fEmail" name="email" autocomplete="email">
+            </div>
+            <div class="field-item full" id="entrepriseField" style="display:none;">
+              <label for="fEntreprise">Nom de l'entreprise</label>
+              <input type="text" id="fEntreprise" name="entreprise" autocomplete="organization">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-step" data-step="17">
+          <label for="fMessage"><span class="step-icon" aria-hidden="true">💬</span>Un message à ajouter ?</label>
+          <textarea id="fMessage" name="message" rows="3" placeholder="Précisez votre besoin, budget, délai... (optionnel)"></textarea>
+        </div>
+
+        <p class="step-error" id="stepError"></p>
+
+        <div class="stepper-nav" id="stepperNav">
+          <button type="button" class="step-back" id="stepBack">← Précédent</button>
+          <button type="button" class="step-skip" id="stepSkip" style="display:none;">Passer cette question</button>
+          <button type="button" class="btn-primary" id="stepNext">Suivant</button>
+        </div>
+
+        <div class="form-status" id="formStatus">
+          <p id="formStatusText"></p>
+        </div>
+
+        <div class="success-screen" id="successScreen">
+          <div class="success-icon">🎉</div>
+          <h2>Votre demande a bien été envoyée !</h2>
+          <p>Votre dossier vient d'être transmis à notre réseau de partenaires.</p>
+          <div class="success-steps">
+            <div class="s-label">Les prochaines étapes</div>
+            <div class="s-item">✓ Analyse de votre dossier</div>
+            <div class="s-item">✓ Recherche de la meilleure offre</div>
+            <div class="s-item">✓ Appel d'un conseiller sous 24h</div>
+          </div>
+          <div class="success-contact">
+            <p>📞 Besoin d'aller plus vite ?</p>
+            <div class="success-actions">
+              <a class="whatsapp-btn" href="https://taap.it/elevenleasewhatsapp" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A8.86 8.86 0 0012.05 4c-4.9 0-8.9 4-8.9 8.9 0 1.57.42 3.1 1.2 4.44L3 22l4.8-1.26a8.9 8.9 0 004.25 1.08h0c4.9 0 8.9-4 8.9-8.9 0-2.38-.93-4.62-2.35-6.6zm-5.55 13.7h0a7.4 7.4 0 01-3.77-1.03l-.27-.16-2.8.74.75-2.73-.18-.28a7.38 7.38 0 01-1.13-3.94c0-4.08 3.32-7.4 7.4-7.4 1.98 0 3.84.77 5.24 2.17a7.35 7.35 0 012.16 5.23c0 4.08-3.32 7.4-7.4 7.4zm4.06-5.54c-.22-.11-1.31-.65-1.52-.72-.2-.08-.35-.11-.5.11-.15.22-.57.72-.7.87-.13.15-.26.16-.48.05-.22-.11-.94-.35-1.79-1.1-.66-.6-1.1-1.33-1.24-1.55-.13-.22-.01-.34.1-.45.1-.1.22-.26.33-.39.11-.13.15-.22.22-.37.07-.15.04-.28-.02-.39-.06-.11-.5-1.21-.69-1.66-.18-.43-.36-.38-.5-.38h-.43c-.15 0-.39.05-.59.28-.2.22-.78.76-.78 1.86s.8 2.16.91 2.31c.11.15 1.57 2.4 3.81 3.36.53.23.95.37 1.27.47.53.17 1.02.15 1.4.09.43-.06 1.31-.53 1.49-1.05.18-.51.18-.95.13-1.05-.05-.1-.2-.16-.42-.27z"/></svg>
+                Discuter sur WhatsApp
+              </a>
+              <a class="btn-outline" href="/">← Retour à l'accueil</a>
+            </div>
+          </div>
+          <button type="button" class="restart-link" id="restartWizardSuccess">← Faire une nouvelle simulation</button>
+        </div>
+
+        <p class="form-note" id="formNote">En envoyant ce formulaire, vous acceptez d'être recontacté par notre réseau de partenaires.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-bottom">
+    © 2026 Eleven Lease. Les véhicules et loyers affichés sont donnés à titre indicatif et soumis à acceptation du dossier par nos partenaires financiers.
+  </div>
+</footer>
+
+<script>
+  // magnetic buttons (desktop only)
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+  if(!isTouch){
+    document.querySelectorAll<HTMLElement>('.btn-primary').forEach(btn=>{
+      btn.addEventListener('mousemove', (e: MouseEvent)=>{
+        const r = btn.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width/2;
+        const y = e.clientY - r.top - r.height/2;
+        btn.style.transform = `translate(${x*0.18}px, ${y*0.35}px)`;
+      });
+      btn.addEventListener('mouseleave', ()=>{ btn.style.transform = 'translate(0,0)'; });
+    });
+  }
+
+  // ============================================================
+  // FORMULAIRE DE CONTACT + ÉLIGIBILITÉ : envoie chaque demande vers
+  // un Google Apps Script qui l'ajoute comme ligne dans un Google Sheet.
+  //
+  // Comment configurer (une seule fois) :
+  // 1. Dans ton Sheet "Leads Eleven Lease", mets cette ligne d'en-têtes
+  //    en row 1 (remplace l'ancienne si besoin) :
+  //    Date | Vehicule | Prenom | Nom | Telephone | Email | Profil | Entreprise | Financement | TypeVehiculeSouhaite | BudgetSouhaite | NeufOccasion | KilometrageAnnuel | DureeContrat | Apport | DateLivraison | VehiculeReprise | VehiculeRepriseDetails | StatutPro | Revenus | Charges | Anciennete | Age | FICP | Eligible | CriteresRisque | Message
+  //    Le formulaire de contact simple (contact.html) envoie ses messages au
+  //    même script (data.formType === 'contact') : ils sont ajoutés dans un
+  //    second onglet "Contacts" du même classeur (créé automatiquement au
+  //    premier message si besoin), avec ces en-têtes :
+  //    Date | Nom | Email | Telephone | Message
+  // 2. Extensions > Apps Script, remplace tout le code par :
+  //
+  //      function doPost(e) {
+  //        var data = JSON.parse(e.postData.contents);
+  //        var ss = SpreadsheetApp.getActiveSpreadsheet();
+  //
+  //        if (data.formType === 'contact') {
+  //          var contactSheet = ss.getSheetByName('Contacts');
+  //          if (!contactSheet) {
+  //            contactSheet = ss.insertSheet('Contacts');
+  //            contactSheet.appendRow(['Date', 'Nom', 'Email', 'Telephone', 'Message']);
+  //          }
+  //          contactSheet.appendRow([
+  //            new Date(), data.nom || '', data.email || '', data.telephone || '', data.message || ''
+  //          ]);
+  //          MailApp.sendEmail({
+  //            to: 'admin@elevenlease.fr',
+  //            subject: 'Nouveau message de contact Eleven Lease : ' + (data.nom || ''),
+  //            body:
+  //              'Nouveau message reçu via le formulaire de contact elevenlease.fr :\n\n' +
+  //              'Nom : ' + (data.nom || '-') + '\n' +
+  //              'Email : ' + (data.email || '-') + '\n' +
+  //              'Téléphone : ' + (data.telephone || '-') + '\n' +
+  //              'Message : ' + (data.message || '-') + '\n\n' +
+  //              'Voir tous les messages : ' + ss.getUrl()
+  //          });
+  //          return ContentService.createTextOutput(JSON.stringify({status:'ok'}))
+  //            .setMimeType(ContentService.MimeType.JSON);
+  //        }
+  //
+  //        var sheet = ss.getActiveSheet();
+  //        sheet.appendRow([
+  //          new Date(), data.vehicule || '', data.prenom || '', data.nom || '',
+  //          data.telephone || '', data.email || '', data.profil || '', data.entreprise || '',
+  //          data.financement || '', data.typeVehiculeSouhaite || '', data.budgetSouhaite || '',
+  //          data.neufOccasion || '', data.kilometrage || '', data.dureeContrat || '', data.apport || '',
+  //          data.dateLivraison || '', data.vehiculeReprise || '', data.vehiculeRepriseDetails || '',
+  //          data.statutPro || '', data.revenus || '', data.charges || '', data.anciennete || '',
+  //          data.age || '', data.ficp || '', data.eligible || '', data.criteresRisque || '',
+  //          data.message || ''
+  //        ]);
+  //        MailApp.sendEmail({
+  //          to: 'admin@elevenlease.fr',
+  //          subject: 'Nouveau lead Eleven Lease (' + (data.eligible === 'Oui' ? 'éligible' : 'à étudier') + ') : ' + (data.prenom || '') + ' ' + (data.nom || ''),
+  //          body:
+  //            'Nouvelle demande de simulation reçue sur elevenlease.fr :\n\n' +
+  //            'Éligibilité estimée : ' + (data.eligible || '-') + '\n' +
+  //            (data.criteresRisque ? 'Points à étudier : ' + data.criteresRisque + '\n' : '') +
+  //            '\nPrénom : ' + (data.prenom || '-') + '\n' +
+  //            'Nom : ' + (data.nom || '-') + '\n' +
+  //            'Téléphone : ' + (data.telephone || '-') + '\n' +
+  //            'Email : ' + (data.email || '-') + '\n' +
+  //            'Profil : ' + (data.profil || '-') + (data.entreprise ? ' (' + data.entreprise + ')' : '') + '\n' +
+  //            'Véhicule : ' + (data.vehicule || '-') + '\n' +
+  //            'Financement : ' + (data.financement || '-') + '\n' +
+  //            'Type de véhicule souhaité : ' + (data.typeVehiculeSouhaite || '-') + '\n' +
+  //            'Budget souhaité : ' + (data.budgetSouhaite || '-') + '\n' +
+  //            'Neuf ou occasion : ' + (data.neufOccasion || '-') + '\n' +
+  //            'Kilométrage annuel : ' + (data.kilometrage || '-') + '\n' +
+  //            'Durée de contrat : ' + (data.dureeContrat || '-') + '\n' +
+  //            'Apport : ' + (data.apport || '-') + '\n' +
+  //            'Livraison souhaitée : ' + (data.dateLivraison || '-') + '\n' +
+  //            'Véhicule à reprendre : ' + (data.vehiculeReprise || '-') + (data.vehiculeRepriseDetails ? ' (' + data.vehiculeRepriseDetails + ')' : '') + '\n' +
+  //            'Statut pro : ' + (data.statutPro || '-') + '\n' +
+  //            'Revenus : ' + (data.revenus || '-') + '\n' +
+  //            'Charges : ' + (data.charges || '-') + '\n' +
+  //            'Ancienneté : ' + (data.anciennete || '-') + '\n' +
+  //            'Âge : ' + (data.age || '-') + '\n' +
+  //            'FICP : ' + (data.ficp || '-') + '\n' +
+  //            'Message : ' + (data.message || '-') + '\n\n' +
+  //            'Voir toutes les demandes : ' + ss.getUrl()
+  //        });
+  //        return ContentService.createTextOutput(JSON.stringify({status:'ok'}))
+  //          .setMimeType(ContentService.MimeType.JSON);
+  //      }
+  //
+  // 3. Enregistre, puis Déployer > Gérer les déploiements > crayon
+  //    (modifier) > Version "Nouvelle version" > Déployer, pour que
+  //    l'URL existante utilise ce nouveau code.
+  // ============================================================
+  const LEADS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4VdDWwJoaqpudvU3Y2pGNyBt0zkYRSYKaZ9syNELViJdWoIoeDtb9Axu0ecA5B4bU/exec";
+
+  // ============================================================
+  // Espace admin (Supabase) : chaque demande est aussi enregistrée
+  // dans Supabase pour pouvoir être consultée sur admin.html.
+  // Remplacez ces deux valeurs par celles de votre projet Supabase
+  // (Project Settings > API). La clé "anon" est prévue pour être
+  // publique : la table `leads` n'autorise que l'ajout avec cette clé,
+  // jamais la lecture (voir supabase-setup.sql).
+  //
+  // Nouveaux champs de qualification : si la table `leads` existe déjà,
+  // exécutez une fois dans le SQL editor Supabase :
+  //   ALTER TABLE leads
+  //     ADD COLUMN IF NOT EXISTS neuf_occasion text,
+  //     ADD COLUMN IF NOT EXISTS kilometrage_annuel text,
+  //     ADD COLUMN IF NOT EXISTS duree_contrat text,
+  //     ADD COLUMN IF NOT EXISTS apport text,
+  //     ADD COLUMN IF NOT EXISTS date_livraison text,
+  //     ADD COLUMN IF NOT EXISTS vehicule_reprise text,
+  //     ADD COLUMN IF NOT EXISTS vehicule_reprise_details text;
+  // ============================================================
+  const SUPABASE_URL = "https://syzlvsfhdmegmebsvscm.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_aF6YEQBB5UrjOrNo9RTMjw_SM3MPKvM";
+
+  interface LeadPayload {
+    prenom: string; nom: string; telephone: string; email: string; vehicule: string;
+    profil: string; entreprise: string; financement: string; typeVehiculeSouhaite: string;
+    budgetSouhaite: string; neufOccasion: string; kilometrage: string; dureeContrat: string;
+    apport: string; dateLivraison: string; vehiculeReprise: string; vehiculeRepriseDetails: string;
+    statutPro: string; revenus: string; charges: string; anciennete: string; age: string; ficp: string;
+    message: string; eligible?: string; criteresRisque?: string;
+  }
+
+  function sendToSupabase(payload: LeadPayload){
+    if(!SUPABASE_URL || !SUPABASE_ANON_KEY) return;
+    fetch(SUPABASE_URL + '/rest/v1/leads', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        prenom: payload.prenom,
+        nom: payload.nom,
+        telephone: payload.telephone,
+        email: payload.email,
+        vehicule: payload.vehicule,
+        profil: payload.profil,
+        entreprise: payload.entreprise,
+        financement: payload.financement,
+        type_vehicule_souhaite: payload.typeVehiculeSouhaite,
+        budget_souhaite: payload.budgetSouhaite,
+        neuf_occasion: payload.neufOccasion,
+        kilometrage_annuel: payload.kilometrage,
+        duree_contrat: payload.dureeContrat,
+        apport: payload.apport,
+        date_livraison: payload.dateLivraison,
+        vehicule_reprise: payload.vehiculeReprise,
+        vehicule_reprise_details: payload.vehiculeRepriseDetails,
+        statut_pro: payload.statutPro,
+        revenus: payload.revenus,
+        charges: payload.charges,
+        anciennete: payload.anciennete,
+        age: payload.age,
+        ficp: payload.ficp,
+        eligible: payload.eligible,
+        criteres_risque: payload.criteresRisque,
+        message: payload.message
+      })
+    }).catch(err => console.error('Erreur enregistrement Supabase (non bloquant) :', err));
+  }
+
+  // Seuils utilisés pour l'estimation d'éligibilité (indicatifs,
+  // modifiables ici). Ce n'est pas une décision de crédit réelle,
+  // juste un pré-filtre pour orienter le conseiller.
+  const ELIGIBILITE_REVENU_MIN = 1200;
+  const ELIGIBILITE_AGE_MIN = 18;
+  const ELIGIBILITE_AGE_MAX = 75;
+  const ELIGIBILITE_ENDETTEMENT_MAX = 0.35;
+
+  function computeEligibility(payload: LeadPayload){
+    const reasons: string[] = [];
+    if(payload.ficp === 'Oui, fiché') reasons.push('Interdit bancaire (FICP)');
+    const revenus = parseFloat(payload.revenus);
+    if(!isNaN(revenus) && revenus < ELIGIBILITE_REVENU_MIN) reasons.push('Revenus sous le seuil habituel (' + ELIGIBILITE_REVENU_MIN + '€/mois)');
+    const charges = parseFloat(payload.charges);
+    if(!isNaN(revenus) && revenus > 0 && !isNaN(charges)){
+      const tauxEndettement = charges / revenus;
+      if(tauxEndettement > ELIGIBILITE_ENDETTEMENT_MAX) reasons.push("Taux d'endettement supérieur à " + Math.round(ELIGIBILITE_ENDETTEMENT_MAX * 100) + '%');
+    }
+    if(payload.statutPro === 'Étudiant' || payload.statutPro === 'Sans emploi') reasons.push('Statut professionnel (' + payload.statutPro + ')');
+    if(payload.anciennete === 'Moins de 6 mois') reasons.push("Ancienneté professionnelle inférieure à 6 mois");
+    const age = parseFloat(payload.age);
+    if(!isNaN(age) && (age < ELIGIBILITE_AGE_MIN || age > ELIGIBILITE_AGE_MAX)) reasons.push('Âge hors de la tranche habituelle (' + ELIGIBILITE_AGE_MIN + '-' + ELIGIBILITE_AGE_MAX + ' ans)');
+    return { eligible: reasons.length === 0, reasons: reasons };
+  }
+
+  const leadForm = document.getElementById('leadForm') as HTMLFormElement | null;
+  const formStatus = document.getElementById('formStatus')!;
+  const formStatusText = document.getElementById('formStatusText')!;
+  const successScreen = document.getElementById('successScreen')!;
+  const contactIntro = document.getElementById('contactIntro') as HTMLElement;
+  const formNote = document.getElementById('formNote') as HTMLElement;
+  const fVehiculeInput = document.getElementById('fVehicule') as HTMLInputElement;
+
+  const prefilledVehicule = new URLSearchParams(window.location.search).get('vehicule');
+  if(prefilledVehicule && fVehiculeInput){
+    fVehiculeInput.value = prefilledVehicule;
+  }
+
+  function showFormError(message: string){
+    formStatusText.textContent = message;
+    formStatus.classList.add('show', 'error');
+  }
+
+  // ============================================================
+  // ASSISTANT PAS-À-PAS : une question par écran, comme un QCM.
+  // ============================================================
+  if(leadForm){
+    const stepEls = Array.from(document.querySelectorAll<HTMLElement>('.form-step'));
+    let currentStep = 1;
+
+    const stepBack = document.getElementById('stepBack') as HTMLButtonElement;
+    const stepNext = document.getElementById('stepNext') as HTMLButtonElement;
+    const stepSkip = document.getElementById('stepSkip') as HTMLButtonElement;
+    const stepError = document.getElementById('stepError')!;
+    const stepperBarFill = document.getElementById('stepperBarFill') as HTMLElement;
+    const stepperLabel = document.getElementById('stepperLabel')!;
+    const stepperTime = document.getElementById('stepperTime')!;
+    const stepperProgress = document.getElementById('stepperProgress') as HTMLElement;
+    const stepperNav = document.getElementById('stepperNav') as HTMLElement;
+    const SECONDS_PER_STEP = 7;
+
+    function radioValue(name: string): string {
+      const el = leadForm!.querySelector<HTMLInputElement>('input[name="' + name + '"]:checked');
+      return el ? el.value : '';
+    }
+
+    function isAchatFlow(){
+      return radioValue('financement') === 'Achat';
+    }
+
+    function getVisibleSteps(): number[] {
+      const skip = isAchatFlow();
+      return stepEls
+        .map(el => Number(el.dataset.step))
+        .filter(n => {
+          const el = stepEls.find(e => Number(e.dataset.step) === n)!;
+          return !(skip && (el.hasAttribute('data-eligibility-only') || el.hasAttribute('data-hide-if-achat')));
+        })
+        .sort((a, b) => a - b);
+    }
+
+    function validateStep(stepNum: number): string | null {
+      switch(stepNum){
+        case 5: return radioValue('neufOccasion') !== '' ? null : 'Merci de préciser si vous recherchez un véhicule neuf ou d\'occasion.';
+        case 6: return radioValue('kilometrage') !== '' ? null : 'Merci de sélectionner votre kilométrage annuel prévu.';
+        case 7: return radioValue('dureeContrat') !== '' ? null : 'Merci de sélectionner la durée de contrat souhaitée.';
+        case 8: return radioValue('apport') !== '' ? null : "Merci de préciser votre apport.";
+        case 9: return radioValue('dateLivraison') !== '' ? null : 'Merci d\'indiquer quand vous souhaitez recevoir votre véhicule.';
+        case 10: return radioValue('vehiculeReprise') !== '' ? null : 'Merci de préciser si vous avez un véhicule à reprendre.';
+        case 11: return radioValue('statutPro') !== '' ? null : 'Merci de sélectionner votre statut professionnel.';
+        case 12: return (document.getElementById('fRevenus') as HTMLInputElement).value !== '' ? null : "Merci d'indiquer vos revenus mensuels nets.";
+        case 13: return (document.getElementById('fCharges') as HTMLInputElement).value !== '' ? null : "Merci d'indiquer vos charges mensuelles (0 si aucune).";
+        case 14: return radioValue('anciennete') !== '' ? null : 'Merci de sélectionner votre ancienneté.';
+        case 16: {
+          if((document.getElementById('fPrenom') as HTMLInputElement).value.trim() === '') return 'Merci d\'indiquer votre prénom.';
+          if((document.getElementById('fNom') as HTMLInputElement).value.trim() === '') return 'Merci d\'indiquer votre nom.';
+          if((document.getElementById('fAge') as HTMLInputElement).value === '') return 'Merci d\'indiquer votre âge.';
+          if((document.getElementById('fTelephone') as HTMLInputElement).value.trim() === '') return 'Merci d\'indiquer votre numéro de téléphone.';
+          const el = document.getElementById('fEmail') as HTMLInputElement;
+          if(el.value.trim() === '') return 'Merci d\'indiquer votre email.';
+          if(!el.checkValidity()) return 'Merci d\'indiquer une adresse email valide.';
+          return null;
+        }
+        default: return null;
+      }
+    }
+
+    function renderStep(){
+      const visibleSteps = getVisibleSteps();
+      const posIndex = visibleSteps.indexOf(currentStep);
+      const visibleTotal = visibleSteps.length;
+      const isLastVisible = currentStep === visibleSteps[visibleTotal - 1];
+
+      stepEls.forEach(el => el.classList.toggle('active', Number(el.dataset.step) === currentStep));
+      stepBack.disabled = currentStep === visibleSteps[0];
+      stepSkip.style.display = (currentStep === visibleSteps[0] || isLastVisible) ? 'inline-block' : 'none';
+      stepNext.textContent = isLastVisible ? 'Envoyer ma demande' : 'Suivant';
+      stepperBarFill.style.width = Math.round((posIndex / visibleTotal) * 100) + '%';
+      stepperLabel.textContent = 'Question ' + (posIndex + 1) + ' / ' + visibleTotal;
+      const secondsLeft = (visibleTotal - posIndex) * SECONDS_PER_STEP;
+      stepperTime.textContent = secondsLeft <= 60 ? "Moins d'1 min restante" : '~' + Math.ceil(secondsLeft / 60) + ' min restantes';
+      stepError.classList.remove('show');
+      stepError.textContent = '';
+      const entrepriseField = document.getElementById('entrepriseField') as HTMLElement | null;
+      if(entrepriseField) entrepriseField.style.display = radioValue('profil') === 'Professionnel' ? '' : 'none';
+      const isAchat = isAchatFlow();
+      const budgetMensuelField = document.getElementById('budgetMensuelField') as HTMLElement | null;
+      const budgetAchatField = document.getElementById('budgetAchatField') as HTMLElement | null;
+      if(budgetMensuelField) budgetMensuelField.style.display = isAchat ? 'none' : '';
+      if(budgetAchatField) budgetAchatField.style.display = isAchat ? '' : 'none';
+      const vehiculeRepriseField = document.getElementById('vehiculeRepriseField') as HTMLElement | null;
+      if(vehiculeRepriseField) vehiculeRepriseField.style.display = radioValue('vehiculeReprise') === 'Oui' ? '' : 'none';
+      const activeEl = stepEls.find(el => Number(el.dataset.step) === currentStep)!;
+      const focusable = activeEl.querySelector<HTMLElement>('input, select, textarea');
+      if(focusable) setTimeout(() => focusable.focus(), 50);
+    }
+
+    function goNext(){
+      const err = validateStep(currentStep);
+      if(err){
+        stepError.textContent = err;
+        stepError.classList.add('show');
+        return;
+      }
+      const visibleSteps = getVisibleSteps();
+      const posIndex = visibleSteps.indexOf(currentStep);
+      if(posIndex === visibleSteps.length - 1){
+        submitLead();
+        return;
+      }
+      currentStep = visibleSteps[posIndex + 1];
+      renderStep();
+    }
+
+    function goBack(){
+      const visibleSteps = getVisibleSteps();
+      const posIndex = visibleSteps.indexOf(currentStep);
+      if(posIndex <= 0) return;
+      currentStep = visibleSteps[posIndex - 1];
+      renderStep();
+    }
+
+    function resetWizard(){
+      leadForm!.reset();
+      if(prefilledVehicule) fVehiculeInput.value = prefilledVehicule;
+      currentStep = 1;
+      formStatus.classList.remove('show', 'error');
+      successScreen.classList.remove('show');
+      contactIntro.style.display = '';
+      stepperProgress.style.display = '';
+      stepperNav.style.display = '';
+      formNote.style.display = '';
+      stepNext.disabled = false;
+      renderStep();
+    }
+
+    stepNext.addEventListener('click', goNext);
+    stepBack.addEventListener('click', goBack);
+    stepSkip.addEventListener('click', goNext);
+    document.getElementById('restartWizardSuccess')!.addEventListener('click', resetWizard);
+
+    // Le champ "véhicule concerné" est sur le même écran que la question
+    // Oui/Non (contrairement aux autres champs conditionnels, affichés sur
+    // un step suivant) : il doit donc réagir immédiatement, sans attendre
+    // le prochain renderStep().
+    leadForm.querySelectorAll<HTMLInputElement>('input[name="vehiculeReprise"]').forEach(radio => {
+      radio.addEventListener('change', () => {
+        const field = document.getElementById('vehiculeRepriseField') as HTMLElement | null;
+        if(field) field.style.display = radioValue('vehiculeReprise') === 'Oui' ? '' : 'none';
+      });
+    });
+
+    leadForm.addEventListener('keydown', (e: KeyboardEvent)=>{
+      if(e.key === 'Enter' && (e.target as HTMLElement).tagName !== 'TEXTAREA'){
+        e.preventDefault();
+        goNext();
+      }
+    });
+    leadForm.addEventListener('submit', (e)=> e.preventDefault());
+
+    async function submitLead(){
+      if(!LEADS_SCRIPT_URL){
+        showFormError("Formulaire pas encore configuré. Merci de nous contacter directement à contact@elevenlease.fr en attendant.");
+        return;
+      }
+      const achatFlow = isAchatFlow();
+      const vehiculeRepriseVal = radioValue('vehiculeReprise');
+      const payload: LeadPayload = {
+        prenom: (document.getElementById('fPrenom') as HTMLInputElement).value.trim(),
+        nom: (document.getElementById('fNom') as HTMLInputElement).value.trim(),
+        telephone: (document.getElementById('fTelephone') as HTMLInputElement).value.trim(),
+        email: (document.getElementById('fEmail') as HTMLInputElement).value.trim(),
+        vehicule: fVehiculeInput.value.trim(),
+        profil: radioValue('profil'),
+        entreprise: (document.getElementById('fEntreprise') as HTMLInputElement).value.trim(),
+        financement: radioValue('financement'),
+        typeVehiculeSouhaite: radioValue('typeVehicule'),
+        budgetSouhaite: achatFlow ? radioValue('budgetAchat') : radioValue('budget'),
+        neufOccasion: radioValue('neufOccasion'),
+        kilometrage: achatFlow ? '' : radioValue('kilometrage'),
+        dureeContrat: achatFlow ? '' : radioValue('dureeContrat'),
+        apport: radioValue('apport'),
+        dateLivraison: radioValue('dateLivraison'),
+        vehiculeReprise: vehiculeRepriseVal,
+        vehiculeRepriseDetails: vehiculeRepriseVal === 'Oui' ? (document.getElementById('fVehiculeRepriseDetails') as HTMLInputElement).value.trim() : '',
+        statutPro: radioValue('statutPro'),
+        revenus: (document.getElementById('fRevenus') as HTMLInputElement).value,
+        charges: (document.getElementById('fCharges') as HTMLInputElement).value,
+        anciennete: radioValue('anciennete'),
+        age: (document.getElementById('fAge') as HTMLInputElement).value,
+        ficp: achatFlow ? '' : radioValue('ficp'),
+        message: (document.getElementById('fMessage') as HTMLTextAreaElement).value.trim(),
+      };
+      if(achatFlow){
+        payload.eligible = 'N/A (achat comptant)';
+        payload.criteresRisque = '';
+      } else {
+        const evalResult = computeEligibility(payload);
+        payload.eligible = evalResult.eligible ? 'Oui' : 'Non';
+        payload.criteresRisque = evalResult.reasons.join(', ');
+      }
+
+      stepNext.disabled = true;
+      stepNext.textContent = 'Envoi en cours…';
+      formStatus.classList.remove('show', 'error');
+      try{
+        sendToSupabase(payload);
+        const res = await fetch(LEADS_SCRIPT_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        if(!res.ok) throw new Error('HTTP ' + res.status);
+        stepperProgress.style.display = 'none';
+        stepEls.forEach(el => el.classList.remove('active'));
+        stepperNav.style.display = 'none';
+        formNote.style.display = 'none';
+        contactIntro.style.display = 'none';
+        successScreen.classList.add('show');
+      }catch(err){
+        console.error('Erreur envoi formulaire :', err);
+        showFormError("Une erreur est survenue lors de l'envoi. Merci de réessayer, ou contactez-nous directement à contact@elevenlease.fr.");
+        stepNext.disabled = false;
+        stepNext.textContent = 'Envoyer ma demande';
+      }
+    }
+
+    renderStep();
+  }
+</script>
+
+<style>
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+  }
+  h1,h2,h3,.display{
+    font-family:'Space Grotesk',sans-serif;
+    font-weight:700;
+    letter-spacing:-0.02em;
+    line-height:1.05;
+  }
+  .wrap{max-width:640px;margin:0 auto;padding:0 32px;}
+  @media(max-width:640px){ .wrap{padding:0 20px;} }
+
+  /* logo */
+  .logo{display:flex;align-items:center;gap:10px;}
+  .logo-icon{width:106px;height:46px;background-image:url('/eleven-lease-logo.png');background-repeat:no-repeat;background-size:contain;background-position:center;flex:none;}
+
+  /* nav */
+  header{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(10,10,10,0.7);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--border);
+  }
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1180px;margin:0 auto;}
+  .back-link{font-size:14px;color:var(--text-dim);transition:color .2s ease;}
+  .back-link:hover{color:var(--accent-1);}
+  @media(max-width:640px){ nav{padding:16px 20px;} }
+
+  .simulation-screen{
+    min-height:100vh;
+    display:flex;align-items:center;justify-content:center;
+    padding:120px 0 60px;
+  }
+
+  /* contact form / eligibility wizard */
+  .contact-panel{
+    border:1px solid var(--border);border-radius:24px;
+    padding:64px;
+    background:radial-gradient(ellipse at 50% 0%, var(--surface), var(--bg));
+    width:100%;
+  }
+  .contact-intro{text-align:center;max-width:520px;margin:0 auto 40px;}
+  .contact-intro h1{font-size:clamp(26px,4vw,36px);margin-bottom:16px;}
+  .contact-intro p{color:var(--text-dim);font-size:15.5px;}
+  .trust-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:18px;}
+  .trust-badge{
+    display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:500;color:var(--text-dim);
+    border:1px solid var(--border);border-radius:100px;padding:6px 13px;white-space:nowrap;
+  }
+  .lead-form{display:flex;flex-direction:column;gap:8px;max-width:480px;margin:0 auto;}
+  .lead-form input, .lead-form select, .lead-form textarea{
+    background:var(--surface-2);border:1px solid var(--border);color:var(--text);
+    padding:16px 18px;border-radius:14px;font-size:15.5px;font-family:'Inter',sans-serif;
+    width:100%;
+    transition:border-color .25s ease, background .25s ease, box-shadow .25s ease;
+  }
+  .lead-form input::placeholder, .lead-form textarea::placeholder{color:var(--text-faint);}
+  .lead-form input:hover, .lead-form select:hover, .lead-form textarea:hover{border-color:#444;}
+  .lead-form input:focus, .lead-form select:focus, .lead-form textarea:focus{
+    outline:none;border-color:var(--accent-1);background:#202020;
+    box-shadow:0 0 0 3px rgba(255,0,127,0.15);
+  }
+  .lead-form textarea{resize:vertical;min-height:110px;font-family:'Inter',sans-serif;line-height:1.55;}
+  .lead-form select{
+    cursor:pointer;-webkit-appearance:none;appearance:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239a9a9a' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat:no-repeat;background-position:right 18px center;padding-right:44px;
+  }
+  .lead-form select option{background:var(--surface-2);color:var(--text);}
+  .lead-form input[type="number"]{-moz-appearance:textfield;appearance:textfield;}
+  .lead-form input[type="number"]::-webkit-outer-spin-button,
+  .lead-form input[type="number"]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+  .btn-primary{
+    background:var(--accent);color:#fff;
+    padding:16px 28px;border-radius:100px;
+    font-weight:600;font-size:15px;
+    transition:transform .2s ease, filter .2s ease, box-shadow .3s ease;
+    display:inline-block;
+  }
+  .btn-primary:hover{filter:brightness(1.12);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,0,127,0.25);}
+  .btn-primary:active{transform:scale(.96);box-shadow:0 4px 12px rgba(255,0,127,0.2);}
+  button.btn-primary{border:none;font-family:inherit;cursor:pointer;width:fit-content;}
+  button.btn-primary:disabled{opacity:0.6;cursor:not-allowed;transform:none;box-shadow:none;}
+  .radio-group{display:flex;gap:12px;padding-top:4px;}
+  .choice-grid{display:flex;flex-direction:column;gap:10px;padding-top:4px;}
+  .choice-grid .radio-option{justify-content:flex-start;}
+  .choice-grid .radio-option::before{display:none;}
+  .field-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding-top:4px;}
+  .field-item{display:flex;flex-direction:column;gap:6px;}
+  .field-item label{font-size:12.5px;color:var(--text-dim);}
+  .field-item.full{grid-column:1 / -1;}
+  @media(max-width:520px){ .field-grid{grid-template-columns:1fr;} }
+  .radio-option{
+    flex:1;display:flex;align-items:center;justify-content:center;gap:8px;
+    font-size:15px;font-weight:500;color:var(--text);cursor:pointer;
+    background:var(--surface-2);border:1px solid var(--border);border-radius:14px;
+    padding:16px 18px;
+    transition:border-color .25s ease, background .25s ease, transform .2s ease;
+  }
+  .radio-option:hover{border-color:#555;transform:translateY(-2px);}
+  .radio-option:active{transform:scale(.97);}
+  .radio-option input{
+    position:absolute;opacity:0;width:0;height:0;pointer-events:none;
+  }
+  .radio-option::before{
+    content:'';width:16px;height:16px;border-radius:50%;flex:none;
+    border:1.5px solid var(--text-dim);
+    transition:border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+  .radio-option:has(input:focus-visible){outline:2px solid var(--accent-1);outline-offset:2px;}
+  .radio-option:has(input:checked){border-color:var(--accent-1);background:#202020;}
+  .radio-option:has(input:checked)::before{
+    border-color:var(--accent-1);background:var(--accent);
+    box-shadow:inset 0 0 0 3px #202020;
+  }
+  .field-stack{display:flex;flex-direction:column;gap:22px;}
+  .field-stack .field-item > label{font-size:14.5px;color:var(--text);font-weight:500;margin-bottom:2px;}
+  .form-note{font-size:12.5px;color:var(--text-faint);text-align:center;margin-top:8px;}
+  .form-status{font-size:13.5px;display:none;padding:16px 18px;border:1px solid var(--border);border-radius:10px;text-align:center;}
+  .form-status.show{display:block;}
+  .form-status.error{color:var(--text-dim);border-color:#555;}
+
+  /* stepper */
+  .stepper-progress{margin-bottom:8px;}
+  .stepper-bar-track{height:3px;background:var(--border);border-radius:100px;overflow:hidden;}
+  .stepper-bar-fill{height:100%;width:0%;background:var(--accent);border-radius:100px;box-shadow:0 0 10px rgba(255,0,127,0.45);transition:width .45s cubic-bezier(.16,1,.3,1), box-shadow .45s ease;}
+  .stepper-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;}
+  .stepper-label, .stepper-time{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;}
+  .stepper-time{color:var(--accent-1);font-weight:600;}
+  .form-step{display:none;flex-direction:column;gap:10px;min-height:120px;padding:20px 0 8px;animation:stepIn .4s cubic-bezier(.16,1,.3,1);}
+  .form-step.active{display:flex;}
+  @keyframes stepIn{from{opacity:0;transform:translateY(10px) scale(.985);}to{opacity:1;transform:translateY(0) scale(1);}}
+  .form-step > label{font-size:17px;color:var(--text);font-weight:500;}
+  .step-icon{margin-right:8px;}
+  .form-step .field-hint{font-size:12.5px;color:var(--text-faint);margin-top:-2px;}
+  .step-error{font-size:12.5px;color:var(--text-dim);display:none;margin-top:4px;}
+  .step-error.show{display:block;}
+  .stepper-nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:12px;}
+  .step-back, .step-skip, .restart-link{
+    font-size:13.5px;color:var(--text-dim);cursor:pointer;background:none;border:none;font-family:inherit;padding:0;
+  }
+  .step-back:hover, .step-skip:hover, .restart-link:hover{color:var(--text);}
+  .step-back:disabled{visibility:hidden;}
+  .step-skip{text-decoration:underline;}
+  .restart-link{text-decoration:underline;margin-top:14px;display:inline-block;}
+  /* écran de succès */
+  .success-screen{display:none;text-align:center;}
+  .success-screen.show{display:block;animation:fadeUp .5s cubic-bezier(.16,1,.3,1);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .success-icon{font-size:40px;margin-bottom:14px;}
+  .success-screen h2{font-size:clamp(22px,3.2vw,28px);margin-bottom:12px;}
+  .success-screen > p{color:var(--text-dim);font-size:15px;max-width:420px;margin:0 auto 28px;}
+  .success-steps{
+    text-align:left;max-width:380px;margin:0 auto 28px;border:1px solid var(--border);border-radius:16px;
+    padding:20px 22px;background:var(--surface-2);display:flex;flex-direction:column;gap:12px;
+  }
+  .success-steps .s-label{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;}
+  .success-steps .s-item{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--text);}
+  .success-contact{border-top:1px solid var(--border);padding-top:24px;margin-top:4px;}
+  .success-contact p{color:var(--text-dim);font-size:14.5px;margin-bottom:14px;}
+  .whatsapp-btn{
+    display:inline-flex;align-items:center;gap:9px;background:#20263a;color:#fff;
+    padding:14px 24px;border-radius:100px;font-weight:600;font-size:14.5px;
+    border:1px solid var(--border);transition:transform .2s ease, border-color .2s ease;
+  }
+  .whatsapp-btn svg{color:#25D366;flex:none;}
+  .whatsapp-btn:hover{transform:translateY(-2px);border-color:#25D366;}
+  .btn-outline{
+    display:inline-block;border:1px solid var(--border);color:var(--text-dim);
+    padding:14px 24px;border-radius:100px;font-weight:600;font-size:14.5px;
+    transition:border-color .2s ease, color .2s ease, transform .2s ease;
+  }
+  .btn-outline:hover{border-color:#666;color:var(--text);transform:translateY(-2px);}
+  .success-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;}
+  .success-actions + .restart-link{display:block;text-align:center;}
+  @media(max-width:640px){ .contact-panel{padding:40px 24px;} }
+
+  footer{border-top:1px solid var(--border);padding:32px 0;}
+  .footer-bottom{font-size:13px;color:var(--text-faint);text-align:center;}
+</style>
+</MinimalLayout>
