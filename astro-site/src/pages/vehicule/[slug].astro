@@ -26,6 +26,48 @@ const canonicalPath = `/vehicule/${v.slug}.html`;
 const photos = v.photos.length ? v.photos : [];
 const baseDuree = parseDureeMonths(v.duration);
 
+const canonicalUrl = `https://elevenlease.fr${canonicalPath}`;
+
+const vehicleSchema: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'Vehicle',
+  name: `${v.brand} ${v.name}${v.finition ? ' ' + v.finition : ''}`,
+  brand: { '@type': 'Brand', name: v.brand },
+  model: v.name,
+  description: pageDescription,
+  url: canonicalUrl,
+  ...(photos.length && { image: photos }),
+  ...(v.finition && { vehicleConfiguration: v.finition }),
+  ...(v.annee && { vehicleModelDate: v.annee }),
+  ...(v.fuel && { fuelType: v.fuel }),
+  ...(v.transmission && { vehicleTransmission: v.transmission }),
+  ...(v.places && /^\d+$/.test(v.places) && { seatingCapacity: Number(v.places) }),
+  ...(v.puissance && /^\d+$/.test(v.puissance) && {
+    vehicleEngine: {
+      '@type': 'EngineSpecification',
+      enginePower: { '@type': 'QuantitativeValue', value: v.puissance, unitCode: 'HUR' },
+    },
+  }),
+  itemCondition: v.condition === 'occasion' ? 'https://schema.org/UsedCondition' : 'https://schema.org/NewCondition',
+  ...(v.price && {
+    offers: {
+      '@type': 'Offer',
+      url: canonicalUrl,
+      priceCurrency: 'EUR',
+      price: v.price,
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price: v.price,
+        priceCurrency: 'EUR',
+        unitText: 'MONTH',
+      },
+      businessFunction: 'http://purl.org/goodrelations/v1#LeaseOut',
+      availability: 'https://schema.org/InStock',
+      seller: { '@type': 'Organization', name: 'Eleven Lease' },
+    },
+  }),
+};
+
 const DUREE_STEPS = [36, 48, 60];
 const APPORT_STEPS = [0, 2000, 5000];
 
@@ -83,6 +125,7 @@ const specRows = buildSpecRows(v);
 const optionEntries = Object.entries(v.options).filter(([, items]) => items.length > 0);
 ---
 <MinimalLayout title={pageTitle} description={pageDescription} path={canonicalPath}>
+<script type="application/ld+json" set:html={JSON.stringify(vehicleSchema)} />
 <div id="pageContent">
   <div class="wrap">
     <div class="detail-header-row">
