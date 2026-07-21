@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Mentions légales | Eleven Lease"
+  description="Mentions légales du site Eleven Lease : éditeur, hébergement, propriété intellectuelle et informations légales."
+  path="/mentions-legales.html"
+  twitterCard="summary"
+>
+  <section class="legal-hero">
+    <div class="wrap">
+      <div class="eyebrow"><span class="dot"></span> Informations légales</div>
+      <h1>Mentions légales</h1>
+      <div class="updated">Dernière mise à jour : juillet 2026</div>
+    </div>
+  </section>
+
+  <section class="legal-body">
+    <div class="wrap">
+      <div class="legal-content">
+
+        <div class="notice-box">
+          <strong>À noter :</strong> la société éditrice de ce site est en cours d'immatriculation. Les informations d'identification légale ci-dessous (SIREN, RCS, capital social...) seront complétées dès l'obtention du numéro d'immatriculation.
+        </div>
+
+        <h2>Éditeur du site</h2>
+        <div class="id-table">
+          <div class="id-row"><span>Nom commercial</span><span>Eleven Lease</span></div>
+          <div class="id-row"><span>Forme juridique</span><span class="pending">À compléter</span></div>
+          <div class="id-row"><span>Capital social</span><span class="pending">À compléter</span></div>
+          <div class="id-row"><span>Siège social</span><span class="pending">À compléter</span></div>
+          <div class="id-row"><span>SIREN</span><span class="pending">À compléter</span></div>
+          <div class="id-row"><span>RCS</span><span class="pending">À compléter</span></div>
+          <div class="id-row"><span>N° TVA intracommunautaire</span><span class="pending">À compléter</span></div>
+          <div class="id-row"><span>N° ORIAS (le cas échéant)</span><span class="pending">À compléter</span></div>
+          <div class="id-row"><span>Contact</span><span>contact@elevenlease.fr</span></div>
+        </div>
+
+        <h2>Directeur de la publication</h2>
+        <p>Le directeur de la publication est le représentant légal de la société éditrice, dont l'identité sera précisée à cet emplacement dès l'immatriculation de la société.</p>
+
+        <h2>Hébergement</h2>
+        <p>Le site elevenlease.fr est hébergé par :</p>
+        <p>Netlify, Inc.<br>2325 3rd Street, Suite 296, San Francisco, CA 94107, États-Unis<br><a class="inline-link" href="https://www.netlify.com" target="_blank" rel="noopener">www.netlify.com</a></p>
+
+        <h2>Activité du site</h2>
+        <p>Eleven Lease est une plateforme de mise en relation entre particuliers et un réseau de partenaires financiers pour des projets de leasing automobile (LOA/LLD) et d'achat de véhicules neufs ou d'occasion.</p>
+        <p><strong style="color:var(--text);">Eleven Lease n'est ni propriétaire des véhicules présentés, ni organisme de crédit.</strong> La société agit en qualité d'apporteur d'affaires : elle met en relation l'utilisateur avec des partenaires financiers indépendants, qui restent seuls responsables des offres proposées, de l'étude des dossiers et des décisions d'acceptation. Les véhicules et les contrats de financement relèvent exclusivement des partenaires concernés.</p>
+
+        <h2>Propriété intellectuelle</h2>
+        <p>L'ensemble des éléments composant ce site (textes, graphismes, logo, structure) est protégé par le droit de la propriété intellectuelle. Toute reproduction ou représentation, totale ou partielle, sans autorisation préalable, est interdite.</p>
+
+        <h2>Limitation de responsabilité</h2>
+        <p>Eleven Lease s'efforce d'assurer l'exactitude des informations diffusées sur ce site, notamment concernant les offres de véhicules, mais ne peut garantir l'exhaustivité ou l'actualité de ces informations, celles-ci pouvant évoluer selon les partenaires. Les loyers et conditions affichés sont donnés à titre indicatif et sont soumis à l'acceptation du dossier par le partenaire financier concerné.</p>
+
+        <h2>Données personnelles</h2>
+        <p>Le traitement des données personnelles collectées via ce site est détaillé dans notre <a class="inline-link" href="/confidentialite.html">politique de confidentialité</a>.</p>
+
+        <h2>Contact</h2>
+        <p>Pour toute question relative à ces mentions légales : <a class="inline-link" href="mailto:contact@elevenlease.fr">contact@elevenlease.fr</a></p>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-hero{padding:150px 0 40px;border-bottom:1px solid var(--border);}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);border:1px solid var(--border);padding:6px 14px;border-radius:100px;margin-bottom:24px;width:fit-content;}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-1);}
+  .legal-hero h1{font-size:clamp(30px,5vw,48px);max-width:760px;}
+  .legal-hero .updated{color:var(--text-faint);font-size:13.5px;margin-top:16px;}
+
+  .legal-body{padding:64px 0 100px;}
+  .legal-content{max-width:760px;}
+  .legal-content h2{font-size:clamp(20px,2.6vw,25px);margin:44px 0 16px;}
+  .legal-content h2:first-child{margin-top:0;}
+  .legal-content p{color:var(--text-dim);font-size:15.5px;line-height:1.75;}
+  .legal-content p + p{margin-top:14px;}
+  .legal-content ul{color:var(--text-dim);font-size:15.5px;line-height:1.75;margin-top:10px;padding-left:20px;}
+  .legal-content li + li{margin-top:6px;}
+  .legal-content a.inline-link{color:var(--text);text-decoration:underline;text-underline-offset:3px;}
+  .legal-content a.inline-link:hover{color:var(--accent-1);}
+
+  .id-table{border:1px solid var(--border);border-radius:16px;padding:8px 24px;margin-top:16px;background:var(--surface);}
+  .id-row{display:flex;justify-content:space-between;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);font-size:14.5px;flex-wrap:wrap;}
+  .id-row:last-child{border-bottom:none;}
+  .id-row span:first-child{color:var(--text-faint);}
+  .id-row span:last-child{color:var(--text-dim);}
+  .id-row .pending{color:var(--text-faint);font-style:italic;}
+
+  .notice-box{
+    border:1px solid var(--border);border-radius:16px;padding:20px 24px;margin-top:20px;
+    background:radial-gradient(ellipse at 0% 0%, var(--surface), var(--bg));
+    font-size:14px;color:var(--text-dim);line-height:1.7;
+  }
+  .notice-box strong{color:var(--text);}
+</style>

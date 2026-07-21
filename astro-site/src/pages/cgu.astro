@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Conditions générales d'utilisation | Eleven Lease"
+  description="Conditions générales d'utilisation du site Eleven Lease : objet, description du service, obligations des utilisateurs."
+  path="/cgu.html"
+  twitterCard="summary"
+>
+  <section class="legal-hero">
+    <div class="wrap">
+      <div class="eyebrow"><span class="dot"></span> Règles d'utilisation</div>
+      <h1>Conditions générales d'utilisation</h1>
+      <div class="updated">Dernière mise à jour : juillet 2026</div>
+    </div>
+  </section>
+
+  <section class="legal-body">
+    <div class="wrap">
+      <div class="legal-content">
+
+        <div class="notice-box">
+          <strong>À noter :</strong> la société éditrice de ce site est en cours d'immatriculation. Les informations d'identification complètes seront ajoutées dès l'obtention du numéro d'immatriculation — voir nos <a class="inline-link" href="/mentions-legales.html">mentions légales</a>.
+        </div>
+
+        <h2>1. Objet</h2>
+        <p>Les présentes conditions générales d'utilisation (CGU) régissent l'accès et l'usage du site elevenlease.fr, édité par Eleven Lease. Elles s'appliquent à tout utilisateur du site, qu'il soit simple visiteur ou qu'il soumette une demande via nos formulaires.</p>
+
+        <h2>2. Description du service</h2>
+        <p>Eleven Lease propose un service de mise en relation entre les utilisateurs et un réseau de partenaires financiers, pour des projets de leasing automobile (LOA/LLD) ou d'achat de véhicules neufs ou d'occasion.</p>
+        <p><strong style="color:var(--text);">Eleven Lease n'est ni un établissement de crédit, ni propriétaire des véhicules présentés sur le site.</strong> Eleven Lease agit exclusivement en qualité d'apporteur d'affaires. Le contrat de financement ou de leasing final est conclu directement entre l'utilisateur et le partenaire financier sélectionné — Eleven Lease n'est pas partie à ce contrat et n'intervient pas dans la décision d'acceptation ou de refus du dossier.</p>
+
+        <h2>3. Accès au site</h2>
+        <p>Le site est accessible gratuitement à tout utilisateur disposant d'un accès à internet. Tous les frais liés à cet accès (matériel, connexion, etc.) sont à la charge de l'utilisateur. Eleven Lease s'efforce d'assurer l'accessibilité du site mais ne garantit pas une disponibilité continue et pourra suspendre l'accès pour maintenance sans préavis.</p>
+
+        <h2>4. Utilisation du formulaire de demande</h2>
+        <p>En soumettant une demande via nos formulaires (simulation, éligibilité, contact), l'utilisateur s'engage à fournir des informations exactes, à jour et complètes. Toute fausse déclaration engage la seule responsabilité de son auteur et peut compromettre l'étude de son dossier par les partenaires financiers.</p>
+        <p>Les estimations de loyer et d'éligibilité affichées sur le site sont fournies à titre indicatif uniquement et ne constituent pas un engagement contractuel de la part d'Eleven Lease ou de ses partenaires. L'offre définitive dépend de l'étude du dossier par le partenaire financier concerné.</p>
+
+        <h2>5. Obligations de l'utilisateur</h2>
+        <ul>
+          <li>Utiliser le site conformément à sa destination et à la réglementation en vigueur</li>
+          <li>Ne pas tenter de nuire au fonctionnement du site ou d'accéder à des données ne lui appartenant pas</li>
+          <li>Fournir des informations sincères dans le cadre de ses demandes</li>
+        </ul>
+
+        <h2>6. Responsabilité</h2>
+        <p>Eleven Lease met tout en œuvre pour assurer l'exactitude des informations diffusées (catalogue de véhicules, contenus du guide LOA) mais ne peut garantir l'absence d'erreur. Eleven Lease ne saurait être tenue responsable des conditions finales, des délais ou des décisions prises par les partenaires financiers du réseau, ceux-ci demeurant seuls responsables de leurs offres.</p>
+
+        <h2>7. Propriété intellectuelle</h2>
+        <p>Le contenu du site (textes, logo, graphismes, structure) est protégé par le droit de la propriété intellectuelle et demeure la propriété exclusive d'Eleven Lease. Toute reproduction non autorisée est interdite.</p>
+
+        <h2>8. Données personnelles</h2>
+        <p>Le traitement des données personnelles collectées via ce site est décrit dans notre <a class="inline-link" href="/confidentialite.html">politique de confidentialité</a>.</p>
+
+        <h2>9. Modification des CGU</h2>
+        <p>Eleven Lease se réserve le droit de modifier les présentes CGU à tout moment, notamment pour les adapter aux évolutions du site ou de la réglementation. La version applicable est celle en vigueur à la date de consultation du site.</p>
+
+        <h2>10. Droit applicable et litiges</h2>
+        <p>Les présentes CGU sont soumises au droit français. En cas de litige, une solution amiable sera recherchée en priorité avant toute action judiciaire, portée devant les tribunaux compétents.</p>
+
+        <h2>11. Contact</h2>
+        <p>Pour toute question relative aux présentes CGU : <a class="inline-link" href="mailto:contact@elevenlease.fr">contact@elevenlease.fr</a></p>
+
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .legal-hero{padding:150px 0 40px;border-bottom:1px solid var(--border);}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);border:1px solid var(--border);padding:6px 14px;border-radius:100px;margin-bottom:24px;width:fit-content;}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-1);}
+  .legal-hero h1{font-size:clamp(30px,5vw,48px);max-width:760px;}
+  .legal-hero .updated{color:var(--text-faint);font-size:13.5px;margin-top:16px;}
+
+  .legal-body{padding:64px 0 100px;}
+  .legal-content{max-width:760px;}
+  .legal-content h2{font-size:clamp(20px,2.6vw,25px);margin:44px 0 16px;}
+  .legal-content h2:first-child{margin-top:0;}
+  .legal-content p{color:var(--text-dim);font-size:15.5px;line-height:1.75;}
+  .legal-content p + p{margin-top:14px;}
+  .legal-content ul{color:var(--text-dim);font-size:15.5px;line-height:1.75;margin-top:10px;padding-left:20px;}
+  .legal-content li + li{margin-top:6px;}
+  .legal-content a.inline-link{color:var(--text);text-decoration:underline;text-underline-offset:3px;}
+  .legal-content a.inline-link:hover{color:var(--accent-1);}
+
+  .notice-box{
+    border:1px solid var(--border);border-radius:16px;padding:20px 24px;margin-top:20px;
+    background:radial-gradient(ellipse at 0% 0%, var(--surface), var(--bg));
+    font-size:14px;color:var(--text-dim);line-height:1.7;
+  }
+  .notice-box strong{color:var(--text);}
+</style>

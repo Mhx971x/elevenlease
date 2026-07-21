@@ -1,0 +1,91 @@
+---
+export interface Props {
+  ctaHref?: string;
+  /** Marque le lien nav correspondant comme actif */
+  active?: 'contact' | 'loa' | 'vehicules';
+  /** Affiche la barre de progression de scroll dans le header (pages de contenu long) */
+  showProgressBar?: boolean;
+}
+const { ctaHref = '/simulation.html', active, showProgressBar = false } = Astro.props;
+const cls = (key: string) => (active === key ? 'active' : undefined);
+---
+<header>
+  <nav>
+    <a href="/" class="logo">
+      <span class="logo-icon" role="img" aria-label="Eleven Lease"></span>
+    </a>
+    <div class="nav-links">
+      <a href="/#comment-ca-marche">Comment ça marche</a>
+      <a href="/loa.html" class={cls('loa')}>Guide LOA</a>
+      <a href="/vehicules.html" class={cls('vehicules')}>Nos offres</a>
+      <a href="/#avis">Avis</a>
+      <a href="/contact.html" class={cls('contact')}>Contact</a>
+    </div>
+    <div class="nav-right">
+      <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
+        <span></span><span></span><span></span>
+      </button>
+      <a href={ctaHref} class="nav-cta">Simuler mon leasing</a>
+    </div>
+  </nav>
+  {showProgressBar && <div class="progress-bar" id="progressBar"></div>}
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-head">
+    <div class="logo">
+      <span class="logo-icon" role="img" aria-label="Eleven Lease"></span>
+    </div>
+    <button class="mobile-menu-close" id="mobileMenuClose" aria-label="Fermer le menu">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+  <nav class="mobile-menu-list">
+    <a href="/#comment-ca-marche">Comment ça marche</a>
+    <a href="/loa.html" class={cls('loa')}>Guide LOA</a>
+    <a href="/vehicules.html" class={cls('vehicules')}>Nos offres</a>
+    <a href="/contact.html" class={cls('contact')}>Contact</a>
+  </nav>
+  <div class="mobile-menu-cta">
+    <a href={ctaHref} class="nav-cta">Simuler mon leasing</a>
+  </div>
+</div>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileMenuClose = document.getElementById('mobileMenuClose');
+  function openMobileMenu(){
+    mobileMenu.classList.add('open');
+    menuToggle.classList.add('active');
+    menuToggle.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('menu-open');
+  }
+  function closeMobileMenu(){
+    mobileMenu.classList.remove('open');
+    menuToggle.classList.remove('active');
+    menuToggle.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
+  }
+  if(menuToggle && mobileMenu){
+    menuToggle.addEventListener('click', ()=>{
+      mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
+    });
+    if(mobileMenuClose) mobileMenuClose.addEventListener('click', closeMobileMenu);
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileMenu));
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeMobileMenu(); });
+  }
+
+  // header scroll state + barre de progression (pages avec showProgressBar)
+  const headerEl = document.querySelector('header');
+  const progressBar = document.getElementById('progressBar');
+  if(progressBar && headerEl){
+    window.addEventListener('scroll', ()=>{
+      if(window.scrollY > 40){ headerEl.classList.add('scrolled'); }
+      else{ headerEl.classList.remove('scrolled'); }
+      const h = document.documentElement;
+      const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+      progressBar.style.width = scrolled + '%';
+    }, {passive:true});
+  }
+</script>

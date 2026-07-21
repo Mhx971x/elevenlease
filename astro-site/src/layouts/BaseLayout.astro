@@ -1,0 +1,156 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+export interface Props {
+  title: string;
+  description: string;
+  /** Chemin absolu utilisé pour construire le canonical + og:url, ex. "/loa.html" ou "/" */
+  path: string;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
+  twitterCard?: 'summary' | 'summary_large_image';
+  ctaHref?: string;
+  active?: 'contact' | 'loa' | 'vehicules';
+  showProgressBar?: boolean;
+}
+
+const {
+  title,
+  description,
+  path,
+  ogImage = 'https://elevenlease.fr/eleven-lease-logo.png',
+  ogType = 'website',
+  twitterCard = 'summary_large_image',
+  ctaHref,
+  active,
+  showProgressBar = false,
+} = Astro.props;
+
+const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
+---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{title}</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<meta name="description" content={description}>
+<link rel="canonical" href={canonicalUrl}>
+<meta property="og:type" content={ogType}>
+<meta property="og:site_name" content="Eleven Lease">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:image" content={ogImage}>
+<meta property="og:url" content={canonicalUrl}>
+<meta name="twitter:card" content={twitterCard}>
+<meta name="twitter:title" content={title}>
+<meta name="twitter:description" content={description}>
+<meta name="twitter:image" content={ogImage}>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<slot name="head" />
+<style is:global>
+  :root{
+    --bg:#0a0a0a;
+    --surface:#141414;
+    --surface-2:#1c1c1c;
+    --border:#2a2a2a;
+    --text:#ffffff;
+    --text-dim:#9a9a9a;
+    --text-faint:#5c5c5c;
+    --accent-1:#ff007f;
+    --accent-2:#8d0a32;
+    --accent:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.5;overflow-x:hidden;}
+  h1,h2,h3,.display{font-family:'Space Grotesk',sans-serif;font-weight:700;letter-spacing:-0.02em;line-height:1.05;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  @media(max-width:768px){ .wrap{padding:0 20px;} }
+
+  /* logo */
+  .logo{display:flex;align-items:center;gap:10px;transition:opacity .25s ease;}
+  .logo:hover{opacity:.8;}
+  .logo-icon{width:106px;height:46px;background-image:url('/eleven-lease-logo.png');background-repeat:no-repeat;background-size:contain;background-position:center;flex:none;}
+
+  /* nav */
+  header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:background .3s ease, border-color .3s ease;}
+  header.scrolled{background:rgba(10,10,10,0.92);}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1180px;margin:0 auto;}
+  .progress-bar{position:absolute;bottom:-1px;left:0;height:1px;width:0%;background:var(--accent);transition:width .1s linear;}
+  .nav-links{display:flex;gap:36px;font-size:14px;color:var(--text-dim);}
+  .nav-links a{position:relative;padding-bottom:4px;}
+  .nav-links a::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--accent);transition:width .3s cubic-bezier(.16,1,.3,1);}
+  .nav-links a:hover::after{width:100%;}
+  .nav-links a:hover{color:var(--accent-1);}
+  .nav-links a.active{color:var(--text);}
+  .nav-links a.active::after{width:100%;background:var(--accent);}
+  .nav-cta{background:var(--accent);color:#fff;padding:10px 20px;border-radius:100px;font-size:14px;font-weight:600;transition:filter .2s ease, transform .2s ease;}
+  .nav-cta:hover{filter:brightness(1.12);transform:translateY(-1px);}
+  .nav-cta:active{transform:scale(.95);}
+  @media(max-width:768px){ .nav-links{display:none;} }
+  @media(max-width:480px){
+    nav{padding:16px 20px;}
+    .logo{gap:7px;}
+    .logo-icon{width:83px;height:36px;}
+    .nav-cta{padding:9px 15px;font-size:13px;}
+  }
+
+  /* nav right group + mobile menu toggle */
+  .nav-right{display:flex;align-items:center;gap:14px;}
+  .menu-toggle{display:none;position:relative;width:24px;height:18px;flex:none;background:none;border:none;cursor:pointer;padding:0;}
+  .menu-toggle span{position:absolute;left:0;width:100%;height:2px;background:var(--text);border-radius:2px;transition:transform .35s cubic-bezier(.16,1,.3,1), opacity .25s ease, top .35s cubic-bezier(.16,1,.3,1);}
+  .menu-toggle span:nth-child(1){top:0;}
+  .menu-toggle span:nth-child(2){top:8px;}
+  .menu-toggle span:nth-child(3){top:16px;}
+  .menu-toggle.active span:nth-child(1){top:8px;transform:rotate(45deg);}
+  .menu-toggle.active span:nth-child(2){opacity:0;}
+  .menu-toggle.active span:nth-child(3){top:8px;transform:rotate(-45deg);}
+  @media(max-width:768px){ .menu-toggle{display:block;} }
+
+  /* full-screen mobile menu */
+  .mobile-menu{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateY(-14px);transition:opacity .4s cubic-bezier(.16,1,.3,1), transform .4s cubic-bezier(.16,1,.3,1), visibility 0s linear .4s;}
+  .mobile-menu.open{opacity:1;visibility:visible;transform:translateY(0);transition:opacity .4s cubic-bezier(.16,1,.3,1), transform .4s cubic-bezier(.16,1,.3,1);}
+  .mobile-menu-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--border);}
+  .mobile-menu-close{background:none;border:none;color:var(--text);cursor:pointer;padding:6px;display:flex;transition:transform .35s cubic-bezier(.16,1,.3,1);}
+  .mobile-menu-close:hover{transform:rotate(90deg);}
+  .mobile-menu-list{flex:1;display:flex;flex-direction:column;overflow-y:auto;width:100%;max-width:none;margin:0;padding:0;justify-content:flex-start;align-items:stretch;}
+  .mobile-menu-list a{display:block;width:100%;padding:15px 20px;font-size:19px;font-family:'Space Grotesk',sans-serif;font-weight:600;border-bottom:1px solid var(--border);color:var(--text-dim);text-align:center;opacity:0;transform:translateY(10px);transition:opacity .45s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1), color .2s ease, background .2s ease;}
+  .mobile-menu.open .mobile-menu-list a{opacity:1;transform:translateY(0);}
+  .mobile-menu.open .mobile-menu-list a:nth-child(1){transition-delay:.08s;}
+  .mobile-menu.open .mobile-menu-list a:nth-child(2){transition-delay:.13s;}
+  .mobile-menu.open .mobile-menu-list a:nth-child(3){transition-delay:.18s;}
+  .mobile-menu.open .mobile-menu-list a:nth-child(4){transition-delay:.23s;}
+  .mobile-menu-list a:hover, .mobile-menu-list a.active{color:var(--accent-1);background:var(--surface);}
+  .mobile-menu-cta{padding:24px 20px 32px;}
+  .mobile-menu-cta .nav-cta{display:block;text-align:center;width:100%;padding:16px 22px;font-size:15px;}
+  @media(min-width:769px){ .mobile-menu{display:none;} }
+  body.menu-open{overflow:hidden;}
+
+  /* footer (partagé) */
+  footer{border-top:1px solid var(--border);padding:64px 0 32px;}
+  .footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:48px;}
+  @media(max-width:768px){ .footer-top{grid-template-columns:1fr 1fr;} }
+  @media(max-width:480px){ .footer-top{grid-template-columns:1fr;} }
+  .footer-col h4{font-size:13px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;}
+  .footer-col a{display:block;color:var(--text-dim);font-size:14.5px;padding:6px 0;transition:color .2s ease;}
+  .footer-col a:hover{color:var(--accent-1);}
+  .footer-col p{color:var(--text-dim);font-size:14px;line-height:1.6;}
+  .footer-bottom{border-top:1px solid var(--border);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12.5px;color:var(--text-faint);}
+
+  @media (prefers-reduced-motion: reduce){ *{animation:none !important;transition:none !important;} }
+</style>
+</head>
+<body>
+  <Header ctaHref={ctaHref} active={active} showProgressBar={showProgressBar} />
+  <slot />
+  <Footer />
+</body>
+</html>

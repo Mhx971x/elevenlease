@@ -1,0 +1,287 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout
+  title="Nous contacter | Eleven Lease"
+  description="Une question sur votre projet de leasing ? Contactez l'équipe Eleven Lease par formulaire ou WhatsApp, réponse sous 24h."
+  path="/contact.html"
+  ctaHref="/simulation.html"
+  active="contact"
+>
+  <section class="contact-hero">
+    <div class="wrap">
+      <div class="eyebrow"><span class="dot"></span> Une réponse sous 24h</div>
+      <h1>Une question ? Écrivez-nous.</h1>
+      <p>Pas le temps de faire la simulation complète ? Laissez-nous un message, un conseiller de notre réseau de partenaires vous répond sous 24h.</p>
+    </div>
+  </section>
+
+  <section class="contact-body">
+    <div class="wrap">
+      <div class="contact-panel" id="contactPanel">
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="field-item">
+            <label for="cNom">Nom complet</label>
+            <input type="text" id="cNom" name="nom" autocomplete="name">
+          </div>
+          <div class="field-item">
+            <label for="cEmail">Email</label>
+            <input type="email" id="cEmail" name="email" autocomplete="email">
+          </div>
+          <div class="field-item">
+            <label for="cTelephone">Téléphone <span style="color:var(--text-faint);">(optionnel)</span></label>
+            <input type="tel" id="cTelephone" name="telephone" autocomplete="tel">
+          </div>
+          <div class="field-item">
+            <label for="cMessage">Votre message</label>
+            <textarea id="cMessage" name="message" rows="5" placeholder="Décrivez votre projet ou votre question..."></textarea>
+          </div>
+          <p class="form-error" id="formError"></p>
+          <button type="submit" class="btn-primary" id="contactSubmit">Envoyer mon message</button>
+          <p class="form-note">En envoyant ce message, vous acceptez d'être recontacté par notre réseau de partenaires.</p>
+        </form>
+
+        <div class="success-screen" id="successScreen">
+          <div class="success-icon">🎉</div>
+          <h2>Message envoyé !</h2>
+          <p>Merci, nous avons bien reçu votre message. Un conseiller de notre réseau vous répond sous 24h.</p>
+          <div class="success-contact">
+            <p>📞 Besoin d'aller plus vite ?</p>
+            <div class="success-actions">
+              <a class="whatsapp-btn" href="https://taap.it/elevenleasewhatsapp" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A8.86 8.86 0 0012.05 4c-4.9 0-8.9 4-8.9 8.9 0 1.57.42 3.1 1.2 4.44L3 22l4.8-1.26a8.9 8.9 0 004.25 1.08h0c4.9 0 8.9-4 8.9-8.9 0-2.38-.93-4.62-2.35-6.6zm-5.55 13.7h0a7.4 7.4 0 01-3.77-1.03l-.27-.16-2.8.74.75-2.73-.18-.28a7.38 7.38 0 01-1.13-3.94c0-4.08 3.32-7.4 7.4-7.4 1.98 0 3.84.77 5.24 2.17a7.35 7.35 0 012.16 5.23c0 4.08-3.32 7.4-7.4 7.4zm4.06-5.54c-.22-.11-1.31-.65-1.52-.72-.2-.08-.35-.11-.5.11-.15.22-.57.72-.7.87-.13.15-.26.16-.48.05-.22-.11-.94-.35-1.79-1.1-.66-.6-1.1-1.33-1.24-1.55-.13-.22-.01-.34.1-.45.1-.1.22-.26.33-.39.11-.13.15-.22.22-.37.07-.15.04-.28-.02-.39-.06-.11-.5-1.21-.69-1.66-.18-.43-.36-.38-.5-.38h-.43c-.15 0-.39.05-.59.28-.2.22-.78.76-.78 1.86s.8 2.16.91 2.31c.11.15 1.57 2.4 3.81 3.36.53.23.95.37 1.27.47.53.17 1.02.15 1.4.09.43-.06 1.31-.53 1.49-1.05.18-.51.18-.95.13-1.05-.05-.1-.2-.16-.42-.27z"/></svg>
+                Discuter sur WhatsApp
+              </a>
+              <a class="btn-outline" href="/">← Retour à l'accueil</a>
+            </div>
+          </div>
+          <button type="button" class="restart-link" id="sendAnotherBtn">← Envoyer un autre message</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-cta">
+    <div class="wrap">
+      <h2>Parler directement à un conseiller ?</h2>
+      <p>Envie d'une réponse immédiate ? Discutez en direct avec notre équipe sur WhatsApp, sans attendre.</p>
+      <div class="contact-cta-btn">
+        <a href="https://taap.it/elevenleasewhatsapp" target="_blank" rel="noopener" class="btn-primary">Discuter sur WhatsApp →</a>
+      </div>
+      <div class="contact-cta-info">
+        <div class="cta-info-item">
+          <div class="cta-info-label">Email</div>
+          <a href="mailto:contact@elevenlease.fr">contact@elevenlease.fr</a>
+        </div>
+      </div>
+      <div class="cta-socials">
+        <a class="social-btn" href="https://taap.it/elevenleasewhatsapp" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A8.86 8.86 0 0012.05 4c-4.9 0-8.9 4-8.9 8.9 0 1.57.42 3.1 1.2 4.44L3 22l4.8-1.26a8.9 8.9 0 004.25 1.08h0c4.9 0 8.9-4 8.9-8.9 0-2.38-.93-4.62-2.35-6.6zm-5.55 13.7h0a7.4 7.4 0 01-3.77-1.03l-.27-.16-2.8.74.75-2.73-.18-.28a7.38 7.38 0 01-1.13-3.94c0-4.08 3.32-7.4 7.4-7.4 1.98 0 3.84.77 5.24 2.17a7.35 7.35 0 012.16 5.23c0 4.08-3.32 7.4-7.4 7.4zm4.06-5.54c-.22-.11-1.31-.65-1.52-.72-.2-.08-.35-.11-.5.11-.15.22-.57.72-.7.87-.13.15-.26.16-.48.05-.22-.11-.94-.35-1.79-1.1-.66-.6-1.1-1.33-1.24-1.55-.13-.22-.01-.34.1-.45.1-.1.22-.26.33-.39.11-.13.15-.22.22-.37.07-.15.04-.28-.02-.39-.06-.11-.5-1.21-.69-1.66-.18-.43-.36-.38-.5-.38h-.43c-.15 0-.39.05-.59.28-.2.22-.78.76-.78 1.86s.8 2.16.91 2.31c.11.15 1.57 2.4 3.81 3.36.53.23.95.37 1.27.47.53.17 1.02.15 1.4.09.43-.06 1.31-.53 1.49-1.05.18-.51.18-.95.13-1.05-.05-.1-.2-.16-.42-.27z"/></svg>
+        </a>
+        <a class="social-btn" href="https://www.instagram.com/elevenlease" target="_blank" rel="noopener" aria-label="Instagram">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/></svg>
+        </a>
+        <a class="social-btn" href="https://www.tiktok.com/@elevenlease" target="_blank" rel="noopener" aria-label="TikTok">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82a4.28 4.28 0 01-2.66-1.28A4.53 4.53 0 0112.9 2H10.1v13.6a2.6 2.6 0 11-2.1-2.55V10.3a5.4 5.4 0 105.1 5.38V9.4a7 7 0 003.5 1.02V7.6a4.3 4.3 0 01-.9-.18v.02c-1.34-.42-.09 0 0 0z"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* intro hero */
+  .contact-hero{padding:150px 0 40px;border-bottom:1px solid var(--border);}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);border:1px solid var(--border);padding:6px 14px;border-radius:100px;margin-bottom:24px;width:fit-content;}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-1);}
+  .contact-hero h1{font-size:clamp(30px,5vw,48px);max-width:640px;}
+  .contact-hero p{color:var(--text-dim);font-size:15.5px;max-width:520px;margin-top:16px;}
+
+  /* form section */
+  .contact-body{padding:64px 0 100px;}
+  .contact-panel{
+    border:1px solid var(--border);border-radius:24px;padding:56px;max-width:600px;margin:0 auto;
+    background:radial-gradient(ellipse at 50% 0%, var(--surface), var(--bg));
+  }
+  @media(max-width:640px){ .contact-panel{padding:36px 24px;} }
+  .contact-form{display:flex;flex-direction:column;gap:18px;}
+  .field-item{display:flex;flex-direction:column;gap:6px;}
+  .field-item label{font-size:13.5px;color:var(--text-dim);}
+  .contact-form input, .contact-form textarea{
+    background:var(--surface-2);border:1px solid var(--border);color:var(--text);
+    padding:16px 18px;border-radius:14px;font-size:15.5px;font-family:'Inter',sans-serif;width:100%;
+    transition:border-color .25s ease, background .25s ease, box-shadow .25s ease;
+  }
+  .contact-form input::placeholder, .contact-form textarea::placeholder{color:var(--text-faint);}
+  .contact-form input:hover, .contact-form textarea:hover{border-color:#444;}
+  .contact-form input:focus, .contact-form textarea:focus{
+    outline:none;border-color:var(--accent-1);background:#202020;box-shadow:0 0 0 3px rgba(255,0,127,0.15);
+  }
+  .contact-form textarea{resize:vertical;min-height:130px;font-family:'Inter',sans-serif;line-height:1.55;}
+  .btn-primary{
+    background:var(--accent);color:#fff;padding:16px 28px;border-radius:100px;font-weight:600;font-size:15px;
+    transition:transform .2s ease, filter .2s ease, box-shadow .3s ease;display:inline-block;
+    border:none;font-family:inherit;cursor:pointer;width:fit-content;
+  }
+  .btn-primary:hover{filter:brightness(1.12);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,0,127,0.25);}
+  .btn-primary:active{transform:scale(.96);}
+  .btn-primary:disabled{opacity:0.6;cursor:not-allowed;transform:none;box-shadow:none;}
+  .form-error{font-size:12.5px;color:var(--text-dim);display:none;margin-top:-6px;}
+  .form-error.show{display:block;}
+  .form-note{font-size:12.5px;color:var(--text-faint);text-align:center;margin-top:4px;}
+
+  /* écran de succès */
+  .success-screen{display:none;text-align:center;}
+  .success-screen.show{display:block;animation:fadeUp .5s cubic-bezier(.16,1,.3,1);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+  .success-icon{font-size:40px;margin-bottom:14px;}
+  .success-screen h2{font-size:clamp(22px,3.2vw,28px);margin-bottom:12px;}
+  .success-screen > p{color:var(--text-dim);font-size:15px;max-width:420px;margin:0 auto 28px;}
+  .success-contact p{color:var(--text-dim);font-size:14.5px;margin-bottom:14px;}
+  .whatsapp-btn{
+    display:inline-flex;align-items:center;gap:9px;background:#20263a;color:#fff;
+    padding:14px 24px;border-radius:100px;font-weight:600;font-size:14.5px;
+    border:1px solid var(--border);transition:transform .2s ease, border-color .2s ease;
+  }
+  .whatsapp-btn svg{color:#25D366;flex:none;}
+  .whatsapp-btn:hover{transform:translateY(-2px);border-color:#25D366;}
+  .btn-outline{
+    display:inline-block;border:1px solid var(--border);color:var(--text-dim);
+    padding:14px 24px;border-radius:100px;font-weight:600;font-size:14.5px;
+    transition:border-color .2s ease, color .2s ease, transform .2s ease;
+  }
+  .btn-outline:hover{border-color:#666;color:var(--text);transform:translateY(-2px);}
+  .success-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px;}
+  .restart-link{font-size:13.5px;color:var(--text-dim);cursor:pointer;background:none;border:none;font-family:inherit;padding:0;text-decoration:underline;margin-top:22px;display:inline-block;}
+  .restart-link:hover{color:var(--text);}
+
+  /* contact CTA (bas de page) */
+  .contact-cta{padding:100px 0;text-align:center;border-top:1px solid var(--border);}
+  @media(max-width:768px){ .contact-cta{padding:64px 0;} }
+  .contact-cta h2{font-size:clamp(26px,4vw,36px);}
+  .contact-cta > .wrap > p{color:var(--text-dim);font-size:15.5px;max-width:520px;margin:16px auto 32px;}
+  .contact-cta-btn{margin-bottom:56px;}
+  .contact-cta-info{
+    display:flex;justify-content:center;gap:48px;flex-wrap:wrap;
+    padding-top:40px;border-top:1px solid var(--border);margin-bottom:40px;
+  }
+  .cta-info-item .cta-info-label{font-size:12px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
+  .cta-info-item a{color:var(--text-dim);font-size:15px;transition:color .2s ease;}
+  .cta-info-item a:hover{color:var(--accent-1);}
+  .cta-socials{display:flex;justify-content:center;gap:14px;}
+  .social-btn{
+    width:44px;height:44px;border-radius:50%;border:1px solid var(--border);
+    display:flex;align-items:center;justify-content:center;color:var(--text-dim);
+    transition:border-color .2s ease, color .2s ease, transform .2s ease;
+  }
+  .social-btn:hover{border-color:var(--accent-1);color:var(--accent-1);transform:translateY(-2px);}
+</style>
+
+<script>
+  // magnetic buttons (desktop only) — cohérent avec simulation.html
+  const isTouch = window.matchMedia('(pointer: coarse)').matches;
+  if(!isTouch){
+    document.querySelectorAll<HTMLElement>('.btn-primary').forEach(btn=>{
+      btn.addEventListener('mousemove', (e: MouseEvent)=>{
+        const r = btn.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width/2;
+        const y = e.clientY - r.top - r.height/2;
+        btn.style.transform = `translate(${x*0.18}px, ${y*0.35}px)`;
+      });
+      btn.addEventListener('mouseleave', ()=>{ btn.style.transform = 'translate(0,0)'; });
+    });
+  }
+
+  // ============================================================
+  // FORMULAIRE DE CONTACT SIMPLE : envoie chaque message vers le même
+  // Google Apps Script que le simulateur (avec formType:'contact', voir
+  // le commentaire de doc dans simulation.html pour le code doPost à
+  // jour) et vers Supabase (table `contact_messages`, lecture uniquement
+  // depuis l'espace admin via la fonction admin-leads).
+  // ============================================================
+  const LEADS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4VdDWwJoaqpudvU3Y2pGNyBt0zkYRSYKaZ9syNELViJdWoIoeDtb9Axu0ecA5B4bU/exec";
+  const SUPABASE_URL = "https://syzlvsfhdmegmebsvscm.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_aF6YEQBB5UrjOrNo9RTMjw_SM3MPKvM";
+
+  interface ContactPayload {
+    nom: string;
+    email: string;
+    telephone: string;
+    message: string;
+    formType?: string;
+  }
+
+  function sendContactToSupabase(payload: ContactPayload){
+    fetch(SUPABASE_URL + '/rest/v1/contact_messages', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({
+        nom: payload.nom,
+        email: payload.email,
+        telephone: payload.telephone,
+        message: payload.message
+      })
+    }).catch(err => console.error('Erreur enregistrement Supabase (non bloquant) :', err));
+  }
+
+  const contactForm = document.getElementById('contactForm') as HTMLFormElement;
+  const contactSubmit = document.getElementById('contactSubmit') as HTMLButtonElement;
+  const formError = document.getElementById('formError') as HTMLParagraphElement;
+  const successScreen = document.getElementById('successScreen') as HTMLDivElement;
+  const sendAnotherBtn = document.getElementById('sendAnotherBtn') as HTMLButtonElement;
+
+  function showError(message: string){
+    formError.textContent = message;
+    formError.classList.add('show');
+  }
+
+  contactForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formError.classList.remove('show');
+    formError.textContent = '';
+
+    const nom = (document.getElementById('cNom') as HTMLInputElement).value.trim();
+    const emailEl = document.getElementById('cEmail') as HTMLInputElement;
+    const email = emailEl.value.trim();
+    const telephone = (document.getElementById('cTelephone') as HTMLInputElement).value.trim();
+    const message = (document.getElementById('cMessage') as HTMLTextAreaElement).value.trim();
+
+    if(nom === '') return showError('Merci d\'indiquer votre nom.');
+    if(email === '' || !emailEl.checkValidity()) return showError('Merci d\'indiquer une adresse email valide.');
+    if(message === '') return showError('Merci d\'écrire votre message.');
+
+    contactSubmit.disabled = true;
+    contactSubmit.textContent = 'Envoi en cours…';
+
+    const payload: ContactPayload = { nom, email, telephone, message, formType: 'contact' };
+    try{
+      sendContactToSupabase(payload);
+      const res = await fetch(LEADS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      if(!res.ok) throw new Error('HTTP ' + res.status);
+      contactForm.style.display = 'none';
+      successScreen.classList.add('show');
+    }catch(err){
+      console.error('Erreur envoi formulaire de contact :', err);
+      showError("Une erreur est survenue lors de l'envoi. Merci de réessayer, ou contactez-nous directement à contact@elevenlease.fr.");
+      contactSubmit.disabled = false;
+      contactSubmit.textContent = 'Envoyer mon message';
+    }
+  });
+
+  sendAnotherBtn.addEventListener('click', () => {
+    contactForm.reset();
+    contactForm.style.display = '';
+    successScreen.classList.remove('show');
+    contactSubmit.disabled = false;
+    contactSubmit.textContent = 'Envoyer mon message';
+  });
+</script>
