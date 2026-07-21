@@ -1,0 +1,24 @@
+{
+  "name": "elevenlease.fr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mhx971x/elevenlease.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Mhx971x/elevenlease/issues"
+  },
+  "homepage": "https://github.com/Mhx971x/elevenlease#readme",
+  "devDependencies": {
+    "supabase": "^2.109.1"
+  }
+}

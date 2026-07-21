@@ -3,7 +3,12 @@ import MinimalLayout from '../../layouts/MinimalLayout.astro';
 import { fetchVehicles, parseDureeMonths, type Vehicle } from '../../lib/vehicles';
 
 export async function getStaticPaths() {
-  const vehicles = await fetchVehicles();
+  let vehicles: Vehicle[] = [];
+  try {
+    vehicles = await fetchVehicles();
+  } catch (e) {
+    console.error('Erreur de chargement des véhicules au build (fiches véhicule) :', e);
+  }
   return vehicles.map(v => ({
     params: { slug: v.slug },
     props: { vehicle: v },

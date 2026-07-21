@@ -233,6 +233,31 @@
   .edit-actions{display:flex;justify-content:flex-end;gap:10px;}
   .edit-actions .btn-ghost, .edit-actions .btn-primary{padding:9px 18px;font-size:13px;}
 
+  /* onglet véhicules : miniatures, formulaire, glisser-déposer photos */
+  .vehicle-thumb{width:48px;height:36px;border-radius:8px;object-fit:cover;background:var(--surface-2);border:1px solid var(--border);flex:none;}
+  .vehicle-thumb-placeholder{
+    width:48px;height:36px;border-radius:8px;background:var(--surface-2);border:1px solid var(--border);flex:none;
+    display:flex;align-items:center;justify-content:center;font-size:16px;
+  }
+  .add-vehicle-panel{display:none;margin-bottom:22px;border:1px solid var(--border);border-radius:16px;background:var(--surface);padding:22px;}
+  .add-vehicle-panel.open{display:block;}
+  .add-vehicle-panel h2{font-size:17px;margin-bottom:18px;}
+  .dropzone{
+    border:2px dashed var(--border);border-radius:14px;padding:24px;text-align:center;
+    color:var(--text-dim);font-size:13.5px;cursor:pointer;transition:border-color .2s ease, background .2s ease;
+    margin-bottom:14px;
+  }
+  .dropzone:hover, .dropzone.dragover{border-color:var(--accent-1);background:rgba(255,0,127,0.05);}
+  .photo-preview-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+  .photo-preview-item{position:relative;width:76px;height:56px;border-radius:8px;overflow:hidden;border:1px solid var(--border);background:var(--surface-2);}
+  .photo-preview-item img{width:100%;height:100%;object-fit:cover;display:block;}
+  .photo-preview-item.uploading{opacity:.5;}
+  .photo-preview-remove{
+    position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;
+    background:rgba(10,10,10,0.75);color:#fff;border:none;cursor:pointer;font-size:12px;line-height:1;
+    display:flex;align-items:center;justify-content:center;
+  }
+
   .empty-state, .loading-state, .error-state{
     text-align:center;padding:70px 20px;color:var(--text-dim);font-size:14.5px;
     border:1px solid var(--border);border-radius:16px;background:var(--surface);
@@ -285,6 +310,7 @@
     <div class="tab-bar">
       <button type="button" class="tab-btn active" id="tabLeadsBtn">Demandes simulateur <span class="tab-count" id="leadsTabCount">0</span></button>
       <button type="button" class="tab-btn" id="tabMessagesBtn">Messages de contact <span class="tab-count" id="messagesTabCount">0</span></button>
+      <button type="button" class="tab-btn" id="tabVehiclesBtn">Véhicules</button>
     </div>
 
     <div class="tab-panel active" id="leadsPanel">
@@ -341,18 +367,117 @@
       <div id="messagesEmptyState" class="empty-state" style="display:none;">Aucun message ne correspond à votre recherche.</div>
       <div class="lead-list" id="messageList" style="display:none;"></div>
     </div>
+
+    <div class="tab-panel" id="vehiclesPanel">
+      <div class="stats-row-3">
+        <div class="stat-card accent" id="vehStatTotalCard"><div class="num" id="vehStatTotal">0</div><div class="label">Véhicules au total</div></div>
+        <div class="stat-card accent" id="vehStatActiveCard"><div class="num" id="vehStatActive">0</div><div class="label">Actifs (visibles)</div></div>
+        <div class="stat-card" id="vehStatInactiveCard"><div class="num" id="vehStatInactive">0</div><div class="label">Inactifs (masqués)</div></div>
+      </div>
+
+      <div class="toolbar">
+        <input type="text" id="vehiclesSearchInput" placeholder="Rechercher une marque, un modèle…">
+        <select id="vehiclesStatusFilter">
+          <option value="">Tous les statuts</option>
+          <option value="active">Actifs</option>
+          <option value="inactive">Inactifs</option>
+        </select>
+        <select id="vehiclesSortSelect">
+          <option value="recent">Plus récent d'abord</option>
+          <option value="old">Plus ancien d'abord</option>
+          <option value="name">Par nom (A → Z)</option>
+          <option value="price-asc">Prix croissant</option>
+          <option value="price-desc">Prix décroissant</option>
+        </select>
+        <button type="button" class="btn-primary" id="addVehicleBtn">+ Ajouter un véhicule</button>
+      </div>
+
+      <div class="add-vehicle-panel" id="addVehiclePanel">
+        <h2 id="vehicleFormTitle">Ajouter un véhicule</h2>
+        <form id="vehicleForm">
+          <div class="edit-grid">
+            <label class="edit-field"><span>Marque *</span><input type="text" data-field="brand" required></label>
+            <label class="edit-field"><span>Modèle *</span><input type="text" data-field="name" required></label>
+            <label class="edit-field"><span>Finition</span><input type="text" data-field="finition"></label>
+            <label class="edit-field">
+              <span>Type</span>
+              <select data-field="type">
+                <option value="">—</option>
+                <option value="citadine">Citadine</option>
+                <option value="berline">Berline</option>
+                <option value="suv">SUV</option>
+                <option value="electrique">Électrique</option>
+              </select>
+            </label>
+            <label class="edit-field">
+              <span>État</span>
+              <select data-field="condition">
+                <option value="">—</option>
+                <option value="neuf">Neuf</option>
+                <option value="occasion">Occasion</option>
+              </select>
+            </label>
+            <label class="edit-field"><span>Prix (€/mois)</span><input type="number" data-field="price" min="0" step="1"></label>
+            <label class="edit-field"><span>Kilométrage annuel</span><input type="text" data-field="km" placeholder="Ex : 20 000 km / an"></label>
+            <label class="edit-field"><span>Durée</span><input type="text" data-field="duration" placeholder="Ex : 36 mois"></label>
+            <label class="edit-field"><span>Carburant</span><input type="text" data-field="fuel"></label>
+            <label class="edit-field"><span>Transmission</span><input type="text" data-field="transmission"></label>
+            <label class="edit-field"><span>Places</span><input type="text" data-field="places"></label>
+            <label class="edit-field"><span>Année</span><input type="text" data-field="annee"></label>
+            <label class="edit-field"><span>Puissance</span><input type="text" data-field="puissance"></label>
+            <label class="edit-field"><span>Moteur</span><input type="text" data-field="moteur"></label>
+            <label class="edit-field"><span>Autonomie électrique</span><input type="text" data-field="autonomie_elec"></label>
+            <label class="edit-field"><span>Autonomie cumulée</span><input type="text" data-field="autonomie_cumulee"></label>
+            <label class="edit-field"><span>Recharge DC</span><input type="text" data-field="recharge_dc"></label>
+            <label class="edit-field"><span>Recharge AC</span><input type="text" data-field="recharge_ac"></label>
+            <label class="edit-field"><span>Temps de charge</span><input type="text" data-field="temps_charge"></label>
+            <label class="edit-field"><span>Consommation</span><input type="text" data-field="consommation"></label>
+            <label class="edit-field"><span>CO2</span><input type="text" data-field="co2"></label>
+            <label class="edit-field"><span>Coffre</span><input type="text" data-field="coffre"></label>
+            <label class="edit-field"><span>Options confort (séparées par des virgules)</span><input type="text" data-field="options_confort"></label>
+            <label class="edit-field"><span>Options extérieur</span><input type="text" data-field="options_exterieur"></label>
+            <label class="edit-field"><span>Options intérieur</span><input type="text" data-field="options_interieur"></label>
+            <label class="edit-field"><span>Options technologie</span><input type="text" data-field="options_technologie"></label>
+          </div>
+          <label class="edit-field edit-field-full"><span>Description</span><textarea data-field="description" rows="3"></textarea></label>
+
+          <div class="edit-field-full">
+            <span style="font-size:12px;color:var(--text-dim);display:block;margin-bottom:8px;">Photos</span>
+            <div class="dropzone" id="photoDropzone">
+              Glissez-déposez des photos ici, ou cliquez pour parcourir
+              <input type="file" id="photoFileInput" accept="image/*" multiple style="display:none;">
+            </div>
+            <div class="photo-preview-grid" id="photoPreviewGrid"></div>
+          </div>
+
+          <div class="edit-actions">
+            <button type="button" class="btn-ghost" id="cancelVehicleFormBtn">Annuler</button>
+            <button type="submit" class="btn-primary" id="saveVehicleBtn">Ajouter le véhicule</button>
+          </div>
+        </form>
+      </div>
+
+      <div id="vehiclesLoadingState" class="loading-state"><div class="spinner"></div>Chargement des véhicules…</div>
+      <div id="vehiclesErrorState" class="error-state" style="display:none;"></div>
+      <div id="vehiclesEmptyState" class="empty-state" style="display:none;">Aucun véhicule ne correspond à votre recherche.</div>
+      <div class="lead-list" id="vehicleList" style="display:none;"></div>
+    </div>
   </div>
 </div>
 
 <script>
+  import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
   // ============================================================
   // Configuration Supabase — à renseigner avec les valeurs de votre
   // projet (Project Settings > API). ADMIN_FUNCTION_URL correspond à
   // l'URL de la fonction "admin-leads" une fois déployée, du type :
   // https://xxxxx.supabase.co/functions/v1/admin-leads
   // ============================================================
+  const SUPABASE_URL = "https://syzlvsfhdmegmebsvscm.supabase.co";
   const SUPABASE_ANON_KEY = "sb_publishable_aF6YEQBB5UrjOrNo9RTMjw_SM3MPKvM";
   const ADMIN_FUNCTION_URL = "https://syzlvsfhdmegmebsvscm.supabase.co/functions/v1/admin-leads";
+  const ADMIN_VEHICLES_FUNCTION_URL = "https://syzlvsfhdmegmebsvscm.supabase.co/functions/v1/admin-vehicles";
 
   interface Lead {
     id: string | number;
@@ -373,6 +498,20 @@
     status?: string;
     nom?: string; email?: string; telephone?: string; message?: string; created_at?: string;
   }
+  interface VehicleAdmin {
+    id: string | number;
+    created_at?: string; updated_at?: string; active?: boolean; slug: string;
+    brand: string; name: string; type?: string; condition?: string; price?: number | null;
+    km?: string; duration?: string; fuel?: string; photos?: string[];
+    transmission?: string; places?: string; finition?: string; description?: string;
+    options_confort?: string[]; options_exterieur?: string[]; options_interieur?: string[]; options_technologie?: string[];
+    annee?: string; puissance?: string; moteur?: string;
+    autonomie_elec?: string; autonomie_cumulee?: string; recharge_dc?: string; recharge_ac?: string;
+    temps_charge?: string; consommation?: string; co2?: string; coffre?: string;
+    [key: string]: unknown;
+  }
+
+  const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
   const loginScreen = document.getElementById('loginScreen') as HTMLElement;
   const dashboard = document.getElementById('dashboard') as HTMLElement;
@@ -412,19 +551,45 @@
   const msgStatNouveau = document.getElementById('msgStatNouveau')!;
   const msgStatTraite = document.getElementById('msgStatTraite')!;
 
+  const tabVehiclesBtn = document.getElementById('tabVehiclesBtn')!;
+  const vehiclesPanel = document.getElementById('vehiclesPanel')!;
+  const vehiclesSearchInput = document.getElementById('vehiclesSearchInput') as HTMLInputElement;
+  const vehiclesStatusFilter = document.getElementById('vehiclesStatusFilter') as HTMLSelectElement;
+  const vehiclesSortSelect = document.getElementById('vehiclesSortSelect') as HTMLSelectElement;
+  const vehiclesLoadingState = document.getElementById('vehiclesLoadingState') as HTMLElement;
+  const vehiclesErrorState = document.getElementById('vehiclesErrorState') as HTMLElement;
+  const vehiclesEmptyState = document.getElementById('vehiclesEmptyState') as HTMLElement;
+  const vehicleList = document.getElementById('vehicleList') as HTMLElement;
+  const vehStatTotal = document.getElementById('vehStatTotal')!;
+  const vehStatActive = document.getElementById('vehStatActive')!;
+  const vehStatInactive = document.getElementById('vehStatInactive')!;
+
+  const addVehicleBtn = document.getElementById('addVehicleBtn')!;
+  const addVehiclePanel = document.getElementById('addVehiclePanel') as HTMLElement;
+  const vehicleFormTitle = document.getElementById('vehicleFormTitle')!;
+  const vehicleForm = document.getElementById('vehicleForm') as HTMLFormElement;
+  const cancelVehicleFormBtn = document.getElementById('cancelVehicleFormBtn')!;
+  const saveVehicleBtn = document.getElementById('saveVehicleBtn') as HTMLButtonElement;
+  const photoDropzone = document.getElementById('photoDropzone') as HTMLElement;
+  const photoFileInput = document.getElementById('photoFileInput') as HTMLInputElement;
+  const photoPreviewGrid = document.getElementById('photoPreviewGrid') as HTMLElement;
+
   const cardEasing = 'cubic-bezier(.16,1,.3,1)';
   let allLeads: Lead[] = [];
   let allMessages: ContactMessage[] = [];
+  let allVehicles: VehicleAdmin[] = [];
 
-  function setActiveTab(tab: 'leads' | 'messages'){
-    const isLeads = tab === 'leads';
-    tabLeadsBtn.classList.toggle('active', isLeads);
-    tabMessagesBtn.classList.toggle('active', !isLeads);
-    leadsPanel.classList.toggle('active', isLeads);
-    messagesPanel.classList.toggle('active', !isLeads);
+  function setActiveTab(tab: 'leads' | 'messages' | 'vehicles'){
+    tabLeadsBtn.classList.toggle('active', tab === 'leads');
+    tabMessagesBtn.classList.toggle('active', tab === 'messages');
+    tabVehiclesBtn.classList.toggle('active', tab === 'vehicles');
+    leadsPanel.classList.toggle('active', tab === 'leads');
+    messagesPanel.classList.toggle('active', tab === 'messages');
+    vehiclesPanel.classList.toggle('active', tab === 'vehicles');
   }
   tabLeadsBtn.addEventListener('click', () => setActiveTab('leads'));
   tabMessagesBtn.addEventListener('click', () => setActiveTab('messages'));
+  tabVehiclesBtn.addEventListener('click', () => setActiveTab('vehicles'));
 
   function updateTabCounts(){
     const leadsCount = allLeads.filter(l => (l.status || 'nouveau') !== 'traite').length;
@@ -449,6 +614,21 @@
       throw new Error("L'espace admin n'est pas encore configuré (URL/clé Supabase manquantes).");
     }
     const res = await fetch(ADMIN_FUNCTION_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+      },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+    return data;
+  }
+
+  async function callAdminVehiclesFunction(body: Record<string, unknown>): Promise<any>{
+    const res = await fetch(ADMIN_VEHICLES_FUNCTION_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -992,12 +1172,327 @@
     }
   }
 
+  // ============================================================
+  // Onglet "Véhicules" — catalogue géré directement depuis l'admin,
+  // stocké dans la table Supabase `vehicles` (remplace le Google Sheet).
+  // Chaque mutation réussie (création/modif/statut/suppression) déclenche
+  // côté fonction edge un rebuild Vercel : le site public se republie
+  // automatiquement avec le catalogue à jour, sans intervention manuelle.
+  // ============================================================
+  const VEHICLE_FIELD_KEYS = [
+    'brand', 'name', 'type', 'condition', 'price', 'km', 'duration', 'fuel',
+    'transmission', 'places', 'finition', 'description',
+    'options_confort', 'options_exterieur', 'options_interieur', 'options_technologie',
+    'annee', 'puissance', 'moteur', 'autonomie_elec', 'autonomie_cumulee',
+    'recharge_dc', 'recharge_ac', 'temps_charge', 'consommation', 'co2', 'coffre',
+  ];
+  const VEHICLE_OPTIONS_KEYS = ['options_confort', 'options_exterieur', 'options_interieur', 'options_technologie'];
+
+  interface PhotoPreview { id: string; url: string; uploading: boolean; }
+  let photoPreviews: PhotoPreview[] = [];
+  let currentUploadFolder: string | null = null;
+  let editingVehicleId: string | number | null = null;
+  let activeUploads = 0;
+
+  function updateVehiclesStats(){
+    const total = allVehicles.length;
+    const active = allVehicles.filter(v => v.active !== false).length;
+    vehStatTotal.textContent = String(total);
+    vehStatActive.textContent = String(active);
+    vehStatInactive.textContent = String(total - active);
+    document.querySelectorAll('#vehiclesPanel .stat-card').forEach((el, i) => setTimeout(() => el.classList.add('in'), i * 60));
+  }
+
+  function buildVehicleCard(v: VehicleAdmin, index: number){
+    const isActive = v.active !== false;
+    const statusCls = isActive ? 'nouveau' : 'traite';
+    const thumb = v.photos && v.photos[0]
+      ? '<img class="vehicle-thumb" src="' + escapeHtml(v.photos[0]) + '" alt="">'
+      : '<div class="vehicle-thumb-placeholder">🚗</div>';
+    const title = escapeHtml(v.brand + ' ' + v.name) + (v.finition ? ' ' + escapeHtml(v.finition) : '');
+    const subLine = [v.price ? v.price + '€/mois' : '', v.condition, v.type].filter(Boolean).join(' · ') || 'Détails non renseignés';
+
+    return (
+      '<div class="lead-card" data-id="' + v.id + '" style="animation-delay:' + Math.min(index * 0.035, 0.3) + 's">' +
+        '<div class="lead-card-header">' +
+          thumb +
+          '<div class="lead-main">' +
+            '<div class="lead-name-row">' +
+              '<span class="lead-name">' + title + '</span>' +
+              '<span class="status-pill ' + statusCls + '">' + (isActive ? 'Actif' : 'Inactif') + '</span>' +
+            '</div>' +
+            '<div class="lead-sub">' + escapeHtml(subLine) + '</div>' +
+          '</div>' +
+          '<div class="lead-meta">' +
+            '<span class="lead-date">' + relativeTime(v.created_at) + '</span>' +
+            CHEVRON_SVG +
+          '</div>' +
+        '</div>' +
+        '<div class="lead-detail">' +
+          '<div class="lead-detail-inner">' +
+            '<div class="lead-actions">' +
+              '<div class="quick-actions">' +
+                '<a class="quick-btn" href="/vehicule/' + escapeHtml(v.slug) + '.html" target="_blank" rel="noopener">Voir la fiche</a>' +
+                '<button type="button" class="edit-btn" data-id="' + v.id + '">Modifier</button>' +
+                '<button type="button" class="delete-btn" data-id="' + v.id + '">Supprimer</button>' +
+              '</div>' +
+              '<button class="status-btn ' + statusCls + '" data-id="' + v.id + '" data-active="' + isActive + '"><span class="dot"></span>' + (isActive ? 'Désactiver (masquer)' : 'Activer (afficher)') + '</button>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>'
+    );
+  }
+
+  function renderVehicles(){
+    const query = vehiclesSearchInput.value.trim().toLowerCase();
+    const statusVal = vehiclesStatusFilter.value;
+    const sortVal = vehiclesSortSelect.value;
+
+    updateVehiclesStats();
+
+    let filtered = allVehicles.filter(v => {
+      const isActive = v.active !== false;
+      if(statusVal === 'active' && !isActive) return false;
+      if(statusVal === 'inactive' && isActive) return false;
+      if(!query) return true;
+      const haystack = [v.brand, v.name, v.finition].filter(Boolean).join(' ').toLowerCase();
+      return haystack.includes(query);
+    });
+
+    filtered = filtered.slice().sort((a, b) => {
+      if(sortVal === 'name') return ((a.brand||'')+(a.name||'')).localeCompare((b.brand||'')+(b.name||''), 'fr');
+      if(sortVal === 'price-asc') return (a.price || 0) - (b.price || 0);
+      if(sortVal === 'price-desc') return (b.price || 0) - (a.price || 0);
+      const da = new Date(a.created_at || 0), db = new Date(b.created_at || 0);
+      return sortVal === 'old' ? da.getTime() - db.getTime() : db.getTime() - da.getTime();
+    });
+
+    if(filtered.length === 0){
+      vehicleList.style.display = 'none';
+      vehiclesEmptyState.style.display = 'block';
+      return;
+    }
+    vehiclesEmptyState.style.display = 'none';
+    vehicleList.style.display = 'flex';
+
+    vehicleList.innerHTML = filtered.map((v, i) => buildVehicleCard(v, i)).join('');
+    attachVehicleCardListeners(vehicleList);
+  }
+
+  function attachVehicleCardListeners(root: HTMLElement){
+    root.querySelectorAll<HTMLElement>('.lead-card-header').forEach(header => {
+      header.addEventListener('click', () => toggleCard(header.closest('.lead-card') as HTMLElement));
+    });
+    root.querySelectorAll<HTMLButtonElement>('.status-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => { e.stopPropagation(); onToggleVehicleActive(e); });
+    });
+    root.querySelectorAll<HTMLButtonElement>('.edit-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const id = (e.currentTarget as HTMLButtonElement).dataset.id!;
+        const vehicle = allVehicles.find(v => String(v.id) === String(id));
+        if(vehicle) openVehicleForm(vehicle);
+      });
+    });
+    root.querySelectorAll<HTMLButtonElement>('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => { e.stopPropagation(); onDeleteVehicle(e); });
+    });
+  }
+
+  async function onToggleVehicleActive(e: Event){
+    const btn = e.currentTarget as HTMLButtonElement;
+    const id = btn.dataset.id!;
+    const newActive = btn.dataset.active !== 'true';
+    btn.disabled = true;
+    try{
+      await callAdminVehiclesFunction({ password: sessionStorage.getItem('adminPassword'), action: 'update-status', id, active: newActive });
+      const vehicle = allVehicles.find(v => String(v.id) === String(id));
+      if(vehicle) vehicle.active = newActive;
+      renderVehicles();
+    }catch(err: any){
+      console.error(err);
+      btn.disabled = false;
+      alert("Impossible de mettre à jour le statut : " + err.message);
+    }
+  }
+
+  async function onDeleteVehicle(e: Event){
+    const btn = e.currentTarget as HTMLButtonElement;
+    const id = btn.dataset.id!;
+    const vehicle = allVehicles.find(v => String(v.id) === String(id));
+    const name = vehicle ? (vehicle.brand + ' ' + vehicle.name).trim() : 'ce véhicule';
+    if(!confirm('Supprimer définitivement "' + name + '" ainsi que ses photos ? Cette action est irréversible.')) return;
+    btn.disabled = true;
+    try{
+      await callAdminVehiclesFunction({ password: sessionStorage.getItem('adminPassword'), action: 'delete', id });
+      allVehicles = allVehicles.filter(v => String(v.id) !== String(id));
+      renderVehicles();
+    }catch(err: any){
+      console.error(err);
+      btn.disabled = false;
+      alert('Impossible de supprimer ce véhicule : ' + err.message);
+    }
+  }
+
+  async function loadVehicles(){
+    vehiclesLoadingState.style.display = 'block';
+    vehiclesErrorState.style.display = 'none';
+    vehicleList.style.display = 'none';
+    vehiclesEmptyState.style.display = 'none';
+    try{
+      const data = await callAdminVehiclesFunction({ password: sessionStorage.getItem('adminPassword') });
+      allVehicles = data.vehicles || [];
+      vehiclesLoadingState.style.display = 'none';
+      renderVehicles();
+    }catch(err: any){
+      console.error(err);
+      vehiclesLoadingState.style.display = 'none';
+      vehiclesErrorState.style.display = 'block';
+      vehiclesErrorState.textContent = "Erreur de chargement : " + err.message;
+    }
+  }
+
+  // --- formulaire d'ajout / modification ---
+
+  function renderPhotoPreviews(){
+    photoPreviewGrid.innerHTML = photoPreviews.map(p =>
+      '<div class="photo-preview-item' + (p.uploading ? ' uploading' : '') + '" data-id="' + p.id + '">' +
+        '<img src="' + p.url + '" alt="">' +
+        (p.uploading ? '' : '<button type="button" class="photo-preview-remove" data-id="' + p.id + '">×</button>') +
+      '</div>'
+    ).join('');
+    photoPreviewGrid.querySelectorAll<HTMLButtonElement>('.photo-preview-remove').forEach(btn => {
+      btn.addEventListener('click', () => {
+        photoPreviews = photoPreviews.filter(p => p.id !== btn.dataset.id);
+        renderPhotoPreviews();
+      });
+    });
+  }
+
+  async function uploadPhoto(file: File){
+    if(!currentUploadFolder) currentUploadFolder = crypto.randomUUID();
+    const id = 'up-' + Math.random().toString(36).slice(2);
+    photoPreviews.push({ id, url: URL.createObjectURL(file), uploading: true });
+    renderPhotoPreviews();
+    activeUploads++;
+    saveVehicleBtn.disabled = true;
+    try{
+      const res = await callAdminVehiclesFunction({
+        password: sessionStorage.getItem('adminPassword'),
+        action: 'create-upload-url',
+        folder: currentUploadFolder,
+        filename: file.name,
+      });
+      const { error } = await supabaseClient.storage.from('vehicle-photos').uploadToSignedUrl(res.path, res.token, file);
+      if(error) throw error;
+      const preview = photoPreviews.find(p => p.id === id);
+      if(preview){ preview.url = res.publicUrl; preview.uploading = false; }
+      renderPhotoPreviews();
+    }catch(err: any){
+      console.error(err);
+      photoPreviews = photoPreviews.filter(p => p.id !== id);
+      renderPhotoPreviews();
+      alert("Échec de l'upload d'une photo : " + err.message);
+    }finally{
+      activeUploads--;
+      if(activeUploads === 0) saveVehicleBtn.disabled = false;
+    }
+  }
+
+  function handleFiles(files: FileList | null){
+    if(!files) return;
+    Array.from(files).forEach(file => uploadPhoto(file));
+  }
+
+  photoDropzone.addEventListener('click', () => photoFileInput.click());
+  photoFileInput.addEventListener('change', () => { handleFiles(photoFileInput.files); photoFileInput.value = ''; });
+  photoDropzone.addEventListener('dragover', (e) => { e.preventDefault(); photoDropzone.classList.add('dragover'); });
+  photoDropzone.addEventListener('dragleave', () => photoDropzone.classList.remove('dragover'));
+  photoDropzone.addEventListener('drop', (e: DragEvent) => {
+    e.preventDefault();
+    photoDropzone.classList.remove('dragover');
+    handleFiles(e.dataTransfer ? e.dataTransfer.files : null);
+  });
+
+  function openVehicleForm(vehicle?: VehicleAdmin){
+    editingVehicleId = vehicle ? vehicle.id : null;
+    currentUploadFolder = crypto.randomUUID();
+    photoPreviews = (vehicle?.photos || []).map(url => ({ id: 'existing-' + url, url, uploading: false }));
+    renderPhotoPreviews();
+
+    vehicleForm.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[data-field]').forEach(el => {
+      const key = el.dataset.field!;
+      let val: unknown = vehicle ? vehicle[key] : '';
+      if(Array.isArray(val)) val = (val as string[]).join(', ');
+      el.value = val != null ? String(val) : '';
+    });
+
+    vehicleFormTitle.textContent = vehicle ? 'Modifier le véhicule' : 'Ajouter un véhicule';
+    saveVehicleBtn.textContent = vehicle ? 'Enregistrer les modifications' : 'Ajouter le véhicule';
+    addVehiclePanel.classList.add('open');
+    addVehiclePanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function closeVehicleForm(){
+    addVehiclePanel.classList.remove('open');
+    vehicleForm.reset();
+    photoPreviews = [];
+    renderPhotoPreviews();
+    editingVehicleId = null;
+  }
+
+  addVehicleBtn.addEventListener('click', () => openVehicleForm());
+  cancelVehicleFormBtn.addEventListener('click', closeVehicleForm);
+
+  vehicleForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if(activeUploads > 0) return;
+
+    const fields: Record<string, unknown> = {};
+    vehicleForm.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('[data-field]').forEach(el => {
+      const key = el.dataset.field!;
+      if(VEHICLE_OPTIONS_KEYS.includes(key)){
+        fields[key] = el.value.split(',').map(s => s.trim()).filter(Boolean);
+      } else if(key === 'price'){
+        fields[key] = el.value === '' ? null : Number(el.value);
+      } else {
+        fields[key] = el.value.trim();
+      }
+    });
+    fields.photos = photoPreviews.filter(p => !p.uploading).map(p => p.url);
+
+    saveVehicleBtn.disabled = true;
+    const prevText = saveVehicleBtn.textContent;
+    saveVehicleBtn.textContent = 'Enregistrement…';
+    try{
+      if(editingVehicleId){
+        await callAdminVehiclesFunction({ password: sessionStorage.getItem('adminPassword'), action: 'update-details', id: editingVehicleId, fields });
+      } else {
+        await callAdminVehiclesFunction({ password: sessionStorage.getItem('adminPassword'), action: 'create', fields });
+      }
+      closeVehicleForm();
+      await loadVehicles();
+    }catch(err: any){
+      console.error(err);
+      alert("Impossible d'enregistrer le véhicule : " + err.message);
+    }finally{
+      saveVehicleBtn.disabled = false;
+      saveVehicleBtn.textContent = prevText;
+    }
+  });
+
+  vehiclesSearchInput.addEventListener('input', renderVehicles);
+  vehiclesStatusFilter.addEventListener('change', renderVehicles);
+  vehiclesSortSelect.addEventListener('change', renderVehicles);
+
   function showDashboard(){
     loginScreen.style.display = 'none';
     dashboard.style.display = 'block';
     logoutBtn.style.display = 'inline-block';
     loadLeads();
     loadMessages();
+    loadVehicles();
   }
 
   loginForm.addEventListener('submit', async (e) => {
@@ -1024,7 +1519,7 @@
     location.reload();
   });
 
-  refreshBtn.addEventListener('click', () => { loadLeads(); loadMessages(); });
+  refreshBtn.addEventListener('click', () => { loadLeads(); loadMessages(); loadVehicles(); });
   searchInput.addEventListener('input', renderLeads);
   statusFilter.addEventListener('change', renderLeads);
   sortSelect.addEventListener('change', renderLeads);
