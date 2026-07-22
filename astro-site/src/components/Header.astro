@@ -2,7 +2,7 @@
 export interface Props {
   ctaHref?: string;
   /** Marque le lien nav correspondant comme actif */
-  active?: 'contact' | 'loa' | 'vehicules';
+  active?: 'contact' | 'loa' | 'vehicules' | 'articles';
   /** Affiche la barre de progression de scroll dans le header (pages de contenu long) */
   showProgressBar?: boolean;
 }
@@ -18,6 +18,7 @@ const cls = (key: string) => (active === key ? 'active' : undefined);
       <a href="/#comment-ca-marche">Comment ça marche</a>
       <a href="/loa.html" class={cls('loa')}>Guide LOA</a>
       <a href="/vehicules.html" class={cls('vehicules')}>Nos offres</a>
+      <a href="/articles.html" class={cls('articles')}>Articles</a>
       <a href="/#avis">Avis</a>
       <a href="/contact.html" class={cls('contact')}>Contact</a>
     </div>
@@ -44,6 +45,7 @@ const cls = (key: string) => (active === key ? 'active' : undefined);
     <a href="/#comment-ca-marche">Comment ça marche</a>
     <a href="/loa.html" class={cls('loa')}>Guide LOA</a>
     <a href="/vehicules.html" class={cls('vehicules')}>Nos offres</a>
+    <a href="/articles.html" class={cls('articles')}>Articles</a>
     <a href="/contact.html" class={cls('contact')}>Contact</a>
   </nav>
   <div class="mobile-menu-cta">

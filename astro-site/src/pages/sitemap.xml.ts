@@ -1,4 +1,5 @@
 import type { APIRoute } from 'astro';
+import { getCollection } from 'astro:content';
 import { fetchVehicles } from '../lib/vehicles';
 
 export const prerender = true;
@@ -15,6 +16,7 @@ const STATIC_ENTRIES: SitemapEntry[] = [
   { loc: '/contact.html', changefreq: 'monthly', priority: '0.8' },
   { loc: '/vehicules.html', changefreq: 'weekly', priority: '0.9' },
   { loc: '/loa.html', changefreq: 'monthly', priority: '0.8' },
+  { loc: '/articles.html', changefreq: 'weekly', priority: '0.7' },
   { loc: '/a-propos.html', changefreq: 'monthly', priority: '0.6' },
   { loc: '/bio.html', changefreq: 'monthly', priority: '0.4' },
   { loc: '/mentions-legales.html', changefreq: 'yearly', priority: '0.2' },
@@ -37,7 +39,14 @@ export const GET: APIRoute = async () => {
     console.error('Erreur de chargement des véhicules pour le sitemap :', e);
   }
 
-  const entries = [...STATIC_ENTRIES, ...vehicleEntries];
+  const articles = await getCollection('articles');
+  const articleEntries: SitemapEntry[] = articles.map(a => ({
+    loc: `/articles/${a.id}.html`,
+    changefreq: 'monthly',
+    priority: '0.6',
+  }));
+
+  const entries = [...STATIC_ENTRIES, ...vehicleEntries, ...articleEntries];
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
