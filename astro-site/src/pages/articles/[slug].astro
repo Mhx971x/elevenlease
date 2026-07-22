@@ -115,6 +115,9 @@ const dateLabel = entry.data.publishDate.toLocaleDateString('fr-FR', { day: 'num
   .prose :global(th){color:var(--text);font-family:'Space Grotesk',sans-serif;font-weight:600;background:var(--surface);}
   .prose :global(td){color:var(--text-dim);}
   .prose :global(tr:nth-child(even) td){background:var(--surface);}
+  .prose :global(blockquote){margin:0 0 28px;padding:18px 22px;border-left:2px solid var(--accent-1);background:var(--surface);border-radius:0 10px 10px 0;color:var(--text);font-size:15px;}
+  .prose :global(blockquote p){margin-bottom:0;color:var(--text);}
+  .prose :global(blockquote strong){color:var(--text);}
 
   .article-cta{padding:80px 0 96px;text-align:center;border-top:1px solid var(--border);}
   .article-cta h2{font-size:clamp(24px,3.4vw,32px);}

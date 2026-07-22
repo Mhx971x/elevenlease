@@ -29,7 +29,7 @@ const orgSchema = {
   "logo": "https://elevenlease.fr/eleven-lease-logo.png",
   "email": "contact@elevenlease.fr",
   "foundingDate": "2023",
-  "description": "Eleven Lease connecte les particuliers et professionnels à un réseau de partenaires financiers pour des projets de leasing automobile (LOA/LLD) en France.",
+  "description": "Eleven Lease connecte les particuliers et professionnels à un réseau de partenaires financiers pour des projets de crédit-bail automobile à kilométrage illimité en France.",
   "sameAs": [
     "https://www.instagram.com/elevenlease",
     "https://www.tiktok.com/@elevenlease"
@@ -72,6 +72,11 @@ const faqSchema = {
       "@type": "Question",
       "name": "Sous quel délai suis-je recontacté après ma demande ?",
       "acceptedAnswer": { "@type": "Answer", "text": "Le délai moyen de mise en relation est de 24h après l'envoi de votre demande." }
+    },
+    {
+      "@type": "Question",
+      "name": "Y a-t-il une limite de kilométrage avec Eleven Lease ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Non. Notre offre de crédit-bail est proposée avec un kilométrage illimité, aussi bien pour les particuliers que pour les professionnels : aucun forfait à respecter, aucune facturation de dépassement en fin de contrat." }
     }
   ]
 };
@@ -85,8 +90,8 @@ const breadcrumbSchema = {
 };
 ---
 <BaseLayout
-  title="Eleven Lease — Le bon leasing, trouvé pour vous"
-  description="Eleven Lease connecte votre projet auto aux meilleures offres de leasing (LOA/LLD) partout en France. Un seul formulaire, une offre sous 24h."
+  title="Eleven Lease — Leasing à kilométrage illimité"
+  description="Crédit-bail automobile à kilométrage illimité, pour particuliers et professionnels. Un seul formulaire, une offre sous 24h, sans limite de kilomètres à surveiller."
   path="/"
   showProgressBar
 >
@@ -104,9 +109,9 @@ const breadcrumbSchema = {
     <div class="hero-grid"></div>
     <canvas class="hero-stars" id="heroStars"></canvas>
     <div class="wrap hero-content">
-      <div class="eyebrow"><span class="dot"></span> Offres de leasing vérifiées — partout en France</div>
-      <h1>Le bon leasing,<br><em>trouvé pour vous.</em></h1>
-      <p>Eleven Lease vous connecte aux meilleures offres de leasing (LOA/LLD) partout en France. Décrivez votre projet, comparez, prenez le volant.</p>
+      <div class="eyebrow"><span class="dot"></span> Crédit-bail à kilométrage illimité — partout en France</div>
+      <h1>Le leasing nouvelle génération,<br><em>sans limite de kilomètres.</em></h1>
+      <p>Eleven Lease propose du crédit-bail automobile à kilométrage illimité, pour les particuliers comme pour les professionnels. Roulez sans compter, nous nous occupons du reste.</p>
       <div class="hero-actions">
         <a href="/simulation" class="btn-primary">Simuler mon leasing</a>
         <a href="/vehicules" class="btn-ghost">Découvrir les véhicules</a>
@@ -123,6 +128,42 @@ const breadcrumbSchema = {
         <div class="node"><div class="label">Eleven Lease</div><div class="value">Mise en relation</div></div>
         <div class="connect-line"></div>
         <div class="node"><div class="label">Partenaire</div><div class="value">Meilleure offre</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pourquoi" class="why-section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div class="section-eyebrow">Pourquoi Eleven Lease</div>
+        <h2>Une offre pensée pour ceux qui roulent vraiment.</h2>
+      </div>
+      <div class="why-grid reveal reveal-stagger">
+        <div class="why-card">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M6.5 8a4 4 0 100 8 4 4 0 003.2-1.6L12 12l2.3 2.4A4 4 0 1017.5 8a4 4 0 00-3.2 1.6L12 12l-2.3-2.4A4 4 0 006.5 8z" stroke="var(--accent-1)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Kilométrage illimité</h3>
+          <p>Aucun forfait à surveiller, aucune facture de dépassement en fin de contrat. Roulez selon votre besoin réel, pas selon une case cochée à la signature.</p>
+        </div>
+        <div class="why-card">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 12h4l2-7 4 14 2-7h6" stroke="var(--accent-1)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Taillé pour les gros rouleurs</h3>
+          <p>Trajets quotidiens, tournées professionnelles, longue distance : notre offre est conçue pour un usage intensif du véhicule.</p>
+        </div>
+        <div class="why-card">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="var(--accent-1)" stroke-width="1.6"/><path d="M21 21l-4.3-4.3" stroke="var(--accent-1)" stroke-width="1.6" stroke-linecap="round"/></svg>
+          <h3>Le véhicule adapté à votre besoin</h3>
+          <p>Nous cherchons le modèle qui correspond réellement à votre usage, pas seulement ce qu'il y a en stock.</p>
+        </div>
+        <div class="why-card">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5A2.5 2.5 0 006.5 22H20V4H6.5A2.5 2.5 0 004 6.5v13z" stroke="var(--accent-1)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Véhicules récents</h3>
+          <p>Un catalogue renouvelé régulièrement, en neuf comme en occasion récente, pour particuliers et professionnels.</p>
+        </div>
+        <div class="why-card">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 13l1.5-5A2 2 0 016.4 6.5h11.2a2 2 0 011.9 1.5L21 13M3 13v5a1 1 0 001 1h1a1 1 0 001-1v-1h12v1a1 1 0 001 1h1a1 1 0 001-1v-5M3 13h18" stroke="var(--accent-1)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <h3>Accompagnement de A à Z</h3>
+          <p>Financement, négociation, livraison : on gère tout le parcours, vous récupérez les clés.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -292,6 +333,10 @@ const breadcrumbSchema = {
         <details class="faq-item">
           <summary>Sous quel délai suis-je recontacté après ma demande ?<span class="faq-icon"></span></summary>
           <div class="faq-content"><p>Le délai moyen de mise en relation est de 24h après l'envoi de votre demande.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Y a-t-il une limite de kilométrage ?<span class="faq-icon"></span></summary>
+          <div class="faq-content"><p>Non. Notre offre de crédit-bail est proposée avec un kilométrage illimité, aussi bien pour les particuliers que pour les professionnels : aucun forfait à respecter, aucune facturation de dépassement en fin de contrat.</p></div>
         </details>
       </div>
     </div>
@@ -488,6 +533,24 @@ const breadcrumbSchema = {
   .cat-card .arrow{font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:gap .25s ease;}
   .cat-card:hover .arrow{gap:12px;}
   @media(max-width:900px){ .cat-grid{grid-template-columns:1fr;} }
+
+  /* why us */
+  .why-section{border-top:1px solid var(--border);}
+  .why-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;}
+  .why-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:28px 24px;
+    transition:transform .35s cubic-bezier(.16,1,.3,1), border-color .35s ease, background .35s ease;
+  }
+  .why-card:hover{border-color:#444;transform:translateY(-6px) scale(1.01);background:var(--surface-2);}
+  .why-card svg{margin-bottom:18px;}
+  .why-card h3{font-size:17px;margin-bottom:10px;}
+  .why-card p{color:var(--text-dim);font-size:13.5px;line-height:1.55;}
+  @media(max-width:1080px){ .why-grid{grid-template-columns:repeat(3,1fr);} }
+  @media(max-width:768px){ .why-grid{grid-template-columns:1fr 1fr;} }
+  @media(max-width:560px){ .why-grid{grid-template-columns:1fr;} }
 
   /* fleet teaser */
   .fleet-teaser{border-top:1px solid var(--border);}

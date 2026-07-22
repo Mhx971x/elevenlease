@@ -6,6 +6,8 @@ publishDate: 2026-07-22
 readTime: "6 min"
 ---
 
+> **Chez Eleven Lease :** notre offre de crédit-bail est à kilométrage illimité, y compris sur les véhicules électriques — le forfait kilométrique mentionné plus bas décrit le fonctionnement d'une LOA classique, pas celui de nos contrats.
+
 ## La LOA est-elle adaptée aux véhicules électriques ?
 
 Oui, et c'est même une formule particulièrement pertinente pour ce type de véhicule. Elle permet de profiter des dernières avancées technologiques (autonomie, vitesse de recharge, aides à la conduite) sans supporter la décote parfois rapide liée à l'évolution accélérée de cette motorisation. Plutôt que d'acheter une batterie et une technologie qui progressent vite, la LOA permet de changer de véhicule à échéance régulière sans subir cette dépréciation.
@@ -34,7 +36,7 @@ Il existe en France un dispositif spécifique baptisé « leasing social », mis
 Quelques points méritent une attention particulière, propres à ce type de motorisation :
 
 - **La garantie batterie** : sa durée et son kilométrage couvert sont aussi importants que la garantie moteur sur un thermique, et varient sensiblement d'un constructeur à l'autre.
-- **L'autonomie réelle annoncée** par rapport à votre usage quotidien, pour éviter un forfait kilométrique mal dimensionné.
+- **L'autonomie réelle annoncée** par rapport à votre usage quotidien, notamment pour les longs trajets — un point d'autant plus important si votre contrat impose un forfait kilométrique.
 - **Les conditions de recharge incluses ou non** dans l'offre (borne à domicile, abonnement de recharge publique).
 - **L'assurance exigée**, quasi systématiquement tous risques, dont le tarif peut varier selon la valeur du véhicule et sa motorisation.
 

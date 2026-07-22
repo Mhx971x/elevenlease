@@ -32,7 +32,7 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
         <div class="stepper-progress" id="stepperProgress">
           <div class="stepper-bar-track"><div class="stepper-bar-fill" id="stepperBarFill"></div></div>
           <div class="stepper-meta">
-            <div class="stepper-label" id="stepperLabel">Question 1 / 17</div>
+            <div class="stepper-label" id="stepperLabel">Question 1 / 16</div>
             <div class="stepper-time" id="stepperTime">~2 min restantes</div>
           </div>
         </div>
@@ -103,16 +103,6 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
         </div>
 
         <div class="form-step" data-step="6" data-hide-if-achat="true">
-          <label><span class="step-icon" aria-hidden="true">🛣️</span>Quel kilométrage annuel prévoyez-vous ?</label>
-          <div class="choice-grid">
-            <label class="radio-option"><input type="radio" name="kilometrage" value="Moins de 10 000 km"> Moins de 10 000 km</label>
-            <label class="radio-option"><input type="radio" name="kilometrage" value="10 000 à 20 000 km"> 10 000 à 20 000 km</label>
-            <label class="radio-option"><input type="radio" name="kilometrage" value="20 000 à 30 000 km"> 20 000 à 30 000 km</label>
-            <label class="radio-option"><input type="radio" name="kilometrage" value="Plus de 30 000 km"> Plus de 30 000 km</label>
-          </div>
-        </div>
-
-        <div class="form-step" data-step="7" data-hide-if-achat="true">
           <label><span class="step-icon" aria-hidden="true">📆</span>Quelle durée de contrat souhaitez-vous ?</label>
           <div class="choice-grid">
             <label class="radio-option"><input type="radio" name="dureeContrat" value="36 mois"> 36 mois</label>
@@ -122,7 +112,7 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
           </div>
         </div>
 
-        <div class="form-step" data-step="8">
+        <div class="form-step" data-step="7">
           <label><span class="step-icon" aria-hidden="true">💰</span>Disposez-vous d'un apport ?</label>
           <div class="choice-grid">
             <label class="radio-option"><input type="radio" name="apport" value="0 €"> 0 €</label>
@@ -132,7 +122,7 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
           </div>
         </div>
 
-        <div class="form-step" data-step="9">
+        <div class="form-step" data-step="8">
           <label><span class="step-icon" aria-hidden="true">🚚</span>Quand souhaitez-vous recevoir votre véhicule ?</label>
           <div class="choice-grid">
             <label class="radio-option"><input type="radio" name="dateLivraison" value="Dès que possible"> Dès que possible</label>
@@ -142,7 +132,7 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
           </div>
         </div>
 
-        <div class="form-step" data-step="10">
+        <div class="form-step" data-step="9">
           <label><span class="step-icon" aria-hidden="true">🔄</span>Avez-vous un véhicule à faire reprendre ?</label>
           <div class="field-stack">
             <div class="field-item">
@@ -158,7 +148,7 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
           </div>
         </div>
 
-        <div class="form-step" data-step="11" data-eligibility-only="true">
+        <div class="form-step" data-step="10" data-eligibility-only="true">
           <label><span class="step-icon" aria-hidden="true">💼</span>Quel est votre statut professionnel ?</label>
           <div class="choice-grid">
             <label class="radio-option"><input type="radio" name="statutPro" value="CDI"> CDI</label>
@@ -170,19 +160,19 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
           </div>
         </div>
 
-        <div class="form-step" data-step="12" data-eligibility-only="true">
+        <div class="form-step" data-step="11" data-eligibility-only="true">
           <label for="fRevenus"><span class="step-icon" aria-hidden="true">💵</span>Quels sont vos revenus mensuels nets ?</label>
           <input type="number" id="fRevenus" name="revenus" min="0" step="50" placeholder="Ex : 1800">
           <div class="field-hint">En euros, avant impôt sur le revenu.</div>
         </div>
 
-        <div class="form-step" data-step="13" data-eligibility-only="true">
+        <div class="form-step" data-step="12" data-eligibility-only="true">
           <label for="fCharges"><span class="step-icon" aria-hidden="true">🧾</span>Quel est le montant de vos charges mensuelles ?</label>
           <input type="number" id="fCharges" name="charges" min="0" step="10" placeholder="Ex : 400">
           <div class="field-hint">Loyer, crédits en cours, pension alimentaire versée...</div>
         </div>
 
-        <div class="form-step" data-step="14" data-eligibility-only="true">
+        <div class="form-step" data-step="13" data-eligibility-only="true">
           <label><span class="step-icon" aria-hidden="true">⏳</span>Depuis combien de temps êtes-vous dans votre emploi / activité actuelle ?</label>
           <div class="choice-grid">
             <label class="radio-option"><input type="radio" name="anciennete" value="Moins de 6 mois"> Moins de 6 mois</label>
@@ -191,7 +181,7 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
           </div>
         </div>
 
-        <div class="form-step" data-step="15" data-eligibility-only="true">
+        <div class="form-step" data-step="14" data-eligibility-only="true">
           <label><span class="step-icon" aria-hidden="true">🏦</span>Avez-vous vérifié si vous êtes fiché à la Banque de France (FICP) ?</label>
           <div class="choice-grid">
             <label class="radio-option"><input type="radio" name="ficp" value="Non, pas fiché" checked> Non, je ne suis pas fiché</label>
@@ -200,7 +190,7 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
           </div>
         </div>
 
-        <div class="form-step" data-step="16">
+        <div class="form-step" data-step="15">
           <label><span class="step-icon" aria-hidden="true">📇</span>Vos coordonnées</label>
           <div class="field-grid">
             <div class="field-item">
@@ -230,7 +220,7 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
           </div>
         </div>
 
-        <div class="form-step" data-step="17">
+        <div class="form-step" data-step="16">
           <label for="fMessage"><span class="step-icon" aria-hidden="true">💬</span>Un message à ajouter ?</label>
           <textarea id="fMessage" name="message" rows="3" placeholder="Précisez votre besoin, budget, délai... (optionnel)"></textarea>
         </div>
@@ -304,7 +294,7 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
   // Comment configurer (une seule fois) :
   // 1. Dans ton Sheet "Leads Eleven Lease", mets cette ligne d'en-têtes
   //    en row 1 (remplace l'ancienne si besoin) :
-  //    Date | Vehicule | Prenom | Nom | Telephone | Email | Profil | Entreprise | Financement | TypeVehiculeSouhaite | BudgetSouhaite | NeufOccasion | KilometrageAnnuel | DureeContrat | Apport | DateLivraison | VehiculeReprise | VehiculeRepriseDetails | StatutPro | Revenus | Charges | Anciennete | Age | FICP | Eligible | CriteresRisque | Message
+  //    Date | Vehicule | Prenom | Nom | Telephone | Email | Profil | Entreprise | Financement | TypeVehiculeSouhaite | BudgetSouhaite | NeufOccasion | DureeContrat | Apport | DateLivraison | VehiculeReprise | VehiculeRepriseDetails | StatutPro | Revenus | Charges | Anciennete | Age | FICP | Eligible | CriteresRisque | Message
   //    Le formulaire de contact simple (contact.html) envoie ses messages au
   //    même script (data.formType === 'contact') : ils sont ajoutés dans un
   //    second onglet "Contacts" du même classeur (créé automatiquement au
@@ -345,7 +335,7 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
   //          new Date(), data.vehicule || '', data.prenom || '', data.nom || '',
   //          data.telephone || '', data.email || '', data.profil || '', data.entreprise || '',
   //          data.financement || '', data.typeVehiculeSouhaite || '', data.budgetSouhaite || '',
-  //          data.neufOccasion || '', data.kilometrage || '', data.dureeContrat || '', data.apport || '',
+  //          data.neufOccasion || '', data.dureeContrat || '', data.apport || '',
   //          data.dateLivraison || '', data.vehiculeReprise || '', data.vehiculeRepriseDetails || '',
   //          data.statutPro || '', data.revenus || '', data.charges || '', data.anciennete || '',
   //          data.age || '', data.ficp || '', data.eligible || '', data.criteresRisque || '',
@@ -368,7 +358,6 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
   //            'Type de véhicule souhaité : ' + (data.typeVehiculeSouhaite || '-') + '\n' +
   //            'Budget souhaité : ' + (data.budgetSouhaite || '-') + '\n' +
   //            'Neuf ou occasion : ' + (data.neufOccasion || '-') + '\n' +
-  //            'Kilométrage annuel : ' + (data.kilometrage || '-') + '\n' +
   //            'Durée de contrat : ' + (data.dureeContrat || '-') + '\n' +
   //            'Apport : ' + (data.apport || '-') + '\n' +
   //            'Livraison souhaitée : ' + (data.dateLivraison || '-') + '\n' +
@@ -404,7 +393,6 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
   // exécutez une fois dans le SQL editor Supabase :
   //   ALTER TABLE leads
   //     ADD COLUMN IF NOT EXISTS neuf_occasion text,
-  //     ADD COLUMN IF NOT EXISTS kilometrage_annuel text,
   //     ADD COLUMN IF NOT EXISTS duree_contrat text,
   //     ADD COLUMN IF NOT EXISTS apport text,
   //     ADD COLUMN IF NOT EXISTS date_livraison text,
@@ -417,7 +405,7 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
   interface LeadPayload {
     prenom: string; nom: string; telephone: string; email: string; vehicule: string;
     profil: string; entreprise: string; financement: string; typeVehiculeSouhaite: string;
-    budgetSouhaite: string; neufOccasion: string; kilometrage: string; dureeContrat: string;
+    budgetSouhaite: string; neufOccasion: string; dureeContrat: string;
     apport: string; dateLivraison: string; vehiculeReprise: string; vehiculeRepriseDetails: string;
     statutPro: string; revenus: string; charges: string; anciennete: string; age: string; ficp: string;
     message: string; eligible?: string; criteresRisque?: string;
@@ -445,7 +433,6 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
         type_vehicule_souhaite: payload.typeVehiculeSouhaite,
         budget_souhaite: payload.budgetSouhaite,
         neuf_occasion: payload.neufOccasion,
-        kilometrage_annuel: payload.kilometrage,
         duree_contrat: payload.dureeContrat,
         apport: payload.apport,
         date_livraison: payload.dateLivraison,
@@ -548,16 +535,15 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
     function validateStep(stepNum: number): string | null {
       switch(stepNum){
         case 5: return radioValue('neufOccasion') !== '' ? null : 'Merci de préciser si vous recherchez un véhicule neuf ou d\'occasion.';
-        case 6: return radioValue('kilometrage') !== '' ? null : 'Merci de sélectionner votre kilométrage annuel prévu.';
-        case 7: return radioValue('dureeContrat') !== '' ? null : 'Merci de sélectionner la durée de contrat souhaitée.';
-        case 8: return radioValue('apport') !== '' ? null : "Merci de préciser votre apport.";
-        case 9: return radioValue('dateLivraison') !== '' ? null : 'Merci d\'indiquer quand vous souhaitez recevoir votre véhicule.';
-        case 10: return radioValue('vehiculeReprise') !== '' ? null : 'Merci de préciser si vous avez un véhicule à reprendre.';
-        case 11: return radioValue('statutPro') !== '' ? null : 'Merci de sélectionner votre statut professionnel.';
-        case 12: return (document.getElementById('fRevenus') as HTMLInputElement).value !== '' ? null : "Merci d'indiquer vos revenus mensuels nets.";
-        case 13: return (document.getElementById('fCharges') as HTMLInputElement).value !== '' ? null : "Merci d'indiquer vos charges mensuelles (0 si aucune).";
-        case 14: return radioValue('anciennete') !== '' ? null : 'Merci de sélectionner votre ancienneté.';
-        case 16: {
+        case 6: return radioValue('dureeContrat') !== '' ? null : 'Merci de sélectionner la durée de contrat souhaitée.';
+        case 7: return radioValue('apport') !== '' ? null : "Merci de préciser votre apport.";
+        case 8: return radioValue('dateLivraison') !== '' ? null : 'Merci d\'indiquer quand vous souhaitez recevoir votre véhicule.';
+        case 9: return radioValue('vehiculeReprise') !== '' ? null : 'Merci de préciser si vous avez un véhicule à reprendre.';
+        case 10: return radioValue('statutPro') !== '' ? null : 'Merci de sélectionner votre statut professionnel.';
+        case 11: return (document.getElementById('fRevenus') as HTMLInputElement).value !== '' ? null : "Merci d'indiquer vos revenus mensuels nets.";
+        case 12: return (document.getElementById('fCharges') as HTMLInputElement).value !== '' ? null : "Merci d'indiquer vos charges mensuelles (0 si aucune).";
+        case 13: return radioValue('anciennete') !== '' ? null : 'Merci de sélectionner votre ancienneté.';
+        case 15: {
           if((document.getElementById('fPrenom') as HTMLInputElement).value.trim() === '') return 'Merci d\'indiquer votre prénom.';
           if((document.getElementById('fNom') as HTMLInputElement).value.trim() === '') return 'Merci d\'indiquer votre nom.';
           if((document.getElementById('fAge') as HTMLInputElement).value === '') return 'Merci d\'indiquer votre âge.';
@@ -683,7 +669,6 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
         typeVehiculeSouhaite: radioValue('typeVehicule'),
         budgetSouhaite: achatFlow ? radioValue('budgetAchat') : radioValue('budget'),
         neufOccasion: radioValue('neufOccasion'),
-        kilometrage: achatFlow ? '' : radioValue('kilometrage'),
         dureeContrat: achatFlow ? '' : radioValue('dureeContrat'),
         apport: radioValue('apport'),
         dateLivraison: radioValue('dateLivraison'),

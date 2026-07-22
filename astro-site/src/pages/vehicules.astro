@@ -42,7 +42,7 @@ const collectionSchema = {
 ---
 <BaseLayout
   title="Eleven Lease — Véhicules disponibles"
-  description="Découvrez les véhicules disponibles via le réseau de partenaires Eleven Lease : citadines, SUV, électriques, en LOA ou LLD partout en France."
+  description="Découvrez les véhicules disponibles via le réseau de partenaires Eleven Lease : citadines, SUV, électriques, en crédit-bail à kilométrage illimité, pour particuliers et professionnels."
   path="/vehicules"
   active="vehicules"
 >
@@ -53,7 +53,8 @@ const collectionSchema = {
   <div class="wrap">
     <div class="eyebrow"><span class="dot"></span> Mis à jour régulièrement</div>
     <h1>Véhicules disponibles via notre réseau.</h1>
-    <p>Une sélection d'offres de leasing actuellement disponibles chez nos partenaires. Chaque véhicule est proposé à titre indicatif — le loyer final dépend de votre profil et de votre apport.</p>
+    <p>Une sélection d'offres de crédit-bail actuellement disponibles chez nos partenaires, pour particuliers et professionnels. Chaque véhicule est proposé à titre indicatif — le loyer final dépend de votre profil et de votre apport.</p>
+    <div class="unlimited-note"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6.5 8a4 4 0 100 8 4 4 0 003.2-1.6L12 12l2.3 2.4A4 4 0 1017.5 8a4 4 0 00-3.2 1.6L12 12l-2.3-2.4A4 4 0 006.5 8z" stroke="var(--accent-1)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Kilométrage illimité selon conditions du contrat.</div>
   </div>
 </section>
 
@@ -110,7 +111,7 @@ const collectionSchema = {
             <div class="veh-name">{v.name}</div>
             <div class="veh-specs">
               <span><Fragment set:html={fuelIcon} /> {v.fuel}</span>
-              <span><Fragment set:html={roadIcon} /> {v.km}</span>
+              <span><Fragment set:html={roadIcon} /> Kilométrage illimité</span>
               <span><Fragment set:html={specIcon} /> {v.duration}</span>
             </div>
             <div class="veh-footer">
@@ -220,6 +221,7 @@ const collectionSchema = {
   .page-hero .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-1);}
   .page-hero h1{font-size:clamp(32px,5vw,52px);max-width:700px;}
   .page-hero p{color:var(--text-dim);font-size:16px;margin-top:14px;max-width:560px;}
+  .unlimited-note{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:8px 16px;border:1px solid var(--border);border-radius:100px;font-size:13.5px;color:var(--text-dim);}
 
   /* filter bar */
   .filter-bar{
