@@ -6,7 +6,7 @@ publishDate: 2026-07-22
 readTime: "6 min"
 ---
 
-> **Chez Eleven Lease :** notre offre de crédit-bail est proposée à kilométrage illimité, pour les particuliers comme pour les professionnels. Le point sur le dépassement de kilométrage ci-dessous décrit le fonctionnement d'une LOA classique avec forfait — il ne s'applique pas aux contrats Eleven Lease, où aucun kilomètre parcouru n'est jamais facturé à la restitution.
+> **Chez Eleven Lease :** notre offre de leasing est proposée à kilométrage illimité, pour les particuliers comme pour les professionnels. Le point sur le dépassement de kilométrage ci-dessous décrit le fonctionnement d'une LOA classique avec forfait — il ne s'applique pas aux contrats Eleven Lease, où aucun kilomètre parcouru n'est jamais facturé à la restitution.
 
 ## Comment se déroule concrètement la restitution d'un véhicule en fin de contrat ?
 
@@ -26,7 +26,7 @@ L'usure normale correspond à la dégradation attendue d'un véhicule utilisé r
 
 Dans une LOA classique, oui, presque systématiquement : le forfait kilométrique est fixé dès la signature du contrat, et tout dépassement est facturé au kilomètre, à un tarif précisé dans le contrat. Ce tarif est généralement plus élevé que le coût réel d'un kilomètre supplémentaire intégré dès le départ dans un forfait plus large — d'où l'intérêt d'estimer large au moment de la simulation plutôt que de sous-estimer son kilométrage annuel pour obtenir un loyer plus bas.
 
-**Avec Eleven Lease, cette question ne se pose pas** : notre offre de crédit-bail est à kilométrage illimité, sans forfait à respecter ni régularisation à prévoir en fin de contrat, quel que soit le nombre de kilomètres parcourus.
+**Avec Eleven Lease, cette question ne se pose pas** : notre offre de leasing est à kilométrage illimité, sans forfait à respecter ni régularisation à prévoir en fin de contrat, quel que soit le nombre de kilomètres parcourus.
 
 ## Comment limiter les frais de remise en état avant restitution ?
 
@@ -48,8 +48,8 @@ Pas totalement, mais on peut les réduire fortement : un véhicule entretenu ré
 
 ## En résumé
 
-La restitution d'un véhicule en fin de contrat repose sur une grille de vétusté contractuelle qui distingue usure normale et dommages facturables. Anticiper l'état du véhicule quelques semaines avant l'échéance — réparations mineures, nettoyage, vérification des pneus — reste le moyen le plus simple d'éviter des frais de restitution évitables. Avec le crédit-bail à kilométrage illimité d'Eleven Lease, la question du dépassement kilométrique ne fait tout simplement plus partie de l'équation.
+La restitution d'un véhicule en fin de contrat repose sur une grille de vétusté contractuelle qui distingue usure normale et dommages facturables. Anticiper l'état du véhicule quelques semaines avant l'échéance — réparations mineures, nettoyage, vérification des pneus — reste le moyen le plus simple d'éviter des frais de restitution évitables. Avec le leasing à kilométrage illimité d'Eleven Lease, la question du dépassement kilométrique ne fait tout simplement plus partie de l'équation.
 
 ---
 
-Votre contrat arrive à échéance et vous cherchez votre prochain véhicule ? [Décrivez votre projet à Eleven Lease](/simulation) : notre réseau de partenaires financiers vous propose la suite, en crédit-bail à kilométrage illimité, sans frais.
+Votre contrat arrive à échéance et vous cherchez votre prochain véhicule ? [Décrivez votre projet à Eleven Lease](/simulation) : notre réseau de partenaires financiers vous propose la suite, en leasing à kilométrage illimité, sans frais.

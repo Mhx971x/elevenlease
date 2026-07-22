@@ -6,7 +6,7 @@ publishDate: 2026-07-22
 readTime: "6 min"
 ---
 
-> **Chez Eleven Lease :** notre offre de crédit-bail est à kilométrage illimité, y compris sur les véhicules électriques — le forfait kilométrique mentionné plus bas décrit le fonctionnement d'une LOA classique, pas celui de nos contrats.
+> **Chez Eleven Lease :** notre offre de leasing est à kilométrage illimité, y compris sur les véhicules électriques — le forfait kilométrique mentionné plus bas décrit le fonctionnement d'une LOA classique, pas celui de nos contrats.
 
 ## La LOA est-elle adaptée aux véhicules électriques ?
 
