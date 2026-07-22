@@ -15,6 +15,7 @@ const STATIC_ENTRIES: SitemapEntry[] = [
   { loc: '/contact.html', changefreq: 'monthly', priority: '0.8' },
   { loc: '/vehicules.html', changefreq: 'weekly', priority: '0.9' },
   { loc: '/loa.html', changefreq: 'monthly', priority: '0.8' },
+  { loc: '/a-propos.html', changefreq: 'monthly', priority: '0.6' },
   { loc: '/bio.html', changefreq: 'monthly', priority: '0.4' },
   { loc: '/mentions-legales.html', changefreq: 'yearly', priority: '0.2' },
   { loc: '/confidentialite.html', changefreq: 'yearly', priority: '0.2' },

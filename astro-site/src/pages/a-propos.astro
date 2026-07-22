@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const aboutSchema = {
+  "@context": "https://schema.org",
+  "@type": "AboutPage",
+  "name": "À propos d'Eleven Lease",
+  "url": "https://elevenlease.fr/a-propos.html",
+  "mainEntity": {
+    "@type": "Organization",
+    "name": "Eleven Lease",
+    "foundingDate": "2023",
+    "description": "Eleven Lease est une équipe de mandataires auto issue du secteur automobile et financier, active depuis 2023. Elle connecte les projets de leasing à un réseau d'une dizaine de partenaires financiers en France.",
+    "url": "https://elevenlease.fr/"
+  }
+};
+
+const checkIcon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+const reasons = [
+  'Un service gratuit pour le client — aucun frais facturé par Eleven Lease.',
+  'Une mise en relation sous 24h en moyenne après votre demande.',
+  'Un réseau de partenaires financiers présents partout en France.',
+  'Une équipe qui connaît à la fois le véhicule et le financement.',
+];
+---
+<BaseLayout
+  title="À propos | Eleven Lease, mandataires auto depuis 2023"
+  description="Eleven Lease est une équipe de mandataires auto issue du secteur automobile et financier, active depuis 2023. Découvrez qui nous sommes et notre réseau de partenaires."
+  path="/a-propos.html"
+  ctaHref="/simulation.html"
+>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />
+  </Fragment>
+
+  <section class="about-hero">
+    <div class="wrap">
+      <div class="eyebrow"><span class="dot"></span> Qui sommes-nous</div>
+      <h1>Des mandataires auto,<br><em>pas un algorithme.</em></h1>
+      <p>Eleven Lease est une équipe de mandataires auto basée en France, active depuis 2023. Notre métier : comparer les offres de leasing (LOA/LLD) de notre réseau de partenaires financiers pour trouver celle qui correspond réellement à votre projet.</p>
+    </div>
+  </section>
+
+  <section class="about-stats">
+    <div class="wrap">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-value">2023</div>
+          <div class="stat-label">Année de création</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">400+</div>
+          <div class="stat-label">Dossiers traités</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">Une dizaine</div>
+          <div class="stat-label">Partenaires financiers</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-body">
+    <div class="wrap">
+      <div class="about-block">
+        <h2>Le double regard auto et financement.</h2>
+        <p>Avant de fonder Eleven Lease, nous avons travaillé dans le secteur automobile et dans le secteur financier. Cette double expérience nous permet de comprendre un dossier de leasing des deux côtés : ce que recherche un client face à un véhicule, et ce qu'étudie un organisme financier avant d'accepter un dossier. C'est ce qui nous permet d'orienter chaque demande vers le partenaire le plus adapté, plutôt que de multiplier les refus.</p>
+      </div>
+
+      <div class="about-block">
+        <h2>Un réseau, pas un guichet unique.</h2>
+        <p>Nous travaillons avec une dizaine de partenaires financiers spécialisés dans le leasing automobile. Plutôt que de dépendre d'un seul organisme — avec ses critères et ses refus — nous orientons chaque dossier vers celui qui correspond le mieux au profil du client.</p>
+      </div>
+
+      <div class="about-block">
+        <h2>Pourquoi passer par Eleven Lease.</h2>
+        <div class="reasons-list">
+          {reasons.map(r => <div class="reason-item"><Fragment set:html={checkIcon} /> {r}</div>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about-cta">
+    <div class="wrap">
+      <h2>Un projet de leasing en tête ?</h2>
+      <p>Décrivez-le en quelques minutes, notre équipe s'occupe du reste.</p>
+      <div class="about-cta-actions">
+        <a href="/simulation.html" class="btn-primary">Simuler mon leasing</a>
+        <a href="/contact.html" class="btn-outline">Nous écrire</a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* hero */
+  .about-hero{padding:150px 0 56px;border-bottom:1px solid var(--border);}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);border:1px solid var(--border);padding:6px 14px;border-radius:100px;margin-bottom:24px;width:fit-content;}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-1);}
+  .about-hero h1{font-size:clamp(30px,5vw,48px);max-width:640px;}
+  .about-hero em{font-style:normal;background:var(--accent);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .about-hero p{color:var(--text-dim);font-size:15.5px;max-width:560px;margin-top:18px;line-height:1.6;}
+
+  /* stats */
+  .about-stats{padding:48px 0;border-bottom:1px solid var(--border);}
+  .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:20px;overflow:hidden;}
+  .stat-item{background:var(--bg);padding:32px 24px;text-align:center;}
+  .stat-value{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(22px,3.4vw,32px);letter-spacing:-0.02em;}
+  .stat-label{color:var(--text-dim);font-size:13.5px;margin-top:8px;}
+  @media(max-width:640px){ .stats-grid{grid-template-columns:1fr;} }
+
+  /* body blocks */
+  .about-body{padding:72px 0;}
+  .about-block{max-width:720px;margin-bottom:56px;}
+  .about-block:last-child{margin-bottom:0;}
+  .about-block h2{font-size:clamp(22px,3.2vw,28px);margin-bottom:16px;}
+  .about-block p{color:var(--text-dim);font-size:15px;line-height:1.75;}
+
+  .reasons-list{display:flex;flex-direction:column;gap:14px;margin-top:8px;}
+  .reason-item{display:flex;align-items:flex-start;gap:12px;color:var(--text-dim);font-size:15px;line-height:1.6;}
+  .reason-item :global(svg){flex:none;color:var(--accent-1);margin-top:3px;}
+
+  /* cta */
+  .about-cta{padding:96px 0;text-align:center;border-top:1px solid var(--border);}
+  @media(max-width:768px){ .about-cta{padding:64px 0;} }
+  .about-cta h2{font-size:clamp(26px,4vw,36px);}
+  .about-cta p{color:var(--text-dim);font-size:15.5px;max-width:480px;margin:16px auto 32px;}
+  .about-cta-actions{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;}
+  .btn-primary{
+    background:var(--accent);color:#fff;padding:16px 28px;border-radius:100px;font-weight:600;font-size:15px;
+    transition:transform .2s ease, filter .2s ease, box-shadow .3s ease;display:inline-block;
+  }
+  .btn-primary:hover{filter:brightness(1.12);transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,0,127,0.25);}
+  .btn-primary:active{transform:scale(.96);}
+  .btn-outline{
+    display:inline-block;border:1px solid var(--border);color:var(--text-dim);
+    padding:15px 28px;border-radius:100px;font-weight:600;font-size:14.5px;
+    transition:border-color .2s ease, color .2s ease, transform .2s ease;
+  }
+  .btn-outline:hover{border-color:#666;color:var(--text);transform:translateY(-2px);}
+</style>
