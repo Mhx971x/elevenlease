@@ -42,4 +42,4 @@ Un refus de LOA en tant que jeune conducteur ne reflète pas la qualité réelle
 
 ---
 
-Vous êtes jeune conducteur et votre projet de LOA a déjà été refusé ailleurs ? [Décrivez-le à Eleven Lease](/simulation.html) : notre réseau de partenaires financiers étudie chaque dossier au cas par cas, sans frais.
+Vous êtes jeune conducteur et votre projet de LOA a déjà été refusé ailleurs ? [Décrivez-le à Eleven Lease](/simulation) : notre réseau de partenaires financiers étudie chaque dossier au cas par cas, sans frais.

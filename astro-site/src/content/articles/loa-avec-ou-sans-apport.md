@@ -42,4 +42,4 @@ Il n'existe pas de réponse universelle : c'est un arbitrage entre trésorerie d
 
 ---
 
-Envie de simuler votre loyer avec et sans apport pour comparer ? [Décrivez votre projet à Eleven Lease](/simulation.html) : notre réseau de partenaires financiers vous chiffre les deux scénarios, sans frais.
+Envie de simuler votre loyer avec et sans apport pour comparer ? [Décrivez votre projet à Eleven Lease](/simulation) : notre réseau de partenaires financiers vous chiffre les deux scénarios, sans frais.
