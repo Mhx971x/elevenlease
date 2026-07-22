@@ -12,16 +12,16 @@ interface SitemapEntry {
 
 const STATIC_ENTRIES: SitemapEntry[] = [
   { loc: '/', changefreq: 'weekly', priority: '1.0' },
-  { loc: '/simulation.html', changefreq: 'monthly', priority: '0.9' },
-  { loc: '/contact.html', changefreq: 'monthly', priority: '0.8' },
-  { loc: '/vehicules.html', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/loa.html', changefreq: 'monthly', priority: '0.8' },
-  { loc: '/articles.html', changefreq: 'weekly', priority: '0.7' },
-  { loc: '/a-propos.html', changefreq: 'monthly', priority: '0.6' },
-  { loc: '/bio.html', changefreq: 'monthly', priority: '0.4' },
-  { loc: '/mentions-legales.html', changefreq: 'yearly', priority: '0.2' },
-  { loc: '/confidentialite.html', changefreq: 'yearly', priority: '0.2' },
-  { loc: '/cgu.html', changefreq: 'yearly', priority: '0.2' },
+  { loc: '/simulation', changefreq: 'monthly', priority: '0.9' },
+  { loc: '/contact', changefreq: 'monthly', priority: '0.8' },
+  { loc: '/vehicules', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/loa', changefreq: 'monthly', priority: '0.8' },
+  { loc: '/articles', changefreq: 'weekly', priority: '0.7' },
+  { loc: '/a-propos', changefreq: 'monthly', priority: '0.6' },
+  { loc: '/bio', changefreq: 'monthly', priority: '0.4' },
+  { loc: '/mentions-legales', changefreq: 'yearly', priority: '0.2' },
+  { loc: '/confidentialite', changefreq: 'yearly', priority: '0.2' },
+  { loc: '/cgu', changefreq: 'yearly', priority: '0.2' },
 ];
 
 export const GET: APIRoute = async () => {
@@ -31,7 +31,7 @@ export const GET: APIRoute = async () => {
   try {
     const vehicles = await fetchVehicles();
     vehicleEntries = vehicles.map(v => ({
-      loc: `/vehicule/${v.slug}.html`,
+      loc: `/vehicule/${v.slug}`,
       changefreq: 'weekly',
       priority: '0.7',
     }));
@@ -41,7 +41,7 @@ export const GET: APIRoute = async () => {
 
   const articles = await getCollection('articles');
   const articleEntries: SitemapEntry[] = articles.map(a => ({
-    loc: `/articles/${a.id}.html`,
+    loc: `/articles/${a.id}`,
     changefreq: 'monthly',
     priority: '0.6',
   }));

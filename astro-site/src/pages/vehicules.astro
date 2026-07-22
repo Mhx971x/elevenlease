@@ -28,13 +28,13 @@ const collectionSchema = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
   name: 'Véhicules disponibles — Eleven Lease',
-  url: 'https://elevenlease.fr/vehicules.html',
+  url: 'https://elevenlease.fr/vehicules',
   mainEntity: {
     '@type': 'ItemList',
     itemListElement: vehicles.map((v, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      url: `https://elevenlease.fr/vehicule/${v.slug}.html`,
+      url: `https://elevenlease.fr/vehicule/${v.slug}`,
       name: `${v.brand} ${v.name}`,
     })),
   },
@@ -43,7 +43,7 @@ const collectionSchema = {
 <BaseLayout
   title="Eleven Lease — Véhicules disponibles"
   description="Découvrez les véhicules disponibles via le réseau de partenaires Eleven Lease : citadines, SUV, électriques, en LOA ou LLD partout en France."
-  path="/vehicules.html"
+  path="/vehicules"
   active="vehicules"
 >
   <Fragment slot="head">
@@ -91,7 +91,7 @@ const collectionSchema = {
       {vehicles.map(v => (
         <a
           class="veh-card show"
-          href={`/vehicule/${v.slug}.html`}
+          href={`/vehicule/${v.slug}`}
           data-type={v.type}
           data-condition={v.condition}
           data-price={v.price}
@@ -138,7 +138,7 @@ const collectionSchema = {
   <div class="cta-band">
     <h2>Le véhicule que vous cherchez n'est pas dans la liste ?</h2>
     <p>Décrivez votre projet, notre réseau de partenaires vous trouve la bonne offre.</p>
-    <a href="/simulation.html" class="btn-primary">Simuler mon leasing</a>
+    <a href="/simulation" class="btn-primary">Simuler mon leasing</a>
   </div>
 </section>
 

@@ -12,13 +12,13 @@ const collectionSchema = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
   name: 'Articles — Eleven Lease',
-  url: 'https://elevenlease.fr/articles.html',
+  url: 'https://elevenlease.fr/articles',
   mainEntity: {
     '@type': 'ItemList',
     itemListElement: entries.map((e, i) => ({
       '@type': 'ListItem',
       position: i + 1,
-      url: `https://elevenlease.fr/articles/${e.id}.html`,
+      url: `https://elevenlease.fr/articles/${e.id}`,
       name: e.data.title,
     })),
   },
@@ -27,7 +27,7 @@ const collectionSchema = {
 <BaseLayout
   title="Articles — Guide leasing et LOA | Eleven Lease"
   description="Conseils, guides et actualités sur le leasing automobile (LOA/LLD) : financement, profils spécifiques, fonctionnement des contrats. Par l'équipe Eleven Lease."
-  path="/articles.html"
+  path="/articles"
   active="articles"
 >
   <Fragment slot="head">
@@ -51,7 +51,7 @@ const collectionSchema = {
 
       <div class="articles-grid" id="articlesGrid">
         {entries.map(e => (
-          <a class="article-card" href={`/articles/${e.id}.html`} data-cat={e.data.category}>
+          <a class="article-card" href={`/articles/${e.id}`} data-cat={e.data.category}>
             <div class="article-cat">{e.data.category}</div>
             <h2>{e.data.title}</h2>
             <p>{e.data.description}</p>

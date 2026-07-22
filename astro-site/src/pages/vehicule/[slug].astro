@@ -21,7 +21,7 @@ const pageTitle = `${v.brand} ${v.name} — Eleven Lease`;
 const pageDescription = (v.description && v.description.trim())
   ? v.description.trim().slice(0, 155)
   : `Découvrez le ${v.brand} ${v.name} disponible en leasing (LOA/LLD) via le réseau de partenaires Eleven Lease. Simulez votre offre en 2 minutes.`;
-const canonicalPath = `/vehicule/${v.slug}.html`;
+const canonicalPath = `/vehicule/${v.slug}`;
 
 const photos = v.photos.length ? v.photos : [];
 const baseDuree = parseDureeMonths(v.duration);
@@ -73,7 +73,7 @@ const breadcrumbSchema = {
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://elevenlease.fr/' },
-    { '@type': 'ListItem', position: 2, name: 'Véhicules', item: 'https://elevenlease.fr/vehicules.html' },
+    { '@type': 'ListItem', position: 2, name: 'Véhicules', item: 'https://elevenlease.fr/vehicules' },
     { '@type': 'ListItem', position: 3, name: `${v.brand} ${v.name}`, item: canonicalUrl },
   ],
 };
@@ -141,7 +141,7 @@ const optionEntries = Object.entries(v.options).filter(([, items]) => items.leng
   <div class="wrap">
     <div class="detail-header-row">
       <div class="detail-header-left">
-        <a href="/vehicules.html" class="share-link back-link"><Fragment set:html={backIcon} /> Retour au catalogue</a>
+        <a href="/vehicules" class="share-link back-link"><Fragment set:html={backIcon} /> Retour au catalogue</a>
         <div class="veh-brand-label">{v.brand}</div>
         <h1>{v.name}{v.finition ? ` ${v.finition}` : ''}</h1>
       </div>
@@ -258,7 +258,7 @@ const optionEntries = Object.entries(v.options).filter(([, items]) => items.leng
       <span class="amount" id="stickyPrice">{v.price}€</span>
       <span class="period"> /mois</span>
     </div>
-    <a href={`/simulation.html?vehicule=${encodeURIComponent(v.brand + ' ' + v.name)}`} class="btn-primary">Vérifier mon éligibilité</a>
+    <a href={`/simulation?vehicule=${encodeURIComponent(v.brand + ' ' + v.name)}`} class="btn-primary">Vérifier mon éligibilité</a>
   </div>
 </div>
 

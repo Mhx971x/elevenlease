@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 
-const canonicalPath = `/articles/${entry.id}.html`;
+const canonicalPath = `/articles/${entry.id}`;
 const canonicalUrl = `https://elevenlease.fr${canonicalPath}`;
 const isoDate = entry.data.publishDate.toISOString();
 
@@ -39,7 +39,7 @@ const breadcrumbSchema = {
   '@type': 'BreadcrumbList',
   itemListElement: [
     { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://elevenlease.fr/' },
-    { '@type': 'ListItem', position: 2, name: 'Articles', item: 'https://elevenlease.fr/articles.html' },
+    { '@type': 'ListItem', position: 2, name: 'Articles', item: 'https://elevenlease.fr/articles' },
     { '@type': 'ListItem', position: 3, name: entry.data.title, item: canonicalUrl },
   ],
 };
@@ -60,7 +60,7 @@ const dateLabel = entry.data.publishDate.toLocaleDateString('fr-FR', { day: 'num
 
   <section class="article-hero">
     <div class="wrap">
-      <a href="/articles.html" class="back-link">← Tous les articles</a>
+      <a href="/articles" class="back-link">← Tous les articles</a>
       <div class="article-cat">{entry.data.category}</div>
       <h1>{entry.data.title}</h1>
       <div class="article-meta-row">
@@ -83,7 +83,7 @@ const dateLabel = entry.data.publishDate.toLocaleDateString('fr-FR', { day: 'num
     <div class="wrap">
       <h2>Un projet de leasing en tête ?</h2>
       <p>Décrivez-le en quelques minutes, notre réseau de partenaires financiers s'occupe du reste.</p>
-      <a href="/simulation.html" class="btn-primary">Simuler mon leasing</a>
+      <a href="/simulation" class="btn-primary">Simuler mon leasing</a>
     </div>
   </section>
 </BaseLayout>

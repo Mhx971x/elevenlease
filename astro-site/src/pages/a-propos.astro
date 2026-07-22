@@ -5,7 +5,7 @@ const aboutSchema = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
   "name": "À propos d'Eleven Lease",
-  "url": "https://elevenlease.fr/a-propos.html",
+  "url": "https://elevenlease.fr/a-propos",
   "mainEntity": {
     "@type": "Organization",
     "name": "Eleven Lease",
@@ -27,8 +27,8 @@ const reasons = [
 <BaseLayout
   title="À propos | Eleven Lease, mandataires auto depuis 2023"
   description="Eleven Lease est une équipe de mandataires auto issue du secteur automobile et financier, active depuis 2023. Découvrez qui nous sommes et notre réseau de partenaires."
-  path="/a-propos.html"
-  ctaHref="/simulation.html"
+  path="/a-propos"
+  ctaHref="/simulation"
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(aboutSchema)} />
@@ -87,8 +87,8 @@ const reasons = [
       <h2>Un projet de leasing en tête ?</h2>
       <p>Décrivez-le en quelques minutes, notre équipe s'occupe du reste.</p>
       <div class="about-cta-actions">
-        <a href="/simulation.html" class="btn-primary">Simuler mon leasing</a>
-        <a href="/contact.html" class="btn-outline">Nous écrire</a>
+        <a href="/simulation" class="btn-primary">Simuler mon leasing</a>
+        <a href="/contact" class="btn-outline">Nous écrire</a>
       </div>
     </div>
   </section>

@@ -1,5 +1,5 @@
 User-agent: *
-Disallow: /admin.html
+Disallow: /admin
 Allow: /
 
 Sitemap: https://elevenlease.fr/sitemap.xml

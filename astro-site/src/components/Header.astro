@@ -6,7 +6,7 @@ export interface Props {
   /** Affiche la barre de progression de scroll dans le header (pages de contenu long) */
   showProgressBar?: boolean;
 }
-const { ctaHref = '/simulation.html', active, showProgressBar = false } = Astro.props;
+const { ctaHref = '/simulation', active, showProgressBar = false } = Astro.props;
 const cls = (key: string) => (active === key ? 'active' : undefined);
 ---
 <header>
@@ -16,11 +16,11 @@ const cls = (key: string) => (active === key ? 'active' : undefined);
     </a>
     <div class="nav-links">
       <a href="/#comment-ca-marche">Comment ça marche</a>
-      <a href="/loa.html" class={cls('loa')}>Guide LOA</a>
-      <a href="/vehicules.html" class={cls('vehicules')}>Nos offres</a>
-      <a href="/articles.html" class={cls('articles')}>Articles</a>
+      <a href="/loa" class={cls('loa')}>Guide LOA</a>
+      <a href="/vehicules" class={cls('vehicules')}>Nos offres</a>
+      <a href="/articles" class={cls('articles')}>Articles</a>
       <a href="/#avis">Avis</a>
-      <a href="/contact.html" class={cls('contact')}>Contact</a>
+      <a href="/contact" class={cls('contact')}>Contact</a>
     </div>
     <div class="nav-right">
       <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -43,10 +43,10 @@ const cls = (key: string) => (active === key ? 'active' : undefined);
   </div>
   <nav class="mobile-menu-list">
     <a href="/#comment-ca-marche">Comment ça marche</a>
-    <a href="/loa.html" class={cls('loa')}>Guide LOA</a>
-    <a href="/vehicules.html" class={cls('vehicules')}>Nos offres</a>
-    <a href="/articles.html" class={cls('articles')}>Articles</a>
-    <a href="/contact.html" class={cls('contact')}>Contact</a>
+    <a href="/loa" class={cls('loa')}>Guide LOA</a>
+    <a href="/vehicules" class={cls('vehicules')}>Nos offres</a>
+    <a href="/articles" class={cls('articles')}>Articles</a>
+    <a href="/contact" class={cls('contact')}>Contact</a>
   </nav>
   <div class="mobile-menu-cta">
     <a href={ctaHref} class="nav-cta">Simuler mon leasing</a>

@@ -99,8 +99,8 @@ const faqSchema = {
       <h1>Le bon leasing,<br><em>trouvé pour vous.</em></h1>
       <p>Eleven Lease vous connecte aux meilleures offres de leasing (LOA/LLD) partout en France. Décrivez votre projet, comparez, prenez le volant.</p>
       <div class="hero-actions">
-        <a href="/simulation.html" class="btn-primary">Simuler mon leasing</a>
-        <a href="/vehicules.html" class="btn-ghost">Découvrir les véhicules</a>
+        <a href="/simulation" class="btn-primary">Simuler mon leasing</a>
+        <a href="/vehicules" class="btn-ghost">Découvrir les véhicules</a>
       </div>
 
       <div class="acceptance-highlight">
@@ -139,7 +139,7 @@ const faqSchema = {
         <div class="fleet-track" id="fleetTrack">
           {fleetVehicles.length === 0 && <p class="fleet-loading">Catalogue momentanément indisponible.</p>}
           {fleetVehicles.map(v => (
-            <a class="fleet-card" href={`/vehicule/${v.slug}.html`} aria-label={`Voir les détails : ${v.brand} ${v.name}`}>
+            <a class="fleet-card" href={`/vehicule/${v.slug}`} aria-label={`Voir les détails : ${v.brand} ${v.name}`}>
               <div class="fleet-visual">
                 <span class={`fleet-badge ${v.condition === 'occasion' ? 'occasion' : ''}`}>{v.condition === 'neuf' ? 'Neuf' : 'Occasion'}</span>
                 {v.photo
@@ -158,7 +158,7 @@ const faqSchema = {
         </div>
       </div>
       <div class="fleet-foot reveal">
-        <a href="/vehicules.html" class="btn-ghost">Voir tout le catalogue →</a>
+        <a href="/vehicules" class="btn-ghost">Voir tout le catalogue →</a>
       </div>
     </div>
   </section>
