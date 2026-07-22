@@ -68,6 +68,16 @@ const vehicleSchema: Record<string, unknown> = {
   }),
 };
 
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://elevenlease.fr/' },
+    { '@type': 'ListItem', position: 2, name: 'Véhicules', item: 'https://elevenlease.fr/vehicules.html' },
+    { '@type': 'ListItem', position: 3, name: `${v.brand} ${v.name}`, item: canonicalUrl },
+  ],
+};
+
 const DUREE_STEPS = [36, 48, 60];
 const APPORT_STEPS = [0, 2000, 5000];
 
@@ -126,6 +136,7 @@ const optionEntries = Object.entries(v.options).filter(([, items]) => items.leng
 ---
 <MinimalLayout title={pageTitle} description={pageDescription} path={canonicalPath}>
 <script type="application/ld+json" set:html={JSON.stringify(vehicleSchema)} />
+<script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 <div id="pageContent">
   <div class="wrap">
     <div class="detail-header-row">

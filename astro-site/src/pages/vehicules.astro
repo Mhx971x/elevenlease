@@ -23,6 +23,22 @@ const carIcon = `<svg viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org
 const specIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
 const fuelIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 21V6a2 2 0 012-2h6a2 2 0 012 2v15M4 21h10M4 10h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 8l2.5 2.5A2 2 0 0117 12v5a1.5 1.5 0 003 0V9l-3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const roadIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 21L9 3h6l5 18M9 15h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+const collectionSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Véhicules disponibles — Eleven Lease',
+  url: 'https://elevenlease.fr/vehicules.html',
+  mainEntity: {
+    '@type': 'ItemList',
+    itemListElement: vehicles.map((v, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      url: `https://elevenlease.fr/vehicule/${v.slug}.html`,
+      name: `${v.brand} ${v.name}`,
+    })),
+  },
+};
 ---
 <BaseLayout
   title="Eleven Lease — Véhicules disponibles"
@@ -30,6 +46,9 @@ const roadIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><p
   path="/vehicules.html"
   active="vehicules"
 >
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+  </Fragment>
 <section class="page-hero">
   <div class="wrap">
     <div class="eyebrow"><span class="dot"></span> Mis à jour régulièrement</div>

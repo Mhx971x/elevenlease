@@ -1,5 +1,27 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Sous quel délai vais-je recevoir une réponse ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Le délai moyen de mise en relation est de 24h après l'envoi de votre message." }
+    },
+    {
+      "@type": "Question",
+      "name": "Dois-je remplir la simulation complète pour poser une question ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Non. Ce formulaire de contact suffit pour poser une question simple : nom, email et votre message. La simulation complète n'est nécessaire que pour lancer une demande de leasing." }
+    },
+    {
+      "@type": "Question",
+      "name": "Puis-je contacter Eleven Lease par un autre moyen que le formulaire ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Oui, vous pouvez aussi nous écrire directement par email ou nous joindre sur WhatsApp pour une réponse immédiate." }
+    }
+  ]
+};
 ---
 <BaseLayout
   title="Nous contacter | Eleven Lease"
@@ -8,6 +30,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   ctaHref="/simulation.html"
   active="contact"
 >
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  </Fragment>
   <section class="contact-hero">
     <div class="wrap">
       <div class="eyebrow"><span class="dot"></span> Une réponse sous 24h</div>
@@ -57,6 +82,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           </div>
           <button type="button" class="restart-link" id="sendAnotherBtn">← Envoyer un autre message</button>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-faq">
+    <div class="wrap">
+      <h2>Questions fréquentes.</h2>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Sous quel délai vais-je recevoir une réponse ?<span class="faq-icon"></span></summary>
+          <div class="faq-content"><p>Le délai moyen de mise en relation est de 24h après l'envoi de votre message.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Dois-je remplir la simulation complète pour poser une question ?<span class="faq-icon"></span></summary>
+          <div class="faq-content"><p>Non. Ce formulaire de contact suffit pour poser une question simple : nom, email et votre message. La simulation complète n'est nécessaire que pour lancer une demande de leasing.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Puis-je contacter Eleven Lease par un autre moyen que le formulaire ?<span class="faq-icon"></span></summary>
+          <div class="faq-content"><p>Oui, vous pouvez aussi nous écrire directement par email ou nous joindre sur WhatsApp pour une réponse immédiate.</p></div>
+        </details>
       </div>
     </div>
   </section>
@@ -155,7 +200,32 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .restart-link{font-size:13.5px;color:var(--text-dim);cursor:pointer;background:none;border:none;font-family:inherit;padding:0;text-decoration:underline;margin-top:22px;display:inline-block;}
   .restart-link:hover{color:var(--text);}
 
-  /* contact CTA (bas de page) */
+  /* faq */
+  .contact-faq{padding:80px 0;border-top:1px solid var(--border);}
+  @media(max-width:768px){ .contact-faq{padding:56px 0;} }
+  .contact-faq h2{font-size:clamp(24px,3.6vw,32px);margin-bottom:32px;}
+  .faq-list{max-width:760px;}
+  .faq-item{border-bottom:1px solid var(--border);padding:22px 0;}
+  .faq-item summary{
+    cursor:pointer;font-size:15.5px;font-weight:500;list-style:none;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+    transition:color .2s ease;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item:hover summary{color:#fff;}
+  .faq-icon{position:relative;width:16px;height:16px;flex:none;}
+  .faq-icon::before,.faq-icon::after{
+    content:'';position:absolute;top:50%;left:50%;background:var(--text-dim);
+    transition:transform .3s cubic-bezier(.16,1,.3,1), background .2s ease;
+  }
+  .faq-icon::before{width:14px;height:1.5px;transform:translate(-50%,-50%);}
+  .faq-icon::after{width:1.5px;height:14px;transform:translate(-50%,-50%);}
+  .faq-item[open] .faq-icon::after{transform:translate(-50%,-50%) rotate(90deg);}
+  .faq-item[open] .faq-icon::before,
+  .faq-item[open] .faq-icon::after{background:var(--accent-1);}
+  .faq-content{overflow:hidden;}
+  .faq-content p{color:var(--text-dim);font-size:14.5px;line-height:1.75;padding-top:14px;max-width:680px;}
+
   .contact-cta{padding:100px 0;text-align:center;border-top:1px solid var(--border);}
   @media(max-width:768px){ .contact-cta{padding:64px 0;} }
   .contact-cta h2{font-size:clamp(26px,4vw,36px);}
@@ -284,4 +354,48 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     contactSubmit.disabled = false;
     contactSubmit.textContent = 'Envoyer mon message';
   });
+
+  // faq accordion
+  const faqEasing = 'cubic-bezier(.16,1,.3,1)';
+  document.querySelectorAll<HTMLDetailsElement>('.faq-item').forEach(item=>{
+    const summary = item.querySelector('summary')!;
+    const content = item.querySelector<HTMLElement>('.faq-content')!;
+    summary.addEventListener('click', (e)=>{
+      e.preventDefault();
+      if(item.classList.contains('is-animating')) return;
+      item.open ? closeFaq(item, content) : openFaq(item, content);
+    });
+  });
+
+  function openFaq(item: HTMLDetailsElement, content: HTMLElement){
+    item.classList.add('is-animating');
+    item.open = true;
+    const target = content.scrollHeight;
+    content.style.overflow = 'hidden';
+    const anim = content.animate(
+      [{ height:'0px', opacity:0 }, { height: target+'px', opacity:1 }],
+      { duration:320, easing:faqEasing }
+    );
+    anim.onfinish = ()=>{
+      content.style.overflow = '';
+      content.style.height = '';
+      item.classList.remove('is-animating');
+    };
+  }
+
+  function closeFaq(item: HTMLDetailsElement, content: HTMLElement){
+    item.classList.add('is-animating');
+    const start = content.scrollHeight;
+    content.style.overflow = 'hidden';
+    const anim = content.animate(
+      [{ height:start+'px', opacity:1 }, { height:'0px', opacity:0 }],
+      { duration:280, easing:faqEasing }
+    );
+    anim.onfinish = ()=>{
+      item.open = false;
+      content.style.overflow = '';
+      content.style.height = '';
+      item.classList.remove('is-animating');
+    };
+  }
 </script>
