@@ -22,6 +22,15 @@ const faqSchema = {
     }
   ]
 };
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://elevenlease.fr/" },
+    { "@type": "ListItem", "position": 2, "name": "Contact", "item": "https://elevenlease.fr/contact" }
+  ]
+};
 ---
 <BaseLayout
   title="Nous contacter | Eleven Lease"
@@ -32,6 +41,7 @@ const faqSchema = {
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   </Fragment>
   <section class="contact-hero">
     <div class="wrap">

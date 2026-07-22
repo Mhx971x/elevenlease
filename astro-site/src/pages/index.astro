@@ -75,6 +75,14 @@ const faqSchema = {
     }
   ]
 };
+
+const breadcrumbSchema = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://elevenlease.fr/" }
+  ]
+};
 ---
 <BaseLayout
   title="Eleven Lease — Le bon leasing, trouvé pour vous"
@@ -86,6 +94,7 @@ const faqSchema = {
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
   </Fragment>
 
   <div class="grain"></div>

@@ -110,6 +110,11 @@ const dateLabel = entry.data.publishDate.toLocaleDateString('fr-FR', { day: 'num
   .prose :global(a){color:var(--text);text-decoration:underline;text-underline-offset:3px;text-decoration-color:var(--accent-1);transition:color .2s ease;}
   .prose :global(a:hover){color:var(--accent-1);}
   .prose :global(hr){border:none;border-top:1px solid var(--border);margin:40px 0;}
+  .prose :global(table){width:100%;border-collapse:collapse;margin:8px 0 28px;font-size:14.5px;}
+  .prose :global(th),.prose :global(td){padding:12px 14px;border:1px solid var(--border);text-align:left;vertical-align:top;}
+  .prose :global(th){color:var(--text);font-family:'Space Grotesk',sans-serif;font-weight:600;background:var(--surface);}
+  .prose :global(td){color:var(--text-dim);}
+  .prose :global(tr:nth-child(even) td){background:var(--surface);}
 
   .article-cta{padding:80px 0 96px;text-align:center;border-top:1px solid var(--border);}
   .article-cta h2{font-size:clamp(24px,3.4vw,32px);}
