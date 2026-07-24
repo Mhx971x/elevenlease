@@ -137,7 +137,8 @@ const reasons = [
   .btn-outline{
     display:inline-block;border:1px solid var(--border);color:var(--text-dim);
     padding:15px 28px;border-radius:100px;font-weight:600;font-size:14.5px;
-    transition:border-color .2s ease, color .2s ease, transform .2s ease;
+    box-shadow:var(--shadow-sm);
+    transition:border-color .2s ease, color .2s ease, transform .2s ease, box-shadow .3s ease;
   }
-  .btn-outline:hover{border-color:#666;color:var(--text);transform:translateY(-2px);}
+  .btn-outline:hover{border-color:#d8d8dd;color:var(--text);transform:translateY(-2px);box-shadow:var(--shadow-md);}
 </style>

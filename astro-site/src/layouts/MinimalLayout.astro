@@ -43,16 +43,19 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style is:global>
   :root{
-    --bg:#0a0a0a;
-    --surface:#141414;
-    --surface-2:#1c1c1c;
-    --border:#2a2a2a;
-    --text:#ffffff;
-    --text-dim:#9a9a9a;
-    --text-faint:#5c5c5c;
+    --bg:#ffffff;
+    --surface:#f6f6f7;
+    --surface-2:#eeeef1;
+    --border:#e4e4e8;
+    --text:#111113;
+    --text-dim:#5a5a62;
+    --text-faint:#96969e;
     --accent-1:#ff007f;
     --accent-2:#8d0a32;
     --accent:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+    --shadow-sm:0 1px 2px rgba(17,17,19,0.04), 0 1px 1px rgba(17,17,19,0.03);
+    --shadow-md:0 12px 32px rgba(17,17,19,0.08), 0 2px 8px rgba(17,17,19,0.04);
+    --shadow-lg:0 24px 56px rgba(17,17,19,0.12), 0 4px 12px rgba(17,17,19,0.05);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   a{color:inherit;text-decoration:none;}

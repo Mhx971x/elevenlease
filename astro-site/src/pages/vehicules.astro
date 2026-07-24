@@ -10,15 +10,15 @@ try {
 }
 
 const carIcon = `<svg viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M20 68 L32 40 Q38 30 52 30 L140 30 Q154 30 160 40 L172 68 L172 80 Q172 84 168 84 L158 84 Q158 92 150 92 Q142 92 142 84 L58 84 Q58 92 50 92 Q42 92 42 84 L32 84 Q28 84 28 80 Z" stroke="#ffffff" stroke-width="2.5" fill="rgba(255,255,255,0.03)"/>
-  <path d="M46 40 L54 40 L50 30" stroke="#ffffff" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
-  <line x1="52" y1="30" x2="52" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
-  <line x1="86" y1="30" x2="86" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
-  <line x1="120" y1="30" x2="120" y2="40" stroke="#ffffff" stroke-width="2" opacity="0.5"/>
-  <circle cx="58" cy="84" r="10" stroke="#ffffff" stroke-width="2.5" fill="#0a0a0a"/>
-  <circle cx="142" cy="84" r="10" stroke="#ffffff" stroke-width="2.5" fill="#0a0a0a"/>
-  <circle cx="58" cy="84" r="3" fill="#ffffff"/>
-  <circle cx="142" cy="84" r="3" fill="#ffffff"/>
+  <path d="M20 68 L32 40 Q38 30 52 30 L140 30 Q154 30 160 40 L172 68 L172 80 Q172 84 168 84 L158 84 Q158 92 150 92 Q142 92 142 84 L58 84 Q58 92 50 92 Q42 92 42 84 L32 84 Q28 84 28 80 Z" stroke="#111113" stroke-width="2.5" fill="rgba(17,17,19,0.03)"/>
+  <path d="M46 40 L54 40 L50 30" stroke="#111113" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
+  <line x1="52" y1="30" x2="52" y2="40" stroke="#111113" stroke-width="2" opacity="0.5"/>
+  <line x1="86" y1="30" x2="86" y2="40" stroke="#111113" stroke-width="2" opacity="0.5"/>
+  <line x1="120" y1="30" x2="120" y2="40" stroke="#111113" stroke-width="2" opacity="0.5"/>
+  <circle cx="58" cy="84" r="10" stroke="#111113" stroke-width="2.5" fill="#f6f6f7"/>
+  <circle cx="142" cy="84" r="10" stroke="#111113" stroke-width="2.5" fill="#f6f6f7"/>
+  <circle cx="58" cy="84" r="3" fill="#111113"/>
+  <circle cx="142" cy="84" r="3" fill="#111113"/>
 </svg>`;
 const specIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
 const fuelIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 21V6a2 2 0 012-2h6a2 2 0 012 2v15M4 21h10M4 10h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 8l2.5 2.5A2 2 0 0117 12v5a1.5 1.5 0 003 0V9l-3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
@@ -230,25 +230,26 @@ const collectionSchema = {
     padding:20px 0;
   }
   .filter-select{
-    background:var(--surface);border:1px solid var(--border);color:var(--text);
+    background:#fff;border:1px solid var(--border);color:var(--text);
     padding:11px 16px;border-radius:100px;font-size:13.5px;font-family:'Inter',sans-serif;
-    cursor:pointer;transition:border-color .2s ease, box-shadow .2s ease;
+    cursor:pointer;box-shadow:var(--shadow-sm);transition:border-color .2s ease, box-shadow .2s ease;
     -webkit-appearance:none;appearance:none;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239a9a9a' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
     background-repeat:no-repeat;background-position:right 14px center;
     padding-right:34px;
   }
-  .filter-select:hover{border-color:#444;}
+  .filter-select:hover{border-color:#d8d8dd;box-shadow:var(--shadow-md);}
   .filter-select:focus{outline:none;border-color:var(--accent-1);box-shadow:0 0 0 3px rgba(255,0,127,0.15);}
   .filter-count{margin-left:auto;font-size:13.5px;color:var(--text-faint);}
   @media(max-width:640px){ .filter-count{margin-left:0;width:100%;} }
 
   .filter-search{
-    background:var(--surface);border:1px solid var(--border);color:var(--text);
+    background:#fff;border:1px solid var(--border);color:var(--text);
     padding:11px 18px;border-radius:100px;font-size:13.5px;font-family:'Inter',sans-serif;
-    flex:1;min-width:220px;transition:border-color .2s ease, box-shadow .2s ease;
+    flex:1;min-width:220px;box-shadow:var(--shadow-sm);transition:border-color .2s ease, box-shadow .2s ease;
   }
   .filter-search::placeholder{color:var(--text-faint);}
+  .filter-search:hover{border-color:#d8d8dd;box-shadow:var(--shadow-md);}
   .filter-search:focus{outline:none;border-color:var(--accent-1);box-shadow:0 0 0 3px rgba(255,0,127,0.15);}
   @media(max-width:640px){ .filter-search{width:100%;flex:none;} }
 
@@ -261,22 +262,21 @@ const collectionSchema = {
   @media(max-width:640px){ .veh-grid{grid-template-columns:1fr;} }
 
   .veh-card{
-    background:var(--surface);border:1px solid var(--border);border-radius:18px;
+    background:#fff;border:1px solid var(--border);border-radius:18px;
     overflow:hidden;
+    box-shadow:var(--shadow-sm);
     transition:border-color .3s ease, box-shadow .3s ease, transform .3s ease;
     display:flex;flex-direction:column;
     cursor:pointer;
   }
-  .veh-card:focus-visible{outline:2px solid #fff;outline-offset:2px;}
-  .veh-card:hover{transform:translateY(-4px);border-color:#444;box-shadow:0 16px 40px rgba(0,0,0,0.35);}
+  .veh-card:focus-visible{outline:2px solid var(--text);outline-offset:2px;}
+  .veh-card:hover{transform:translateY(-4px);border-color:#d8d8dd;box-shadow:var(--shadow-md);}
   .veh-card:hover .veh-visual svg{transform:scale(1.06);}
 
   .veh-visual{
     position:relative;
     aspect-ratio:16/9;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(255,255,255,0.05), transparent),
-      linear-gradient(180deg, var(--surface-2), var(--surface));
+    background:linear-gradient(180deg, var(--surface-2), var(--surface));
     display:flex;align-items:center;justify-content:center;
     border-bottom:1px solid var(--border);
     overflow:hidden;

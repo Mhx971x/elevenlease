@@ -156,21 +156,21 @@ const breadcrumbSchema = {
   .contact-body{padding:64px 0 100px;}
   .contact-panel{
     border:1px solid var(--border);border-radius:24px;padding:56px;max-width:600px;margin:0 auto;
-    background:radial-gradient(ellipse at 50% 0%, var(--surface), var(--bg));
+    background:#fff;box-shadow:var(--shadow-sm);
   }
   @media(max-width:640px){ .contact-panel{padding:36px 24px;} }
   .contact-form{display:flex;flex-direction:column;gap:18px;}
   .field-item{display:flex;flex-direction:column;gap:6px;}
   .field-item label{font-size:13.5px;color:var(--text-dim);}
   .contact-form input, .contact-form textarea{
-    background:var(--surface-2);border:1px solid var(--border);color:var(--text);
+    background:#fff;border:1px solid var(--border);color:var(--text);
     padding:16px 18px;border-radius:14px;font-size:15.5px;font-family:'Inter',sans-serif;width:100%;
     transition:border-color .25s ease, background .25s ease, box-shadow .25s ease;
   }
   .contact-form input::placeholder, .contact-form textarea::placeholder{color:var(--text-faint);}
-  .contact-form input:hover, .contact-form textarea:hover{border-color:#444;}
+  .contact-form input:hover, .contact-form textarea:hover{border-color:#d8d8dd;}
   .contact-form input:focus, .contact-form textarea:focus{
-    outline:none;border-color:var(--accent-1);background:#202020;box-shadow:0 0 0 3px rgba(255,0,127,0.15);
+    outline:none;border-color:var(--accent-1);background:#fff;box-shadow:0 0 0 3px rgba(255,0,127,0.15);
   }
   .contact-form textarea{resize:vertical;min-height:130px;font-family:'Inter',sans-serif;line-height:1.55;}
   .btn-primary{
@@ -194,7 +194,7 @@ const breadcrumbSchema = {
   .success-screen > p{color:var(--text-dim);font-size:15px;max-width:420px;margin:0 auto 28px;}
   .success-contact p{color:var(--text-dim);font-size:14.5px;margin-bottom:14px;}
   .whatsapp-btn{
-    display:inline-flex;align-items:center;gap:9px;background:#20263a;color:#fff;
+    display:inline-flex;align-items:center;gap:9px;background:var(--surface);color:var(--text);
     padding:14px 24px;border-radius:100px;font-weight:600;font-size:14.5px;
     border:1px solid var(--border);transition:transform .2s ease, border-color .2s ease;
   }
@@ -205,7 +205,7 @@ const breadcrumbSchema = {
     padding:14px 24px;border-radius:100px;font-weight:600;font-size:14.5px;
     transition:border-color .2s ease, color .2s ease, transform .2s ease;
   }
-  .btn-outline:hover{border-color:#666;color:var(--text);transform:translateY(-2px);}
+  .btn-outline:hover{border-color:#d8d8dd;color:var(--text);transform:translateY(-2px);}
   .success-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px;}
   .restart-link{font-size:13.5px;color:var(--text-dim);cursor:pointer;background:none;border:none;font-family:inherit;padding:0;text-decoration:underline;margin-top:22px;display:inline-block;}
   .restart-link:hover{color:var(--text);}
@@ -222,7 +222,7 @@ const breadcrumbSchema = {
     transition:color .2s ease;
   }
   .faq-item summary::-webkit-details-marker{display:none;}
-  .faq-item:hover summary{color:#fff;}
+  .faq-item:hover summary{color:var(--text);}
   .faq-icon{position:relative;width:16px;height:16px;flex:none;}
   .faq-icon::before,.faq-icon::after{
     content:'';position:absolute;top:50%;left:50%;background:var(--text-dim);

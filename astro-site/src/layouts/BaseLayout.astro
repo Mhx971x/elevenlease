@@ -56,16 +56,19 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
 <slot name="head" />
 <style is:global>
   :root{
-    --bg:#0a0a0a;
-    --surface:#141414;
-    --surface-2:#1c1c1c;
-    --border:#2a2a2a;
-    --text:#ffffff;
-    --text-dim:#9a9a9a;
-    --text-faint:#5c5c5c;
+    --bg:#ffffff;
+    --surface:#f6f6f7;
+    --surface-2:#eeeef1;
+    --border:#e4e4e8;
+    --text:#111113;
+    --text-dim:#5a5a62;
+    --text-faint:#96969e;
     --accent-1:#ff007f;
     --accent-2:#8d0a32;
     --accent:linear-gradient(135deg,var(--accent-1),var(--accent-2));
+    --shadow-sm:0 1px 2px rgba(17,17,19,0.04), 0 1px 1px rgba(17,17,19,0.03);
+    --shadow-md:0 12px 32px rgba(17,17,19,0.08), 0 2px 8px rgba(17,17,19,0.04);
+    --shadow-lg:0 24px 56px rgba(17,17,19,0.12), 0 4px 12px rgba(17,17,19,0.05);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -78,11 +81,11 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
   /* logo */
   .logo{display:flex;align-items:center;gap:10px;transition:opacity .25s ease;}
   .logo:hover{opacity:.8;}
-  .logo-icon{width:106px;height:46px;background-image:url('/eleven-lease-logo.png');background-repeat:no-repeat;background-size:contain;background-position:center;flex:none;}
+  .logo-icon{width:106px;height:46px;background-image:url('/eleven-lease-logo-light.png');background-repeat:no-repeat;background-size:contain;background-position:center;flex:none;}
 
   /* nav */
-  header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:background .3s ease, border-color .3s ease;}
-  header.scrolled{background:rgba(10,10,10,0.92);}
+  header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,0.82);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:background .3s ease, border-color .3s ease, box-shadow .3s ease;}
+  header.scrolled{background:rgba(255,255,255,0.92);border-bottom-color:var(--border);box-shadow:var(--shadow-sm);}
   nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;max-width:1180px;margin:0 auto;}
   .progress-bar{position:absolute;bottom:-1px;left:0;height:1px;width:0%;background:var(--accent);transition:width .1s linear;}
   .nav-links{display:flex;gap:36px;font-size:14px;color:var(--text-dim);}
