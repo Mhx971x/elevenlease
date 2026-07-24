@@ -136,12 +136,11 @@ const breadcrumbSchema = {
 
       <div class="hero-visual" aria-hidden="true">
         <div class="hero-visual-ring"></div>
-        <div class="hero-ground-shadow"></div>
         <div class="hero-visual-label">
           <span>La liberté de rouler</span>
           <strong>sans compter.</strong>
         </div>
-        <img src="/hero-premium-car.webp" alt="" width="1672" height="941" fetchpriority="high">
+        <img src="/hero-sport-compact.png" alt="" width="1774" height="887" fetchpriority="high">
       </div>
     </div>
   </section>
@@ -577,36 +576,9 @@ const breadcrumbSchema = {
     border:1px solid rgba(255,0,127,.1);
     box-shadow:0 45px 90px rgba(17,17,19,.08);
   }
-  .hero-ground-shadow{
-    position:absolute;z-index:1;
-    left:7%;right:2%;bottom:18.5%;height:60px;
-    border-radius:50%;
-    background:
-      radial-gradient(ellipse 52% 23% at 56% 24%,rgba(8,8,10,.3) 0%,rgba(17,17,19,.14) 48%,transparent 78%),
-      radial-gradient(ellipse 68% 58% at 56% 52%,rgba(17,17,19,.21) 0%,rgba(17,17,19,.12) 38%,rgba(17,17,19,.035) 62%,transparent 76%);
-    filter:blur(5.5px);
-    transform:scaleX(.98) rotate(-.5deg);
-    opacity:.82;
-  }
-  .hero-ground-shadow::before,
-  .hero-ground-shadow::after{
-    content:'';position:absolute;bottom:25px;
-    width:18%;height:11px;border-radius:50%;
-    background:radial-gradient(ellipse,rgba(8,8,10,.64) 0%,rgba(17,17,19,.32) 44%,transparent 78%);
-    filter:blur(2px);
-  }
-  .hero-ground-shadow::before{
-    left:34%;
-    transform:rotate(3deg) scaleX(.9);
-  }
-  .hero-ground-shadow::after{
-    right:2%;
-    transform:rotate(-2deg) scaleX(.82);
-  }
   .hero-visual img{
-    position:relative;z-index:2;width:118%;max-width:none;height:auto;
+    position:relative;z-index:2;width:123%;max-width:none;height:auto;
     transform:translateX(-1%);
-    filter:drop-shadow(0 4px 4px rgba(17,17,19,.08));
   }
   .hero-visual-label{
     position:absolute;z-index:3;right:0;top:13%;
