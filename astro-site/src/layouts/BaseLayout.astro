@@ -138,17 +138,6 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
   @media(min-width:769px){ .mobile-menu{display:none;} }
   body.menu-open{overflow:hidden;}
 
-  /* footer (partagé) */
-  footer{border-top:1px solid var(--border);padding:64px 0 32px;}
-  .footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;padding-bottom:48px;}
-  @media(max-width:768px){ .footer-top{grid-template-columns:1fr 1fr;} }
-  @media(max-width:480px){ .footer-top{grid-template-columns:1fr;} }
-  .footer-col h4{font-size:13px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:16px;}
-  .footer-col a{display:block;color:var(--text-dim);font-size:14.5px;padding:6px 0;transition:color .2s ease;}
-  .footer-col a:hover{color:var(--accent-1);}
-  .footer-col p{color:var(--text-dim);font-size:14px;line-height:1.6;}
-  .footer-bottom{border-top:1px solid var(--border);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12.5px;color:var(--text-faint);}
-
   @media (prefers-reduced-motion: reduce){ *{animation:none !important;transition:none !important;} }
 </style>
 </head>
