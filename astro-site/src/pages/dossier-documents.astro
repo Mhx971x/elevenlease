@@ -108,6 +108,15 @@
             <input type="file" id="otherFileInput" accept=".pdf,.jpg,.jpeg,.png,.webp,.heic,.heif,application/pdf,image/jpeg,image/png,image/webp,image/heic,image/heif" multiple>
             <span>+ Ajouter des fichiers</span>
           </label>
+          <div class="upload-progress" hidden>
+            <div class="upload-progress-head">
+              <span class="upload-progress-label">Préparation…</span>
+              <strong class="upload-progress-percent">0 %</strong>
+            </div>
+            <div class="upload-progress-track" role="progressbar" aria-label="Progression du téléversement" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <span class="upload-progress-fill"></span>
+            </div>
+          </div>
           <div class="upload-feedback" aria-live="polite"></div>
           <div class="other-documents" id="otherDocuments"></div>
         </section>
@@ -123,14 +132,11 @@
   </footer>
 
   <script>
-    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
-
     const SUPABASE_URL = 'https://syzlvsfhdmegmebsvscm.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_aF6YEQBB5UrjOrNo9RTMjw_SM3MPKvM';
     const PORTAL_FUNCTION_URL = SUPABASE_URL + '/functions/v1/document-portal';
     const BUCKET = 'lead-documents';
     const MAX_FILE_SIZE = 15 * 1024 * 1024;
-    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
     interface Requirement {
       id: string;
@@ -264,6 +270,15 @@
                 '<input type="file" class="document-input" data-document-type="' + escapeHtml(requirement.id) + '" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.heic,.heif,application/pdf,image/jpeg,image/png,image/webp,image/heic,image/heif">' +
                 '<span><b>+</b> ' + (done ? 'Ajouter un autre fichier' : 'Ajouter un fichier') + '</span>' +
               '</label>' +
+              '<div class="upload-progress" hidden>' +
+                '<div class="upload-progress-head">' +
+                  '<span class="upload-progress-label">Préparation…</span>' +
+                  '<strong class="upload-progress-percent">0 %</strong>' +
+                '</div>' +
+                '<div class="upload-progress-track" role="progressbar" aria-label="Progression du téléversement" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">' +
+                  '<span class="upload-progress-fill"></span>' +
+                '</div>' +
+              '</div>' +
               '<div class="upload-feedback" aria-live="polite"></div>' +
             '</div>' +
           '</article>'
@@ -282,10 +297,70 @@
       if(feedback) feedback.textContent = message;
     }
 
+    function setUploadProgress(input: HTMLInputElement, percent: number, label: string){
+      const card = input.closest('.document-card, .optional-section') as HTMLElement | null;
+      const progress = card?.querySelector('.upload-progress') as HTMLElement | null;
+      const track = progress?.querySelector('.upload-progress-track') as HTMLElement | null;
+      const fill = progress?.querySelector('.upload-progress-fill') as HTMLElement | null;
+      const progressLabel = progress?.querySelector('.upload-progress-label') as HTMLElement | null;
+      const progressPercent = progress?.querySelector('.upload-progress-percent') as HTMLElement | null;
+      const safePercent = Math.max(0, Math.min(100, Math.round(percent)));
+      if(!progress || !track || !fill || !progressLabel || !progressPercent) return;
+      progress.hidden = false;
+      progressLabel.textContent = label;
+      progressPercent.textContent = safePercent + ' %';
+      fill.style.width = safePercent + '%';
+      track.setAttribute('aria-valuenow', String(safePercent));
+      track.setAttribute('aria-valuetext', label + ', ' + safePercent + ' %');
+    }
+
+    function uploadToSignedUrlWithProgress(
+      path: string,
+      uploadToken: string,
+      file: File,
+      onProgress: (percent: number) => void
+    ){
+      return new Promise<void>((resolve, reject) => {
+        const cleanPath = path.split('/').filter(Boolean).map(encodeURIComponent).join('/');
+        const uploadUrl = SUPABASE_URL + '/storage/v1/object/upload/sign/' +
+          encodeURIComponent(BUCKET) + '/' + cleanPath + '?token=' + encodeURIComponent(uploadToken);
+        const body = new FormData();
+        body.append('cacheControl', '0');
+        body.append('', file);
+        const request = new XMLHttpRequest();
+        request.open('PUT', uploadUrl);
+        request.setRequestHeader('apikey', SUPABASE_ANON_KEY);
+        request.setRequestHeader('Authorization', 'Bearer ' + SUPABASE_ANON_KEY);
+        request.setRequestHeader('x-upsert', 'false');
+        request.upload.addEventListener('progress', event => {
+          if(event.lengthComputable && event.total > 0){
+            onProgress((event.loaded / event.total) * 100);
+          }
+        });
+        request.addEventListener('load', () => {
+          if(request.status >= 200 && request.status < 300){
+            onProgress(100);
+            resolve();
+            return;
+          }
+          let message = 'Le document n’a pas pu être envoyé.';
+          try{
+            const response = JSON.parse(request.responseText || '{}');
+            message = response.message || response.error || message;
+          }catch{}
+          reject(new Error(message));
+        });
+        request.addEventListener('error', () => reject(new Error('Connexion interrompue pendant le téléversement.')));
+        request.addEventListener('abort', () => reject(new Error('Téléversement annulé.')));
+        request.send(body);
+      });
+    }
+
     async function uploadFiles(input: HTMLInputElement, documentType: string){
       const files = Array.from(input.files || []);
       if(!files.length) return;
       setCardBusy(input, true, 'Préparation du transfert…');
+      setUploadProgress(input, 0, files.length > 1 ? 'Préparation de ' + files.length + ' fichiers' : 'Préparation du fichier');
 
       try{
         for(let index = 0; index < files.length; index++){
@@ -294,7 +369,9 @@
             throw new Error(file.name + ' dépasse la limite de 15 Mo.');
           }
           const mimeType = mimeTypeFor(file);
-          setCardBusy(input, true, 'Envoi de ' + file.name + ' (' + (index + 1) + '/' + files.length + ')…');
+          const filePosition = files.length > 1 ? ' · fichier ' + (index + 1) + ' sur ' + files.length : '';
+          setCardBusy(input, true);
+          setUploadProgress(input, 0, file.name + filePosition);
           const upload = await callPortal({
             action: 'create-upload',
             documentType,
@@ -302,13 +379,13 @@
             mimeType,
             size: file.size,
           });
-          const { error } = await supabase.storage
-            .from(BUCKET)
-            .uploadToSignedUrl(upload.path, upload.uploadToken, file, {
-              contentType: mimeType,
-              cacheControl: '0',
-            });
-          if(error) throw error;
+          await uploadToSignedUrlWithProgress(
+            upload.path,
+            upload.uploadToken,
+            file,
+            percent => setUploadProgress(input, percent, file.name + filePosition)
+          );
+          setUploadProgress(input, 100, 'Validation de ' + file.name);
           const result = await callPortal({
             action: 'complete-upload',
             documentType,
@@ -321,6 +398,8 @@
           portalData!.portal.completed = result.completed === true;
         }
         render();
+        setCardBusy(input, false, files.length > 1 ? files.length + ' fichiers ajoutés.' : 'Fichier ajouté.');
+        input.value = '';
       }catch(error: any){
         console.error(error);
         setCardBusy(input, false, error.message || 'Le document n’a pas pu être envoyé.');
@@ -432,11 +511,11 @@
   .section-heading p,.optional-section p{color:var(--dim);font-size:13px;margin-top:5px;}
   .format-note{flex:none;padding:7px 10px;border-radius:9px;background:var(--surface-soft);color:var(--dim);font-size:10.5px;font-weight:600;}
   .document-list{display:flex;flex-direction:column;gap:12px;}
-  .document-card{display:grid;grid-template-columns:32px minmax(0,1fr);gap:14px;padding:19px;border:1px solid var(--border);border-radius:16px;background:#fff;transition:border-color .2s ease,box-shadow .2s ease;}
+  .document-card{display:grid;grid-template-columns:32px minmax(0,1fr);gap:14px;padding:19px;border:1px solid var(--border);border-radius:16px;background:#fff;transition:border-color .2s ease,box-shadow .2s ease,transform .2s ease;}
   .document-card:hover{border-color:#d2d2d8;box-shadow:0 10px 26px rgba(25,25,28,.06);}
   .document-card.is-complete{border-color:#cce7db;background:linear-gradient(145deg,#fff,var(--green-soft));}
   .document-status{width:28px;height:28px;border:1.5px solid #d6d6dc;border-radius:50%;display:grid;place-items:center;color:var(--dim);font-size:11px;font-weight:800;margin-top:1px;}
-  .document-card.is-complete .document-status{background:var(--green);border-color:var(--green);}
+  .document-card.is-complete .document-status{background:var(--green);border-color:var(--green);color:#fff;text-shadow:0 1px 1px rgba(0,0,0,.12);}
   .document-title-row{display:flex;align-items:center;justify-content:space-between;gap:12px;}
   .document-card h3{font-size:16px;}
   .file-count{flex:none;padding:5px 8px;border-radius:999px;background:#fff0f7;color:var(--pink-dark);font-size:10px;font-weight:800;}
@@ -448,7 +527,14 @@
   .upload-button span{display:flex;align-items:center;justify-content:center;width:100%;padding:11px 14px;border:1px dashed #cacad2;border-radius:11px;background:rgba(255,255,255,.72);color:var(--text);font-size:11.5px;font-weight:700;transition:.2s ease;}
   .optional-upload span{display:inline-flex;padding:9px 14px;border:1px solid var(--border);border-radius:10px;background:#fff;color:var(--text);font-size:12px;font-weight:600;transition:.2s ease;}
   .upload-button:hover span,.optional-upload:hover span{border-color:var(--pink);color:var(--pink);background:#fff7fb;}
-  .document-card.is-uploading{opacity:.7;pointer-events:none;}
+  .document-card.is-uploading{border-color:#edb3cf;box-shadow:0 10px 28px rgba(240,0,120,.08);}
+  .document-card.is-uploading .upload-button,.optional-section.is-uploading .optional-upload{opacity:.55;pointer-events:none;}
+  .upload-progress{margin-top:13px;padding:11px 12px;border:1px solid #f1d8e4;border-radius:11px;background:#fff8fb;}
+  .upload-progress-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;}
+  .upload-progress-label{min-width:0;color:var(--text);font-size:10.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .upload-progress-percent{flex:none;color:var(--pink-dark);font-size:10.5px;}
+  .upload-progress-track{height:6px;overflow:hidden;border-radius:999px;background:#eadfe5;}
+  .upload-progress-fill{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,var(--pink-dark),var(--pink));box-shadow:0 0 12px rgba(240,0,120,.24);transition:width .12s linear;}
   .upload-feedback{min-height:18px;margin-top:7px;color:var(--pink);font-size:11.5px;}
   .uploaded-files,.other-documents{display:flex;flex-direction:column;gap:7px;margin-top:12px;}
   .uploaded-file{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:10px;background:var(--green-soft);}
@@ -476,32 +562,45 @@
     .intro-card{padding:32px;}
   }
   @media(max-width:600px){
+    body{background:#f7f7f9;}
+    .portal-header{position:sticky;top:0;z-index:10;box-shadow:0 1px 12px rgba(21,21,23,.04);}
     .header-inner{height:68px;padding:0 18px;}
     .logo{width:92px;height:42px;}
     .secure-label{padding:7px 9px;font-size:10px;}
-    main{padding:18px 11px 48px;}
-    .portal-content{gap:12px;}
-    .portal-main,.portal-sidebar{gap:12px;}
-    .intro-card,.documents-section,.optional-section,.security-note{border-radius:18px;}
-    .intro-card{padding:27px 21px;}
-    .intro-card h1{font-size:26px;}
-    .intro-copy{font-size:13.5px;}
+    main{padding:14px 10px 48px;}
+    .portal-content{gap:10px;}
+    .portal-main,.portal-sidebar{gap:10px;}
+    .intro-card,.documents-section,.optional-section,.security-note{border-radius:16px;}
+    .intro-card{padding:24px 20px;}
+    .intro-card h1{font-size:24px;line-height:1.12;}
+    .intro-copy{font-size:13px;line-height:1.6;margin-top:13px;}
+    .project-line{margin-top:14px;}
     .progress-block{margin-top:24px;padding-top:20px;}
     .progress-ring{width:58px;height:58px;}
     .progress-ring::before{width:45px;height:45px;}
-    .documents-section{padding:24px 15px 16px;}
-    .section-heading{display:block;margin:0 4px 20px;}
+    .progress-copy small{line-height:1.45;}
+    .documents-section{padding:22px 12px 13px;}
+    .section-heading{display:block;margin:0 4px 17px;}
     .section-heading h2{font-size:21px;}
-    .format-note{display:inline-flex;margin-top:12px;}
-    .document-list{gap:10px;}
-    .document-card{grid-template-columns:26px minmax(0,1fr);gap:11px;padding:16px 13px;}
-    .document-status{width:23px;height:23px;}
+    .section-heading p{line-height:1.5;}
+    .format-note{display:inline-flex;margin-top:10px;}
+    .document-list{gap:8px;}
+    .document-card{grid-template-columns:26px minmax(0,1fr);gap:10px;padding:15px 12px;border-radius:14px;}
+    .document-card:hover{box-shadow:none;}
+    .document-status{width:24px;height:24px;}
     .document-title-row{align-items:flex-start;flex-wrap:wrap;}
     .document-card h3{font-size:15px;}
     .file-count{font-size:9px;padding:4px 6px;}
-    .upload-button span{padding:10px 9px;font-size:10.5px;}
-    .optional-section{padding:23px 20px;}
-    .security-note{padding:18px 20px;}
+    .document-copy>p{font-size:12px;line-height:1.5;}
+    .upload-button span{min-height:44px;padding:10px 9px;font-size:11px;border-radius:10px;}
+    .upload-progress{padding:10px;margin-top:10px;}
+    .uploaded-file{padding:9px 8px;}
+    .remove-file{min-height:36px;padding:0 3px;}
+    .optional-section{padding:21px 18px;}
+    .optional-upload{display:flex;width:100%;}
+    .optional-upload span{justify-content:center;width:100%;min-height:44px;}
+    .security-note{padding:17px 18px;}
+    footer{padding:0 18px 28px;line-height:1.8;}
     .state-card{margin:35px 0;padding:42px 24px;}
   }
 </style>
