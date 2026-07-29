@@ -83,6 +83,44 @@ async function sha256(value: string) {
     .join('')
 }
 
+function bytesToBase64(bytes: Uint8Array) {
+  return btoa(String.fromCharCode(...bytes))
+}
+
+function base64ToBytes(value: string) {
+  return Uint8Array.from(atob(value), (character) => character.charCodeAt(0))
+}
+
+async function portalEncryptionKey(secret: string) {
+  const rawKey = await crypto.subtle.digest(
+    'SHA-256',
+    new TextEncoder().encode(`elevenlease-document-portal:${secret}`),
+  )
+  return crypto.subtle.importKey('raw', rawKey, 'AES-GCM', false, ['encrypt', 'decrypt'])
+}
+
+async function encryptPortalToken(token: string, secret: string) {
+  const iv = crypto.getRandomValues(new Uint8Array(12))
+  const encrypted = await crypto.subtle.encrypt(
+    { name: 'AES-GCM', iv },
+    await portalEncryptionKey(secret),
+    new TextEncoder().encode(token),
+  )
+  return {
+    tokenCiphertext: bytesToBase64(new Uint8Array(encrypted)),
+    tokenIv: bytesToBase64(iv),
+  }
+}
+
+async function decryptPortalToken(ciphertext: string, iv: string, secret: string) {
+  const decrypted = await crypto.subtle.decrypt(
+    { name: 'AES-GCM', iv: base64ToBytes(iv) },
+    await portalEncryptionKey(secret),
+    base64ToBytes(ciphertext),
+  )
+  return new TextDecoder().decode(decrypted)
+}
+
 function escapeHtml(value: unknown) {
   return String(value || '').replace(/[&<>"']/g, (character) => ({
     '&': '&amp;',
@@ -103,7 +141,7 @@ function archiveSafeName(value: unknown, fallback = 'document') {
   return normalized.slice(0, 120) || fallback
 }
 
-async function createDocumentPortal(supabase: any, leadId: string) {
+async function createDocumentPortal(supabase: any, leadId: string, encryptionSecret: string) {
   const now = new Date().toISOString()
   const { error: revokeError } = await supabase
     .from('document_portals')
@@ -113,12 +151,15 @@ async function createDocumentPortal(supabase: any, leadId: string) {
   if (revokeError) throw revokeError
 
   const token = createPortalToken()
+  const encryptedToken = await encryptPortalToken(token, encryptionSecret)
   const expiresAt = new Date(Date.now() + DOCUMENT_PORTAL_DURATION_MS).toISOString()
   const { data: portal, error: portalError } = await supabase
     .from('document_portals')
     .insert({
       lead_id: leadId,
       token_hash: await sha256(token),
+      token_ciphertext: encryptedToken.tokenCiphertext,
+      token_iv: encryptedToken.tokenIv,
       expires_at: expiresAt,
     })
     .select('id, expires_at, created_at')
@@ -282,10 +323,8 @@ Deno.serve(async (req) => {
   try {
     const body = await req.json()
 
-    const supabase = createClient(
-      Deno.env.get('SUPABASE_URL')!,
-      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
-    )
+    const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+    const supabase = createClient(Deno.env.get('SUPABASE_URL')!, serviceRoleKey)
 
     const role = await authenticate(supabase, body)
     if (!role) {
@@ -298,6 +337,7 @@ Deno.serve(async (req) => {
       'create-document-portal',
       'send-document-request',
       'documents-zip',
+      'document-portal-link',
       'revoke-document-portal',
       'document-download',
       'delete-document',
@@ -326,6 +366,40 @@ Deno.serve(async (req) => {
 
     const resourceKey = body.resource === 'messages' ? 'messages' : 'leads'
     const { table, editableFields, listKey } = RESOURCES[resourceKey]
+
+    if (body.action === 'document-portal-link') {
+      if (!body.id) throw new Error('id manquant')
+      const { data: portal, error: portalError } = await supabase
+        .from('document_portals')
+        .select('id, expires_at, token_ciphertext, token_iv')
+        .eq('lead_id', String(body.id))
+        .is('revoked_at', null)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .maybeSingle()
+      if (portalError) throw portalError
+      if (!portal || new Date(portal.expires_at).getTime() <= Date.now()) {
+        return new Response(JSON.stringify({ error: 'Aucun lien actif pour ce dossier' }), {
+          status: 404,
+          headers: jsonHeaders,
+        })
+      }
+      if (!portal.token_ciphertext || !portal.token_iv) {
+        return new Response(JSON.stringify({
+          error: 'Ce lien historique doit être renouvelé une fois avant de pouvoir être copié.',
+        }), { status: 409, headers: jsonHeaders })
+      }
+      const token = await decryptPortalToken(
+        portal.token_ciphertext,
+        portal.token_iv,
+        serviceRoleKey,
+      )
+      return new Response(JSON.stringify({
+        ok: true,
+        role,
+        url: `${DOCUMENT_PORTAL_URL}#${token}`,
+      }), { headers: jsonHeaders })
+    }
 
     if (body.action === 'documents-zip') {
       if (!body.id) throw new Error('id manquant')
@@ -413,7 +487,7 @@ Deno.serve(async (req) => {
         })
       }
 
-      const created = await createDocumentPortal(supabase, String(lead.id))
+      const created = await createDocumentPortal(supabase, String(lead.id), serviceRoleKey)
       let messageId = ''
       try {
         messageId = await sendDocumentRequestEmail(lead, created.url)
@@ -465,7 +539,7 @@ Deno.serve(async (req) => {
         })
       }
 
-      const created = await createDocumentPortal(supabase, String(lead.id))
+      const created = await createDocumentPortal(supabase, String(lead.id), serviceRoleKey)
       return new Response(JSON.stringify({
         ok: true,
         role,

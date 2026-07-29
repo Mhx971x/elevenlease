@@ -230,11 +230,12 @@
   .document-portal-status.complete{background:#edf9f3;border-color:#c9eadb;color:#137a51;}
   .document-portal-status.expired{color:#b42318;border-color:#f0c7c4;}
   .document-portal-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
-  .document-link-btn,.document-email-btn,.document-zip-btn,.document-revoke-btn,.document-download-btn,.document-delete-btn{
+  .document-link-btn,.document-copy-btn,.document-email-btn,.document-zip-btn,.document-revoke-btn,.document-download-btn,.document-delete-btn{
     display:inline-flex;align-items:center;padding:8px 13px;border-radius:99px;border:1px solid var(--border);
     background:#fff;color:var(--text);font:600 11.5px/1 'Inter',sans-serif;cursor:pointer;
   }
   .document-link-btn{background:var(--text);border-color:var(--text);color:#fff;}
+  .document-copy-btn{background:var(--text);border-color:var(--text);color:#fff;}
   .document-email-btn{background:var(--accent);border-color:transparent;color:#fff;}
   .document-zip-btn{background:#edf9f3;border-color:#c9eadb;color:#137a51;}
   .document-revoke-btn,.document-delete-btn{color:#b42318;}
@@ -250,7 +251,7 @@
   .document-admin-info strong{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .document-admin-info span{font-size:10px;color:var(--text-faint);}
   .document-download-btn,.document-delete-btn{padding:6px 9px;font-size:10px;}
-  .document-link-btn:disabled,.document-email-btn:disabled,.document-zip-btn:disabled,.document-revoke-btn:disabled,.document-download-btn:disabled,.document-delete-btn:disabled{opacity:.5;cursor:default;}
+  .document-link-btn:disabled,.document-copy-btn:disabled,.document-email-btn:disabled,.document-zip-btn:disabled,.document-revoke-btn:disabled,.document-download-btn:disabled,.document-delete-btn:disabled{opacity:.5;cursor:default;}
 
   .lead-edit-form{display:none;}
   .lead-card.editing .lead-view{display:none;}
@@ -324,9 +325,9 @@
   header .wrap{max-width:none;height:100%;padding:0 28px;}
   .logo-icon{width:100px;}
   #dashboard{padding:0;}
-  .crm-layout{min-height:calc(100vh - 74px);display:grid;grid-template-columns:248px minmax(0,1fr);}
+  .crm-layout{min-height:calc(100vh - 74px);display:grid;grid-template-columns:220px minmax(0,1fr);}
   .crm-sidebar{
-    position:sticky;top:74px;height:calc(100vh - 74px);padding:28px 18px 22px;
+    position:sticky;top:74px;height:calc(100vh - 74px);padding:24px 14px 20px;
     display:flex;flex-direction:column;background:var(--crm-dark);color:#fff;
   }
   .crm-sidebar-title{
@@ -341,15 +342,10 @@
   }
   .crm-sidebar .tab-btn:hover{border-color:#34343a;background:#222226;color:#fff;transform:none;}
   .crm-sidebar .tab-btn.active{border-color:#38383e;background:#2a2a2f;color:#fff;box-shadow:inset 3px 0 0 var(--accent-1);}
-  .nav-icon{width:24px;height:24px;display:grid;place-items:center;color:#85858e;font-size:17px;}
+  .nav-icon{width:24px;height:24px;display:grid;place-items:center;color:#85858e;}
+  .nav-icon svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
   .crm-sidebar .tab-btn.active .nav-icon{color:#ff4fa8;}
   .crm-sidebar .tab-count{justify-self:end;background:var(--accent-1);}
-  .crm-sidebar-note{
-    margin-top:auto;padding:17px;border:1px solid #333338;border-radius:13px;
-    background:linear-gradient(145deg,#222226,#1c1c20);display:flex;flex-direction:column;gap:6px;
-  }
-  .crm-sidebar-note strong{font-family:'Space Grotesk',sans-serif;font-size:12.5px;}
-  .crm-sidebar-note span{color:#8e8e97;font-size:10.5px;line-height:1.55;}
   .crm-workspace{min-width:0;padding:34px clamp(24px,4vw,52px) 70px;overflow:hidden;}
   .dash-head{margin-bottom:26px;align-items:center;}
   .page-kicker{margin-bottom:6px;color:var(--accent-1);font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;}
@@ -382,7 +378,7 @@
   .pipeline-heading strong{font-family:'Space Grotesk',sans-serif;font-size:14px;}
   .pipeline-heading span{color:var(--text-faint);font-size:10.5px;}
   .pipeline-reset{border:none;background:none;color:var(--accent-1);font:700 10.5px/1 'Inter',sans-serif;cursor:pointer;}
-  .pipeline-overview{display:grid;grid-template-columns:repeat(9,minmax(76px,1fr));gap:7px;}
+  .pipeline-overview{display:grid;grid-template-columns:repeat(5,minmax(110px,1fr));gap:8px;}
   .pipeline-step{
     position:relative;min-width:0;padding:12px 9px 11px;border:1px solid var(--border);border-radius:11px;
     background:#fafafc;color:var(--text);cursor:pointer;text-align:left;font-family:inherit;transition:.2s ease;
@@ -439,7 +435,7 @@
     header .wrap{padding:0 18px;}
     .crm-layout{grid-template-columns:1fr;}
     .crm-sidebar{position:static;height:auto;padding:10px 14px;}
-    .crm-sidebar-title,.crm-sidebar-note{display:none;}
+    .crm-sidebar-title{display:none;}
     .crm-sidebar .tab-bar{flex-direction:row;overflow-x:auto;}
     .crm-sidebar .tab-btn{width:auto;min-width:max-content;grid-template-columns:22px auto auto;padding:9px 12px;}
     .crm-sidebar .tab-btn.active{box-shadow:inset 0 -3px 0 var(--accent-1);}
@@ -512,20 +508,16 @@
       <div class="crm-sidebar-title">Navigation</div>
       <div class="tab-bar">
         <button type="button" class="tab-btn active" id="tabLeadsBtn">
-          <span class="nav-icon">⌁</span><span>Dossiers clients</span>
+          <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5h6l2 2h8v9H4z"/><path d="M4 7.5v-2h6l2 2"/></svg></span><span>Dossiers clients</span>
           <span class="tab-count" id="leadsTabCount">0</span>
         </button>
         <button type="button" class="tab-btn" id="tabMessagesBtn">
-          <span class="nav-icon">✉</span><span>Messages</span>
+          <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></span><span>Messages</span>
           <span class="tab-count" id="messagesTabCount">0</span>
         </button>
         <button type="button" class="tab-btn" id="tabVehiclesBtn">
-          <span class="nav-icon">◇</span><span>Catalogue véhicules</span>
+          <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 15 1.5-5h11l1.5 5"/><path d="M3 15h18v4H3z"/><circle cx="7" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg></span><span>Véhicules</span>
         </button>
-      </div>
-      <div class="crm-sidebar-note">
-        <strong>Eleven Lease CRM</strong>
-        <span>Centralisez les demandes, documents et étapes de chaque dossier.</span>
       </div>
     </aside>
 
@@ -862,6 +854,14 @@
     { value: 'refuse', label: 'Refusé', short: 'Refusé', color: '#c43e3e' },
     { value: 'livre', label: 'Livré', short: 'Livré', color: '#111113' },
   ];
+  const PIPELINE_GROUPS = [
+    { value:'nouveau', label:'Nouveau', values:['nouveau'], color:'#f00078' },
+    { value:'qualification', label:'Contact / qualification', values:['contacte','qualifie'], color:'#2864dc' },
+    { value:'documents', label:'Documents', values:['documents','complet'], color:'#d27a14' },
+    { value:'etude', label:'En étude', values:['etude'], color:'#585b66' },
+    { value:'finalise', label:'Finalisé', values:['accepte','refuse','livre','traite'], color:'#168653' },
+  ];
+  let activePipelineGroup = '';
 
   function leadStatusInfo(value?: string){
     if(value === 'traite') return { value: 'traite', label: 'Traité (ancien)', short: 'Traité', color: '#777780' };
@@ -999,15 +999,16 @@
     statNouveau.textContent = String(nouveaux);
     statTraite.textContent = String(actifs);
     statEligible.textContent = String(convertis);
-    pipelineOverview.innerHTML = LEAD_STAGES.map(stage => {
-      const count = allLeads.filter(lead => (lead.status || 'nouveau') === stage.value).length;
-      return '<button type="button" class="pipeline-step' + (statusFilter.value === stage.value ? ' active' : '') +
-        '" data-status="' + stage.value + '" style="--stage-color:' + stage.color + '">' +
-        '<span class="pipeline-dot"></span><strong>' + count + '</strong><span>' + stage.short + '</span></button>';
+    pipelineOverview.innerHTML = PIPELINE_GROUPS.map(group => {
+      const count = allLeads.filter(lead => group.values.includes(lead.status || 'nouveau')).length;
+      return '<button type="button" class="pipeline-step' + (activePipelineGroup === group.value ? ' active' : '') +
+        '" data-pipeline="' + group.value + '" style="--stage-color:' + group.color + '">' +
+        '<span class="pipeline-dot"></span><strong>' + count + '</strong><span>' + group.label + '</span></button>';
     }).join('');
     pipelineOverview.querySelectorAll<HTMLButtonElement>('.pipeline-step').forEach(button => {
       button.addEventListener('click', () => {
-        statusFilter.value = button.dataset.status || '';
+        activePipelineGroup = button.dataset.pipeline || '';
+        statusFilter.value = '';
         renderLeads();
       });
     });
@@ -1190,9 +1191,10 @@
           (documents.length
             ? '<button type="button" class="document-zip-btn" data-id="' + lead.id + '">↓ Tout télécharger (.zip)</button>'
             : '') +
-          '<button type="button" class="document-link-btn" data-id="' + lead.id + '" data-has-portal="' + (active ? '1' : '0') + '">' +
-            (active ? 'Générer un nouveau lien' : 'Créer le lien documents') +
-          '</button>' +
+          (active
+            ? '<button type="button" class="document-copy-btn" data-id="' + lead.id + '">Copier le lien actif</button>' +
+              '<button type="button" class="document-link-btn" data-id="' + lead.id + '" data-has-portal="1">Renouveler le lien</button>'
+            : '<button type="button" class="document-link-btn" data-id="' + lead.id + '" data-has-portal="0">Créer le lien documents</button>') +
           (active
             ? '<button type="button" class="document-revoke-btn" data-id="' + lead.id + '">Désactiver le lien</button>'
             : '') +
@@ -1278,6 +1280,10 @@
     updateStats();
 
     let filtered = allLeads.filter(lead => {
+      if(activePipelineGroup){
+        const group = PIPELINE_GROUPS.find(item => item.value === activePipelineGroup);
+        if(group && !group.values.includes(lead.status || 'nouveau')) return false;
+      }
       if(statusVal && (lead.status || 'nouveau') !== statusVal) return false;
       if(!query) return true;
       const haystack = [
@@ -1330,6 +1336,9 @@
     });
     root.querySelectorAll<HTMLButtonElement>('.document-link-btn').forEach(btn => {
       btn.addEventListener('click', (e) => { e.stopPropagation(); onCreateDocumentPortal(btn); });
+    });
+    root.querySelectorAll<HTMLButtonElement>('.document-copy-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => { e.stopPropagation(); onCopyDocumentPortal(btn); });
     });
     root.querySelectorAll<HTMLButtonElement>('.document-email-btn').forEach(btn => {
       btn.addEventListener('click', (e) => { e.stopPropagation(); onSendDocumentRequest(btn); });
@@ -1401,6 +1410,55 @@
         btn.textContent = previousText || 'Envoyer la demande par email';
       }
       alert('Impossible d’envoyer la demande de documents : ' + err.message);
+    }
+  }
+
+  async function onCopyDocumentPortal(btn: HTMLButtonElement){
+    const id = btn.dataset.id!;
+    const lead = allLeads.find(item => String(item.id) === String(id));
+    btn.disabled = true;
+    const previousText = btn.textContent;
+    btn.textContent = 'Copie en cours…';
+    try{
+      const result = await callAdminFunction({
+        ...authPayload(),
+        action: 'document-portal-link',
+        id,
+      });
+      await copyPortalLink(result.url);
+    }catch(err: any){
+      const historical = String(err.message || '').includes('historique');
+      if(historical && confirm(
+        'Ce lien a été créé avant l’activation de la copie sécurisée.\n\n' +
+        'Voulez-vous le renouveler maintenant ? L’ancien lien sera désactivé.'
+      )){
+        try{
+          const result = await callAdminFunction({
+            ...authPayload(),
+            action: 'create-document-portal',
+            id,
+          });
+          if(lead){
+            lead.document_portal = {
+              ...result.portal,
+              expired:false,
+              documents:lead.document_portal?.documents || [],
+            };
+            refreshCard(lead);
+          }
+          await copyPortalLink(result.url);
+          return;
+        }catch(renewError: any){
+          alert('Impossible de renouveler le lien : ' + renewError.message);
+          return;
+        }
+      }
+      if(!historical) alert('Impossible de copier le lien actif : ' + err.message);
+    }finally{
+      if(btn.isConnected){
+        btn.disabled = false;
+        btn.textContent = previousText || 'Copier le lien actif';
+      }
     }
   }
 
@@ -2192,11 +2250,15 @@
 
   refreshBtn.addEventListener('click', () => { loadLeads(); loadMessages(); loadVehicles(); });
   pipelineReset.addEventListener('click', () => {
+    activePipelineGroup = '';
     statusFilter.value = '';
     renderLeads();
   });
   searchInput.addEventListener('input', renderLeads);
-  statusFilter.addEventListener('change', renderLeads);
+  statusFilter.addEventListener('change', () => {
+    activePipelineGroup = '';
+    renderLeads();
+  });
   sortSelect.addEventListener('change', renderLeads);
   messagesSearchInput.addEventListener('input', renderMessages);
   messagesStatusFilter.addEventListener('change', renderMessages);
