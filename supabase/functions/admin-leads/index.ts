@@ -11,6 +11,7 @@
 // Secret requis : supabase secrets set ADMIN_PASSWORD=votre-mot-de-passe
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import JSZip from 'npm:jszip@3.10.1'
 import { authenticate } from '../_shared/auth.ts'
 
 const corsHeaders = {
@@ -23,6 +24,20 @@ const DOCUMENT_PORTAL_URL = 'https://elevenlease.fr/dossier-documents'
 const DOCUMENT_PORTAL_DURATION_MS = 30 * 24 * 60 * 60 * 1000
 const BREVO_ENDPOINT = 'https://api.brevo.com/v3/smtp/email'
 const EMAIL_SENDER = { name: 'Eleven Lease', email: 'contact@elevenlease.fr' }
+const MAX_ZIP_SOURCE_SIZE = 80 * 1024 * 1024
+const DOCUMENT_ARCHIVE_LABELS: Record<string, string> = {
+  piece_identite: 'Piece-identite',
+  permis_conduire: 'Permis-conduire',
+  justificatif_domicile: 'Justificatif-domicile',
+  rib: 'RIB',
+  justificatifs_revenus: 'Justificatifs-revenus',
+  avis_imposition: 'Avis-imposition',
+  releves_bancaires: 'Releves-bancaires',
+  kbis: 'Kbis',
+  statuts: 'Statuts',
+  bilans: 'Bilans',
+  autre: 'Autres-documents',
+}
 
 // Deux ressources gérées par cette même fonction : les demandes du
 // simulateur (`leads`, comportement historique, inchangé) et les messages
@@ -76,6 +91,16 @@ function escapeHtml(value: unknown) {
     '"': '&quot;',
     "'": '&#39;',
   })[character]!)
+}
+
+function archiveSafeName(value: unknown, fallback = 'document') {
+  const normalized = String(value || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[<>:"/\\|?*\u0000-\u001f]/g, '-')
+    .replace(/\s+/g, ' ')
+    .trim()
+  return normalized.slice(0, 120) || fallback
 }
 
 async function createDocumentPortal(supabase: any, leadId: string) {
@@ -272,6 +297,7 @@ Deno.serve(async (req) => {
     const documentActions = [
       'create-document-portal',
       'send-document-request',
+      'documents-zip',
       'revoke-document-portal',
       'document-download',
       'delete-document',
@@ -300,6 +326,77 @@ Deno.serve(async (req) => {
 
     const resourceKey = body.resource === 'messages' ? 'messages' : 'leads'
     const { table, editableFields, listKey } = RESOURCES[resourceKey]
+
+    if (body.action === 'documents-zip') {
+      if (!body.id) throw new Error('id manquant')
+      const { data: lead, error: leadError } = await supabase
+        .from('leads')
+        .select('id, prenom, nom')
+        .eq('id', body.id)
+        .maybeSingle()
+      if (leadError) throw leadError
+      if (!lead) {
+        return new Response(JSON.stringify({ error: 'Lead introuvable' }), {
+          status: 404,
+          headers: jsonHeaders,
+        })
+      }
+
+      const { data: documents, error: documentsError } = await supabase
+        .from('lead_documents')
+        .select('id, document_type, original_name, storage_path, size_bytes, uploaded_at')
+        .eq('lead_id', String(lead.id))
+        .order('uploaded_at', { ascending: true })
+      if (documentsError) throw documentsError
+      if (!documents?.length) {
+        return new Response(JSON.stringify({ error: 'Aucun document à télécharger' }), {
+          status: 404,
+          headers: jsonHeaders,
+        })
+      }
+
+      const totalSize = documents.reduce(
+        (sum, document) => sum + Number(document.size_bytes || 0),
+        0,
+      )
+      if (totalSize > MAX_ZIP_SOURCE_SIZE) {
+        return new Response(JSON.stringify({
+          error: 'Le dossier dépasse la limite de 80 Mo pour un téléchargement groupé.',
+        }), { status: 413, headers: jsonHeaders })
+      }
+
+      const zip = new JSZip()
+      for (let index = 0; index < documents.length; index++) {
+        const document = documents[index]
+        const { data: file, error: fileError } = await supabase.storage
+          .from(DOCUMENT_BUCKET)
+          .download(document.storage_path)
+        if (fileError) throw fileError
+        const folder = DOCUMENT_ARCHIVE_LABELS[document.document_type] || 'Documents'
+        const originalName = archiveSafeName(document.original_name)
+        const prefix = String(index + 1).padStart(2, '0')
+        zip.file(`${folder}/${prefix}-${originalName}`, await file.arrayBuffer())
+      }
+
+      const archive = await zip.generateAsync({
+        type: 'uint8array',
+        compression: 'DEFLATE',
+        compressionOptions: { level: 6 },
+      })
+      const fullName = archiveSafeName(
+        [lead.nom, lead.prenom].filter(Boolean).join(' '),
+        String(lead.id),
+      )
+      const fileName = `Dossier ${fullName}.zip`
+      return new Response(archive, {
+        headers: {
+          ...corsHeaders,
+          'Content-Type': 'application/zip',
+          'Content-Disposition': `attachment; filename="${fileName}"`,
+          'Cache-Control': 'no-store',
+        },
+      })
+    }
 
     if (body.action === 'send-document-request') {
       if (!body.id) throw new Error('id manquant')

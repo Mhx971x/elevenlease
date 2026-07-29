@@ -230,12 +230,13 @@
   .document-portal-status.complete{background:#edf9f3;border-color:#c9eadb;color:#137a51;}
   .document-portal-status.expired{color:#b42318;border-color:#f0c7c4;}
   .document-portal-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
-  .document-link-btn,.document-email-btn,.document-revoke-btn,.document-download-btn,.document-delete-btn{
+  .document-link-btn,.document-email-btn,.document-zip-btn,.document-revoke-btn,.document-download-btn,.document-delete-btn{
     display:inline-flex;align-items:center;padding:8px 13px;border-radius:99px;border:1px solid var(--border);
     background:#fff;color:var(--text);font:600 11.5px/1 'Inter',sans-serif;cursor:pointer;
   }
   .document-link-btn{background:var(--text);border-color:var(--text);color:#fff;}
   .document-email-btn{background:var(--accent);border-color:transparent;color:#fff;}
+  .document-zip-btn{background:#edf9f3;border-color:#c9eadb;color:#137a51;}
   .document-revoke-btn,.document-delete-btn{color:#b42318;}
   .document-email-status{display:flex;align-items:center;gap:7px;margin-top:11px;color:var(--text-dim);font-size:10.5px;}
   .document-email-status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--text-faint);}
@@ -249,7 +250,7 @@
   .document-admin-info strong{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .document-admin-info span{font-size:10px;color:var(--text-faint);}
   .document-download-btn,.document-delete-btn{padding:6px 9px;font-size:10px;}
-  .document-link-btn:disabled,.document-email-btn:disabled,.document-revoke-btn:disabled,.document-download-btn:disabled,.document-delete-btn:disabled{opacity:.5;cursor:default;}
+  .document-link-btn:disabled,.document-email-btn:disabled,.document-zip-btn:disabled,.document-revoke-btn:disabled,.document-download-btn:disabled,.document-delete-btn:disabled{opacity:.5;cursor:default;}
 
   .lead-edit-form{display:none;}
   .lead-card.editing .lead-view{display:none;}
@@ -1186,6 +1187,9 @@
             (!lead.email ? ' disabled title="Adresse email manquante"' : '') + '>' +
             (emailSent ? 'Renvoyer la demande par email' : 'Envoyer la demande par email') +
           '</button>' +
+          (documents.length
+            ? '<button type="button" class="document-zip-btn" data-id="' + lead.id + '">↓ Tout télécharger (.zip)</button>'
+            : '') +
           '<button type="button" class="document-link-btn" data-id="' + lead.id + '" data-has-portal="' + (active ? '1' : '0') + '">' +
             (active ? 'Générer un nouveau lien' : 'Créer le lien documents') +
           '</button>' +
@@ -1330,6 +1334,9 @@
     root.querySelectorAll<HTMLButtonElement>('.document-email-btn').forEach(btn => {
       btn.addEventListener('click', (e) => { e.stopPropagation(); onSendDocumentRequest(btn); });
     });
+    root.querySelectorAll<HTMLButtonElement>('.document-zip-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => { e.stopPropagation(); onDownloadDocumentsZip(btn); });
+    });
     root.querySelectorAll<HTMLButtonElement>('.document-revoke-btn').forEach(btn => {
       btn.addEventListener('click', (e) => { e.stopPropagation(); onRevokeDocumentPortal(btn); });
     });
@@ -1449,6 +1456,60 @@
       alert('Impossible de télécharger le document : ' + err.message);
     }finally{
       btn.disabled = false;
+    }
+  }
+
+  function archiveClientName(lead: Lead | undefined){
+    const fullName = lead
+      ? [lead.nom, lead.prenom].filter(Boolean).join(' ')
+      : 'Client';
+    const safeName = fullName
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[<>:"/\\|?*\u0000-\u001f]/g, '-')
+      .replace(/\s+/g, ' ')
+      .trim() || 'Client';
+    return 'Dossier ' + safeName + '.zip';
+  }
+
+  async function onDownloadDocumentsZip(btn: HTMLButtonElement){
+    const id = btn.dataset.id!;
+    const lead = allLeads.find(item => String(item.id) === String(id));
+    btn.disabled = true;
+    const previousText = btn.textContent;
+    btn.textContent = 'Création du ZIP…';
+    try{
+      const response = await fetch(ADMIN_FUNCTION_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        },
+        body: JSON.stringify({
+          ...authPayload(),
+          action: 'documents-zip',
+          id,
+        }),
+      });
+      if(!response.ok){
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.error || ('HTTP ' + response.status));
+      }
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = archiveClientName(lead);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }catch(err: any){
+      alert('Impossible de créer le fichier ZIP : ' + err.message);
+    }finally{
+      btn.disabled = false;
+      btn.textContent = previousText || '↓ Tout télécharger (.zip)';
     }
   }
 
