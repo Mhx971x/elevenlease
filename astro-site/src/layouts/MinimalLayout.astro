@@ -1,4 +1,6 @@
 ---
+import SpeedInsights from '@vercel/speed-insights/astro';
+
 // Layout minimal pour les pages autonomes qui n'utilisent pas le
 // header/nav/footer du site principal (ex. bio.html, page "link-in-bio").
 export interface Props {
@@ -64,5 +66,6 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
 </head>
 <body>
   <slot />
+  <SpeedInsights />
 </body>
 </html>
