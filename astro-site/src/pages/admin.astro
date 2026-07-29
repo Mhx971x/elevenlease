@@ -312,13 +312,13 @@
     --crm-green:#168653;
   }
   body{background:var(--crm-bg);}
-  header{height:74px;padding:0;background:#fff;}
+  header{position:sticky;top:0;z-index:50;height:74px;padding:0;background:#fff;}
   header .wrap{max-width:none;height:100%;padding:0 28px;}
   .logo-icon{width:100px;}
   #dashboard{padding:0;}
   .crm-layout{min-height:calc(100vh - 74px);display:grid;grid-template-columns:248px minmax(0,1fr);}
   .crm-sidebar{
-    position:sticky;top:0;height:calc(100vh - 74px);padding:28px 18px 22px;
+    position:sticky;top:74px;height:calc(100vh - 74px);padding:28px 18px 22px;
     display:flex;flex-direction:column;background:var(--crm-dark);color:#fff;
   }
   .crm-sidebar-title{
