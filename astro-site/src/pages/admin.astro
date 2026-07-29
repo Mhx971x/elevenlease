@@ -489,12 +489,14 @@
     id: string | number;
     status?: string;
     prenom?: string; nom?: string; email?: string; telephone?: string;
-    vehicule?: string; entreprise?: string; financement?: string;
-    type_vehicule_souhaite?: string; budget_souhaite?: string;
+    vehicule?: string; recherche_vehicule?: string; entreprise?: string; financement?: string;
+    type_vehicule_souhaite?: string; motorisation?: string; budget_souhaite?: string;
     neuf_occasion?: string; kilometrage_annuel?: string; duree_contrat?: string;
     apport?: string; date_livraison?: string; vehicule_reprise?: string;
     vehicule_reprise_details?: string; statut_pro?: string; anciennete?: string;
     revenus?: string; charges?: string; age?: string; ficp?: string;
+    statut_juridique?: string; siren?: string; chiffre_affaires?: string;
+    anciennete_entreprise?: string; consent_recontact?: boolean;
     eligible?: string; criteres_risque?: string; message?: string;
     profil?: string; created_at?: string;
     [key: string]: unknown;
@@ -688,6 +690,8 @@
     if(lead.eligible === 'Oui') return { cls: 'eligible', label: 'Éligible' };
     if(lead.eligible === 'Non') return { cls: 'complex', label: 'À étudier' };
     if(lead.eligible && lead.eligible.indexOf('N/A') === 0) return { cls: 'neutral', label: 'Achat comptant' };
+    if(lead.eligible === 'Étude professionnelle') return { cls: 'neutral', label: 'Étude pro' };
+    if(lead.eligible === 'Étude crédit automobile') return { cls: 'neutral', label: 'Étude crédit' };
     return { cls: 'neutral', label: lead.eligible || 'Non évalué' };
   }
 
@@ -718,8 +722,10 @@
     { key: 'nom', label: 'Nom' },
     { key: 'email', label: 'Email' },
     { key: 'telephone', label: 'Téléphone' },
+    { key: 'recherche_vehicule', label: 'Mode de recherche' },
     { key: 'vehicule', label: 'Véhicule demandé' },
-    { key: 'type_vehicule_souhaite', label: 'Type souhaité' },
+    { key: 'type_vehicule_souhaite', label: 'Carrosserie' },
+    { key: 'motorisation', label: 'Motorisation' },
     { key: 'budget_souhaite', label: 'Budget souhaité' },
     { key: 'financement', label: 'Financement' },
     { key: 'neuf_occasion', label: 'Neuf / occasion' },
@@ -730,6 +736,10 @@
     { key: 'vehicule_reprise', label: 'Véhicule à reprendre' },
     { key: 'vehicule_reprise_details', label: 'Détails reprise' },
     { key: 'entreprise', label: 'Entreprise' },
+    { key: 'statut_juridique', label: 'Statut juridique' },
+    { key: 'siren', label: 'SIREN' },
+    { key: 'chiffre_affaires', label: 'CA mensuel moyen' },
+    { key: 'anciennete_entreprise', label: 'Ancienneté entreprise' },
     { key: 'statut_pro', label: 'Statut professionnel' },
     { key: 'anciennete', label: 'Ancienneté' },
     { key: 'revenus', label: 'Revenus mensuels' },
@@ -757,8 +767,10 @@
 
   function buildDetailGrid(lead: Lead){
     const items = [
+      { label: 'Mode de recherche', value: lead.recherche_vehicule },
       { label: 'Véhicule demandé', value: lead.vehicule },
-      { label: 'Type souhaité', value: lead.type_vehicule_souhaite },
+      { label: 'Carrosserie', value: lead.type_vehicule_souhaite },
+      { label: 'Motorisation', value: lead.motorisation },
       { label: 'Budget souhaité', value: lead.budget_souhaite },
       { label: 'Neuf / occasion', value: lead.neuf_occasion },
       { label: 'Kilométrage annuel', value: lead.kilometrage_annuel },
@@ -767,12 +779,17 @@
       { label: 'Livraison souhaitée', value: lead.date_livraison },
       { label: 'Véhicule à reprendre', value: lead.vehicule_reprise === 'Oui' ? ('Oui' + (lead.vehicule_reprise_details ? ' — ' + lead.vehicule_reprise_details : '')) : lead.vehicule_reprise },
       { label: 'Entreprise', value: lead.entreprise },
+      { label: 'Statut juridique', value: lead.statut_juridique },
+      { label: 'SIREN', value: lead.siren },
+      { label: 'CA mensuel moyen', value: lead.chiffre_affaires ? lead.chiffre_affaires + ' €' : '' },
+      { label: 'Ancienneté entreprise', value: lead.anciennete_entreprise },
       { label: 'Statut professionnel', value: lead.statut_pro },
       { label: 'Ancienneté', value: lead.anciennete },
       { label: 'Revenus mensuels', value: lead.revenus ? lead.revenus + ' €' : '' },
       { label: 'Charges mensuelles', value: lead.charges ? lead.charges + ' €' : '' },
       { label: 'Âge', value: lead.age },
       { label: 'Fiché Banque de France', value: lead.ficp },
+      { label: 'Consentement au rappel', value: lead.consent_recontact === true ? 'Oui' : '' },
     ].filter(item => item.value);
 
     if(items.length === 0) return '';
@@ -786,7 +803,7 @@
     const eligInfo = eligibilityInfo(lead);
     const fullName = ((lead.prenom || '') + ' ' + (lead.nom || '')).trim() || 'Sans nom';
     const initial = (lead.prenom || lead.nom || '?').trim().charAt(0).toUpperCase();
-    const subLine = [lead.vehicule || lead.type_vehicule_souhaite, lead.financement].filter(Boolean).join(' · ') || 'Projet non précisé';
+    const subLine = [lead.vehicule || lead.type_vehicule_souhaite, lead.motorisation, lead.financement].filter(Boolean).join(' · ') || 'Projet non précisé';
 
     const detailGrid = buildDetailGrid(lead);
     const riskNote = lead.criteres_risque
@@ -852,7 +869,10 @@
     let filtered = allLeads.filter(lead => {
       if(statusVal && (lead.status || 'nouveau') !== statusVal) return false;
       if(!query) return true;
-      const haystack = [lead.prenom, lead.nom, lead.email, lead.telephone, lead.vehicule, lead.entreprise, lead.type_vehicule_souhaite]
+      const haystack = [
+        lead.prenom, lead.nom, lead.email, lead.telephone, lead.vehicule,
+        lead.entreprise, lead.siren, lead.type_vehicule_souhaite, lead.motorisation
+      ]
         .filter(Boolean).join(' ').toLowerCase();
       return haystack.includes(query);
     });

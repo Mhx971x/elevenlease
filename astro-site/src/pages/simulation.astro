@@ -32,166 +32,223 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
         <div class="stepper-progress" id="stepperProgress">
           <div class="stepper-bar-track"><div class="stepper-bar-fill" id="stepperBarFill"></div></div>
           <div class="stepper-meta">
-            <div class="stepper-label" id="stepperLabel">Question 1 / 16</div>
+            <div class="stepper-label" id="stepperLabel">Question 1 / 9</div>
             <div class="stepper-time" id="stepperTime">~2 min restantes</div>
           </div>
         </div>
 
         <div class="form-step active" data-step="1">
-          <label for="fVehicule"><span class="step-icon" aria-hidden="true">🚗</span>Quel véhicule vous intéresse ?</label>
-          <input type="text" id="fVehicule" name="vehicule" placeholder="Ex : Renault Clio (laissez vide si vous hésitez)">
+          <label><span class="step-icon" aria-hidden="true">🚗</span>Avez-vous déjà un véhicule précis en tête ?</label>
+          <div class="choice-grid">
+            <label class="radio-option"><input type="radio" name="rechercheVehicule" value="Modèle précis"> Oui, je connais le modèle</label>
+            <label class="radio-option"><input type="radio" name="rechercheVehicule" value="Besoin de conseil"> Non, je souhaite être conseillé</label>
+            <label class="radio-option"><input type="radio" name="rechercheVehicule" value="Ouvert à plusieurs modèles"> Je suis ouvert à plusieurs modèles</label>
+          </div>
+          <div class="conditional-field" id="vehiculePrecisField" style="display:none;">
+            <label for="fVehicule">Marque et modèle souhaités</label>
+            <input type="text" id="fVehicule" name="vehicule" placeholder="Ex : Renault Clio, Peugeot 3008...">
+          </div>
         </div>
 
         <div class="form-step" data-step="2">
-          <label><span class="step-icon" aria-hidden="true">👤</span>Ce financement est-il à titre personnel ou professionnel ?</label>
-          <div class="radio-group">
-            <label class="radio-option"><input type="radio" name="profil" value="Particulier" checked> Particulier</label>
-            <label class="radio-option"><input type="radio" name="profil" value="Professionnel"> Professionnel</label>
+          <label><span class="step-icon" aria-hidden="true">🚘</span>Quelles sont vos préférences ?</label>
+          <div class="field-stack">
+            <div class="field-item" id="carrosserieField">
+              <label>Type de carrosserie</label>
+              <div class="choice-grid compact-choice-grid">
+                <label class="radio-option"><input type="radio" name="typeVehicule" value="Citadine"> Citadine</label>
+                <label class="radio-option"><input type="radio" name="typeVehicule" value="Berline"> Berline</label>
+                <label class="radio-option"><input type="radio" name="typeVehicule" value="SUV"> SUV</label>
+                <label class="radio-option"><input type="radio" name="typeVehicule" value="Break / Monospace"> Break / Monospace</label>
+                <label class="radio-option"><input type="radio" name="typeVehicule" value="Utilitaire"> Utilitaire</label>
+              </div>
+            </div>
+            <div class="field-item">
+              <label>Motorisation</label>
+              <div class="choice-grid compact-choice-grid">
+                <label class="radio-option"><input type="radio" name="motorisation" value="Essence"> Essence</label>
+                <label class="radio-option"><input type="radio" name="motorisation" value="Hybride"> Hybride</label>
+                <label class="radio-option"><input type="radio" name="motorisation" value="Électrique"> Électrique</label>
+                <label class="radio-option"><input type="radio" name="motorisation" value="Diesel"> Diesel</label>
+                <label class="radio-option"><input type="radio" name="motorisation" value="Peu importe"> Peu importe</label>
+              </div>
+            </div>
+            <div class="field-item">
+              <label>Neuf ou occasion</label>
+              <div class="choice-grid compact-choice-grid">
+                <label class="radio-option"><input type="radio" name="neufOccasion" value="Neuf"> Neuf</label>
+                <label class="radio-option"><input type="radio" name="neufOccasion" value="Occasion"> Occasion</label>
+                <label class="radio-option"><input type="radio" name="neufOccasion" value="Peu importe"> Peu importe</label>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="form-step" data-step="3">
-          <label><span class="step-icon" aria-hidden="true">💳</span>Quel type de financement souhaitez-vous ?</label>
+          <label><span class="step-icon" aria-hidden="true">💳</span>Comment souhaitez-vous financer votre véhicule ?</label>
           <div class="choice-grid">
-            <label class="radio-option"><input type="radio" name="financement" value="Leasing (LOA/LLD)" checked> Leasing (LOA/LLD)</label>
-            <label class="radio-option"><input type="radio" name="financement" value="Achat"> Achat</label>
-            <label class="radio-option"><input type="radio" name="financement" value="Je ne sais pas encore"> Je ne sais pas encore</label>
+            <label class="radio-option"><input type="radio" name="financement" value="Leasing (LOA/LLD)"> Leasing (LOA/LLD)</label>
+            <label class="radio-option"><input type="radio" name="financement" value="Achat comptant"> Achat comptant</label>
+            <label class="radio-option"><input type="radio" name="financement" value="Crédit automobile"> Crédit automobile</label>
+            <label class="radio-option"><input type="radio" name="financement" value="Besoin de conseil"> Je souhaite être conseillé</label>
           </div>
         </div>
 
         <div class="form-step" data-step="4">
-          <label><span class="step-icon" aria-hidden="true">🚘</span>Vos préférences véhicule</label>
-          <div class="field-stack">
-            <div class="field-item">
-              <label><span class="step-icon" aria-hidden="true">🚙</span>Type de véhicule souhaité</label>
-              <div class="choice-grid">
-                <label class="radio-option"><input type="radio" name="typeVehicule" value="Citadine"> Citadine</label>
-                <label class="radio-option"><input type="radio" name="typeVehicule" value="Berline"> Berline</label>
-                <label class="radio-option"><input type="radio" name="typeVehicule" value="SUV"> SUV</label>
-                <label class="radio-option"><input type="radio" name="typeVehicule" value="Électrique"> Électrique</label>
-              </div>
+          <label><span class="step-icon" aria-hidden="true">💶</span>Quel budget souhaitez-vous consacrer au véhicule ?</label>
+          <div id="budgetMensuelField">
+            <div class="choice-grid">
+              <label class="radio-option"><input type="radio" name="budget" value="Moins de 300 €/mois"> Moins de 300 €/mois</label>
+              <label class="radio-option"><input type="radio" name="budget" value="300 à 500 €/mois"> 300 à 500 €/mois</label>
+              <label class="radio-option"><input type="radio" name="budget" value="500 à 700 €/mois"> 500 à 700 €/mois</label>
+              <label class="radio-option"><input type="radio" name="budget" value="700 à 1 000 €/mois"> 700 à 1 000 €/mois</label>
+              <label class="radio-option"><input type="radio" name="budget" value="Plus de 1 000 €/mois"> Plus de 1 000 €/mois</label>
             </div>
-            <div class="field-item" id="budgetMensuelField">
-              <label><span class="step-icon" aria-hidden="true">💶</span>Budget mensuel souhaité</label>
-              <div class="choice-grid">
-                <label class="radio-option"><input type="radio" name="budget" value="Moins de 300 €/mois"> Moins de 300 €/mois</label>
-                <label class="radio-option"><input type="radio" name="budget" value="300 à 500 €/mois"> 300 à 500 €/mois</label>
-                <label class="radio-option"><input type="radio" name="budget" value="500 à 700 €/mois"> 500 à 700 €/mois</label>
-                <label class="radio-option"><input type="radio" name="budget" value="700 à 1 000 €/mois"> 700 à 1 000 €/mois</label>
-                <label class="radio-option"><input type="radio" name="budget" value="Plus de 1 000 €/mois"> Plus de 1 000 €/mois</label>
-              </div>
-            </div>
-            <div class="field-item" id="budgetAchatField" style="display:none;">
-              <label><span class="step-icon" aria-hidden="true">💰</span>Budget d'achat souhaité</label>
-              <div class="choice-grid">
-                <label class="radio-option"><input type="radio" name="budgetAchat" value="Moins de 10 000€"> Moins de 10 000€</label>
-                <label class="radio-option"><input type="radio" name="budgetAchat" value="10 000€ – 20 000€"> 10 000€ – 20 000€</label>
-                <label class="radio-option"><input type="radio" name="budgetAchat" value="20 000€ – 35 000€"> 20 000€ – 35 000€</label>
-                <label class="radio-option"><input type="radio" name="budgetAchat" value="Plus de 35 000€"> Plus de 35 000€</label>
-              </div>
+          </div>
+          <div id="budgetAchatField" style="display:none;">
+            <div class="choice-grid">
+              <label class="radio-option"><input type="radio" name="budgetAchat" value="Moins de 10 000 €"> Moins de 10 000 €</label>
+              <label class="radio-option"><input type="radio" name="budgetAchat" value="10 000 à 20 000 €"> 10 000 à 20 000 €</label>
+              <label class="radio-option"><input type="radio" name="budgetAchat" value="20 000 à 35 000 €"> 20 000 à 35 000 €</label>
+              <label class="radio-option"><input type="radio" name="budgetAchat" value="Plus de 35 000 €"> Plus de 35 000 €</label>
             </div>
           </div>
         </div>
 
         <div class="form-step" data-step="5">
-          <label><span class="step-icon" aria-hidden="true">🆕</span>Le véhicule recherché est-il :</label>
-          <div class="choice-grid">
-            <label class="radio-option"><input type="radio" name="neufOccasion" value="Neuf"> Neuf</label>
-            <label class="radio-option"><input type="radio" name="neufOccasion" value="Occasion"> Occasion</label>
-            <label class="radio-option"><input type="radio" name="neufOccasion" value="Peu importe"> Peu importe</label>
+          <label><span class="step-icon" aria-hidden="true">⚙️</span>Configurons votre projet</label>
+          <div class="field-stack">
+            <div class="field-item" id="dureeContratField">
+              <label>Durée de contrat souhaitée</label>
+              <div class="choice-grid compact-choice-grid">
+                <label class="radio-option"><input type="radio" name="dureeContrat" value="36 mois"> 36 mois</label>
+                <label class="radio-option"><input type="radio" name="dureeContrat" value="48 mois"> 48 mois</label>
+                <label class="radio-option"><input type="radio" name="dureeContrat" value="60 mois"> 60 mois</label>
+                <label class="radio-option"><input type="radio" name="dureeContrat" value="À définir"> À définir</label>
+              </div>
+            </div>
+            <div class="field-item" id="apportField">
+              <label>Apport disponible</label>
+              <div class="choice-grid compact-choice-grid">
+                <label class="radio-option"><input type="radio" name="apport" value="0 €"> 0 €</label>
+                <label class="radio-option"><input type="radio" name="apport" value="Moins de 2 000 €"> Moins de 2 000 €</label>
+                <label class="radio-option"><input type="radio" name="apport" value="2 000 à 5 000 €"> 2 000 à 5 000 €</label>
+                <label class="radio-option"><input type="radio" name="apport" value="Plus de 5 000 €"> Plus de 5 000 €</label>
+              </div>
+            </div>
+            <div class="field-item">
+              <label>Livraison souhaitée</label>
+              <div class="choice-grid compact-choice-grid">
+                <label class="radio-option"><input type="radio" name="dateLivraison" value="Dès que possible"> Dès que possible</label>
+                <label class="radio-option"><input type="radio" name="dateLivraison" value="Dans 1 mois"> Dans 1 mois</label>
+                <label class="radio-option"><input type="radio" name="dateLivraison" value="Dans 3 mois"> Dans 3 mois</label>
+                <label class="radio-option"><input type="radio" name="dateLivraison" value="Plus tard"> Plus tard</label>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="form-step" data-step="6" data-hide-if-achat="true">
-          <label><span class="step-icon" aria-hidden="true">📆</span>Quelle durée de contrat souhaitez-vous ?</label>
-          <div class="choice-grid">
-            <label class="radio-option"><input type="radio" name="dureeContrat" value="36 mois"> 36 mois</label>
-            <label class="radio-option"><input type="radio" name="dureeContrat" value="48 mois"> 48 mois</label>
-            <label class="radio-option"><input type="radio" name="dureeContrat" value="60 mois"> 60 mois</label>
-            <label class="radio-option"><input type="radio" name="dureeContrat" value="Je ne sais pas encore"> Je ne sais pas encore</label>
+        <div class="form-step" data-step="6">
+          <label><span class="step-icon" aria-hidden="true">🔄</span>Avez-vous un véhicule à faire reprendre ?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="vehiculeReprise" value="Oui"> Oui</label>
+            <label class="radio-option"><input type="radio" name="vehiculeReprise" value="Non"> Non</label>
+          </div>
+          <div class="conditional-field" id="vehiculeRepriseField" style="display:none;">
+            <label for="fVehiculeRepriseDetails">Véhicule concerné</label>
+            <input type="text" id="fVehiculeRepriseDetails" name="vehiculeRepriseDetails" placeholder="Ex : Peugeot 208, 2019, 45 000 km">
           </div>
         </div>
 
         <div class="form-step" data-step="7">
-          <label><span class="step-icon" aria-hidden="true">💰</span>Disposez-vous d'un apport ?</label>
-          <div class="choice-grid">
-            <label class="radio-option"><input type="radio" name="apport" value="0 €"> 0 €</label>
-            <label class="radio-option"><input type="radio" name="apport" value="Moins de 2 000 €"> Moins de 2 000 €</label>
-            <label class="radio-option"><input type="radio" name="apport" value="2 000 à 5 000 €"> 2 000 à 5 000 €</label>
-            <label class="radio-option"><input type="radio" name="apport" value="Plus de 5 000 €"> Plus de 5 000 €</label>
+          <label><span class="step-icon" aria-hidden="true">👤</span>Votre demande est-elle personnelle ou professionnelle ?</label>
+          <div class="radio-group">
+            <label class="radio-option"><input type="radio" name="profil" value="Particulier"> Particulier</label>
+            <label class="radio-option"><input type="radio" name="profil" value="Professionnel"> Professionnel</label>
           </div>
         </div>
 
         <div class="form-step" data-step="8">
-          <label><span class="step-icon" aria-hidden="true">🚚</span>Quand souhaitez-vous recevoir votre véhicule ?</label>
-          <div class="choice-grid">
-            <label class="radio-option"><input type="radio" name="dateLivraison" value="Dès que possible"> Dès que possible</label>
-            <label class="radio-option"><input type="radio" name="dateLivraison" value="Dans 1 mois"> Dans 1 mois</label>
-            <label class="radio-option"><input type="radio" name="dateLivraison" value="Dans 3 mois"> Dans 3 mois</label>
-            <label class="radio-option"><input type="radio" name="dateLivraison" value="Plus tard"> Plus tard</label>
+          <label><span class="step-icon" aria-hidden="true">📋</span>Quelques informations pour étudier votre demande</label>
+          <div class="field-stack" id="particulierQualification">
+            <div class="field-item">
+              <label>Statut professionnel</label>
+              <div class="choice-grid compact-choice-grid">
+                <label class="radio-option"><input type="radio" name="statutPro" value="CDI"> CDI</label>
+                <label class="radio-option"><input type="radio" name="statutPro" value="CDD"> CDD</label>
+                <label class="radio-option"><input type="radio" name="statutPro" value="Indépendant"> Indépendant / Freelance</label>
+                <label class="radio-option"><input type="radio" name="statutPro" value="Retraité"> Retraité</label>
+                <label class="radio-option"><input type="radio" name="statutPro" value="Étudiant"> Étudiant</label>
+                <label class="radio-option"><input type="radio" name="statutPro" value="Sans emploi"> Sans emploi</label>
+              </div>
+            </div>
+            <div class="field-grid">
+              <div class="field-item">
+                <label for="fRevenus">Revenus nets mensuels</label>
+                <input type="number" id="fRevenus" name="revenus" min="0" step="50" inputmode="numeric" placeholder="Ex : 1 800">
+              </div>
+              <div class="field-item">
+                <label for="fCharges">Charges mensuelles</label>
+                <input type="number" id="fCharges" name="charges" min="0" step="10" inputmode="numeric" placeholder="Ex : 400">
+              </div>
+            </div>
+            <div class="field-item">
+              <label>Ancienneté dans l'activité actuelle</label>
+              <div class="choice-grid compact-choice-grid">
+                <label class="radio-option"><input type="radio" name="anciennete" value="Moins de 6 mois"> Moins de 6 mois</label>
+                <label class="radio-option"><input type="radio" name="anciennete" value="6 mois à 2 ans"> 6 mois à 2 ans</label>
+                <label class="radio-option"><input type="radio" name="anciennete" value="Plus de 2 ans"> Plus de 2 ans</label>
+              </div>
+            </div>
+            <div class="field-item">
+              <label>Situation Banque de France (FICP)</label>
+              <div class="choice-grid compact-choice-grid">
+                <label class="radio-option"><input type="radio" name="ficp" value="Non, pas fiché"> Non, je ne suis pas fiché</label>
+                <label class="radio-option"><input type="radio" name="ficp" value="Oui, fiché"> Oui, je suis fiché</label>
+                <label class="radio-option"><input type="radio" name="ficp" value="Je n'ai pas vérifié"> Je n'ai pas vérifié</label>
+              </div>
+            </div>
+          </div>
+          <div class="field-stack" id="professionnelQualification" style="display:none;">
+            <div class="field-grid">
+              <div class="field-item full">
+                <label for="fEntreprise">Nom de l'entreprise</label>
+                <input type="text" id="fEntreprise" name="entreprise" autocomplete="organization">
+              </div>
+              <div class="field-item">
+                <label for="fStatutJuridique">Statut juridique</label>
+                <select id="fStatutJuridique" name="statutJuridique">
+                  <option value="">Sélectionner</option>
+                  <option>Micro-entreprise</option>
+                  <option>EI / EIRL</option>
+                  <option>SAS / SASU</option>
+                  <option>SARL / EURL</option>
+                  <option>Association</option>
+                  <option>Autre</option>
+                </select>
+              </div>
+              <div class="field-item">
+                <label for="fSiren">SIREN <span class="optional-label">(facultatif)</span></label>
+                <input type="text" id="fSiren" name="siren" inputmode="numeric" maxlength="9" placeholder="9 chiffres">
+              </div>
+              <div class="field-item full" id="chiffreAffairesField">
+                <label for="fChiffreAffaires">Chiffre d'affaires mensuel moyen</label>
+                <input type="number" id="fChiffreAffaires" name="chiffreAffaires" min="0" step="100" inputmode="numeric" placeholder="Ex : 8 000">
+              </div>
+            </div>
+            <div class="field-item" id="ancienneteEntrepriseField">
+              <label>Ancienneté de l'entreprise</label>
+              <div class="choice-grid compact-choice-grid">
+                <label class="radio-option"><input type="radio" name="ancienneteEntreprise" value="Moins de 1 an"> Moins de 1 an</label>
+                <label class="radio-option"><input type="radio" name="ancienneteEntreprise" value="1 à 3 ans"> 1 à 3 ans</label>
+                <label class="radio-option"><input type="radio" name="ancienneteEntreprise" value="Plus de 3 ans"> Plus de 3 ans</label>
+              </div>
+            </div>
           </div>
         </div>
 
         <div class="form-step" data-step="9">
-          <label><span class="step-icon" aria-hidden="true">🔄</span>Avez-vous un véhicule à faire reprendre ?</label>
-          <div class="field-stack">
-            <div class="field-item">
-              <div class="radio-group">
-                <label class="radio-option"><input type="radio" name="vehiculeReprise" value="Oui"> Oui</label>
-                <label class="radio-option"><input type="radio" name="vehiculeReprise" value="Non" checked> Non</label>
-              </div>
-            </div>
-            <div class="field-item" id="vehiculeRepriseField" style="display:none;">
-              <label for="fVehiculeRepriseDetails">Véhicule concerné</label>
-              <input type="text" id="fVehiculeRepriseDetails" name="vehiculeRepriseDetails" placeholder="Ex : Peugeot 208, 2019, 45 000 km">
-            </div>
-          </div>
-        </div>
-
-        <div class="form-step" data-step="10" data-eligibility-only="true">
-          <label><span class="step-icon" aria-hidden="true">💼</span>Quel est votre statut professionnel ?</label>
-          <div class="choice-grid">
-            <label class="radio-option"><input type="radio" name="statutPro" value="CDI"> CDI</label>
-            <label class="radio-option"><input type="radio" name="statutPro" value="CDD"> CDD</label>
-            <label class="radio-option"><input type="radio" name="statutPro" value="Indépendant"> Indépendant / Freelance</label>
-            <label class="radio-option"><input type="radio" name="statutPro" value="Retraité"> Retraité</label>
-            <label class="radio-option"><input type="radio" name="statutPro" value="Étudiant"> Étudiant</label>
-            <label class="radio-option"><input type="radio" name="statutPro" value="Sans emploi"> Sans emploi</label>
-          </div>
-        </div>
-
-        <div class="form-step" data-step="11" data-eligibility-only="true">
-          <label for="fRevenus"><span class="step-icon" aria-hidden="true">💵</span>Quels sont vos revenus mensuels nets ?</label>
-          <input type="number" id="fRevenus" name="revenus" min="0" step="50" placeholder="Ex : 1800">
-          <div class="field-hint">En euros, avant impôt sur le revenu.</div>
-        </div>
-
-        <div class="form-step" data-step="12" data-eligibility-only="true">
-          <label for="fCharges"><span class="step-icon" aria-hidden="true">🧾</span>Quel est le montant de vos charges mensuelles ?</label>
-          <input type="number" id="fCharges" name="charges" min="0" step="10" placeholder="Ex : 400">
-          <div class="field-hint">Loyer, crédits en cours, pension alimentaire versée...</div>
-        </div>
-
-        <div class="form-step" data-step="13" data-eligibility-only="true">
-          <label><span class="step-icon" aria-hidden="true">⏳</span>Depuis combien de temps êtes-vous dans votre emploi / activité actuelle ?</label>
-          <div class="choice-grid">
-            <label class="radio-option"><input type="radio" name="anciennete" value="Moins de 6 mois"> Moins de 6 mois</label>
-            <label class="radio-option"><input type="radio" name="anciennete" value="6 mois à 2 ans"> 6 mois à 2 ans</label>
-            <label class="radio-option"><input type="radio" name="anciennete" value="Plus de 2 ans"> Plus de 2 ans</label>
-          </div>
-        </div>
-
-        <div class="form-step" data-step="14" data-eligibility-only="true">
-          <label><span class="step-icon" aria-hidden="true">🏦</span>Avez-vous vérifié si vous êtes fiché à la Banque de France (FICP) ?</label>
-          <div class="choice-grid">
-            <label class="radio-option"><input type="radio" name="ficp" value="Non, pas fiché" checked> Non, je ne suis pas fiché</label>
-            <label class="radio-option"><input type="radio" name="ficp" value="Oui, fiché"> Oui, je suis fiché</label>
-            <label class="radio-option"><input type="radio" name="ficp" value="Je n'ai pas vérifié"> Je n'ai pas vérifié</label>
-          </div>
-        </div>
-
-        <div class="form-step" data-step="15">
-          <label><span class="step-icon" aria-hidden="true">📇</span>Vos coordonnées</label>
+          <label><span class="step-icon" aria-hidden="true">📇</span>Vos coordonnées et le récapitulatif</label>
           <div class="field-grid">
             <div class="field-item">
               <label for="fPrenom">Prénom</label>
@@ -201,9 +258,9 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
               <label for="fNom">Nom</label>
               <input type="text" id="fNom" name="nom" autocomplete="family-name">
             </div>
-            <div class="field-item">
+            <div class="field-item" id="ageField">
               <label for="fAge">Âge</label>
-              <input type="number" id="fAge" name="age" min="1" max="120" placeholder="Ex : 32">
+              <input type="number" id="fAge" name="age" min="18" max="100" inputmode="numeric" placeholder="Ex : 32">
             </div>
             <div class="field-item">
               <label for="fTelephone">Téléphone</label>
@@ -213,23 +270,22 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
               <label for="fEmail">Email</label>
               <input type="email" id="fEmail" name="email" autocomplete="email">
             </div>
-            <div class="field-item full" id="entrepriseField" style="display:none;">
-              <label for="fEntreprise">Nom de l'entreprise</label>
-              <input type="text" id="fEntreprise" name="entreprise" autocomplete="organization">
-            </div>
           </div>
-        </div>
-
-        <div class="form-step" data-step="16">
-          <label for="fMessage"><span class="step-icon" aria-hidden="true">💬</span>Un message à ajouter ?</label>
-          <textarea id="fMessage" name="message" rows="3" placeholder="Précisez votre besoin, budget, délai... (optionnel)"></textarea>
+          <div class="field-item message-field">
+            <label for="fMessage">Un message à ajouter ? <span class="optional-label">(facultatif)</span></label>
+            <textarea id="fMessage" name="message" rows="3" placeholder="Une précision utile pour votre conseiller..."></textarea>
+          </div>
+          <div class="project-summary" id="projectSummary"></div>
+          <label class="consent-option">
+            <input type="checkbox" id="fConsent" name="consentRecontact">
+            <span>J'accepte d'être recontacté au sujet de ma demande par Eleven Lease et son réseau de partenaires.</span>
+          </label>
         </div>
 
         <p class="step-error" id="stepError"></p>
 
         <div class="stepper-nav" id="stepperNav">
           <button type="button" class="step-back" id="stepBack">← Précédent</button>
-          <button type="button" class="step-skip" id="stepSkip" style="display:none;">Passer cette question</button>
           <button type="button" class="btn-primary" id="stepNext">Suivant</button>
         </div>
 
@@ -290,6 +346,10 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
   // ============================================================
   // FORMULAIRE DE CONTACT + ÉLIGIBILITÉ : envoie chaque demande vers
   // un Google Apps Script qui l'ajoute comme ligne dans un Google Sheet.
+  // La version à déployer après cette refonte se trouve désormais dans
+  // /integrations/google-apps-script-leads.js. Elle ajoute les nouvelles
+  // colonnes sans casser les lignes historiques. Le bloc ci-dessous est
+  // conservé uniquement comme documentation du fonctionnement initial.
   //
   // Comment configurer (une seule fois) :
   // 1. Dans ton Sheet "Leads Eleven Lease", mets cette ligne d'en-têtes
@@ -404,51 +464,75 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
 
   interface LeadPayload {
     prenom: string; nom: string; telephone: string; email: string; vehicule: string;
-    profil: string; entreprise: string; financement: string; typeVehiculeSouhaite: string;
+    rechercheVehicule: string; profil: string; entreprise: string; financement: string;
+    typeVehiculeSouhaite: string; motorisation: string;
     budgetSouhaite: string; neufOccasion: string; dureeContrat: string;
     apport: string; dateLivraison: string; vehiculeReprise: string; vehiculeRepriseDetails: string;
     statutPro: string; revenus: string; charges: string; anciennete: string; age: string; ficp: string;
-    message: string; eligible?: string; criteresRisque?: string;
+    statutJuridique: string; siren: string; chiffreAffaires: string; ancienneteEntreprise: string;
+    message: string; consentRecontact: boolean; eligible?: string; criteresRisque?: string;
   }
 
-  function sendToSupabase(payload: LeadPayload){
-    if(!SUPABASE_URL || !SUPABASE_ANON_KEY) return;
-    fetch(SUPABASE_URL + '/rest/v1/leads', {
+  async function sendToSupabase(payload: LeadPayload){
+    if(!SUPABASE_URL || !SUPABASE_ANON_KEY) throw new Error('Supabase non configuré');
+    const headers = {
+      'Content-Type': 'application/json',
+      'apikey': SUPABASE_ANON_KEY,
+      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+      'Prefer': 'return=minimal'
+    };
+    const legacyData = {
+      prenom: payload.prenom,
+      nom: payload.nom,
+      telephone: payload.telephone,
+      email: payload.email,
+      vehicule: payload.vehicule,
+      profil: payload.profil,
+      entreprise: payload.entreprise,
+      financement: payload.financement,
+      type_vehicule_souhaite: payload.typeVehiculeSouhaite,
+      budget_souhaite: payload.budgetSouhaite,
+      neuf_occasion: payload.neufOccasion,
+      duree_contrat: payload.dureeContrat,
+      apport: payload.apport,
+      date_livraison: payload.dateLivraison,
+      vehicule_reprise: payload.vehiculeReprise,
+      vehicule_reprise_details: payload.vehiculeRepriseDetails,
+      statut_pro: payload.statutPro,
+      revenus: payload.revenus,
+      charges: payload.charges,
+      anciennete: payload.anciennete,
+      age: payload.age,
+      ficp: payload.ficp,
+      eligible: payload.eligible,
+      criteres_risque: payload.criteresRisque,
+      message: payload.message
+    };
+    const enrichedData = {
+      ...legacyData,
+      recherche_vehicule: payload.rechercheVehicule,
+      motorisation: payload.motorisation,
+      statut_juridique: payload.statutJuridique,
+      siren: payload.siren,
+      chiffre_affaires: payload.chiffreAffaires,
+      anciennete_entreprise: payload.ancienneteEntreprise,
+      consent_recontact: payload.consentRecontact,
+    };
+    let response = await fetch(SUPABASE_URL + '/rest/v1/leads', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify({
-        prenom: payload.prenom,
-        nom: payload.nom,
-        telephone: payload.telephone,
-        email: payload.email,
-        vehicule: payload.vehicule,
-        profil: payload.profil,
-        entreprise: payload.entreprise,
-        financement: payload.financement,
-        type_vehicule_souhaite: payload.typeVehiculeSouhaite,
-        budget_souhaite: payload.budgetSouhaite,
-        neuf_occasion: payload.neufOccasion,
-        duree_contrat: payload.dureeContrat,
-        apport: payload.apport,
-        date_livraison: payload.dateLivraison,
-        vehicule_reprise: payload.vehiculeReprise,
-        vehicule_reprise_details: payload.vehiculeRepriseDetails,
-        statut_pro: payload.statutPro,
-        revenus: payload.revenus,
-        charges: payload.charges,
-        anciennete: payload.anciennete,
-        age: payload.age,
-        ficp: payload.ficp,
-        eligible: payload.eligible,
-        criteres_risque: payload.criteresRisque,
-        message: payload.message
-      })
-    }).catch(err => console.error('Erreur enregistrement Supabase (non bloquant) :', err));
+      headers,
+      body: JSON.stringify(enrichedData)
+    });
+    // Tant que la migration SQL n'est pas encore appliquée en production,
+    // un second essai conserve au moins le lead avec les colonnes historiques.
+    if(!response.ok){
+      response = await fetch(SUPABASE_URL + '/rest/v1/leads', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(legacyData)
+      });
+    }
+    if(!response.ok) throw new Error('Supabase HTTP ' + response.status);
   }
 
   // Seuils utilisés pour l'estimation d'éligibilité (indicatifs,
@@ -459,6 +543,17 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
   const ELIGIBILITE_AGE_MAX = 75;
   const ELIGIBILITE_ENDETTEMENT_MAX = 0.35;
 
+  function estimatedMonthlyBudget(budget: string){
+    const estimates: Record<string, number> = {
+      'Moins de 300 €/mois': 300,
+      '300 à 500 €/mois': 400,
+      '500 à 700 €/mois': 600,
+      '700 à 1 000 €/mois': 850,
+      'Plus de 1 000 €/mois': 1000,
+    };
+    return estimates[budget] || 0;
+  }
+
   function computeEligibility(payload: LeadPayload){
     const reasons: string[] = [];
     if(payload.ficp === 'Oui, fiché') reasons.push('Interdit bancaire (FICP)');
@@ -466,7 +561,8 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
     if(!isNaN(revenus) && revenus < ELIGIBILITE_REVENU_MIN) reasons.push('Revenus sous le seuil habituel (' + ELIGIBILITE_REVENU_MIN + '€/mois)');
     const charges = parseFloat(payload.charges);
     if(!isNaN(revenus) && revenus > 0 && !isNaN(charges)){
-      const tauxEndettement = charges / revenus;
+      const mensualiteEstimee = estimatedMonthlyBudget(payload.budgetSouhaite);
+      const tauxEndettement = (charges + mensualiteEstimee) / revenus;
       if(tauxEndettement > ELIGIBILITE_ENDETTEMENT_MAX) reasons.push("Taux d'endettement supérieur à " + Math.round(ELIGIBILITE_ENDETTEMENT_MAX * 100) + '%');
     }
     if(payload.statutPro === 'Étudiant' || payload.statutPro === 'Sans emploi') reasons.push('Statut professionnel (' + payload.statutPro + ')');
@@ -503,58 +599,147 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
 
     const stepBack = document.getElementById('stepBack') as HTMLButtonElement;
     const stepNext = document.getElementById('stepNext') as HTMLButtonElement;
-    const stepSkip = document.getElementById('stepSkip') as HTMLButtonElement;
     const stepError = document.getElementById('stepError')!;
     const stepperBarFill = document.getElementById('stepperBarFill') as HTMLElement;
     const stepperLabel = document.getElementById('stepperLabel')!;
     const stepperTime = document.getElementById('stepperTime')!;
     const stepperProgress = document.getElementById('stepperProgress') as HTMLElement;
     const stepperNav = document.getElementById('stepperNav') as HTMLElement;
-    const SECONDS_PER_STEP = 7;
+    const SECONDS_PER_STEP = 10;
 
     function radioValue(name: string): string {
       const el = leadForm!.querySelector<HTMLInputElement>('input[name="' + name + '"]:checked');
       return el ? el.value : '';
     }
 
-    function isAchatFlow(){
-      return radioValue('financement') === 'Achat';
+    function inputValue(id: string): string {
+      return (document.getElementById(id) as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement).value.trim();
+    }
+
+    function isCashPurchase(){
+      return radioValue('financement') === 'Achat comptant';
+    }
+
+    function usesPurchaseBudget(){
+      return ['Achat comptant', 'Crédit automobile'].includes(radioValue('financement'));
+    }
+
+    function usesContractDuration(){
+      return radioValue('financement') === 'Leasing (LOA/LLD)';
     }
 
     function getVisibleSteps(): number[] {
-      const skip = isAchatFlow();
       return stepEls
         .map(el => Number(el.dataset.step))
-        .filter(n => {
-          const el = stepEls.find(e => Number(e.dataset.step) === n)!;
-          return !(skip && (el.hasAttribute('data-eligibility-only') || el.hasAttribute('data-hide-if-achat')));
-        })
+        .filter(n => !(isCashPurchase() && radioValue('profil') !== 'Professionnel' && n === 8))
         .sort((a, b) => a - b);
     }
 
     function validateStep(stepNum: number): string | null {
       switch(stepNum){
-        case 5: return radioValue('neufOccasion') !== '' ? null : 'Merci de préciser si vous recherchez un véhicule neuf ou d\'occasion.';
-        case 6: return radioValue('dureeContrat') !== '' ? null : 'Merci de sélectionner la durée de contrat souhaitée.';
-        case 7: return radioValue('apport') !== '' ? null : "Merci de préciser votre apport.";
-        case 8: return radioValue('dateLivraison') !== '' ? null : 'Merci d\'indiquer quand vous souhaitez recevoir votre véhicule.';
-        case 9: return radioValue('vehiculeReprise') !== '' ? null : 'Merci de préciser si vous avez un véhicule à reprendre.';
-        case 10: return radioValue('statutPro') !== '' ? null : 'Merci de sélectionner votre statut professionnel.';
-        case 11: return (document.getElementById('fRevenus') as HTMLInputElement).value !== '' ? null : "Merci d'indiquer vos revenus mensuels nets.";
-        case 12: return (document.getElementById('fCharges') as HTMLInputElement).value !== '' ? null : "Merci d'indiquer vos charges mensuelles (0 si aucune).";
-        case 13: return radioValue('anciennete') !== '' ? null : 'Merci de sélectionner votre ancienneté.';
-        case 15: {
-          if((document.getElementById('fPrenom') as HTMLInputElement).value.trim() === '') return 'Merci d\'indiquer votre prénom.';
-          if((document.getElementById('fNom') as HTMLInputElement).value.trim() === '') return 'Merci d\'indiquer votre nom.';
-          if((document.getElementById('fAge') as HTMLInputElement).value === '') return 'Merci d\'indiquer votre âge.';
-          if((document.getElementById('fTelephone') as HTMLInputElement).value.trim() === '') return 'Merci d\'indiquer votre numéro de téléphone.';
+        case 1:
+          if(!radioValue('rechercheVehicule')) return 'Merci de préciser si vous avez déjà un modèle en tête.';
+          if(radioValue('rechercheVehicule') === 'Modèle précis' && !inputValue('fVehicule')) return 'Merci d’indiquer la marque et le modèle recherchés.';
+          return null;
+        case 2:
+          if(radioValue('rechercheVehicule') !== 'Modèle précis' && !radioValue('typeVehicule')) return 'Merci de choisir un type de carrosserie.';
+          if(!radioValue('motorisation')) return 'Merci de choisir une motorisation.';
+          if(!radioValue('neufOccasion')) return 'Merci de préciser si vous recherchez un véhicule neuf ou d’occasion.';
+          return null;
+        case 3:
+          return radioValue('financement') ? null : 'Merci de choisir un mode de financement.';
+        case 4:
+          return (usesPurchaseBudget() ? radioValue('budgetAchat') : radioValue('budget')) ? null : 'Merci de choisir une tranche de budget.';
+        case 5:
+          if(usesContractDuration() && !radioValue('dureeContrat')) return 'Merci de choisir une durée de contrat.';
+          if(!isCashPurchase() && !radioValue('apport')) return 'Merci de préciser votre apport.';
+          if(!radioValue('dateLivraison')) return 'Merci d’indiquer la date de livraison souhaitée.';
+          return null;
+        case 6:
+          if(!radioValue('vehiculeReprise')) return 'Merci de préciser si vous avez un véhicule à reprendre.';
+          if(radioValue('vehiculeReprise') === 'Oui' && !inputValue('fVehiculeRepriseDetails')) return 'Merci de décrire le véhicule à reprendre.';
+          return null;
+        case 7:
+          return radioValue('profil') ? null : 'Merci de choisir le profil correspondant à votre demande.';
+        case 8:
+          if(radioValue('profil') === 'Professionnel'){
+            if(!inputValue('fEntreprise')) return 'Merci d’indiquer le nom de l’entreprise.';
+            if(!inputValue('fStatutJuridique')) return 'Merci de sélectionner le statut juridique.';
+            const siren = inputValue('fSiren').replace(/\s/g, '');
+            if(siren && !/^\d{9}$/.test(siren)) return 'Le numéro SIREN doit contenir exactement 9 chiffres.';
+            if(!isCashPurchase()){
+              if(!inputValue('fChiffreAffaires')) return 'Merci d’indiquer le chiffre d’affaires mensuel moyen.';
+              if(Number(inputValue('fChiffreAffaires')) < 0) return 'Le chiffre d’affaires ne peut pas être négatif.';
+              if(!radioValue('ancienneteEntreprise')) return 'Merci de préciser l’ancienneté de l’entreprise.';
+            }
+            return null;
+          }
+          if(!radioValue('statutPro')) return 'Merci de sélectionner votre statut professionnel.';
+          if(!inputValue('fRevenus')) return 'Merci d’indiquer vos revenus mensuels nets.';
+          if(Number(inputValue('fRevenus')) < 0) return 'Les revenus ne peuvent pas être négatifs.';
+          if(inputValue('fCharges') === '') return 'Merci d’indiquer vos charges mensuelles (0 si aucune).';
+          if(Number(inputValue('fCharges')) < 0) return 'Les charges ne peuvent pas être négatives.';
+          if(!radioValue('anciennete')) return 'Merci de sélectionner votre ancienneté.';
+          if(!radioValue('ficp')) return 'Merci de sélectionner votre situation Banque de France.';
+          return null;
+        case 9: {
+          if(!inputValue('fPrenom')) return 'Merci d’indiquer votre prénom.';
+          if(!inputValue('fNom')) return 'Merci d’indiquer votre nom.';
+          if(radioValue('profil') === 'Particulier' && !isCashPurchase()){
+            const ageEl = document.getElementById('fAge') as HTMLInputElement;
+            if(!ageEl.value) return 'Merci d’indiquer votre âge.';
+            if(!ageEl.checkValidity()) return 'Merci d’indiquer un âge compris entre 18 et 100 ans.';
+          }
+          const telephone = inputValue('fTelephone').replace(/[^\d+]/g, '');
+          if(!telephone) return 'Merci d’indiquer votre numéro de téléphone.';
+          if(telephone.replace(/\D/g, '').length < 8 || telephone.replace(/\D/g, '').length > 15) return 'Merci d’indiquer un numéro de téléphone valide.';
           const el = document.getElementById('fEmail') as HTMLInputElement;
-          if(el.value.trim() === '') return 'Merci d\'indiquer votre email.';
-          if(!el.checkValidity()) return 'Merci d\'indiquer une adresse email valide.';
+          if(!el.value.trim()) return 'Merci d’indiquer votre email.';
+          if(!el.checkValidity()) return 'Merci d’indiquer une adresse email valide.';
+          if(!(document.getElementById('fConsent') as HTMLInputElement).checked) return 'Merci d’accepter d’être recontacté pour envoyer votre demande.';
           return null;
         }
         default: return null;
       }
+    }
+
+    function updateConditionalFields(){
+      const precise = radioValue('rechercheVehicule') === 'Modèle précis';
+      (document.getElementById('vehiculePrecisField') as HTMLElement).style.display = precise ? '' : 'none';
+      (document.getElementById('carrosserieField') as HTMLElement).style.display = precise ? 'none' : '';
+      const purchaseBudget = usesPurchaseBudget();
+      (document.getElementById('budgetMensuelField') as HTMLElement).style.display = purchaseBudget ? 'none' : '';
+      (document.getElementById('budgetAchatField') as HTMLElement).style.display = purchaseBudget ? '' : 'none';
+      (document.getElementById('dureeContratField') as HTMLElement).style.display = usesContractDuration() ? '' : 'none';
+      (document.getElementById('apportField') as HTMLElement).style.display = isCashPurchase() ? 'none' : '';
+      (document.getElementById('vehiculeRepriseField') as HTMLElement).style.display = radioValue('vehiculeReprise') === 'Oui' ? '' : 'none';
+      const professionnel = radioValue('profil') === 'Professionnel';
+      (document.getElementById('particulierQualification') as HTMLElement).style.display = professionnel ? 'none' : '';
+      (document.getElementById('professionnelQualification') as HTMLElement).style.display = professionnel ? '' : 'none';
+      (document.getElementById('chiffreAffairesField') as HTMLElement).style.display = professionnel && !isCashPurchase() ? '' : 'none';
+      (document.getElementById('ancienneteEntrepriseField') as HTMLElement).style.display = professionnel && !isCashPurchase() ? '' : 'none';
+      (document.getElementById('ageField') as HTMLElement).style.display = !professionnel && !isCashPurchase() ? '' : 'none';
+    }
+
+    function buildSummary(){
+      const summary = document.getElementById('projectSummary') as HTMLElement;
+      const escapeText = (value: string) => value.replace(/[&<>"']/g, character => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+      })[character] as string);
+      const vehicle = radioValue('rechercheVehicule') === 'Modèle précis'
+        ? inputValue('fVehicule')
+        : [radioValue('typeVehicule'), radioValue('motorisation')].filter(Boolean).join(' · ');
+      const rows = [
+        ['Véhicule', vehicle || 'À conseiller'],
+        ['État', radioValue('neufOccasion')],
+        ['Financement', radioValue('financement')],
+        ['Budget', usesPurchaseBudget() ? radioValue('budgetAchat') : radioValue('budget')],
+        ['Profil', radioValue('profil')],
+        ['Livraison', radioValue('dateLivraison')],
+      ].filter(([, value]) => value);
+      summary.innerHTML = '<div class="summary-title">Récapitulatif du projet</div>' + rows.map(([label, value]) =>
+        '<div class="summary-row"><span>' + escapeText(label) + '</span><strong>' + escapeText(value) + '</strong></div>'
+      ).join('');
     }
 
     function renderStep(){
@@ -565,23 +750,15 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
 
       stepEls.forEach(el => el.classList.toggle('active', Number(el.dataset.step) === currentStep));
       stepBack.disabled = currentStep === visibleSteps[0];
-      stepSkip.style.display = (currentStep === visibleSteps[0] || isLastVisible) ? 'inline-block' : 'none';
       stepNext.textContent = isLastVisible ? 'Envoyer ma demande' : 'Suivant';
-      stepperBarFill.style.width = Math.round((posIndex / visibleTotal) * 100) + '%';
-      stepperLabel.textContent = 'Question ' + (posIndex + 1) + ' / ' + visibleTotal;
+      stepperBarFill.style.width = Math.round(((posIndex + 1) / visibleTotal) * 100) + '%';
+      stepperLabel.textContent = 'Étape ' + (posIndex + 1) + ' / ' + visibleTotal;
       const secondsLeft = (visibleTotal - posIndex) * SECONDS_PER_STEP;
       stepperTime.textContent = secondsLeft <= 60 ? "Moins d'1 min restante" : '~' + Math.ceil(secondsLeft / 60) + ' min restantes';
       stepError.classList.remove('show');
       stepError.textContent = '';
-      const entrepriseField = document.getElementById('entrepriseField') as HTMLElement | null;
-      if(entrepriseField) entrepriseField.style.display = radioValue('profil') === 'Professionnel' ? '' : 'none';
-      const isAchat = isAchatFlow();
-      const budgetMensuelField = document.getElementById('budgetMensuelField') as HTMLElement | null;
-      const budgetAchatField = document.getElementById('budgetAchatField') as HTMLElement | null;
-      if(budgetMensuelField) budgetMensuelField.style.display = isAchat ? 'none' : '';
-      if(budgetAchatField) budgetAchatField.style.display = isAchat ? '' : 'none';
-      const vehiculeRepriseField = document.getElementById('vehiculeRepriseField') as HTMLElement | null;
-      if(vehiculeRepriseField) vehiculeRepriseField.style.display = radioValue('vehiculeReprise') === 'Oui' ? '' : 'none';
+      updateConditionalFields();
+      if(currentStep === 9) buildSummary();
       const activeEl = stepEls.find(el => Number(el.dataset.step) === currentStep)!;
       const focusable = activeEl.querySelector<HTMLElement>('input, select, textarea');
       if(focusable) setTimeout(() => focusable.focus(), 50);
@@ -614,7 +791,11 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
 
     function resetWizard(){
       leadForm!.reset();
-      if(prefilledVehicule) fVehiculeInput.value = prefilledVehicule;
+      if(prefilledVehicule){
+        fVehiculeInput.value = prefilledVehicule;
+        const preciseRadio = leadForm!.querySelector<HTMLInputElement>('input[name="rechercheVehicule"][value="Modèle précis"]');
+        if(preciseRadio) preciseRadio.checked = true;
+      }
       currentStep = 1;
       formStatus.classList.remove('show', 'error');
       successScreen.classList.remove('show');
@@ -628,18 +809,10 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
 
     stepNext.addEventListener('click', goNext);
     stepBack.addEventListener('click', goBack);
-    stepSkip.addEventListener('click', goNext);
     document.getElementById('restartWizardSuccess')!.addEventListener('click', resetWizard);
 
-    // Le champ "véhicule concerné" est sur le même écran que la question
-    // Oui/Non (contrairement aux autres champs conditionnels, affichés sur
-    // un step suivant) : il doit donc réagir immédiatement, sans attendre
-    // le prochain renderStep().
-    leadForm.querySelectorAll<HTMLInputElement>('input[name="vehiculeReprise"]').forEach(radio => {
-      radio.addEventListener('change', () => {
-        const field = document.getElementById('vehiculeRepriseField') as HTMLElement | null;
-        if(field) field.style.display = radioValue('vehiculeReprise') === 'Oui' ? '' : 'none';
-      });
+    leadForm.querySelectorAll<HTMLInputElement>('input[type="radio"]').forEach(radio => {
+      radio.addEventListener('change', updateConditionalFields);
     });
 
     leadForm.addEventListener('keydown', (e: KeyboardEvent)=>{
@@ -655,36 +828,50 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
         showFormError("Formulaire pas encore configuré. Merci de nous contacter directement à contact@elevenlease.fr en attendant.");
         return;
       }
-      const achatFlow = isAchatFlow();
+      const cashPurchase = isCashPurchase();
+      const professionnel = radioValue('profil') === 'Professionnel';
       const vehiculeRepriseVal = radioValue('vehiculeReprise');
       const payload: LeadPayload = {
         prenom: (document.getElementById('fPrenom') as HTMLInputElement).value.trim(),
         nom: (document.getElementById('fNom') as HTMLInputElement).value.trim(),
         telephone: (document.getElementById('fTelephone') as HTMLInputElement).value.trim(),
         email: (document.getElementById('fEmail') as HTMLInputElement).value.trim(),
-        vehicule: fVehiculeInput.value.trim(),
+        vehicule: radioValue('rechercheVehicule') === 'Modèle précis' ? fVehiculeInput.value.trim() : '',
+        rechercheVehicule: radioValue('rechercheVehicule'),
         profil: radioValue('profil'),
         entreprise: (document.getElementById('fEntreprise') as HTMLInputElement).value.trim(),
         financement: radioValue('financement'),
-        typeVehiculeSouhaite: radioValue('typeVehicule'),
-        budgetSouhaite: achatFlow ? radioValue('budgetAchat') : radioValue('budget'),
+        typeVehiculeSouhaite: radioValue('rechercheVehicule') === 'Modèle précis' ? '' : radioValue('typeVehicule'),
+        motorisation: radioValue('motorisation'),
+        budgetSouhaite: usesPurchaseBudget() ? radioValue('budgetAchat') : radioValue('budget'),
         neufOccasion: radioValue('neufOccasion'),
-        dureeContrat: achatFlow ? '' : radioValue('dureeContrat'),
-        apport: radioValue('apport'),
+        dureeContrat: usesContractDuration() ? radioValue('dureeContrat') : '',
+        apport: cashPurchase ? '' : radioValue('apport'),
         dateLivraison: radioValue('dateLivraison'),
         vehiculeReprise: vehiculeRepriseVal,
         vehiculeRepriseDetails: vehiculeRepriseVal === 'Oui' ? (document.getElementById('fVehiculeRepriseDetails') as HTMLInputElement).value.trim() : '',
-        statutPro: radioValue('statutPro'),
-        revenus: (document.getElementById('fRevenus') as HTMLInputElement).value,
-        charges: (document.getElementById('fCharges') as HTMLInputElement).value,
-        anciennete: radioValue('anciennete'),
-        age: (document.getElementById('fAge') as HTMLInputElement).value,
-        ficp: achatFlow ? '' : radioValue('ficp'),
+        statutPro: professionnel || cashPurchase ? '' : radioValue('statutPro'),
+        revenus: professionnel || cashPurchase ? '' : (document.getElementById('fRevenus') as HTMLInputElement).value,
+        charges: professionnel || cashPurchase ? '' : (document.getElementById('fCharges') as HTMLInputElement).value,
+        anciennete: professionnel || cashPurchase ? '' : radioValue('anciennete'),
+        age: professionnel || cashPurchase ? '' : (document.getElementById('fAge') as HTMLInputElement).value,
+        ficp: professionnel || cashPurchase ? '' : radioValue('ficp'),
+        statutJuridique: professionnel ? inputValue('fStatutJuridique') : '',
+        siren: professionnel ? inputValue('fSiren').replace(/\s/g, '') : '',
+        chiffreAffaires: professionnel && !cashPurchase ? inputValue('fChiffreAffaires') : '',
+        ancienneteEntreprise: professionnel && !cashPurchase ? radioValue('ancienneteEntreprise') : '',
         message: (document.getElementById('fMessage') as HTMLTextAreaElement).value.trim(),
+        consentRecontact: (document.getElementById('fConsent') as HTMLInputElement).checked,
       };
-      if(achatFlow){
+      if(cashPurchase){
         payload.eligible = 'N/A (achat comptant)';
         payload.criteresRisque = '';
+      } else if(professionnel){
+        payload.eligible = 'Étude professionnelle';
+        payload.criteresRisque = payload.ancienneteEntreprise === 'Moins de 1 an' ? 'Entreprise créée depuis moins d’un an' : '';
+      } else if(payload.financement === 'Crédit automobile'){
+        payload.eligible = 'Étude crédit automobile';
+        payload.criteresRisque = 'Mensualité de crédit à déterminer';
       } else {
         const evalResult = computeEligibility(payload);
         payload.eligible = evalResult.eligible ? 'Oui' : 'Non';
@@ -695,13 +882,17 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
       stepNext.textContent = 'Envoi en cours…';
       formStatus.classList.remove('show', 'error');
       try{
-        sendToSupabase(payload);
-        const res = await fetch(LEADS_SCRIPT_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify(payload)
-        });
-        if(!res.ok) throw new Error('HTTP ' + res.status);
+        const destinations = await Promise.allSettled([
+          sendToSupabase(payload),
+          fetch(LEADS_SCRIPT_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            body: JSON.stringify(payload)
+          }).then(res => {
+            if(!res.ok) throw new Error('HTTP ' + res.status);
+          })
+        ]);
+        if(destinations.every(result => result.status === 'rejected')) throw new Error('Aucune destination disponible');
         stepperProgress.style.display = 'none';
         stepEls.forEach(el => el.classList.remove('active'));
         stepperNav.style.display = 'none';
@@ -716,6 +907,10 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
       }
     }
 
+    if(prefilledVehicule){
+      const preciseRadio = leadForm.querySelector<HTMLInputElement>('input[name="rechercheVehicule"][value="Modèle précis"]');
+      if(preciseRadio) preciseRadio.checked = true;
+    }
     renderStep();
   }
 </script>
@@ -843,6 +1038,32 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
   }
   .field-stack{display:flex;flex-direction:column;gap:22px;}
   .field-stack .field-item > label{font-size:14.5px;color:var(--text);font-weight:500;margin-bottom:2px;}
+  .compact-choice-grid{display:grid;grid-template-columns:1fr 1fr;}
+  .compact-choice-grid .radio-option{padding:12px 13px;font-size:13.5px;min-height:46px;}
+  .conditional-field{display:flex;flex-direction:column;gap:7px;margin-top:10px;}
+  .conditional-field > label{font-size:13px;color:var(--text-dim);}
+  .message-field{margin-top:16px;}
+  .optional-label{font-size:11.5px;color:var(--text-faint);font-weight:400;}
+  .project-summary{
+    margin-top:18px;padding:16px 18px;border:1px solid var(--border);border-radius:14px;
+    background:var(--surface-2);display:flex;flex-direction:column;gap:9px;
+  }
+  .summary-title{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--text-faint);margin-bottom:2px;}
+  .summary-row{display:flex;justify-content:space-between;gap:16px;font-size:13px;color:var(--text-dim);}
+  .summary-row strong{color:var(--text);font-weight:600;text-align:right;}
+  .consent-option{
+    display:flex;align-items:flex-start;gap:11px;margin-top:14px;padding:14px 15px;
+    border:1px solid var(--border);border-radius:13px;font-size:12.5px;color:var(--text-dim);
+    line-height:1.45;cursor:pointer;background:#fff;
+  }
+  .lead-form .consent-option input{width:17px;height:17px;flex:none;margin-top:1px;accent-color:var(--accent-1);}
+  @media(max-width:520px){
+    .field-stack{gap:18px;}
+    .compact-choice-grid{gap:8px;}
+    .compact-choice-grid .radio-option{padding:11px 10px;font-size:12.5px;}
+    .summary-row{flex-direction:column;gap:2px;}
+    .summary-row strong{text-align:left;}
+  }
   .form-note{font-size:12.5px;color:var(--text-faint);text-align:center;margin-top:8px;}
   .form-status{font-size:13.5px;display:none;padding:16px 18px;border:1px solid var(--border);border-radius:10px;text-align:center;}
   .form-status.show{display:block;}

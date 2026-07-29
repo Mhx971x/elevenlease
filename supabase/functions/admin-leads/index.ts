@@ -32,10 +32,12 @@ const RESOURCES: Record<string, { table: string; editableFields: string[]; listK
     // (on n'autorise jamais l'écriture directe de `id` ou `created_at`)
     editableFields: [
       'prenom', 'nom', 'email', 'telephone',
-      'vehicule', 'type_vehicule_souhaite', 'budget_souhaite', 'financement',
+      'vehicule', 'recherche_vehicule', 'type_vehicule_souhaite', 'motorisation',
+      'budget_souhaite', 'financement',
       'neuf_occasion', 'kilometrage_annuel', 'duree_contrat', 'apport', 'date_livraison',
       'vehicule_reprise', 'vehicule_reprise_details',
-      'entreprise', 'statut_pro', 'anciennete', 'revenus', 'charges', 'age', 'ficp',
+      'entreprise', 'statut_juridique', 'siren', 'chiffre_affaires', 'anciennete_entreprise',
+      'statut_pro', 'anciennete', 'revenus', 'charges', 'age', 'ficp',
       'message', 'status',
     ],
   },
