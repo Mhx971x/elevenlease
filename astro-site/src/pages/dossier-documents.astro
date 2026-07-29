@@ -59,7 +59,7 @@
             </div>
             <div class="progress-copy">
               <span>Progression</span>
-              <strong id="progressLabel">0 fichier sur 0</strong>
+              <strong id="progressLabel">0 étape sur 0</strong>
               <small>Vous pouvez revenir compléter ce dossier plus tard avec le même lien.</small>
             </div>
           </div>
@@ -136,7 +136,6 @@
       id: string;
       label: string;
       description: string;
-      minFiles: number;
     }
 
     interface UploadedDocument {
@@ -234,35 +233,36 @@
 
     function render(){
       if(!portalData) return;
-      const total = portalData.requirements.reduce((sum, requirement) => sum + requirement.minFiles, 0);
-      const completeCount = portalData.requirements.reduce((sum, requirement) => {
-        return sum + Math.min(documentsFor(requirement.id).length, requirement.minFiles);
-      }, 0);
+      const total = portalData.requirements.length;
+      const completeCount = portalData.requirements.filter(requirement =>
+        documentsFor(requirement.id).length > 0
+      ).length;
       const percent = total ? Math.round((completeCount / total) * 100) : 0;
 
-      progressLabel.textContent = completeCount + ' fichier' + (completeCount > 1 ? 's' : '') + ' sur ' + total;
+      progressLabel.textContent = completeCount + ' étape' + (completeCount > 1 ? 's' : '') + ' sur ' + total;
       progressPercent.textContent = percent + ' %';
       progressRing.style.setProperty('--progress', (percent * 3.6) + 'deg');
       completeBanner.hidden = completeCount !== total;
 
       documentList.innerHTML = portalData.requirements.map((requirement, index) => {
         const files = documentsFor(requirement.id);
-        const done = files.length >= requirement.minFiles;
-        const missing = Math.max(0, requirement.minFiles - files.length);
-        const countLabel = Math.min(files.length, requirement.minFiles) + ' / ' + requirement.minFiles;
+        const done = files.length > 0;
+        const countLabel = done
+          ? files.length + ' fichier' + (files.length > 1 ? 's' : '') + ' ajouté' + (files.length > 1 ? 's' : '')
+          : 'À ajouter';
         return (
           '<article class="document-card ' + (done ? 'is-complete' : '') + '" data-type="' + escapeHtml(requirement.id) + '">' +
             '<div class="document-status">' + (done ? '✓' : (index + 1)) + '</div>' +
             '<div class="document-copy">' +
               '<div class="document-title-row">' +
                 '<h3>' + escapeHtml(requirement.label) + '</h3>' +
-                '<span class="file-count">' + countLabel + ' fichier' + (requirement.minFiles > 1 ? 's' : '') + '</span>' +
+                '<span class="file-count">' + countLabel + '</span>' +
               '</div>' +
               '<p>' + escapeHtml(requirement.description) + '</p>' +
               '<div class="uploaded-files">' + files.map(uploadedFileMarkup).join('') + '</div>' +
               '<label class="upload-button">' +
                 '<input type="file" class="document-input" data-document-type="' + escapeHtml(requirement.id) + '" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.heic,.heif,application/pdf,image/jpeg,image/png,image/webp,image/heic,image/heif">' +
-                '<span><b>+</b> ' + (done ? 'Ajouter un autre fichier' : missing === 1 ? 'Ajouter le fichier demandé' : 'Ajouter les ' + missing + ' fichiers') + '</span>' +
+                '<span><b>+</b> ' + (done ? 'Ajouter un autre fichier' : 'Ajouter un fichier') + '</span>' +
               '</label>' +
               '<div class="upload-feedback" aria-live="polite"></div>' +
             '</div>' +
