@@ -28,7 +28,7 @@ type Requirement = {
   id: string
   label: string
   description: string
-  multiple?: boolean
+  minFiles: number
 }
 
 type Portal = {
@@ -61,39 +61,44 @@ const INDIVIDUAL_REQUIREMENTS: Requirement[] = [
   {
     id: 'piece_identite',
     label: 'Pièce d’identité',
-    description: 'Carte nationale d’identité ou passeport en cours de validité.',
+    description: 'Recto et verso de la carte d’identité, ou les pages d’identité du passeport.',
+    minFiles: 2,
   },
   {
     id: 'permis_conduire',
     label: 'Permis de conduire',
     description: 'Recto et verso du permis du futur conducteur.',
+    minFiles: 2,
   },
   {
     id: 'justificatif_domicile',
     label: 'Justificatif de domicile',
     description: 'Document récent de moins de 3 mois.',
+    minFiles: 1,
   },
   {
     id: 'rib',
     label: 'RIB',
     description: 'Relevé d’identité bancaire au nom du demandeur.',
+    minFiles: 1,
   },
   {
     id: 'justificatifs_revenus',
     label: 'Justificatifs de revenus',
     description: 'Vos 3 derniers bulletins de salaire ou justificatifs équivalents.',
-    multiple: true,
+    minFiles: 3,
   },
   {
     id: 'avis_imposition',
     label: 'Dernier avis d’imposition',
     description: 'Toutes les pages du dernier avis disponible.',
+    minFiles: 1,
   },
   {
     id: 'releves_bancaires',
     label: 'Relevés bancaires',
     description: 'Les 3 derniers relevés du compte principal.',
-    multiple: true,
+    minFiles: 3,
   },
 ]
 
@@ -101,39 +106,44 @@ const PROFESSIONAL_REQUIREMENTS: Requirement[] = [
   {
     id: 'piece_identite',
     label: 'Pièce d’identité du dirigeant',
-    description: 'Carte nationale d’identité ou passeport en cours de validité.',
+    description: 'Recto et verso de la carte d’identité, ou les pages d’identité du passeport.',
+    minFiles: 2,
   },
   {
     id: 'permis_conduire',
     label: 'Permis de conduire',
     description: 'Recto et verso du permis du futur conducteur.',
+    minFiles: 2,
   },
   {
     id: 'kbis',
     label: 'Extrait Kbis',
     description: 'Extrait récent de moins de 3 mois.',
+    minFiles: 1,
   },
   {
     id: 'statuts',
     label: 'Statuts de l’entreprise',
     description: 'Statuts à jour et signés.',
+    minFiles: 1,
   },
   {
     id: 'rib',
     label: 'RIB professionnel',
     description: 'Relevé d’identité bancaire de l’entreprise.',
+    minFiles: 1,
   },
   {
     id: 'bilans',
     label: 'Bilans ou liasses fiscales',
     description: 'Les 2 derniers exercices disponibles.',
-    multiple: true,
+    minFiles: 2,
   },
   {
     id: 'releves_bancaires',
     label: 'Relevés bancaires professionnels',
     description: 'Les 3 derniers relevés du compte professionnel.',
-    multiple: true,
+    minFiles: 3,
   },
 ]
 
@@ -259,10 +269,12 @@ async function updateCompletion(
   lead: Lead,
 ) {
   const documents = await getDocuments(supabase, portal.id)
-  const uploadedTypes = new Set(documents.map((document) => document.document_type))
-  const completed = requirementsFor(lead.profil).every((requirement) =>
-    uploadedTypes.has(requirement.id)
-  )
+  const completed = requirementsFor(lead.profil).every((requirement) => {
+    const count = documents.filter((document) =>
+      document.document_type === requirement.id
+    ).length
+    return count >= requirement.minFiles
+  })
   await supabase
     .from('document_portals')
     .update({ completed_at: completed ? new Date().toISOString() : null })
@@ -310,6 +322,15 @@ Deno.serve(async (req) => {
       const documentType = requireString(body.documentType, 'Type de document', 80)
       if (!allowedDocumentTypes.has(documentType)) {
         return json(req, { error: 'Type de document invalide' }, 400)
+      }
+      const { count, error: countError } = await supabase
+        .from('lead_documents')
+        .select('id', { count: 'exact', head: true })
+        .eq('portal_id', portal.id)
+        .eq('document_type', documentType)
+      if (countError) throw countError
+      if ((count || 0) >= 10) {
+        return json(req, { error: 'Vous avez atteint la limite de 10 fichiers pour cette pièce.' }, 400)
       }
       const file = normalizeFile(body.originalName, body.mimeType, body.size)
       const storagePath =

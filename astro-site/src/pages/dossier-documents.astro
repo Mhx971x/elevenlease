@@ -45,65 +45,73 @@
     </section>
 
     <div class="portal-content" id="portalContent" hidden>
-      <section class="intro-card">
-        <div class="eyebrow">Finalisation de votre demande</div>
-        <h1 id="welcomeTitle">Complétez votre dossier</h1>
-        <p class="intro-copy">
-          Déposez les justificatifs ci-dessous afin que notre équipe puisse préparer votre dossier de financement.
-        </p>
-        <div class="project-line" id="projectLine" hidden></div>
-        <div class="progress-block">
-          <div class="progress-meta">
-            <span id="progressLabel">0 document sur 0</span>
-            <strong id="progressPercent">0 %</strong>
+      <aside class="portal-sidebar">
+        <section class="intro-card">
+          <div class="eyebrow">Finalisation de votre demande</div>
+          <h1 id="welcomeTitle">Complétez votre dossier</h1>
+          <p class="intro-copy">
+            Ajoutez les justificatifs demandés pour permettre à notre équipe de préparer votre dossier.
+          </p>
+          <div class="project-line" id="projectLine" hidden></div>
+          <div class="progress-block">
+            <div class="progress-ring" id="progressRing">
+              <strong id="progressPercent">0 %</strong>
+            </div>
+            <div class="progress-copy">
+              <span>Progression</span>
+              <strong id="progressLabel">0 fichier sur 0</strong>
+              <small>Vous pouvez revenir compléter ce dossier plus tard avec le même lien.</small>
+            </div>
           </div>
-          <div class="progress-track" aria-hidden="true">
-            <div class="progress-fill" id="progressFill"></div>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <section class="complete-banner" id="completeBanner" hidden>
-        <div class="complete-icon" aria-hidden="true">✓</div>
-        <div>
-          <strong>Votre dossier est complet.</strong>
-          <p>Merci, notre équipe peut maintenant poursuivre son étude.</p>
-        </div>
-      </section>
-
-      <section class="documents-section">
-        <div class="section-heading">
+        <section class="security-note">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M12 3l8 4v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V7l8-4z" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
           <div>
-            <h2>Documents demandés</h2>
-            <p>Formats acceptés : PDF ou photo · 15 Mo maximum par fichier.</p>
+            <strong>Vos documents restent privés.</strong>
+            <p>Ils sont accessibles uniquement à l’équipe en charge de votre dossier. Ne partagez pas ce lien.</p>
           </div>
-        </div>
-        <div class="document-list" id="documentList"></div>
-      </section>
+        </section>
+      </aside>
 
-      <section class="optional-section">
-        <div>
-          <h2>Un autre document utile ?</h2>
-          <p>Vous pouvez ajouter toute pièce demandée par votre conseiller.</p>
-        </div>
-        <label class="optional-upload">
-          <input type="file" id="otherFileInput" accept=".pdf,.jpg,.jpeg,.png,.webp,.heic,.heif,application/pdf,image/jpeg,image/png,image/webp,image/heic,image/heif" multiple>
-          <span>Ajouter un document</span>
-        </label>
-        <div class="upload-feedback" aria-live="polite"></div>
-        <div class="other-documents" id="otherDocuments"></div>
-      </section>
+      <div class="portal-main">
+        <section class="complete-banner" id="completeBanner" hidden>
+          <div class="complete-icon" aria-hidden="true">✓</div>
+          <div>
+            <strong>Votre dossier est complet.</strong>
+            <p>Merci, notre équipe peut maintenant poursuivre son étude.</p>
+          </div>
+        </section>
 
-      <section class="security-note">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <path d="M12 3l8 4v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V7l8-4z" stroke="currentColor" stroke-width="1.8"/>
-          <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        <div>
-          <strong>Vos documents restent privés.</strong>
-          <p>Ils sont stockés dans un espace sécurisé et accessibles uniquement à l’équipe en charge de votre dossier. Ne partagez pas ce lien.</p>
-        </div>
-      </section>
+        <section class="documents-section">
+          <div class="section-heading">
+            <div>
+              <div class="section-kicker">Vos justificatifs</div>
+              <h2>Documents demandés</h2>
+              <p>Sélectionnez plusieurs fichiers en une fois si nécessaire.</p>
+            </div>
+            <div class="format-note">PDF ou photo<br>15 Mo max.</div>
+          </div>
+          <div class="document-list" id="documentList"></div>
+        </section>
+
+        <section class="optional-section">
+          <div>
+            <div class="section-kicker">Facultatif</div>
+            <h2>Un autre document utile ?</h2>
+            <p>Ajoutez toute pièce complémentaire demandée par votre conseiller.</p>
+          </div>
+          <label class="optional-upload">
+            <input type="file" id="otherFileInput" accept=".pdf,.jpg,.jpeg,.png,.webp,.heic,.heif,application/pdf,image/jpeg,image/png,image/webp,image/heic,image/heif" multiple>
+            <span>+ Ajouter des fichiers</span>
+          </label>
+          <div class="upload-feedback" aria-live="polite"></div>
+          <div class="other-documents" id="otherDocuments"></div>
+        </section>
+      </div>
     </div>
   </main>
 
@@ -128,7 +136,7 @@
       id: string;
       label: string;
       description: string;
-      multiple?: boolean;
+      minFiles: number;
     }
 
     interface UploadedDocument {
@@ -155,7 +163,7 @@
     const projectLine = document.getElementById('projectLine') as HTMLElement;
     const progressLabel = document.getElementById('progressLabel') as HTMLElement;
     const progressPercent = document.getElementById('progressPercent') as HTMLElement;
-    const progressFill = document.getElementById('progressFill') as HTMLElement;
+    const progressRing = document.getElementById('progressRing') as HTMLElement;
     const completeBanner = document.getElementById('completeBanner') as HTMLElement;
     const documentList = document.getElementById('documentList') as HTMLElement;
     const otherDocuments = document.getElementById('otherDocuments') as HTMLElement;
@@ -226,36 +234,35 @@
 
     function render(){
       if(!portalData) return;
-      const completedTypes = new Set(
-        portalData.documents
-          .filter(document => document.document_type !== 'autre')
-          .map(document => document.document_type)
-      );
-      const completeCount = portalData.requirements.filter(requirement => completedTypes.has(requirement.id)).length;
-      const total = portalData.requirements.length;
+      const total = portalData.requirements.reduce((sum, requirement) => sum + requirement.minFiles, 0);
+      const completeCount = portalData.requirements.reduce((sum, requirement) => {
+        return sum + Math.min(documentsFor(requirement.id).length, requirement.minFiles);
+      }, 0);
       const percent = total ? Math.round((completeCount / total) * 100) : 0;
 
-      progressLabel.textContent = completeCount + ' document' + (completeCount > 1 ? 's' : '') + ' sur ' + total;
+      progressLabel.textContent = completeCount + ' fichier' + (completeCount > 1 ? 's' : '') + ' sur ' + total;
       progressPercent.textContent = percent + ' %';
-      progressFill.style.width = percent + '%';
+      progressRing.style.setProperty('--progress', (percent * 3.6) + 'deg');
       completeBanner.hidden = completeCount !== total;
 
-      documentList.innerHTML = portalData.requirements.map(requirement => {
+      documentList.innerHTML = portalData.requirements.map((requirement, index) => {
         const files = documentsFor(requirement.id);
-        const done = files.length > 0;
+        const done = files.length >= requirement.minFiles;
+        const missing = Math.max(0, requirement.minFiles - files.length);
+        const countLabel = Math.min(files.length, requirement.minFiles) + ' / ' + requirement.minFiles;
         return (
           '<article class="document-card ' + (done ? 'is-complete' : '') + '" data-type="' + escapeHtml(requirement.id) + '">' +
-            '<div class="document-status">' + (done ? '✓' : '') + '</div>' +
+            '<div class="document-status">' + (done ? '✓' : (index + 1)) + '</div>' +
             '<div class="document-copy">' +
               '<div class="document-title-row">' +
                 '<h3>' + escapeHtml(requirement.label) + '</h3>' +
-                '<span class="required-label">' + (done ? 'Reçu' : 'Demandé') + '</span>' +
+                '<span class="file-count">' + countLabel + ' fichier' + (requirement.minFiles > 1 ? 's' : '') + '</span>' +
               '</div>' +
               '<p>' + escapeHtml(requirement.description) + '</p>' +
               '<div class="uploaded-files">' + files.map(uploadedFileMarkup).join('') + '</div>' +
               '<label class="upload-button">' +
-                '<input type="file" class="document-input" data-document-type="' + escapeHtml(requirement.id) + '" ' + (requirement.multiple ? 'multiple ' : '') + 'accept=".pdf,.jpg,.jpeg,.png,.webp,.heic,.heif,application/pdf,image/jpeg,image/png,image/webp,image/heic,image/heif">' +
-                '<span>' + (done ? 'Ajouter un autre fichier' : 'Choisir un fichier') + '</span>' +
+                '<input type="file" class="document-input" data-document-type="' + escapeHtml(requirement.id) + '" multiple accept=".pdf,.jpg,.jpeg,.png,.webp,.heic,.heif,application/pdf,image/jpeg,image/png,image/webp,image/heic,image/heif">' +
+                '<span><b>+</b> ' + (done ? 'Ajouter un autre fichier' : missing === 1 ? 'Ajouter le fichier demandé' : 'Ajouter les ' + missing + ' fichiers') + '</span>' +
               '</label>' +
               '<div class="upload-feedback" aria-live="polite"></div>' +
             '</div>' +
@@ -375,9 +382,9 @@
 </body>
 </html>
 
-<style>
+<style is:global>
   :root{
-    --bg:#f5f5f7;--surface:#fff;--surface-soft:#f8f8fa;--border:#e4e4e9;
+    --bg:#f4f4f6;--surface:#fff;--surface-soft:#f8f8fa;--border:#e4e4e9;
     --text:#151517;--dim:#62626b;--faint:#92929b;--pink:#f00078;--pink-dark:#a5074a;
     --green:#137a51;--green-soft:#edf9f3;--shadow:0 18px 50px rgba(25,25,28,.08);
   }
@@ -386,10 +393,10 @@
   button,input{font:inherit;}
   button{cursor:pointer;}
   .portal-header{background:#fff;border-bottom:1px solid var(--border);}
-  .header-inner{max-width:880px;height:82px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;}
+  .header-inner{max-width:1120px;height:82px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;}
   .logo{width:112px;height:50px;background:url('/eleven-lease-logo-light.png') center/contain no-repeat;}
-  .secure-label{display:flex;align-items:center;gap:7px;color:var(--dim);font-size:12.5px;font-weight:600;}
-  main{max-width:780px;margin:0 auto;padding:52px 24px 72px;}
+  .secure-label{display:flex;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;background:var(--green-soft);color:var(--green);font-size:12px;font-weight:700;}
+  main{max-width:1120px;margin:0 auto;padding:52px 24px 72px;}
   h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-.025em;}
   .state-card{max-width:560px;margin:70px auto;text-align:center;background:#fff;border:1px solid var(--border);border-radius:24px;padding:54px 34px;box-shadow:var(--shadow);}
   .state-card h1{font-size:25px;margin:18px 0 9px;}
@@ -398,40 +405,49 @@
   @keyframes spin{to{transform:rotate(360deg);}}
   .state-icon{width:42px;height:42px;margin:0 auto;border-radius:50%;display:grid;place-items:center;background:#fff0f0;color:#c83232;font-size:22px;font-weight:700;}
   .secondary-button{display:inline-flex;margin-top:24px;padding:12px 20px;border:1px solid var(--border);border-radius:999px;font-size:13.5px;font-weight:600;text-decoration:none;}
-  .portal-content{display:flex;flex-direction:column;gap:18px;}
+  .portal-content{display:grid;grid-template-columns:minmax(280px,340px) minmax(0,1fr);gap:24px;align-items:start;}
+  .portal-sidebar{position:sticky;top:24px;display:flex;flex-direction:column;gap:16px;}
+  .portal-main{min-width:0;display:flex;flex-direction:column;gap:18px;}
   .intro-card,.documents-section,.optional-section,.security-note{background:#fff;border:1px solid var(--border);border-radius:24px;}
-  .intro-card{padding:38px 40px;box-shadow:var(--shadow);}
-  .eyebrow{color:var(--pink);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;}
-  .intro-card h1{font-size:clamp(27px,5vw,38px);line-height:1.12;max-width:610px;}
-  .intro-copy{color:var(--dim);font-size:15px;line-height:1.7;margin-top:15px;max-width:630px;}
-  .project-line{display:inline-flex;margin-top:18px;padding:7px 12px;border-radius:999px;background:var(--surface-soft);color:var(--dim);font-size:12.5px;font-weight:600;}
-  .progress-block{margin-top:30px;}
-  .progress-meta{display:flex;justify-content:space-between;gap:20px;margin-bottom:9px;color:var(--dim);font-size:12.5px;}
-  .progress-meta strong{color:var(--pink);}
-  .progress-track{height:7px;border-radius:99px;background:#ececf0;overflow:hidden;}
-  .progress-fill{height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--pink),var(--pink-dark));transition:width .5s cubic-bezier(.16,1,.3,1);}
+  .intro-card{position:relative;overflow:hidden;padding:34px;background:#19191c;color:#fff;border:none;box-shadow:0 24px 60px rgba(25,25,28,.16);}
+  .intro-card::after{content:"";position:absolute;width:250px;height:250px;right:-120px;top:-125px;border-radius:50%;background:radial-gradient(circle,rgba(240,0,120,.35),transparent 68%);pointer-events:none;}
+  .eyebrow{position:relative;z-index:1;color:#ff69b1;font-size:10.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px;}
+  .intro-card h1{position:relative;z-index:1;font-size:clamp(27px,3vw,34px);line-height:1.08;}
+  .intro-copy{position:relative;z-index:1;color:#c8c8ce;font-size:13.5px;line-height:1.7;margin-top:16px;}
+  .project-line{position:relative;z-index:1;display:inline-flex;max-width:100%;margin-top:18px;padding:7px 11px;border-radius:999px;background:rgba(255,255,255,.1);color:#ededf0;font-size:11.5px;font-weight:600;overflow-wrap:anywhere;}
+  .progress-block{position:relative;z-index:1;display:flex;align-items:center;gap:16px;margin-top:30px;padding-top:24px;border-top:1px solid rgba(255,255,255,.12);}
+  .progress-ring{--progress:0%;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;flex:none;background:conic-gradient(var(--pink) var(--progress),rgba(255,255,255,.12) 0);transition:background .5s ease;}
+  .progress-ring::before{content:"";grid-area:1/1;width:50px;height:50px;border-radius:50%;background:#19191c;}
+  .progress-ring strong{grid-area:1/1;z-index:1;color:#fff;font-size:12px;}
+  .progress-copy{min-width:0;display:flex;flex-direction:column;gap:3px;color:#aaaab2;font-size:11.5px;}
+  .progress-copy strong{color:#fff;font-size:13px;}
   .complete-banner{display:flex;align-items:center;gap:14px;padding:20px 24px;border:1px solid #c9eadb;border-radius:18px;background:var(--green-soft);color:var(--green);}
   .complete-icon{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:#fff;font-weight:700;flex:none;}
   .complete-banner strong{font-size:14px;}
   .complete-banner p{font-size:12.5px;margin-top:2px;}
-  .documents-section{padding:34px 34px 22px;}
-  .section-heading{margin-bottom:23px;}
-  .section-heading h2,.optional-section h2{font-size:21px;}
+  .documents-section{padding:34px;}
+  .section-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:22px;}
+  .section-kicker{color:var(--pink);font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px;}
+  .section-heading h2,.optional-section h2{font-size:23px;}
   .section-heading p,.optional-section p{color:var(--dim);font-size:13px;margin-top:5px;}
-  .document-list{display:flex;flex-direction:column;}
-  .document-card{display:grid;grid-template-columns:30px 1fr;gap:14px;padding:22px 0;border-top:1px solid var(--border);}
-  .document-card:first-child{border-top:none;padding-top:0;}
-  .document-status{width:26px;height:26px;border:1.5px solid #d6d6dc;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:13px;font-weight:700;margin-top:1px;}
+  .format-note{flex:none;padding:7px 10px;border-radius:9px;background:var(--surface-soft);color:var(--dim);font-size:10.5px;font-weight:600;}
+  .document-list{display:flex;flex-direction:column;gap:12px;}
+  .document-card{display:grid;grid-template-columns:32px minmax(0,1fr);gap:14px;padding:19px;border:1px solid var(--border);border-radius:16px;background:#fff;transition:border-color .2s ease,box-shadow .2s ease;}
+  .document-card:hover{border-color:#d2d2d8;box-shadow:0 10px 26px rgba(25,25,28,.06);}
+  .document-card.is-complete{border-color:#cce7db;background:linear-gradient(145deg,#fff,var(--green-soft));}
+  .document-status{width:28px;height:28px;border:1.5px solid #d6d6dc;border-radius:50%;display:grid;place-items:center;color:var(--dim);font-size:11px;font-weight:800;margin-top:1px;}
   .document-card.is-complete .document-status{background:var(--green);border-color:var(--green);}
   .document-title-row{display:flex;align-items:center;justify-content:space-between;gap:12px;}
   .document-card h3{font-size:16px;}
-  .required-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--faint);}
-  .document-card.is-complete .required-label{color:var(--green);}
+  .file-count{flex:none;padding:5px 8px;border-radius:999px;background:#fff0f7;color:var(--pink-dark);font-size:10px;font-weight:800;}
+  .document-card.is-complete .file-count{background:#dff3e9;color:var(--green);}
   .document-copy>p{color:var(--dim);font-size:12.5px;margin-top:4px;}
-  .upload-button,.optional-upload{display:inline-flex;margin-top:13px;cursor:pointer;}
+  .upload-button{display:flex;width:100%;margin-top:14px;cursor:pointer;}
+  .optional-upload{display:inline-flex;margin-top:13px;cursor:pointer;}
   .upload-button input,.optional-upload input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;}
-  .upload-button span,.optional-upload span{display:inline-flex;padding:9px 14px;border:1px solid var(--border);border-radius:10px;background:#fff;color:var(--text);font-size:12px;font-weight:600;transition:.2s ease;}
-  .upload-button:hover span,.optional-upload:hover span{border-color:var(--pink);color:var(--pink);}
+  .upload-button span{display:flex;align-items:center;justify-content:center;width:100%;padding:11px 14px;border:1px dashed #cacad2;border-radius:11px;background:rgba(255,255,255,.72);color:var(--text);font-size:11.5px;font-weight:700;transition:.2s ease;}
+  .optional-upload span{display:inline-flex;padding:9px 14px;border:1px solid var(--border);border-radius:10px;background:#fff;color:var(--text);font-size:12px;font-weight:600;transition:.2s ease;}
+  .upload-button:hover span,.optional-upload:hover span{border-color:var(--pink);color:var(--pink);background:#fff7fb;}
   .document-card.is-uploading{opacity:.7;pointer-events:none;}
   .upload-feedback{min-height:18px;margin-top:7px;color:var(--pink);font-size:11.5px;}
   .uploaded-files,.other-documents{display:flex;flex-direction:column;gap:7px;margin-top:12px;}
@@ -445,7 +461,8 @@
   .optional-section{padding:26px 34px;}
   .optional-upload span{background:var(--text);color:#fff;border-color:var(--text);}
   .optional-upload:hover span{background:var(--pink);color:#fff;border-color:var(--pink);}
-  .security-note{display:flex;gap:13px;padding:20px 24px;color:var(--dim);}
+  .security-note{display:flex;gap:13px;padding:19px 20px;color:var(--dim);}
+  .security-note>div{min-width:0;}
   .security-note svg{color:var(--green);flex:none;margin-top:1px;}
   .security-note strong{color:var(--text);font-size:12.5px;}
   .security-note p{font-size:11.5px;line-height:1.6;margin-top:3px;}
@@ -453,24 +470,36 @@
   footer a{color:var(--dim);text-decoration:underline;text-underline-offset:2px;}
   .footer-separator{margin:0 5px;}
   [hidden]{display:none!important;}
+  @media(max-width:850px){
+    .portal-content{grid-template-columns:1fr;}
+    .portal-sidebar{position:static;}
+    .intro-card{padding:32px;}
+  }
   @media(max-width:600px){
     .header-inner{height:68px;padding:0 18px;}
     .logo{width:92px;height:42px;}
-    .secure-label{font-size:11px;}
-    main{padding:24px 12px 50px;}
+    .secure-label{padding:7px 9px;font-size:10px;}
+    main{padding:18px 11px 48px;}
     .portal-content{gap:12px;}
+    .portal-main,.portal-sidebar{gap:12px;}
     .intro-card,.documents-section,.optional-section,.security-note{border-radius:18px;}
-    .intro-card{padding:27px 22px;}
-    .intro-card h1{font-size:27px;}
+    .intro-card{padding:27px 21px;}
+    .intro-card h1{font-size:26px;}
     .intro-copy{font-size:13.5px;}
-    .progress-block{margin-top:24px;}
-    .documents-section{padding:25px 20px 14px;}
-    .document-card{grid-template-columns:26px 1fr;gap:11px;padding:20px 0;}
+    .progress-block{margin-top:24px;padding-top:20px;}
+    .progress-ring{width:58px;height:58px;}
+    .progress-ring::before{width:45px;height:45px;}
+    .documents-section{padding:24px 15px 16px;}
+    .section-heading{display:block;margin:0 4px 20px;}
+    .section-heading h2{font-size:21px;}
+    .format-note{display:inline-flex;margin-top:12px;}
+    .document-list{gap:10px;}
+    .document-card{grid-template-columns:26px minmax(0,1fr);gap:11px;padding:16px 13px;}
     .document-status{width:23px;height:23px;}
-    .document-title-row{align-items:flex-start;}
+    .document-title-row{align-items:flex-start;flex-wrap:wrap;}
     .document-card h3{font-size:15px;}
-    .required-label{font-size:9px;margin-top:3px;}
-    .upload-button span{padding:9px 12px;}
+    .file-count{font-size:9px;padding:4px 6px;}
+    .upload-button span{padding:10px 9px;font-size:10.5px;}
     .optional-section{padding:23px 20px;}
     .security-note{padding:18px 20px;}
     .state-card{margin:35px 0;padding:42px 24px;}
