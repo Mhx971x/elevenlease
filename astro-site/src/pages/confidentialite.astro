@@ -34,6 +34,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <div class="data-row"><span class="d-label">Projet véhicule</span><span class="d-value">Modèle recherché, type de véhicule, budget, mode de financement souhaité</span></div>
           <div class="data-row"><span class="d-label">Situation professionnelle</span><span class="d-value">Statut professionnel, entreprise, ancienneté</span></div>
           <div class="data-row"><span class="d-label">Situation financière</span><span class="d-value">Revenus mensuels, charges mensuelles, âge, situation vis-à-vis du fichier FICP de la Banque de France</span></div>
+          <div class="data-row"><span class="d-label">Justificatifs du dossier</span><span class="d-value">Pièce d’identité, permis, justificatif de domicile, RIB, justificatifs de revenus, avis d’imposition, relevés bancaires et, pour les professionnels, documents relatifs à l’entreprise</span></div>
           <div class="data-row"><span class="d-label">Message libre</span><span class="d-value">Toute information complémentaire que vous choisissez de nous communiquer</span></div>
         </div>
         <p>Ces informations, notamment financières, sont utilisées uniquement pour estimer votre éligibilité et orienter votre demande vers le partenaire le plus adapté — elles ne sont jamais utilisées à d'autres fins.</p>
@@ -51,15 +52,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <ul>
           <li><strong style="color:var(--text);">En interne</strong> : à l'équipe Eleven Lease, pour le traitement de votre demande.</li>
           <li><strong style="color:var(--text);">Au partenaire financier sélectionné</strong> : uniquement le ou les partenaires susceptibles de répondre à votre projet reçoivent vos informations, dans la limite de ce qui est nécessaire à l'étude de votre dossier.</li>
-          <li><strong style="color:var(--text);">Prestataires techniques</strong> : nous utilisons Supabase (hébergement de notre base de données) et Google (feuille de calcul de suivi interne) pour stocker et traiter vos demandes de façon sécurisée. Ces prestataires n'utilisent vos données que pour le compte d'Eleven Lease.</li>
+          <li><strong style="color:var(--text);">Prestataires techniques</strong> : nous utilisons Supabase (hébergement de notre base de données et stockage privé des justificatifs) et Google (feuille de calcul de suivi interne) pour stocker et traiter vos demandes de façon sécurisée. Ces prestataires n'utilisent vos données que pour le compte d'Eleven Lease.</li>
         </ul>
         <p>Nous ne vendons ni ne louons vos données personnelles à des tiers à des fins commerciales.</p>
 
         <h2>Durée de conservation</h2>
-        <p>Vos données sont conservées le temps nécessaire au traitement de votre demande et à la relation avec le partenaire mis en relation, puis supprimées ou archivées conformément aux durées légales applicables.</p>
+        <p>Vos données et les justificatifs transmis sont conservés uniquement pendant la durée nécessaire à l’étude, à la mise en place et au suivi de votre dossier, puis supprimés ou archivés conformément aux obligations légales applicables. Le lien de dépôt documentaire est temporaire et peut être désactivé à tout moment par Eleven Lease.</p>
 
         <h2>Cookies</h2>
-        <p>Ce site n'utilise pas de cookies de suivi publicitaire ou d'analyse tierce. Seuls des éléments techniques strictement nécessaires au fonctionnement du site et de son hébergement (Netlify) peuvent être déposés.</p>
+        <p>Ce site n'utilise pas de cookies de suivi publicitaire ou d'analyse tierce. Seuls des éléments techniques strictement nécessaires au fonctionnement du site et de son hébergement (Vercel) peuvent être déposés.</p>
 
         <h2>Vos droits</h2>
         <p>Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique et Libertés, vous disposez des droits suivants sur vos données :</p>

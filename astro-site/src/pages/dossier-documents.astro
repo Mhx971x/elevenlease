@@ -1,0 +1,478 @@
+---
+// Portail privé accessible uniquement avec un jeton dans le fragment de l'URL.
+// Cette page est volontairement absente du menu et du sitemap.
+---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="referrer" content="no-referrer">
+  <title>Mon dossier sécurisé | Eleven Lease</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/favicon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="portal-header">
+    <div class="header-inner">
+      <span class="logo" role="img" aria-label="Eleven Lease"></span>
+      <div class="secure-label">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <rect x="5" y="10" width="14" height="11" rx="2" stroke="currentColor" stroke-width="2"/>
+          <path d="M8 10V7a4 4 0 018 0v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        Espace sécurisé
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="state-card loading-state" id="loadingState">
+      <div class="spinner" aria-hidden="true"></div>
+      <h1>Ouverture de votre dossier…</h1>
+      <p>Nous vérifions votre lien sécurisé.</p>
+    </section>
+
+    <section class="state-card error-state" id="errorState" hidden>
+      <div class="state-icon" aria-hidden="true">!</div>
+      <h1>Ce dossier n’est pas accessible</h1>
+      <p id="errorMessage">Le lien est invalide ou a expiré.</p>
+      <a href="mailto:contact@elevenlease.fr" class="secondary-button">Contacter Eleven Lease</a>
+    </section>
+
+    <div class="portal-content" id="portalContent" hidden>
+      <section class="intro-card">
+        <div class="eyebrow">Finalisation de votre demande</div>
+        <h1 id="welcomeTitle">Complétez votre dossier</h1>
+        <p class="intro-copy">
+          Déposez les justificatifs ci-dessous afin que notre équipe puisse préparer votre dossier de financement.
+        </p>
+        <div class="project-line" id="projectLine" hidden></div>
+        <div class="progress-block">
+          <div class="progress-meta">
+            <span id="progressLabel">0 document sur 0</span>
+            <strong id="progressPercent">0 %</strong>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="complete-banner" id="completeBanner" hidden>
+        <div class="complete-icon" aria-hidden="true">✓</div>
+        <div>
+          <strong>Votre dossier est complet.</strong>
+          <p>Merci, notre équipe peut maintenant poursuivre son étude.</p>
+        </div>
+      </section>
+
+      <section class="documents-section">
+        <div class="section-heading">
+          <div>
+            <h2>Documents demandés</h2>
+            <p>Formats acceptés : PDF ou photo · 15 Mo maximum par fichier.</p>
+          </div>
+        </div>
+        <div class="document-list" id="documentList"></div>
+      </section>
+
+      <section class="optional-section">
+        <div>
+          <h2>Un autre document utile ?</h2>
+          <p>Vous pouvez ajouter toute pièce demandée par votre conseiller.</p>
+        </div>
+        <label class="optional-upload">
+          <input type="file" id="otherFileInput" accept=".pdf,.jpg,.jpeg,.png,.webp,.heic,.heif,application/pdf,image/jpeg,image/png,image/webp,image/heic,image/heif" multiple>
+          <span>Ajouter un document</span>
+        </label>
+        <div class="upload-feedback" aria-live="polite"></div>
+        <div class="other-documents" id="otherDocuments"></div>
+      </section>
+
+      <section class="security-note">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M12 3l8 4v5c0 5-3.4 8.5-8 10-4.6-1.5-8-5-8-10V7l8-4z" stroke="currentColor" stroke-width="1.8"/>
+          <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div>
+          <strong>Vos documents restent privés.</strong>
+          <p>Ils sont stockés dans un espace sécurisé et accessibles uniquement à l’équipe en charge de votre dossier. Ne partagez pas ce lien.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <span>Besoin d’aide ?</span>
+    <a href="mailto:contact@elevenlease.fr">contact@elevenlease.fr</a>
+    <span class="footer-separator">·</span>
+    <a href="https://taap.it/elevenleasewhatsapp" target="_blank" rel="noopener">WhatsApp</a>
+  </footer>
+
+  <script>
+    import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+
+    const SUPABASE_URL = 'https://syzlvsfhdmegmebsvscm.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_aF6YEQBB5UrjOrNo9RTMjw_SM3MPKvM';
+    const PORTAL_FUNCTION_URL = SUPABASE_URL + '/functions/v1/document-portal';
+    const BUCKET = 'lead-documents';
+    const MAX_FILE_SIZE = 15 * 1024 * 1024;
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    interface Requirement {
+      id: string;
+      label: string;
+      description: string;
+      multiple?: boolean;
+    }
+
+    interface UploadedDocument {
+      id: string;
+      document_type: string;
+      original_name: string;
+      mime_type: string;
+      size_bytes: number;
+      uploaded_at: string;
+    }
+
+    interface PortalData {
+      portal: { expiresAt: string; completed: boolean };
+      client: { firstName: string; profile: string; vehicle: string };
+      requirements: Requirement[];
+      documents: UploadedDocument[];
+    }
+
+    const loadingState = document.getElementById('loadingState') as HTMLElement;
+    const errorState = document.getElementById('errorState') as HTMLElement;
+    const errorMessage = document.getElementById('errorMessage') as HTMLElement;
+    const portalContent = document.getElementById('portalContent') as HTMLElement;
+    const welcomeTitle = document.getElementById('welcomeTitle') as HTMLElement;
+    const projectLine = document.getElementById('projectLine') as HTMLElement;
+    const progressLabel = document.getElementById('progressLabel') as HTMLElement;
+    const progressPercent = document.getElementById('progressPercent') as HTMLElement;
+    const progressFill = document.getElementById('progressFill') as HTMLElement;
+    const completeBanner = document.getElementById('completeBanner') as HTMLElement;
+    const documentList = document.getElementById('documentList') as HTMLElement;
+    const otherDocuments = document.getElementById('otherDocuments') as HTMLElement;
+    const otherFileInput = document.getElementById('otherFileInput') as HTMLInputElement;
+
+    const token = location.hash.slice(1).trim();
+    let portalData: PortalData | null = null;
+
+    function escapeHtml(value: unknown){
+      return String(value).replace(/[&<>"']/g, character => ({
+        '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'
+      }[character] as string));
+    }
+
+    function formatSize(bytes: number){
+      if(bytes < 1024 * 1024) return Math.max(1, Math.round(bytes / 1024)) + ' Ko';
+      return (bytes / (1024 * 1024)).toFixed(1).replace('.', ',') + ' Mo';
+    }
+
+    function mimeTypeFor(file: File){
+      if(file.type) return file.type.toLowerCase();
+      const extension = file.name.split('.').pop()?.toLowerCase();
+      const fallback: Record<string, string> = {
+        pdf:'application/pdf', jpg:'image/jpeg', jpeg:'image/jpeg',
+        png:'image/png', webp:'image/webp', heic:'image/heic', heif:'image/heif'
+      };
+      return fallback[extension || ''] || '';
+    }
+
+    async function callPortal(body: Record<string, unknown>){
+      const response = await fetch(PORTAL_FUNCTION_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'apikey': SUPABASE_ANON_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+        },
+        body: JSON.stringify({ ...body, token }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if(!response.ok) throw new Error(data.error || 'Une erreur est survenue.');
+      return data;
+    }
+
+    function showError(message: string){
+      loadingState.hidden = true;
+      portalContent.hidden = true;
+      errorMessage.textContent = message;
+      errorState.hidden = false;
+    }
+
+    function documentsFor(type: string){
+      return (portalData?.documents || []).filter(document => document.document_type === type);
+    }
+
+    function uploadedFileMarkup(document: UploadedDocument){
+      return (
+        '<div class="uploaded-file">' +
+          '<div class="file-check">✓</div>' +
+          '<div class="file-info">' +
+            '<strong>' + escapeHtml(document.original_name) + '</strong>' +
+            '<span>' + formatSize(document.size_bytes) + '</span>' +
+          '</div>' +
+          '<button type="button" class="remove-file" data-document-id="' + escapeHtml(document.id) + '" aria-label="Supprimer ' + escapeHtml(document.original_name) + '">Supprimer</button>' +
+        '</div>'
+      );
+    }
+
+    function render(){
+      if(!portalData) return;
+      const completedTypes = new Set(
+        portalData.documents
+          .filter(document => document.document_type !== 'autre')
+          .map(document => document.document_type)
+      );
+      const completeCount = portalData.requirements.filter(requirement => completedTypes.has(requirement.id)).length;
+      const total = portalData.requirements.length;
+      const percent = total ? Math.round((completeCount / total) * 100) : 0;
+
+      progressLabel.textContent = completeCount + ' document' + (completeCount > 1 ? 's' : '') + ' sur ' + total;
+      progressPercent.textContent = percent + ' %';
+      progressFill.style.width = percent + '%';
+      completeBanner.hidden = completeCount !== total;
+
+      documentList.innerHTML = portalData.requirements.map(requirement => {
+        const files = documentsFor(requirement.id);
+        const done = files.length > 0;
+        return (
+          '<article class="document-card ' + (done ? 'is-complete' : '') + '" data-type="' + escapeHtml(requirement.id) + '">' +
+            '<div class="document-status">' + (done ? '✓' : '') + '</div>' +
+            '<div class="document-copy">' +
+              '<div class="document-title-row">' +
+                '<h3>' + escapeHtml(requirement.label) + '</h3>' +
+                '<span class="required-label">' + (done ? 'Reçu' : 'Demandé') + '</span>' +
+              '</div>' +
+              '<p>' + escapeHtml(requirement.description) + '</p>' +
+              '<div class="uploaded-files">' + files.map(uploadedFileMarkup).join('') + '</div>' +
+              '<label class="upload-button">' +
+                '<input type="file" class="document-input" data-document-type="' + escapeHtml(requirement.id) + '" ' + (requirement.multiple ? 'multiple ' : '') + 'accept=".pdf,.jpg,.jpeg,.png,.webp,.heic,.heif,application/pdf,image/jpeg,image/png,image/webp,image/heic,image/heif">' +
+                '<span>' + (done ? 'Ajouter un autre fichier' : 'Choisir un fichier') + '</span>' +
+              '</label>' +
+              '<div class="upload-feedback" aria-live="polite"></div>' +
+            '</div>' +
+          '</article>'
+        );
+      }).join('');
+
+      otherDocuments.innerHTML = documentsFor('autre').map(uploadedFileMarkup).join('');
+      attachListeners();
+    }
+
+    function setCardBusy(input: HTMLInputElement, busy: boolean, message = ''){
+      const card = input.closest('.document-card, .optional-section') as HTMLElement;
+      const feedback = card?.querySelector('.upload-feedback') as HTMLElement | null;
+      input.disabled = busy;
+      card?.classList.toggle('is-uploading', busy);
+      if(feedback) feedback.textContent = message;
+    }
+
+    async function uploadFiles(input: HTMLInputElement, documentType: string){
+      const files = Array.from(input.files || []);
+      if(!files.length) return;
+      setCardBusy(input, true, 'Préparation du transfert…');
+
+      try{
+        for(let index = 0; index < files.length; index++){
+          const file = files[index];
+          if(file.size <= 0 || file.size > MAX_FILE_SIZE){
+            throw new Error(file.name + ' dépasse la limite de 15 Mo.');
+          }
+          const mimeType = mimeTypeFor(file);
+          setCardBusy(input, true, 'Envoi de ' + file.name + ' (' + (index + 1) + '/' + files.length + ')…');
+          const upload = await callPortal({
+            action: 'create-upload',
+            documentType,
+            originalName: file.name,
+            mimeType,
+            size: file.size,
+          });
+          const { error } = await supabase.storage
+            .from(BUCKET)
+            .uploadToSignedUrl(upload.path, upload.uploadToken, file, {
+              contentType: mimeType,
+              cacheControl: '0',
+            });
+          if(error) throw error;
+          const result = await callPortal({
+            action: 'complete-upload',
+            documentType,
+            path: upload.path,
+            originalName: file.name,
+            mimeType,
+            size: file.size,
+          });
+          portalData!.documents = result.documents || portalData!.documents;
+          portalData!.portal.completed = result.completed === true;
+        }
+        render();
+      }catch(error: any){
+        console.error(error);
+        setCardBusy(input, false, error.message || 'Le document n’a pas pu être envoyé.');
+        input.value = '';
+        return;
+      }
+    }
+
+    async function removeDocument(button: HTMLButtonElement){
+      const documentId = button.dataset.documentId;
+      if(!documentId || !confirm('Supprimer ce document du dossier ?')) return;
+      button.disabled = true;
+      try{
+        const result = await callPortal({ action: 'delete-document', documentId });
+        portalData!.documents = result.documents || [];
+        portalData!.portal.completed = result.completed === true;
+        render();
+      }catch(error: any){
+        button.disabled = false;
+        alert(error.message || 'Le document n’a pas pu être supprimé.');
+      }
+    }
+
+    function attachListeners(){
+      documentList.querySelectorAll<HTMLInputElement>('.document-input').forEach(input => {
+        input.addEventListener('change', () => uploadFiles(input, input.dataset.documentType || 'autre'));
+      });
+      document.querySelectorAll<HTMLButtonElement>('.remove-file').forEach(button => {
+        button.addEventListener('click', () => removeDocument(button));
+      });
+    }
+
+    otherFileInput.addEventListener('change', () => uploadFiles(otherFileInput, 'autre'));
+
+    async function initialize(){
+      if(!token){
+        showError('Ce lien ne contient pas de clé d’accès. Utilisez le lien complet transmis par votre conseiller.');
+        return;
+      }
+      try{
+        portalData = await callPortal({ action: 'portal-info' }) as PortalData;
+        welcomeTitle.textContent = portalData.client.firstName
+          ? 'Bonjour ' + portalData.client.firstName + ', complétez votre dossier'
+          : 'Complétez votre dossier';
+        if(portalData.client.vehicle){
+          projectLine.textContent = 'Projet : ' + portalData.client.vehicle;
+          projectLine.hidden = false;
+        }
+        loadingState.hidden = true;
+        portalContent.hidden = false;
+        render();
+      }catch(error: any){
+        showError(error.message || 'Ce lien est invalide ou a expiré.');
+      }
+    }
+
+    initialize();
+  </script>
+</body>
+</html>
+
+<style>
+  :root{
+    --bg:#f5f5f7;--surface:#fff;--surface-soft:#f8f8fa;--border:#e4e4e9;
+    --text:#151517;--dim:#62626b;--faint:#92929b;--pink:#f00078;--pink-dark:#a5074a;
+    --green:#137a51;--green-soft:#edf9f3;--shadow:0 18px 50px rgba(25,25,28,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{min-height:100vh;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;line-height:1.5;}
+  button,input{font:inherit;}
+  button{cursor:pointer;}
+  .portal-header{background:#fff;border-bottom:1px solid var(--border);}
+  .header-inner{max-width:880px;height:82px;margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;}
+  .logo{width:112px;height:50px;background:url('/eleven-lease-logo-light.png') center/contain no-repeat;}
+  .secure-label{display:flex;align-items:center;gap:7px;color:var(--dim);font-size:12.5px;font-weight:600;}
+  main{max-width:780px;margin:0 auto;padding:52px 24px 72px;}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-.025em;}
+  .state-card{max-width:560px;margin:70px auto;text-align:center;background:#fff;border:1px solid var(--border);border-radius:24px;padding:54px 34px;box-shadow:var(--shadow);}
+  .state-card h1{font-size:25px;margin:18px 0 9px;}
+  .state-card p{color:var(--dim);font-size:14.5px;}
+  .spinner{width:30px;height:30px;margin:0 auto;border:3px solid #e7e7eb;border-top-color:var(--pink);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .state-icon{width:42px;height:42px;margin:0 auto;border-radius:50%;display:grid;place-items:center;background:#fff0f0;color:#c83232;font-size:22px;font-weight:700;}
+  .secondary-button{display:inline-flex;margin-top:24px;padding:12px 20px;border:1px solid var(--border);border-radius:999px;font-size:13.5px;font-weight:600;text-decoration:none;}
+  .portal-content{display:flex;flex-direction:column;gap:18px;}
+  .intro-card,.documents-section,.optional-section,.security-note{background:#fff;border:1px solid var(--border);border-radius:24px;}
+  .intro-card{padding:38px 40px;box-shadow:var(--shadow);}
+  .eyebrow{color:var(--pink);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;}
+  .intro-card h1{font-size:clamp(27px,5vw,38px);line-height:1.12;max-width:610px;}
+  .intro-copy{color:var(--dim);font-size:15px;line-height:1.7;margin-top:15px;max-width:630px;}
+  .project-line{display:inline-flex;margin-top:18px;padding:7px 12px;border-radius:999px;background:var(--surface-soft);color:var(--dim);font-size:12.5px;font-weight:600;}
+  .progress-block{margin-top:30px;}
+  .progress-meta{display:flex;justify-content:space-between;gap:20px;margin-bottom:9px;color:var(--dim);font-size:12.5px;}
+  .progress-meta strong{color:var(--pink);}
+  .progress-track{height:7px;border-radius:99px;background:#ececf0;overflow:hidden;}
+  .progress-fill{height:100%;width:0;border-radius:inherit;background:linear-gradient(90deg,var(--pink),var(--pink-dark));transition:width .5s cubic-bezier(.16,1,.3,1);}
+  .complete-banner{display:flex;align-items:center;gap:14px;padding:20px 24px;border:1px solid #c9eadb;border-radius:18px;background:var(--green-soft);color:var(--green);}
+  .complete-icon{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:#fff;font-weight:700;flex:none;}
+  .complete-banner strong{font-size:14px;}
+  .complete-banner p{font-size:12.5px;margin-top:2px;}
+  .documents-section{padding:34px 34px 22px;}
+  .section-heading{margin-bottom:23px;}
+  .section-heading h2,.optional-section h2{font-size:21px;}
+  .section-heading p,.optional-section p{color:var(--dim);font-size:13px;margin-top:5px;}
+  .document-list{display:flex;flex-direction:column;}
+  .document-card{display:grid;grid-template-columns:30px 1fr;gap:14px;padding:22px 0;border-top:1px solid var(--border);}
+  .document-card:first-child{border-top:none;padding-top:0;}
+  .document-status{width:26px;height:26px;border:1.5px solid #d6d6dc;border-radius:50%;display:grid;place-items:center;color:#fff;font-size:13px;font-weight:700;margin-top:1px;}
+  .document-card.is-complete .document-status{background:var(--green);border-color:var(--green);}
+  .document-title-row{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .document-card h3{font-size:16px;}
+  .required-label{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--faint);}
+  .document-card.is-complete .required-label{color:var(--green);}
+  .document-copy>p{color:var(--dim);font-size:12.5px;margin-top:4px;}
+  .upload-button,.optional-upload{display:inline-flex;margin-top:13px;cursor:pointer;}
+  .upload-button input,.optional-upload input{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;}
+  .upload-button span,.optional-upload span{display:inline-flex;padding:9px 14px;border:1px solid var(--border);border-radius:10px;background:#fff;color:var(--text);font-size:12px;font-weight:600;transition:.2s ease;}
+  .upload-button:hover span,.optional-upload:hover span{border-color:var(--pink);color:var(--pink);}
+  .document-card.is-uploading{opacity:.7;pointer-events:none;}
+  .upload-feedback{min-height:18px;margin-top:7px;color:var(--pink);font-size:11.5px;}
+  .uploaded-files,.other-documents{display:flex;flex-direction:column;gap:7px;margin-top:12px;}
+  .uploaded-file{display:flex;align-items:center;gap:9px;padding:9px 11px;border-radius:10px;background:var(--green-soft);}
+  .file-check{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:#fff;font-size:10px;font-weight:700;flex:none;}
+  .file-info{min-width:0;display:flex;flex-direction:column;flex:1;}
+  .file-info strong{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .file-info span{color:var(--dim);font-size:10px;}
+  .remove-file{border:none;background:none;color:var(--dim);font-size:10.5px;text-decoration:underline;text-underline-offset:2px;}
+  .remove-file:disabled{opacity:.5;}
+  .optional-section{padding:26px 34px;}
+  .optional-upload span{background:var(--text);color:#fff;border-color:var(--text);}
+  .optional-upload:hover span{background:var(--pink);color:#fff;border-color:var(--pink);}
+  .security-note{display:flex;gap:13px;padding:20px 24px;color:var(--dim);}
+  .security-note svg{color:var(--green);flex:none;margin-top:1px;}
+  .security-note strong{color:var(--text);font-size:12.5px;}
+  .security-note p{font-size:11.5px;line-height:1.6;margin-top:3px;}
+  footer{padding:0 24px 35px;text-align:center;color:var(--faint);font-size:11.5px;}
+  footer a{color:var(--dim);text-decoration:underline;text-underline-offset:2px;}
+  .footer-separator{margin:0 5px;}
+  [hidden]{display:none!important;}
+  @media(max-width:600px){
+    .header-inner{height:68px;padding:0 18px;}
+    .logo{width:92px;height:42px;}
+    .secure-label{font-size:11px;}
+    main{padding:24px 12px 50px;}
+    .portal-content{gap:12px;}
+    .intro-card,.documents-section,.optional-section,.security-note{border-radius:18px;}
+    .intro-card{padding:27px 22px;}
+    .intro-card h1{font-size:27px;}
+    .intro-copy{font-size:13.5px;}
+    .progress-block{margin-top:24px;}
+    .documents-section{padding:25px 20px 14px;}
+    .document-card{grid-template-columns:26px 1fr;gap:11px;padding:20px 0;}
+    .document-status{width:23px;height:23px;}
+    .document-title-row{align-items:flex-start;}
+    .document-card h3{font-size:15px;}
+    .required-label{font-size:9px;margin-top:3px;}
+    .upload-button span{padding:9px 12px;}
+    .optional-section{padding:23px 20px;}
+    .security-note{padding:18px 20px;}
+    .state-card{margin:35px 0;padding:42px 24px;}
+  }
+</style>

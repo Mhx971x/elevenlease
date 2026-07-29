@@ -217,6 +217,33 @@
   .delete-btn:hover{border-color:#dc2626;color:#dc2626;transform:translateY(-1px);}
   .edit-btn:disabled, .delete-btn:disabled{opacity:.5;cursor:default;transform:none;}
 
+  .document-portal-box{
+    margin:18px 0;padding:18px 20px;border:1px solid var(--border);border-radius:14px;background:var(--surface);
+  }
+  .document-portal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;}
+  .document-portal-head h3{font-size:14px;margin-bottom:4px;}
+  .document-portal-head p{color:var(--text-dim);font-size:12px;line-height:1.55;}
+  .document-portal-status{
+    flex:none;padding:5px 10px;border-radius:99px;border:1px solid var(--border);
+    color:var(--text-dim);font-size:10.5px;font-weight:700;white-space:nowrap;
+  }
+  .document-portal-status.complete{background:#edf9f3;border-color:#c9eadb;color:#137a51;}
+  .document-portal-status.expired{color:#b42318;border-color:#f0c7c4;}
+  .document-portal-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .document-link-btn,.document-revoke-btn,.document-download-btn,.document-delete-btn{
+    display:inline-flex;align-items:center;padding:8px 13px;border-radius:99px;border:1px solid var(--border);
+    background:#fff;color:var(--text);font:600 11.5px/1 'Inter',sans-serif;cursor:pointer;
+  }
+  .document-link-btn{background:var(--text);border-color:var(--text);color:#fff;}
+  .document-revoke-btn,.document-delete-btn{color:#b42318;}
+  .document-admin-list{display:flex;flex-direction:column;gap:7px;margin-top:14px;}
+  .document-admin-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:10px;background:#fff;border:1px solid var(--border);}
+  .document-admin-info{display:flex;flex-direction:column;min-width:0;flex:1;}
+  .document-admin-info strong{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .document-admin-info span{font-size:10px;color:var(--text-faint);}
+  .document-download-btn,.document-delete-btn{padding:6px 9px;font-size:10px;}
+  .document-link-btn:disabled,.document-revoke-btn:disabled,.document-download-btn:disabled,.document-delete-btn:disabled{opacity:.5;cursor:default;}
+
   .lead-edit-form{display:none;}
   .lead-card.editing .lead-view{display:none;}
   .lead-card.editing .lead-edit-form{display:block;}
@@ -272,6 +299,10 @@
   @keyframes spin{ to{transform:rotate(360deg);} }
 
   @media (prefers-reduced-motion: reduce){ *{animation:none !important;transition:none !important;} }
+  @media(max-width:600px){
+    .document-portal-head{flex-direction:column;gap:8px;}
+    .document-admin-item{align-items:flex-start;flex-wrap:wrap;}
+  }
 </style>
 </head>
 <body>
@@ -500,6 +531,13 @@
     eligible?: string; criteres_risque?: string; message?: string;
     confirmation_email_status?: string; confirmation_email_id?: string;
     confirmation_email_sent_at?: string; confirmation_email_error?: string;
+    document_portal?: {
+      id: string; expires_at: string; expired?: boolean; revoked_at?: string; completed_at?: string;
+      created_at?: string; documents?: Array<{
+        id: string; document_type: string; original_name: string;
+        mime_type: string; size_bytes: number; uploaded_at: string;
+      }>;
+    } | null;
     profil?: string; created_at?: string;
     [key: string]: unknown;
   }
@@ -808,6 +846,78 @@
     ).join('') + '</div>';
   }
 
+  const DOCUMENT_LABELS: Record<string, string> = {
+    piece_identite: 'Pièce d’identité',
+    permis_conduire: 'Permis de conduire',
+    justificatif_domicile: 'Justificatif de domicile',
+    rib: 'RIB',
+    justificatifs_revenus: 'Justificatif de revenus',
+    avis_imposition: 'Avis d’imposition',
+    releves_bancaires: 'Relevé bancaire',
+    kbis: 'Extrait Kbis',
+    statuts: 'Statuts',
+    bilans: 'Bilan ou liasse fiscale',
+    autre: 'Document complémentaire',
+  };
+
+  function formatFileSize(bytes: number){
+    if(!Number.isFinite(bytes) || bytes <= 0) return '';
+    if(bytes < 1024 * 1024) return Math.max(1, Math.round(bytes / 1024)) + ' Ko';
+    return (bytes / (1024 * 1024)).toFixed(1).replace('.', ',') + ' Mo';
+  }
+
+  function buildDocumentPortal(lead: Lead){
+    if(isPartner()) return '';
+    const portal = lead.document_portal;
+    const documents = portal?.documents || [];
+    const expired = portal?.expired === true;
+    const revoked = Boolean(portal?.revoked_at);
+    const active = Boolean(portal && !expired && !revoked);
+    const complete = Boolean(portal?.completed_at);
+    const statusLabel = !portal
+      ? 'Non créé'
+      : revoked
+        ? 'Lien désactivé'
+      : expired
+        ? 'Expiré'
+        : complete
+          ? 'Dossier complet'
+          : documents.length + ' pièce' + (documents.length > 1 ? 's' : '') + ' reçue' + (documents.length > 1 ? 's' : '');
+    const statusClass = expired ? ' expired' : complete ? ' complete' : '';
+    const files = documents.map(document =>
+      '<div class="document-admin-item">' +
+        '<div class="document-admin-info">' +
+          '<strong>' + escapeHtml(document.original_name) + '</strong>' +
+          '<span>' + escapeHtml(DOCUMENT_LABELS[document.document_type] || document.document_type) +
+            (document.size_bytes ? ' · ' + formatFileSize(document.size_bytes) : '') + '</span>' +
+        '</div>' +
+        '<button type="button" class="document-download-btn" data-document-id="' + escapeHtml(document.id) + '">Télécharger</button>' +
+        '<button type="button" class="document-delete-btn" data-document-id="' + escapeHtml(document.id) + '">Supprimer</button>' +
+      '</div>'
+    ).join('');
+    return (
+      '<div class="document-portal-box">' +
+        '<div class="document-portal-head">' +
+          '<div><h3>Dossier documentaire sécurisé</h3><p>' +
+            (active
+              ? 'Lien actif jusqu’au ' + new Date(portal.expires_at).toLocaleDateString('fr-FR') + '.'
+              : 'Créez un lien privé à transmettre uniquement au client qualifié.') +
+          '</p></div>' +
+          '<span class="document-portal-status' + statusClass + '">' + escapeHtml(statusLabel) + '</span>' +
+        '</div>' +
+        '<div class="document-portal-actions">' +
+          '<button type="button" class="document-link-btn" data-id="' + lead.id + '" data-has-portal="' + (active ? '1' : '0') + '">' +
+            (active ? 'Générer un nouveau lien' : 'Créer le lien documents') +
+          '</button>' +
+          (active
+            ? '<button type="button" class="document-revoke-btn" data-id="' + lead.id + '">Désactiver le lien</button>'
+            : '') +
+        '</div>' +
+        (files ? '<div class="document-admin-list">' + files + '</div>' : '') +
+      '</div>'
+    );
+  }
+
   function buildCard(lead: Lead, index: number){
     const status = lead.status || 'nouveau';
     const eligInfo = eligibilityInfo(lead);
@@ -852,6 +962,7 @@
             detailGrid +
             riskNote +
             messageBox +
+            buildDocumentPortal(lead) +
             '<div class="lead-actions">' +
               '<div class="quick-actions">' +
                 (telHref ? '<a class="quick-btn" href="' + telHref + '">' + PHONE_SVG + 'Appeler</a>' : '') +
@@ -924,6 +1035,102 @@
     root.querySelectorAll<HTMLButtonElement>('.delete-btn').forEach(btn => {
       btn.addEventListener('click', (e) => { e.stopPropagation(); onDeleteLead(e); });
     });
+    root.querySelectorAll<HTMLButtonElement>('.document-link-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => { e.stopPropagation(); onCreateDocumentPortal(btn); });
+    });
+    root.querySelectorAll<HTMLButtonElement>('.document-revoke-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => { e.stopPropagation(); onRevokeDocumentPortal(btn); });
+    });
+    root.querySelectorAll<HTMLButtonElement>('.document-download-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => { e.stopPropagation(); onDownloadDocument(btn); });
+    });
+    root.querySelectorAll<HTMLButtonElement>('.document-delete-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => { e.stopPropagation(); onDeleteDocument(btn); });
+    });
+  }
+
+  async function copyPortalLink(url: string){
+    try{
+      await navigator.clipboard.writeText(url);
+      alert('Lien sécurisé copié. Vous pouvez maintenant le transmettre au client.');
+    }catch{
+      prompt('Copiez ce lien sécurisé et transmettez-le au client :', url);
+    }
+  }
+
+  async function onCreateDocumentPortal(btn: HTMLButtonElement){
+    const id = btn.dataset.id!;
+    if(btn.dataset.hasPortal === '1' && !confirm('Le lien actuel sera immédiatement désactivé. Générer un nouveau lien ?')) return;
+    btn.disabled = true;
+    try{
+      const result = await callAdminFunction({ ...authPayload(), action: 'create-document-portal', id });
+      const lead = allLeads.find(item => String(item.id) === String(id));
+      if(lead){
+        lead.document_portal = {
+          ...result.portal,
+          expired: false,
+          documents: lead.document_portal?.documents || [],
+        };
+        refreshCard(lead);
+      }
+      await copyPortalLink(result.url);
+    }catch(err: any){
+      btn.disabled = false;
+      alert('Impossible de créer le lien documentaire : ' + err.message);
+    }
+  }
+
+  async function onRevokeDocumentPortal(btn: HTMLButtonElement){
+    const id = btn.dataset.id!;
+    if(!confirm('Désactiver immédiatement le lien documentaire de ce client ?')) return;
+    btn.disabled = true;
+    try{
+      await callAdminFunction({ ...authPayload(), action: 'revoke-document-portal', id });
+      const lead = allLeads.find(item => String(item.id) === String(id));
+      if(lead){
+        if(lead.document_portal) lead.document_portal.revoked_at = new Date().toISOString();
+        refreshCard(lead);
+      }
+    }catch(err: any){
+      btn.disabled = false;
+      alert('Impossible de désactiver le lien : ' + err.message);
+    }
+  }
+
+  async function onDownloadDocument(btn: HTMLButtonElement){
+    btn.disabled = true;
+    try{
+      const result = await callAdminFunction({
+        ...authPayload(),
+        action: 'document-download',
+        documentId: btn.dataset.documentId,
+      });
+      window.open(result.url, '_blank', 'noopener');
+    }catch(err: any){
+      alert('Impossible de télécharger le document : ' + err.message);
+    }finally{
+      btn.disabled = false;
+    }
+  }
+
+  async function onDeleteDocument(btn: HTMLButtonElement){
+    const documentId = btn.dataset.documentId!;
+    if(!confirm('Supprimer définitivement ce document ?')) return;
+    btn.disabled = true;
+    try{
+      await callAdminFunction({ ...authPayload(), action: 'delete-document', documentId });
+      const card = btn.closest('.lead-card') as HTMLElement;
+      const lead = allLeads.find(item => String(item.id) === String(card.dataset.id));
+      if(lead?.document_portal){
+        lead.document_portal.documents = (lead.document_portal.documents || [])
+          .filter(document => document.id !== documentId);
+        lead.document_portal.completed_at = undefined;
+        refreshCard(lead);
+      }
+    }catch(err: any){
+      btn.disabled = false;
+      alert('Impossible de supprimer le document : ' + err.message);
+    }
   }
 
   function refreshCard(lead: Lead){
