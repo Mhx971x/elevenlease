@@ -1,6 +1,7 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
 
 export interface Props {
   title: string;
@@ -145,5 +146,6 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
   <Header ctaHref={ctaHref} active={active} showProgressBar={showProgressBar} />
   <slot />
   <Footer />
+  <SpeedInsights />
 </body>
 </html>
