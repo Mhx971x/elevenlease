@@ -769,7 +769,7 @@
 
   function buildDetailGrid(lead: Lead){
     const confirmationEmail = lead.confirmation_email_status === 'sent'
-      ? 'Envoyé' + (lead.confirmation_email_sent_at ? ' le ' + formatDate(lead.confirmation_email_sent_at) : '')
+      ? 'Envoyé' + (lead.confirmation_email_sent_at ? ' · ' + relativeTime(lead.confirmation_email_sent_at) : '')
       : lead.confirmation_email_status === 'failed'
         ? 'Échec d’envoi'
         : lead.confirmation_email_status === 'pending'
