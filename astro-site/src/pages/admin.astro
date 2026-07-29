@@ -303,6 +303,172 @@
     .document-portal-head{flex-direction:column;gap:8px;}
     .document-admin-item{align-items:flex-start;flex-wrap:wrap;}
   }
+
+  /* Mini CRM — nouvelle structure de navigation et de pilotage */
+  :root{
+    --crm-bg:#f3f4f6;
+    --crm-dark:#18181b;
+    --crm-muted:#73737d;
+    --crm-green:#168653;
+  }
+  body{background:var(--crm-bg);}
+  header{height:74px;padding:0;background:#fff;}
+  header .wrap{max-width:none;height:100%;padding:0 28px;}
+  .logo-icon{width:100px;}
+  #dashboard{padding:0;}
+  .crm-layout{min-height:calc(100vh - 74px);display:grid;grid-template-columns:248px minmax(0,1fr);}
+  .crm-sidebar{
+    position:sticky;top:0;height:calc(100vh - 74px);padding:28px 18px 22px;
+    display:flex;flex-direction:column;background:var(--crm-dark);color:#fff;
+  }
+  .crm-sidebar-title{
+    padding:0 11px 12px;color:#787880;font-size:10px;font-weight:800;
+    letter-spacing:.12em;text-transform:uppercase;
+  }
+  .crm-sidebar .tab-bar{display:flex;flex-direction:column;gap:6px;margin:0;}
+  .crm-sidebar .tab-btn{
+    width:100%;min-height:46px;display:grid;grid-template-columns:24px 1fr auto;gap:10px;
+    padding:10px 12px;border:1px solid transparent;border-radius:11px;background:transparent;
+    color:#aaaab2;text-align:left;
+  }
+  .crm-sidebar .tab-btn:hover{border-color:#34343a;background:#222226;color:#fff;transform:none;}
+  .crm-sidebar .tab-btn.active{border-color:#38383e;background:#2a2a2f;color:#fff;box-shadow:inset 3px 0 0 var(--accent-1);}
+  .nav-icon{width:24px;height:24px;display:grid;place-items:center;color:#85858e;font-size:17px;}
+  .crm-sidebar .tab-btn.active .nav-icon{color:#ff4fa8;}
+  .crm-sidebar .tab-count{justify-self:end;background:var(--accent-1);}
+  .crm-sidebar-note{
+    margin-top:auto;padding:17px;border:1px solid #333338;border-radius:13px;
+    background:linear-gradient(145deg,#222226,#1c1c20);display:flex;flex-direction:column;gap:6px;
+  }
+  .crm-sidebar-note strong{font-family:'Space Grotesk',sans-serif;font-size:12.5px;}
+  .crm-sidebar-note span{color:#8e8e97;font-size:10.5px;line-height:1.55;}
+  .crm-workspace{min-width:0;padding:34px clamp(24px,4vw,52px) 70px;overflow:hidden;}
+  .dash-head{margin-bottom:26px;align-items:center;}
+  .page-kicker{margin-bottom:6px;color:var(--accent-1);font-size:10px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;}
+  .dash-head h1{font-size:30px;}
+  .dash-head p{margin-top:4px;}
+  .last-refresh{color:var(--text-faint);font-size:11.5px;}
+  .dash-actions .btn-ghost{background:#fff;}
+
+  .stats-row,.stats-row-3{gap:14px;margin-bottom:22px;}
+  .stat-card{
+    min-height:126px;padding:18px 19px;border-radius:16px;background:#fff;box-shadow:0 8px 28px rgba(24,24,27,.045);
+  }
+  .stat-card.accent{background:var(--crm-dark);color:#fff;border-color:var(--crm-dark);}
+  .stat-card.urgent .num{color:var(--accent-1);}
+  .stat-card.success .num{color:var(--crm-green);}
+  .stat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+  .stat-icon{width:26px;height:26px;border-radius:8px;background:var(--surface);display:grid;place-items:center;color:var(--text-dim);font-size:13px;}
+  .stat-card.accent .stat-icon{background:#2c2c31;color:#ff4fa8;}
+  .stat-trend{color:var(--text-faint);font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;}
+  .stat-card .num{font-size:29px;line-height:1;}
+  .stat-card .label{margin-top:7px;}
+  .stat-card.accent .label{color:#a7a7af;}
+
+  .pipeline-section{
+    margin-bottom:22px;padding:20px;border:1px solid var(--border);border-radius:17px;background:#fff;
+    box-shadow:0 8px 28px rgba(24,24,27,.035);
+  }
+  .pipeline-heading{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:16px;}
+  .pipeline-heading>div{display:flex;flex-direction:column;gap:3px;}
+  .pipeline-heading strong{font-family:'Space Grotesk',sans-serif;font-size:14px;}
+  .pipeline-heading span{color:var(--text-faint);font-size:10.5px;}
+  .pipeline-reset{border:none;background:none;color:var(--accent-1);font:700 10.5px/1 'Inter',sans-serif;cursor:pointer;}
+  .pipeline-overview{display:grid;grid-template-columns:repeat(9,minmax(76px,1fr));gap:7px;}
+  .pipeline-step{
+    position:relative;min-width:0;padding:12px 9px 11px;border:1px solid var(--border);border-radius:11px;
+    background:#fafafc;color:var(--text);cursor:pointer;text-align:left;font-family:inherit;transition:.2s ease;
+  }
+  .pipeline-step:hover,.pipeline-step.active{border-color:var(--stage-color);background:#fff;transform:translateY(-2px);box-shadow:0 8px 18px rgba(24,24,27,.07);}
+  .pipeline-dot{display:block;width:7px;height:7px;margin-bottom:10px;border-radius:50%;background:var(--stage-color);}
+  .pipeline-step strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:19px;line-height:1;}
+  .pipeline-step>span:last-child{display:block;margin-top:5px;color:var(--text-dim);font-size:9.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+  .list-panel{
+    padding:22px;border:1px solid var(--border);border-radius:18px;background:#fff;
+    box-shadow:0 12px 36px rgba(24,24,27,.045);
+  }
+  .list-panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+  .list-panel-head>div{display:flex;align-items:baseline;gap:10px;}
+  .list-panel-head h2{font-size:17px;}
+  .list-panel-head span{color:var(--text-faint);font-size:11px;}
+  .toolbar{gap:9px;margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid var(--border);}
+  .search-field{min-width:240px;display:flex;align-items:center;gap:8px;flex:1;padding:0 13px;border:1px solid var(--border);border-radius:11px;background:var(--surface);}
+  .search-field>span{color:var(--text-faint);font-size:19px;}
+  .toolbar .search-field input{min-width:0;width:100%;padding:10px 0;border:none;background:transparent;}
+  .toolbar .search-field input:focus{box-shadow:none;}
+  .toolbar select{background:#fff;}
+
+  .lead-list{gap:9px;}
+  .lead-card{position:relative;border-radius:13px;background:#fff;box-shadow:none;}
+  .lead-card::before{content:"";position:absolute;left:-1px;top:15px;bottom:15px;width:3px;border-radius:0 4px 4px 0;background:var(--status-color,var(--border));}
+  .lead-card:hover{border-color:#cfcfd6;box-shadow:0 9px 24px rgba(24,24,27,.06);}
+  .lead-card-header{min-height:76px;padding:15px 17px 15px 20px;gap:13px;}
+  .lead-avatar{width:40px;height:40px;background:#f1f1f4;}
+  .lead-avatar.eligible{background:#111113;}
+  .lead-name{font-size:14px;}
+  .lead-sub{font-size:11.5px;}
+  .lead-meta{min-width:210px;justify-content:flex-end;}
+  .crm-status-select{
+    max-width:158px;padding:7px 29px 7px 12px;border:1px solid color-mix(in srgb,var(--status-color) 35%,#e1e1e5);
+    border-radius:999px;background-color:color-mix(in srgb,var(--status-color) 8%,#fff);
+    color:var(--status-color);font:700 10.5px/1 'Inter',sans-serif;cursor:pointer;
+  }
+  .crm-status-select:focus{outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--status-color) 16%,transparent);}
+  .crm-status-readonly{padding:7px 11px;border-radius:999px;background:#f4f4f6;color:var(--status-color);font-size:10.5px;font-weight:700;}
+  .lead-date{font-size:10.5px;}
+  .lead-detail-inner{margin:0;padding:22px 22px 22px 74px;background:#fafafc;}
+  .detail-grid{padding:16px;border:1px solid var(--border);border-radius:12px;background:#fff;}
+  .lead-stage-summary{display:inline-flex;align-items:center;gap:7px;color:var(--text-dim);font-size:10.5px;font-weight:600;}
+  .lead-stage-summary>span{width:7px;height:7px;border-radius:50%;}
+  .document-portal-box{background:#fff;}
+
+  @media(max-width:1100px){
+    .pipeline-overview{display:flex;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin;}
+    .pipeline-step{min-width:98px;}
+  }
+  @media(max-width:850px){
+    header .wrap{padding:0 18px;}
+    .crm-layout{grid-template-columns:1fr;}
+    .crm-sidebar{position:static;height:auto;padding:10px 14px;}
+    .crm-sidebar-title,.crm-sidebar-note{display:none;}
+    .crm-sidebar .tab-bar{flex-direction:row;overflow-x:auto;}
+    .crm-sidebar .tab-btn{width:auto;min-width:max-content;grid-template-columns:22px auto auto;padding:9px 12px;}
+    .crm-sidebar .tab-btn.active{box-shadow:inset 0 -3px 0 var(--accent-1);}
+    .crm-workspace{padding:26px 18px 55px;}
+    .stats-row{grid-template-columns:repeat(2,1fr);}
+  }
+  @media(max-width:600px){
+    header{height:64px;}
+    .crm-layout{min-height:calc(100vh - 64px);}
+    .logo-tag{display:none;}
+    .logo-icon{width:88px;}
+    .crm-workspace{padding:22px 10px 45px;}
+    .dash-head{display:block;margin:0 6px 20px;}
+    .dash-head h1{font-size:25px;}
+    .dash-actions{margin-top:14px;justify-content:space-between;}
+    .last-refresh{display:none;}
+    .stats-row{gap:8px;margin-bottom:14px;}
+    .stat-card{min-height:108px;padding:14px;border-radius:13px;}
+    .stat-card .num{font-size:24px;}
+    .pipeline-section{padding:16px 14px;margin-bottom:14px;border-radius:15px;}
+    .pipeline-heading{align-items:center;}
+    .pipeline-heading span{display:none;}
+    .pipeline-step{min-width:91px;}
+    .list-panel{padding:15px 10px;border-radius:15px;}
+    .list-panel-head{margin:0 5px 14px;}
+    .toolbar{display:grid;grid-template-columns:1fr 1fr;padding:0 4px 15px;}
+    .search-field{grid-column:1/-1;min-width:0;}
+    .toolbar select{min-width:0;width:100%;padding:10px 8px;font-size:11px;}
+    .lead-card-header{align-items:flex-start;padding:14px 12px 14px 17px;gap:10px;flex-wrap:wrap;}
+    .lead-avatar{width:36px;height:36px;}
+    .lead-main{width:calc(100% - 50px);}
+    .lead-meta{width:100%;min-width:0;padding-left:46px;justify-content:space-between;}
+    .crm-status-select{max-width:180px;}
+    .lead-detail-inner{padding:17px 12px;}
+    .detail-grid{grid-template-columns:1fr 1fr;padding:13px;gap:13px;}
+    .lead-actions{align-items:flex-start;flex-direction:column;}
+  }
 </style>
 </head>
 <body>
@@ -333,49 +499,88 @@
 </div>
 
 <div id="dashboard">
-  <div class="wrap">
-    <div class="dash-head">
-      <div>
-        <h1>Demandes reçues</h1>
-        <p>Cliquez sur une demande pour voir tous les détails.</p>
+  <div class="crm-layout">
+    <aside class="crm-sidebar">
+      <div class="crm-sidebar-title">Navigation</div>
+      <div class="tab-bar">
+        <button type="button" class="tab-btn active" id="tabLeadsBtn">
+          <span class="nav-icon">⌁</span><span>Dossiers clients</span>
+          <span class="tab-count" id="leadsTabCount">0</span>
+        </button>
+        <button type="button" class="tab-btn" id="tabMessagesBtn">
+          <span class="nav-icon">✉</span><span>Messages</span>
+          <span class="tab-count" id="messagesTabCount">0</span>
+        </button>
+        <button type="button" class="tab-btn" id="tabVehiclesBtn">
+          <span class="nav-icon">◇</span><span>Catalogue véhicules</span>
+        </button>
       </div>
-      <div class="dash-actions">
-        <button class="btn-ghost" id="refreshBtn">Actualiser</button>
+      <div class="crm-sidebar-note">
+        <strong>Eleven Lease CRM</strong>
+        <span>Centralisez les demandes, documents et étapes de chaque dossier.</span>
       </div>
-    </div>
+    </aside>
 
-    <div class="tab-bar">
-      <button type="button" class="tab-btn active" id="tabLeadsBtn">Demandes simulateur <span class="tab-count" id="leadsTabCount">0</span></button>
-      <button type="button" class="tab-btn" id="tabMessagesBtn">Messages de contact <span class="tab-count" id="messagesTabCount">0</span></button>
-      <button type="button" class="tab-btn" id="tabVehiclesBtn">Véhicules</button>
-    </div>
+    <main class="crm-workspace">
+      <div class="dash-head">
+        <div>
+          <div class="page-kicker">Pilotage commercial</div>
+          <h1 id="dashboardTitle">Dossiers clients</h1>
+          <p id="dashboardSubtitle">Suivez chaque demande, de la simulation à la livraison.</p>
+        </div>
+        <div class="dash-actions">
+          <span class="last-refresh" id="lastRefresh">Données à jour</span>
+          <button class="btn-ghost" id="refreshBtn">↻ Actualiser</button>
+        </div>
+      </div>
 
     <div class="tab-panel active" id="leadsPanel">
       <div class="stats-row">
-        <div class="stat-card accent" id="statTotalCard"><div class="num" id="statTotal">0</div><div class="label">Demandes au total</div></div>
-        <div class="stat-card accent" id="statNouveauCard"><div class="num" id="statNouveau">0</div><div class="label">À traiter</div></div>
-        <div class="stat-card" id="statTraiteCard"><div class="num" id="statTraite">0</div><div class="label">Traitées</div></div>
-        <div class="stat-card" id="statEligibleCard"><div class="num" id="statEligible">0</div><div class="label">Profils éligibles</div></div>
+        <div class="stat-card accent" id="statTotalCard"><div class="stat-top"><span class="stat-icon">◎</span><span class="stat-trend">Global</span></div><div class="num" id="statTotal">0</div><div class="label">Dossiers au total</div></div>
+        <div class="stat-card urgent" id="statNouveauCard"><div class="stat-top"><span class="stat-icon">+</span><span class="stat-trend">Action</span></div><div class="num" id="statNouveau">0</div><div class="label">Nouveaux leads</div></div>
+        <div class="stat-card" id="statTraiteCard"><div class="stat-top"><span class="stat-icon">↗</span><span class="stat-trend">En cours</span></div><div class="num" id="statTraite">0</div><div class="label">Dossiers actifs</div></div>
+        <div class="stat-card success" id="statEligibleCard"><div class="stat-top"><span class="stat-icon">✓</span><span class="stat-trend">Conversion</span></div><div class="num" id="statEligible">0</div><div class="label">Acceptés ou livrés</div></div>
       </div>
 
-      <div class="toolbar">
-        <input type="text" id="searchInput" placeholder="Rechercher un nom, un email, un véhicule…">
-        <select id="statusFilter">
-          <option value="">Tous les statuts</option>
-          <option value="nouveau">À traiter</option>
-          <option value="traite">Traité</option>
-        </select>
-        <select id="sortSelect">
-          <option value="recent">Plus récent d'abord</option>
-          <option value="old">Plus ancien d'abord</option>
-          <option value="name">Par nom (A → Z)</option>
-        </select>
-      </div>
+      <section class="pipeline-section">
+        <div class="pipeline-heading">
+          <div><strong>Pipeline des dossiers</strong><span>Cliquez sur une étape pour filtrer</span></div>
+          <button type="button" class="pipeline-reset" id="pipelineReset">Voir tous les dossiers</button>
+        </div>
+        <div class="pipeline-overview" id="pipelineOverview"></div>
+      </section>
 
-      <div id="loadingState" class="loading-state"><div class="spinner"></div>Chargement des demandes…</div>
-      <div id="errorState" class="error-state" style="display:none;"></div>
-      <div id="emptyState" class="empty-state" style="display:none;">Aucune demande ne correspond à votre recherche.</div>
-      <div class="lead-list" id="leadList" style="display:none;"></div>
+      <div class="list-panel">
+        <div class="list-panel-head">
+          <div><h2>Liste des dossiers</h2><span id="leadResultCount">0 dossier</span></div>
+        </div>
+        <div class="toolbar">
+          <label class="search-field"><span aria-hidden="true">⌕</span><input type="text" id="searchInput" placeholder="Rechercher un client, un email, un véhicule…"></label>
+          <select id="statusFilter" aria-label="Filtrer par statut">
+            <option value="">Tous les statuts</option>
+            <option value="nouveau">Nouveau lead</option>
+            <option value="contacte">Contacté</option>
+            <option value="qualifie">Qualifié</option>
+            <option value="documents">Documents demandés</option>
+            <option value="complet">Dossier complet</option>
+            <option value="etude">En étude</option>
+            <option value="accepte">Accepté</option>
+            <option value="refuse">Refusé</option>
+            <option value="livre">Livré</option>
+            <option value="traite">Traité (ancien)</option>
+          </select>
+          <select id="sortSelect" aria-label="Trier les dossiers">
+            <option value="recent">Plus récent d'abord</option>
+            <option value="old">Plus ancien d'abord</option>
+            <option value="name">Par nom (A → Z)</option>
+          </select>
+        </div>
+
+        <div id="loadingState" class="loading-state"><div class="spinner"></div>Chargement des demandes…</div>
+        <div id="errorState" class="error-state" style="display:none;"></div>
+        <div id="emptyState" class="empty-state" style="display:none;">Aucune demande ne correspond à votre recherche.</div>
+        <div class="lead-list" id="leadList" style="display:none;"></div>
+      </div>
     </div>
 
     <div class="tab-panel" id="messagesPanel">
@@ -499,6 +704,7 @@
       <div id="vehiclesEmptyState" class="empty-state" style="display:none;">Aucun véhicule ne correspond à votre recherche.</div>
       <div class="lead-list" id="vehicleList" style="display:none;"></div>
     </div>
+    </main>
   </div>
 </div>
 
@@ -571,9 +777,15 @@
   const loginError = document.getElementById('loginError')!;
   const logoutBtn = document.getElementById('logoutBtn') as HTMLElement;
   const refreshBtn = document.getElementById('refreshBtn')!;
+  const dashboardTitle = document.getElementById('dashboardTitle')!;
+  const dashboardSubtitle = document.getElementById('dashboardSubtitle')!;
+  const lastRefresh = document.getElementById('lastRefresh')!;
   const searchInput = document.getElementById('searchInput') as HTMLInputElement;
   const statusFilter = document.getElementById('statusFilter') as HTMLSelectElement;
   const sortSelect = document.getElementById('sortSelect') as HTMLSelectElement;
+  const pipelineOverview = document.getElementById('pipelineOverview')!;
+  const pipelineReset = document.getElementById('pipelineReset')!;
+  const leadResultCount = document.getElementById('leadResultCount')!;
   const loadingState = document.getElementById('loadingState') as HTMLElement;
   const errorState = document.getElementById('errorState') as HTMLElement;
   const emptyState = document.getElementById('emptyState') as HTMLElement;
@@ -629,6 +841,32 @@
   let allMessages: ContactMessage[] = [];
   let allVehicles: VehicleAdmin[] = [];
 
+  const LEAD_STAGES = [
+    { value: 'nouveau', label: 'Nouveau', short: 'Nouveau', color: '#f00078' },
+    { value: 'contacte', label: 'Contacté', short: 'Contacté', color: '#7c5ce5' },
+    { value: 'qualifie', label: 'Qualifié', short: 'Qualifié', color: '#2864dc' },
+    { value: 'documents', label: 'Documents demandés', short: 'Documents', color: '#d27a14' },
+    { value: 'complet', label: 'Dossier complet', short: 'Complet', color: '#0f8d72' },
+    { value: 'etude', label: 'En étude', short: 'En étude', color: '#585b66' },
+    { value: 'accepte', label: 'Accepté', short: 'Accepté', color: '#168653' },
+    { value: 'refuse', label: 'Refusé', short: 'Refusé', color: '#c43e3e' },
+    { value: 'livre', label: 'Livré', short: 'Livré', color: '#111113' },
+  ];
+
+  function leadStatusInfo(value?: string){
+    if(value === 'traite') return { value: 'traite', label: 'Traité (ancien)', short: 'Traité', color: '#777780' };
+    return LEAD_STAGES.find(stage => stage.value === (value || 'nouveau')) || LEAD_STAGES[0];
+  }
+
+  function leadStatusOptions(current?: string){
+    const currentValue = current || 'nouveau';
+    const options = LEAD_STAGES.map(stage =>
+      '<option value="' + stage.value + '"' + (stage.value === currentValue ? ' selected' : '') + '>' + stage.label + '</option>'
+    );
+    if(currentValue === 'traite') options.push('<option value="traite" selected>Traité (ancien)</option>');
+    return options.join('');
+  }
+
   function setActiveTab(tab: 'leads' | 'messages' | 'vehicles'){
     tabLeadsBtn.classList.toggle('active', tab === 'leads');
     tabMessagesBtn.classList.toggle('active', tab === 'messages');
@@ -636,13 +874,20 @@
     leadsPanel.classList.toggle('active', tab === 'leads');
     messagesPanel.classList.toggle('active', tab === 'messages');
     vehiclesPanel.classList.toggle('active', tab === 'vehicles');
+    const copy = tab === 'leads'
+      ? ['Dossiers clients', 'Suivez chaque demande, de la simulation à la livraison.']
+      : tab === 'messages'
+        ? ['Messages de contact', 'Traitez rapidement les demandes reçues depuis le site.']
+        : ['Catalogue véhicules', 'Gérez les véhicules visibles sur ElevenLease.fr.'];
+    dashboardTitle.textContent = copy[0];
+    dashboardSubtitle.textContent = copy[1];
   }
   tabLeadsBtn.addEventListener('click', () => setActiveTab('leads'));
   tabMessagesBtn.addEventListener('click', () => setActiveTab('messages'));
   tabVehiclesBtn.addEventListener('click', () => setActiveTab('vehicles'));
 
   function updateTabCounts(){
-    const leadsCount = allLeads.filter(l => (l.status || 'nouveau') !== 'traite').length;
+    const leadsCount = allLeads.filter(l => (l.status || 'nouveau') === 'nouveau').length;
     const messagesCount = allMessages.filter(m => (m.status || 'nouveau') !== 'traite').length;
     leadsTabCount.textContent = String(leadsCount);
     leadsTabCount.style.display = leadsCount > 0 ? 'inline-flex' : 'none';
@@ -737,12 +982,25 @@
 
   function updateStats(){
     const total = allLeads.length;
-    const traite = allLeads.filter(l => l.status === 'traite').length;
-    const eligibles = allLeads.filter(l => l.eligible === 'Oui').length;
+    const nouveaux = allLeads.filter(l => (l.status || 'nouveau') === 'nouveau').length;
+    const actifs = allLeads.filter(l => ['contacte','qualifie','documents','complet','etude','traite'].includes(l.status || '')).length;
+    const convertis = allLeads.filter(l => ['accepte','livre'].includes(l.status || '')).length;
     statTotal.textContent = String(total);
-    statNouveau.textContent = String(total - traite);
-    statTraite.textContent = String(traite);
-    statEligible.textContent = String(eligibles);
+    statNouveau.textContent = String(nouveaux);
+    statTraite.textContent = String(actifs);
+    statEligible.textContent = String(convertis);
+    pipelineOverview.innerHTML = LEAD_STAGES.map(stage => {
+      const count = allLeads.filter(lead => (lead.status || 'nouveau') === stage.value).length;
+      return '<button type="button" class="pipeline-step' + (statusFilter.value === stage.value ? ' active' : '') +
+        '" data-status="' + stage.value + '" style="--stage-color:' + stage.color + '">' +
+        '<span class="pipeline-dot"></span><strong>' + count + '</strong><span>' + stage.short + '</span></button>';
+    }).join('');
+    pipelineOverview.querySelectorAll<HTMLButtonElement>('.pipeline-step').forEach(button => {
+      button.addEventListener('click', () => {
+        statusFilter.value = button.dataset.status || '';
+        renderLeads();
+      });
+    });
     document.querySelectorAll('#leadsPanel .stat-card').forEach((el, i) => setTimeout(() => el.classList.add('in'), i * 60));
     updateTabCounts();
   }
@@ -920,6 +1178,7 @@
 
   function buildCard(lead: Lead, index: number){
     const status = lead.status || 'nouveau';
+    const statusInfo = leadStatusInfo(status);
     const eligInfo = eligibilityInfo(lead);
     const fullName = ((lead.prenom || '') + ' ' + (lead.nom || '')).trim() || 'Sans nom';
     const initial = (lead.prenom || lead.nom || '?').trim().charAt(0).toUpperCase();
@@ -936,18 +1195,22 @@
     const mailHref = lead.email ? 'mailto:' + lead.email : '';
 
     return (
-      '<div class="lead-card" data-id="' + lead.id + '" style="animation-delay:' + Math.min(index * 0.035, 0.3) + 's">' +
+      '<div class="lead-card" data-id="' + lead.id + '" data-status="' + escapeHtml(statusInfo.value) +
+        '" style="--status-color:' + statusInfo.color + ';animation-delay:' + Math.min(index * 0.035, 0.3) + 's">' +
         '<div class="lead-card-header">' +
           '<div class="lead-avatar ' + (eligInfo.cls === 'eligible' ? 'eligible' : '') + '">' + escapeHtml(initial) + '</div>' +
           '<div class="lead-main">' +
             '<div class="lead-name-row">' +
               '<span class="lead-name">' + escapeHtml(fullName) + '</span>' +
               '<span class="badge ' + eligInfo.cls + '"><span class="badge-dot"></span>' + escapeHtml(eligInfo.label) + '</span>' +
-              '<span class="status-pill ' + status + '">' + (status === 'traite' ? 'Traité' : 'À traiter') + '</span>' +
             '</div>' +
             '<div class="lead-sub">' + escapeHtml(subLine) + '</div>' +
           '</div>' +
           '<div class="lead-meta">' +
+            (isPartner()
+              ? '<span class="crm-status-readonly" style="--status-color:' + statusInfo.color + '">' + escapeHtml(statusInfo.label) + '</span>'
+              : '<select class="crm-status-select" data-id="' + lead.id + '" aria-label="Statut de ' + escapeHtml(fullName) +
+                '" style="--status-color:' + statusInfo.color + '">' + leadStatusOptions(status) + '</select>') +
             '<span class="lead-date">' + relativeTime(lead.created_at) + '</span>' +
             CHEVRON_SVG +
           '</div>' +
@@ -970,7 +1233,7 @@
                 (isPartner() ? '' : '<button type="button" class="edit-btn" data-id="' + lead.id + '">Modifier</button>') +
                 (isPartner() ? '' : '<button type="button" class="delete-btn" data-id="' + lead.id + '">Supprimer</button>') +
               '</div>' +
-              (isPartner() ? '' : '<button class="status-btn ' + status + '" data-id="' + lead.id + '" data-status="' + status + '"><span class="dot"></span>' + (status === 'traite' ? 'Marquer comme à traiter' : 'Marquer comme traité') + '</button>') +
+              '<span class="lead-stage-summary"><span style="background:' + statusInfo.color + '"></span>Étape actuelle : ' + escapeHtml(statusInfo.label) + '</span>' +
             '</div>' +
             '</div>' +
             (isPartner() ? '' : buildEditForm(lead)) +
@@ -1004,6 +1267,8 @@
       return sortVal === 'old' ? da.getTime() - db.getTime() : db.getTime() - da.getTime();
     });
 
+    leadResultCount.textContent = filtered.length + ' dossier' + (filtered.length > 1 ? 's' : '');
+
     if(filtered.length === 0){
       leadList.style.display = 'none';
       emptyState.style.display = 'block';
@@ -1020,8 +1285,9 @@
     root.querySelectorAll<HTMLElement>('.lead-card-header').forEach(header => {
       header.addEventListener('click', () => toggleCard(header.closest('.lead-card') as HTMLElement));
     });
-    root.querySelectorAll<HTMLButtonElement>('.status-btn').forEach(btn => {
-      btn.addEventListener('click', (e) => { e.stopPropagation(); onToggleStatus(e); });
+    root.querySelectorAll<HTMLSelectElement>('.crm-status-select').forEach(select => {
+      select.addEventListener('click', e => e.stopPropagation());
+      select.addEventListener('change', e => { e.stopPropagation(); onLeadStatusChange(select); });
     });
     root.querySelectorAll<HTMLButtonElement>('.edit-btn').forEach(btn => {
       btn.addEventListener('click', (e) => { e.stopPropagation(); btn.closest('.lead-card')!.classList.add('editing'); });
@@ -1231,20 +1497,20 @@
     };
   }
 
-  async function onToggleStatus(e: Event){
-    const btn = e.currentTarget as HTMLButtonElement;
-    const id = btn.dataset.id!;
-    const currentStatus = btn.dataset.status;
-    const newStatus = currentStatus === 'traite' ? 'nouveau' : 'traite';
-    btn.disabled = true;
+  async function onLeadStatusChange(select: HTMLSelectElement){
+    const id = select.dataset.id!;
+    const lead = allLeads.find(item => String(item.id) === String(id));
+    const previousStatus = lead?.status || 'nouveau';
+    const newStatus = select.value;
+    select.disabled = true;
     try{
       await callAdminFunction({ ...authPayload(), action: 'update-status', id, status: newStatus });
-      const lead = allLeads.find(l => String(l.id) === String(id));
       if(lead) lead.status = newStatus;
       renderLeads();
     }catch(err: any){
       console.error(err);
-      btn.disabled = false;
+      select.value = previousStatus;
+      select.disabled = false;
       alert("Impossible de mettre à jour le statut : " + err.message);
     }
   }
@@ -1258,6 +1524,7 @@
       const data = await callAdminFunction({ ...authPayload() });
       allLeads = data.leads || [];
       loadingState.style.display = 'none';
+      lastRefresh.textContent = 'Actualisé à ' + new Date().toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
       renderLeads();
     }catch(err: any){
       console.error(err);
@@ -1790,6 +2057,10 @@
   });
 
   refreshBtn.addEventListener('click', () => { loadLeads(); loadMessages(); loadVehicles(); });
+  pipelineReset.addEventListener('click', () => {
+    statusFilter.value = '';
+    renderLeads();
+  });
   searchInput.addEventListener('input', renderLeads);
   statusFilter.addEventListener('change', renderLeads);
   sortSelect.addEventListener('change', renderLeads);
