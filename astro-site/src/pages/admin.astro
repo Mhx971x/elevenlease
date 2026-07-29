@@ -498,6 +498,8 @@
     statut_juridique?: string; siren?: string; chiffre_affaires?: string;
     anciennete_entreprise?: string; consent_recontact?: boolean;
     eligible?: string; criteres_risque?: string; message?: string;
+    confirmation_email_status?: string; confirmation_email_id?: string;
+    confirmation_email_sent_at?: string; confirmation_email_error?: string;
     profil?: string; created_at?: string;
     [key: string]: unknown;
   }
@@ -766,7 +768,15 @@
   }
 
   function buildDetailGrid(lead: Lead){
+    const confirmationEmail = lead.confirmation_email_status === 'sent'
+      ? 'Envoyé' + (lead.confirmation_email_sent_at ? ' le ' + formatDate(lead.confirmation_email_sent_at) : '')
+      : lead.confirmation_email_status === 'failed'
+        ? 'Échec d’envoi'
+        : lead.confirmation_email_status === 'pending'
+          ? 'En attente'
+          : '';
     const items = [
+      { label: 'Email de confirmation', value: confirmationEmail },
       { label: 'Mode de recherche', value: lead.recherche_vehicule },
       { label: 'Véhicule demandé', value: lead.vehicule },
       { label: 'Carrosserie', value: lead.type_vehicule_souhaite },

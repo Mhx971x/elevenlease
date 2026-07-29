@@ -29,6 +29,10 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
         <p>Quelques questions rapides pour une offre sur-mesure de notre réseau de partenaires, sans engagement.</p>
       </div>
       <form id="leadForm" class="lead-form" novalidate>
+        <div class="honeypot-field" aria-hidden="true">
+          <label for="fWebsite">Site internet</label>
+          <input type="text" id="fWebsite" name="website" tabindex="-1" autocomplete="off">
+        </div>
         <div class="stepper-progress" id="stepperProgress">
           <div class="stepper-bar-track"><div class="stepper-bar-fill" id="stepperBarFill"></div></div>
           <div class="stepper-meta">
@@ -283,6 +287,7 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
           <div class="success-icon">🎉</div>
           <h2>Votre demande a bien été envoyée !</h2>
           <p>Votre dossier vient d'être transmis à notre réseau de partenaires.</p>
+          <p class="success-email-notice" id="successEmailNotice" hidden>Un email de confirmation vient de vous être envoyé.</p>
           <div class="success-steps">
             <div class="s-label">Les prochaines étapes</div>
             <div class="s-item">✓ Analyse de votre dossier</div>
@@ -425,25 +430,10 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
   //    (modifier) > Version "Nouvelle version" > Déployer, pour que
   //    l'URL existante utilise ce nouveau code.
   // ============================================================
-  const LEADS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4VdDWwJoaqpudvU3Y2pGNyBt0zkYRSYKaZ9syNELViJdWoIoeDtb9Axu0ecA5B4bU/exec";
-
   // ============================================================
-  // Espace admin (Supabase) : chaque demande est aussi enregistrée
-  // dans Supabase pour pouvoir être consultée sur admin.html.
-  // Remplacez ces deux valeurs par celles de votre projet Supabase
-  // (Project Settings > API). La clé "anon" est prévue pour être
-  // publique : la table `leads` n'autorise que l'ajout avec cette clé,
-  // jamais la lecture (voir supabase-setup.sql).
-  //
-  // Nouveaux champs de qualification : si la table `leads` existe déjà,
-  // exécutez une fois dans le SQL editor Supabase :
-  //   ALTER TABLE leads
-  //     ADD COLUMN IF NOT EXISTS neuf_occasion text,
-  //     ADD COLUMN IF NOT EXISTS duree_contrat text,
-  //     ADD COLUMN IF NOT EXISTS apport text,
-  //     ADD COLUMN IF NOT EXISTS date_livraison text,
-  //     ADD COLUMN IF NOT EXISTS vehicule_reprise text,
-  //     ADD COLUMN IF NOT EXISTS vehicule_reprise_details text;
+  // Point d'entrée public du simulateur. La clé publishable reste publique,
+  // tandis que l'enregistrement du lead et l'appel Brevo ont lieu dans la
+  // fonction Edge `submit-simulation`, qui seule connaît les secrets serveur.
   // ============================================================
   const SUPABASE_URL = "https://syzlvsfhdmegmebsvscm.supabase.co";
   const SUPABASE_ANON_KEY = "sb_publishable_aF6YEQBB5UrjOrNo9RTMjw_SM3MPKvM";
@@ -459,66 +449,27 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
     message: string; consentRecontact: boolean; eligible?: string; criteresRisque?: string;
   }
 
-  async function sendToSupabase(payload: LeadPayload){
+  async function submitSimulation(payload: LeadPayload, submissionId: string, formStartedAt: number){
     if(!SUPABASE_URL || !SUPABASE_ANON_KEY) throw new Error('Supabase non configuré');
-    const headers = {
-      'Content-Type': 'application/json',
-      'apikey': SUPABASE_ANON_KEY,
-      'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-      'Prefer': 'return=minimal'
-    };
-    const legacyData = {
-      prenom: payload.prenom,
-      nom: payload.nom,
-      telephone: payload.telephone,
-      email: payload.email,
-      vehicule: payload.vehicule,
-      profil: payload.profil,
-      entreprise: payload.entreprise,
-      financement: payload.financement,
-      type_vehicule_souhaite: payload.typeVehiculeSouhaite,
-      budget_souhaite: payload.budgetSouhaite,
-      neuf_occasion: payload.neufOccasion,
-      duree_contrat: payload.dureeContrat,
-      apport: payload.apport,
-      date_livraison: payload.dateLivraison,
-      vehicule_reprise: payload.vehiculeReprise,
-      vehicule_reprise_details: payload.vehiculeRepriseDetails,
-      statut_pro: payload.statutPro,
-      revenus: payload.revenus,
-      charges: payload.charges,
-      anciennete: payload.anciennete,
-      age: payload.age,
-      ficp: payload.ficp,
-      eligible: payload.eligible,
-      criteres_risque: payload.criteresRisque,
-      message: payload.message
-    };
-    const enrichedData = {
-      ...legacyData,
-      recherche_vehicule: payload.rechercheVehicule,
-      motorisation: payload.motorisation,
-      statut_juridique: payload.statutJuridique,
-      siren: payload.siren,
-      chiffre_affaires: payload.chiffreAffaires,
-      anciennete_entreprise: payload.ancienneteEntreprise,
-      consent_recontact: payload.consentRecontact,
-    };
-    let response = await fetch(SUPABASE_URL + '/rest/v1/leads', {
+    const response = await fetch(SUPABASE_URL + '/functions/v1/submit-simulation', {
       method: 'POST',
-      headers,
-      body: JSON.stringify(enrichedData)
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
+      },
+      body: JSON.stringify({
+        ...payload,
+        submissionId,
+        formStartedAt,
+        website: (document.getElementById('fWebsite') as HTMLInputElement).value,
+      })
     });
-    // Tant que la migration SQL n'est pas encore appliquée en production,
-    // un second essai conserve au moins le lead avec les colonnes historiques.
+    const result = await response.json().catch(() => ({}));
     if(!response.ok){
-      response = await fetch(SUPABASE_URL + '/rest/v1/leads', {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(legacyData)
-      });
+      throw new Error(typeof result.error === 'string' ? result.error : 'Supabase HTTP ' + response.status);
     }
-    if(!response.ok) throw new Error('Supabase HTTP ' + response.status);
+    return result;
   }
 
   // Seuils utilisés pour l'estimation d'éligibilité (indicatifs,
@@ -562,6 +513,7 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
   const formStatus = document.getElementById('formStatus')!;
   const formStatusText = document.getElementById('formStatusText')!;
   const successScreen = document.getElementById('successScreen')!;
+  const successEmailNotice = document.getElementById('successEmailNotice') as HTMLParagraphElement;
   const contactIntro = document.getElementById('contactIntro') as HTMLElement;
   const formNote = document.getElementById('formNote') as HTMLElement;
   const fVehiculeInput = document.getElementById('fVehicule') as HTMLInputElement;
@@ -582,6 +534,8 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
   if(leadForm){
     const stepEls = Array.from(document.querySelectorAll<HTMLElement>('.form-step'));
     let currentStep = 1;
+    let formStartedAt = Date.now();
+    let submissionId = crypto.randomUUID();
 
     const stepBack = document.getElementById('stepBack') as HTMLButtonElement;
     const stepNext = document.getElementById('stepNext') as HTMLButtonElement;
@@ -824,6 +778,8 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
         if(preciseRadio) preciseRadio.checked = true;
       }
       currentStep = 1;
+      formStartedAt = Date.now();
+      submissionId = crypto.randomUUID();
       formStatus.classList.remove('show', 'error');
       successScreen.classList.remove('show');
       contactIntro.style.display = '';
@@ -851,10 +807,6 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
     leadForm.addEventListener('submit', (e)=> e.preventDefault());
 
     async function submitLead(){
-      if(!LEADS_SCRIPT_URL){
-        showFormError("Formulaire pas encore configuré. Merci de nous contacter directement à contact@elevenlease.fr en attendant.");
-        return;
-      }
       const professionnel = radioValue('profil') === 'Professionnel';
       const vehiculeRepriseVal = radioValue('vehiculeReprise');
       const payload: LeadPayload = {
@@ -902,17 +854,8 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
       stepNext.textContent = 'Envoi en cours…';
       formStatus.classList.remove('show', 'error');
       try{
-        const destinations = await Promise.allSettled([
-          sendToSupabase(payload),
-          fetch(LEADS_SCRIPT_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-            body: JSON.stringify(payload)
-          }).then(res => {
-            if(!res.ok) throw new Error('HTTP ' + res.status);
-          })
-        ]);
-        if(destinations.every(result => result.status === 'rejected')) throw new Error('Aucune destination disponible');
+        const result = await submitSimulation(payload, submissionId, formStartedAt);
+        successEmailNotice.hidden = result.emailSent !== true;
         stepperProgress.style.display = 'none';
         stepEls.forEach(el => el.classList.remove('active'));
         stepperNav.style.display = 'none';
@@ -995,6 +938,11 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
     border:1px solid var(--border);border-radius:100px;padding:6px 13px;white-space:nowrap;
   }
   .lead-form{display:flex;flex-direction:column;gap:8px;max-width:480px;margin:0 auto;}
+  .honeypot-field{
+    position:absolute!important;width:1px!important;height:1px!important;
+    padding:0!important;margin:-1px!important;overflow:hidden!important;
+    clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;
+  }
   .lead-form input, .lead-form select, .lead-form textarea{
     background:var(--surface-2);border:1px solid var(--border);color:var(--text);
     padding:16px 18px;border-radius:14px;font-size:15.5px;font-family:'Inter',sans-serif;
@@ -1135,6 +1083,9 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
   .success-icon{font-size:40px;margin-bottom:14px;}
   .success-screen h2{font-size:clamp(22px,3.2vw,28px);margin-bottom:12px;}
   .success-screen > p{color:var(--text-dim);font-size:15px;max-width:420px;margin:0 auto 28px;}
+  .success-screen > .success-email-notice{
+    color:#18794e;font-size:13.5px;font-weight:600;margin-top:-18px;margin-bottom:24px;
+  }
   .success-steps{
     text-align:left;max-width:380px;margin:0 auto 28px;border:1px solid var(--border);border-radius:16px;
     padding:20px 22px;background:#fff;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:12px;
