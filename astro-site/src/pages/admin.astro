@@ -230,19 +230,26 @@
   .document-portal-status.complete{background:#edf9f3;border-color:#c9eadb;color:#137a51;}
   .document-portal-status.expired{color:#b42318;border-color:#f0c7c4;}
   .document-portal-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
-  .document-link-btn,.document-revoke-btn,.document-download-btn,.document-delete-btn{
+  .document-link-btn,.document-email-btn,.document-revoke-btn,.document-download-btn,.document-delete-btn{
     display:inline-flex;align-items:center;padding:8px 13px;border-radius:99px;border:1px solid var(--border);
     background:#fff;color:var(--text);font:600 11.5px/1 'Inter',sans-serif;cursor:pointer;
   }
   .document-link-btn{background:var(--text);border-color:var(--text);color:#fff;}
+  .document-email-btn{background:var(--accent);border-color:transparent;color:#fff;}
   .document-revoke-btn,.document-delete-btn{color:#b42318;}
+  .document-email-status{display:flex;align-items:center;gap:7px;margin-top:11px;color:var(--text-dim);font-size:10.5px;}
+  .document-email-status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--text-faint);}
+  .document-email-status.sent{color:#137a51;}
+  .document-email-status.sent::before{background:#137a51;}
+  .document-email-status.failed{color:#b42318;}
+  .document-email-status.failed::before{background:#b42318;}
   .document-admin-list{display:flex;flex-direction:column;gap:7px;margin-top:14px;}
   .document-admin-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:10px;background:#fff;border:1px solid var(--border);}
   .document-admin-info{display:flex;flex-direction:column;min-width:0;flex:1;}
   .document-admin-info strong{font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .document-admin-info span{font-size:10px;color:var(--text-faint);}
   .document-download-btn,.document-delete-btn{padding:6px 9px;font-size:10px;}
-  .document-link-btn:disabled,.document-revoke-btn:disabled,.document-download-btn:disabled,.document-delete-btn:disabled{opacity:.5;cursor:default;}
+  .document-link-btn:disabled,.document-email-btn:disabled,.document-revoke-btn:disabled,.document-download-btn:disabled,.document-delete-btn:disabled{opacity:.5;cursor:default;}
 
   .lead-edit-form{display:none;}
   .lead-card.editing .lead-view{display:none;}
@@ -737,6 +744,8 @@
     eligible?: string; criteres_risque?: string; message?: string;
     confirmation_email_status?: string; confirmation_email_id?: string;
     confirmation_email_sent_at?: string; confirmation_email_error?: string;
+    document_request_email_status?: string; document_request_email_id?: string;
+    document_request_email_sent_at?: string; document_request_email_error?: string;
     document_portal?: {
       id: string; expires_at: string; expired?: boolean; revoked_at?: string; completed_at?: string;
       created_at?: string; documents?: Array<{
@@ -1142,6 +1151,15 @@
           ? 'Dossier complet'
           : documents.length + ' pièce' + (documents.length > 1 ? 's' : '') + ' reçue' + (documents.length > 1 ? 's' : '');
     const statusClass = expired ? ' expired' : complete ? ' complete' : '';
+    const emailSent = lead.document_request_email_status === 'sent';
+    const emailFailed = lead.document_request_email_status === 'failed';
+    const emailStatus = emailSent
+      ? '<div class="document-email-status sent">Demande envoyée' +
+        (lead.document_request_email_sent_at ? ' · ' + relativeTime(lead.document_request_email_sent_at) : '') + '</div>'
+      : emailFailed
+        ? '<div class="document-email-status failed">Échec du dernier envoi' +
+          (lead.document_request_email_error ? ' · ' + escapeHtml(lead.document_request_email_error) : '') + '</div>'
+        : '<div class="document-email-status">Aucune demande de documents envoyée</div>';
     const files = documents.map(document =>
       '<div class="document-admin-item">' +
         '<div class="document-admin-info">' +
@@ -1164,6 +1182,10 @@
           '<span class="document-portal-status' + statusClass + '">' + escapeHtml(statusLabel) + '</span>' +
         '</div>' +
         '<div class="document-portal-actions">' +
+          '<button type="button" class="document-email-btn" data-id="' + lead.id + '" data-email="' + escapeHtml(lead.email || '') + '"' +
+            (!lead.email ? ' disabled title="Adresse email manquante"' : '') + '>' +
+            (emailSent ? 'Renvoyer la demande par email' : 'Envoyer la demande par email') +
+          '</button>' +
           '<button type="button" class="document-link-btn" data-id="' + lead.id + '" data-has-portal="' + (active ? '1' : '0') + '">' +
             (active ? 'Générer un nouveau lien' : 'Créer le lien documents') +
           '</button>' +
@@ -1171,6 +1193,7 @@
             ? '<button type="button" class="document-revoke-btn" data-id="' + lead.id + '">Désactiver le lien</button>'
             : '') +
         '</div>' +
+        emailStatus +
         (files ? '<div class="document-admin-list">' + files + '</div>' : '') +
       '</div>'
     );
@@ -1304,6 +1327,9 @@
     root.querySelectorAll<HTMLButtonElement>('.document-link-btn').forEach(btn => {
       btn.addEventListener('click', (e) => { e.stopPropagation(); onCreateDocumentPortal(btn); });
     });
+    root.querySelectorAll<HTMLButtonElement>('.document-email-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => { e.stopPropagation(); onSendDocumentRequest(btn); });
+    });
     root.querySelectorAll<HTMLButtonElement>('.document-revoke-btn').forEach(btn => {
       btn.addEventListener('click', (e) => { e.stopPropagation(); onRevokeDocumentPortal(btn); });
     });
@@ -1321,6 +1347,53 @@
       alert('Lien sécurisé copié. Vous pouvez maintenant le transmettre au client.');
     }catch{
       prompt('Copiez ce lien sécurisé et transmettez-le au client :', url);
+    }
+  }
+
+  async function onSendDocumentRequest(btn: HTMLButtonElement){
+    const id = btn.dataset.id!;
+    const email = btn.dataset.email || '';
+    const lead = allLeads.find(item => String(item.id) === String(id));
+    const name = lead ? ((lead.prenom || '') + ' ' + (lead.nom || '')).trim() : 'ce client';
+    if(!email) return;
+    const confirmation = 'Envoyer une demande de documents à ' + name + ' (' + email + ') ?\n\n' +
+      'Un nouveau lien sécurisé valable 30 jours sera créé. Le lien précédent sera désactivé.';
+    if(!confirm(confirmation)) return;
+
+    btn.disabled = true;
+    const previousText = btn.textContent;
+    btn.textContent = 'Envoi en cours…';
+    try{
+      const result = await callAdminFunction({
+        ...authPayload(),
+        action: 'send-document-request',
+        id,
+      });
+      if(lead){
+        lead.status = 'documents';
+        lead.document_request_email_status = result.emailStatus || 'sent';
+        lead.document_request_email_id = result.messageId || '';
+        lead.document_request_email_sent_at = result.sentAt || new Date().toISOString();
+        lead.document_request_email_error = '';
+        lead.document_portal = {
+          ...result.portal,
+          expired: false,
+          documents: lead.document_portal?.documents || [],
+        };
+        refreshCard(lead);
+        updateStats();
+      }
+      alert('La demande de documents a bien été envoyée à ' + email + '.');
+    }catch(err: any){
+      if(lead){
+        lead.document_request_email_status = 'failed';
+        lead.document_request_email_error = err.message || 'Erreur d’envoi';
+        refreshCard(lead);
+      }else{
+        btn.disabled = false;
+        btn.textContent = previousText || 'Envoyer la demande par email';
+      }
+      alert('Impossible d’envoyer la demande de documents : ' + err.message);
     }
   }
 
