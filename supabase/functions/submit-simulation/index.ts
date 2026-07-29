@@ -385,7 +385,7 @@ function emailHtml(payload: LeadPayload) {
             </tr>
             <tr>
               <td style="padding:32px 34px 12px;">
-                <img src="https://elevenlease.fr/eleven-lease-logo.png" width="145" alt="Eleven Lease" style="display:block;width:145px;max-width:100%;height:auto;border:0;">
+                <img src="https://elevenlease.fr/eleven-lease-logo-light.png" width="145" alt="Eleven Lease" style="display:block;width:145px;max-width:100%;height:auto;border:0;">
               </td>
             </tr>
             <tr>
