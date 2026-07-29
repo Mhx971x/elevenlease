@@ -314,6 +314,21 @@
       track.setAttribute('aria-valuetext', label + ', ' + safePercent + ' %');
     }
 
+    function resetUploadProgress(input: HTMLInputElement){
+      const card = input.closest('.document-card, .optional-section') as HTMLElement | null;
+      const progress = card?.querySelector('.upload-progress') as HTMLElement | null;
+      const track = progress?.querySelector('.upload-progress-track') as HTMLElement | null;
+      const fill = progress?.querySelector('.upload-progress-fill') as HTMLElement | null;
+      const progressPercent = progress?.querySelector('.upload-progress-percent') as HTMLElement | null;
+      if(progress) progress.hidden = true;
+      if(fill) fill.style.width = '0%';
+      if(progressPercent) progressPercent.textContent = '0 %';
+      if(track){
+        track.setAttribute('aria-valuenow', '0');
+        track.removeAttribute('aria-valuetext');
+      }
+    }
+
     function uploadToSignedUrlWithProgress(
       path: string,
       uploadToken: string,
@@ -398,6 +413,7 @@
           portalData!.portal.completed = result.completed === true;
         }
         render();
+        resetUploadProgress(input);
         setCardBusy(input, false, files.length > 1 ? files.length + ' fichiers ajoutés.' : 'Fichier ajouté.');
         input.value = '';
       }catch(error: any){
