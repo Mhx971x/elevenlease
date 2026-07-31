@@ -762,6 +762,7 @@
     <div class="tab-panel" id="analyticsPanel">
       <div class="analytics-toolbar">
         <div class="analytics-range" role="group" aria-label="Période des statistiques">
+          <button type="button" class="analytics-range-btn" data-range="1">24 h</button>
           <button type="button" class="analytics-range-btn active" data-range="7">7 jours</button>
           <button type="button" class="analytics-range-btn" data-range="30">30 jours</button>
         </div>
@@ -783,7 +784,7 @@
         <div class="analytics-layout">
           <section class="analytics-panel">
             <div class="analytics-panel-head">
-              <div><h2>Évolution de l’audience</h2><p>Visiteurs et pages vues par jour</p></div>
+              <div><h2>Évolution de l’audience</h2><p id="analyticsTrendSubtitle">Visiteurs et pages vues par jour</p></div>
               <div class="analytics-legend"><span><i></i>Visiteurs</span><span><i></i>Pages vues</span></div>
             </div>
             <div class="analytics-chart" id="analyticsTrend" aria-label="Évolution quotidienne des visiteurs et pages vues"></div>
@@ -958,6 +959,7 @@
   const analyticsConversion = document.getElementById('analyticsConversion')!;
   const analyticsDepth = document.getElementById('analyticsDepth')!;
   const analyticsRangeLabel = document.getElementById('analyticsRangeLabel')!;
+  const analyticsTrendSubtitle = document.getElementById('analyticsTrendSubtitle')!;
   const analyticsTrend = document.getElementById('analyticsTrend')!;
   const analyticsPages = document.getElementById('analyticsPages')!;
   const analyticsReferrers = document.getElementById('analyticsReferrers')!;
@@ -1117,13 +1119,18 @@
     }
     const max = Math.max(...rows.flatMap(row => [row.pageviews, row.visitors]), 1);
     analyticsTrend.innerHTML = rows.map((row, index) => {
-      const date = new Date(row.date + 'T12:00:00');
-      const label = analyticsRange === 30 && index % 5 !== 0 && index !== rows.length - 1
-        ? ''
-        : date.toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit' });
+      const date = new Date(analyticsRange === 1 ? row.date : row.date + 'T12:00:00');
+      const label = analyticsRange === 1
+        ? (index % 4 === 0 || index === rows.length - 1 ? date.toLocaleTimeString('fr-FR', { hour:'2-digit' }) : '')
+        : analyticsRange === 30 && index % 5 !== 0 && index !== rows.length - 1
+          ? ''
+          : date.toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit' });
       const visitorsHeight = Math.max(2, (row.visitors / max) * 100);
       const viewsHeight = Math.max(2, (row.pageviews / max) * 100);
-      return '<div class="analytics-day" title="' + exactNumber.format(row.visitors) + ' visiteurs · ' + exactNumber.format(row.pageviews) + ' pages vues">' +
+      const periodLabel = analyticsRange === 1
+        ? date.toLocaleString('fr-FR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' })
+        : date.toLocaleDateString('fr-FR');
+      return '<div class="analytics-day" title="' + periodLabel + ' · ' + exactNumber.format(row.visitors) + ' visiteurs · ' + exactNumber.format(row.pageviews) + ' pages vues">' +
         '<div class="analytics-bar" style="height:' + visitorsHeight.toFixed(1) + '%"></div>' +
         '<div class="analytics-bar views" style="height:' + viewsHeight.toFixed(1) + '%"></div>' +
         (label ? '<span class="analytics-day-label">' + label + '</span>' : '') +
@@ -1137,7 +1144,8 @@
     analyticsLeads.textContent = exactNumber.format(data.metrics.leads);
     analyticsConversion.textContent = data.metrics.conversionRate.toLocaleString('fr-FR', { maximumFractionDigits: 1 }) + ' %';
     analyticsDepth.textContent = data.metrics.pagesPerVisitor.toLocaleString('fr-FR', { maximumFractionDigits: 1 });
-    analyticsRangeLabel.textContent = data.range + ' derniers jours';
+    analyticsRangeLabel.textContent = data.range === 1 ? '24 dernières heures' : data.range + ' derniers jours';
+    analyticsTrendSubtitle.textContent = data.range === 1 ? 'Visiteurs et pages vues par heure' : 'Visiteurs et pages vues par jour';
     renderAnalyticsTrend(data.trend);
     renderAnalyticsRanking(analyticsPages, data.pages, analyticsPageLabel);
     renderAnalyticsRanking(analyticsReferrers, data.referrers);

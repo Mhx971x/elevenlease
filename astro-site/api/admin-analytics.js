@@ -1,7 +1,8 @@
 const SUPABASE_ADMIN_URL = 'https://syzlvsfhdmegmebsvscm.supabase.co/functions/v1/admin-leads';
 const SUPABASE_ANON_KEY = 'sb_publishable_aF6YEQBB5UrjOrNo9RTMjw_SM3MPKvM';
 const VERCEL_ANALYTICS_URL = 'https://api.vercel.com/v1/query/web-analytics/visits/aggregate';
-const ALLOWED_RANGES = new Set([7, 30]);
+const VERCEL_ANALYTICS_COUNT_URL = 'https://api.vercel.com/v1/query/web-analytics/visits/count';
+const ALLOWED_RANGES = new Set([1, 7, 30]);
 
 function json(response, body, status = 200) {
   response.setHeader('Cache-Control', 'private, no-store, max-age=0');
@@ -73,6 +74,23 @@ async function queryAnalytics({ token, projectId, since, until, by, limit }) {
   return normalizeRows(data);
 }
 
+async function queryAnalyticsCount({ token, projectId, since, until }) {
+  const url = new URL(VERCEL_ANALYTICS_COUNT_URL);
+  url.searchParams.set('projectId', projectId);
+  url.searchParams.set('since', since);
+  url.searchParams.set('until', until);
+
+  const response = await fetch(url, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    const message = data?.error?.message || data?.message || `Vercel Analytics HTTP ${response.status}`;
+    throw new Error(message);
+  }
+  return data?.data || {};
+}
+
 export default async function handler(request, response) {
   if (request.method !== 'POST') {
     return json(response, { error: 'Méthode non autorisée' }, 405);
@@ -92,14 +110,21 @@ export default async function handler(request, response) {
     const adminData = await verifyAdmin(body);
     const untilDate = new Date();
     const sinceDate = new Date();
-    sinceDate.setUTCDate(untilDate.getUTCDate() - (range - 1));
-    sinceDate.setUTCHours(0, 0, 0, 0);
-    const since = dateOnly(sinceDate);
-    const until = dateOnly(untilDate);
+    if (range === 1) {
+      sinceDate.setTime(untilDate.getTime() - 24 * 60 * 60 * 1000);
+    } else {
+      sinceDate.setUTCDate(untilDate.getUTCDate() - (range - 1));
+      sinceDate.setUTCHours(0, 0, 0, 0);
+    }
+    const since = range === 1 ? sinceDate.toISOString() : dateOnly(sinceDate);
+    const until = range === 1 ? untilDate.toISOString() : dateOnly(untilDate);
     const queryBase = { token, projectId, since, until };
+    const timeGranularity = range === 1 ? 'hour' : 'day';
+    const trendLimit = range === 1 ? 24 : range;
 
-    const [trendRows, pageRows, countryRows, referrerRows, deviceRows] = await Promise.all([
-      queryAnalytics({ ...queryBase, by: 'day', limit: range }),
+    const [countData, trendRows, pageRows, countryRows, referrerRows, deviceRows] = await Promise.all([
+      queryAnalyticsCount(queryBase),
+      queryAnalytics({ ...queryBase, by: timeGranularity, limit: trendLimit }),
       queryAnalytics({ ...queryBase, by: 'requestPath', limit: 8 }),
       queryAnalytics({ ...queryBase, by: 'country', limit: 8 }),
       queryAnalytics({ ...queryBase, by: 'referrerHostname', limit: 8 }),
@@ -107,12 +132,12 @@ export default async function handler(request, response) {
     ]);
 
     const trend = trendRows.map((row) => ({
-      date: String(row.timestamp || '').slice(0, 10),
+      date: range === 1 ? String(row.timestamp || '') : String(row.timestamp || '').slice(0, 10),
       pageviews: Number(row.pageviews) || 0,
       visitors: Number(row.visitors) || 0,
     }));
-    const pageviews = trend.reduce((sum, row) => sum + row.pageviews, 0);
-    const visitors = trend.reduce((sum, row) => sum + row.visitors, 0);
+    const pageviews = Number(countData.pageviews) || 0;
+    const visitors = Number(countData.visitors) || 0;
     const leads = Array.isArray(adminData.leads)
       ? adminData.leads.filter((lead) => {
           const createdAt = Date.parse(lead?.created_at || '');
