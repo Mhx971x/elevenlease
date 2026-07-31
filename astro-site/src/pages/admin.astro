@@ -427,9 +427,52 @@
   .lead-stage-summary>span{width:7px;height:7px;border-radius:50%;}
   .document-portal-box{background:#fff;}
 
+  /* Audience — données Vercel Analytics + leads Supabase */
+  .analytics-toolbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px;}
+  .analytics-range{display:inline-flex;padding:4px;border:1px solid var(--border);border-radius:999px;background:#fff;}
+  .analytics-range-btn{padding:8px 14px;border:0;border-radius:999px;background:transparent;color:var(--text-dim);font:700 11px/1 'Inter',sans-serif;cursor:pointer;}
+  .analytics-range-btn.active{background:var(--crm-dark);color:#fff;}
+  .analytics-freshness{display:flex;align-items:center;gap:7px;color:var(--text-faint);font-size:11px;}
+  .analytics-freshness::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--crm-green);box-shadow:0 0 0 4px rgba(22,134,83,.1);}
+  .analytics-stats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:18px;}
+  .analytics-stat{min-height:118px;padding:17px;border:1px solid var(--border);border-radius:15px;background:#fff;box-shadow:0 8px 28px rgba(24,24,27,.04);}
+  .analytics-stat.primary{background:var(--crm-dark);color:#fff;border-color:var(--crm-dark);}
+  .analytics-stat-value{font-family:'Space Grotesk',sans-serif;font-size:28px;font-weight:700;line-height:1;}
+  .analytics-stat.primary .analytics-stat-value{color:#ff4fa8;}
+  .analytics-stat-label{margin-top:8px;color:var(--text-dim);font-size:11.5px;}
+  .analytics-stat.primary .analytics-stat-label{color:#aaaab2;}
+  .analytics-stat-context{margin-top:13px;color:var(--text-faint);font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;}
+  .analytics-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(250px,.75fr);gap:14px;margin-bottom:14px;}
+  .analytics-panel{min-width:0;padding:20px;border:1px solid var(--border);border-radius:17px;background:#fff;box-shadow:0 10px 30px rgba(24,24,27,.04);}
+  .analytics-panel-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:18px;}
+  .analytics-panel-head h2{font-size:15px;}
+  .analytics-panel-head p{margin-top:4px;color:var(--text-faint);font-size:10.5px;}
+  .analytics-legend{display:flex;align-items:center;gap:12px;color:var(--text-faint);font-size:9.5px;}
+  .analytics-legend span{display:flex;align-items:center;gap:5px;}
+  .analytics-legend i{width:7px;height:7px;border-radius:2px;background:var(--accent-1);}
+  .analytics-legend span:last-child i{background:#d7d7dd;}
+  .analytics-chart{height:210px;display:flex;align-items:flex-end;gap:clamp(4px,1vw,10px);padding:10px 2px 25px;border-bottom:1px solid var(--border);}
+  .analytics-day{position:relative;flex:1;height:100%;display:flex;align-items:flex-end;justify-content:center;gap:2px;min-width:0;}
+  .analytics-bar{width:min(12px,42%);min-height:2px;border-radius:4px 4px 1px 1px;background:var(--accent-1);transition:height .35s cubic-bezier(.16,1,.3,1);}
+  .analytics-bar.views{background:#d7d7dd;}
+  .analytics-day-label{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);color:var(--text-faint);font-size:8.5px;white-space:nowrap;}
+  .analytics-chart-empty{align-self:center;margin:auto;color:var(--text-faint);font-size:12px;}
+  .analytics-ranking{display:flex;flex-direction:column;gap:13px;}
+  .analytics-rank-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;}
+  .analytics-rank-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text-dim);font-size:11.5px;}
+  .analytics-rank-value{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;}
+  .analytics-rank-track{grid-column:1/-1;height:4px;overflow:hidden;border-radius:99px;background:var(--surface-2);}
+  .analytics-rank-fill{height:100%;border-radius:99px;background:var(--accent-1);}
+  .analytics-breakdowns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;}
+  .analytics-loading,.analytics-error{padding:50px 20px;border:1px solid var(--border);border-radius:17px;background:#fff;text-align:center;color:var(--text-dim);font-size:13px;}
+  .analytics-error{color:#b42318;}
+  .analytics-note{margin-top:14px;color:var(--text-faint);font-size:10px;line-height:1.6;}
+
   @media(max-width:1100px){
     .pipeline-overview{display:flex;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin;}
     .pipeline-step{min-width:98px;}
+    .analytics-stats{grid-template-columns:repeat(3,minmax(0,1fr));}
+    .analytics-breakdowns{grid-template-columns:1fr 1fr;}
   }
   @media(max-width:850px){
     header .wrap{padding:0 18px;}
@@ -441,6 +484,7 @@
     .crm-sidebar .tab-btn.active{box-shadow:inset 0 -3px 0 var(--accent-1);}
     .crm-workspace{padding:26px 18px 55px;}
     .stats-row{grid-template-columns:repeat(2,1fr);}
+    .analytics-layout{grid-template-columns:1fr;}
   }
   @media(max-width:600px){
     header{height:64px;}
@@ -472,6 +516,13 @@
     .lead-detail-inner{padding:17px 12px;}
     .detail-grid{grid-template-columns:1fr 1fr;padding:13px;gap:13px;}
     .lead-actions{align-items:flex-start;flex-direction:column;}
+    .analytics-toolbar{align-items:flex-start;flex-direction:column;}
+    .analytics-stats{grid-template-columns:1fr 1fr;gap:8px;}
+    .analytics-stat{min-height:105px;padding:14px;}
+    .analytics-stat-value{font-size:24px;}
+    .analytics-panel{padding:16px 13px;}
+    .analytics-breakdowns{grid-template-columns:1fr;}
+    .analytics-chart{height:185px;gap:3px;}
   }
 </style>
 </head>
@@ -517,6 +568,9 @@
         </button>
         <button type="button" class="tab-btn" id="tabVehiclesBtn">
           <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 15 1.5-5h11l1.5 5"/><path d="M3 15h18v4H3z"/><circle cx="7" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg></span><span>Véhicules</span>
+        </button>
+        <button type="button" class="tab-btn" id="tabAnalyticsBtn">
+          <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9"/><path d="M10 19V5"/><path d="M16 19v-7"/><path d="M22 19V3"/><path d="M2 19h20"/></svg></span><span>Audience</span>
         </button>
       </div>
     </aside>
@@ -704,6 +758,59 @@
       <div id="vehiclesEmptyState" class="empty-state" style="display:none;">Aucun véhicule ne correspond à votre recherche.</div>
       <div class="lead-list" id="vehicleList" style="display:none;"></div>
     </div>
+
+    <div class="tab-panel" id="analyticsPanel">
+      <div class="analytics-toolbar">
+        <div class="analytics-range" role="group" aria-label="Période des statistiques">
+          <button type="button" class="analytics-range-btn active" data-range="7">7 jours</button>
+          <button type="button" class="analytics-range-btn" data-range="30">30 jours</button>
+        </div>
+        <div class="analytics-freshness" id="analyticsFreshness">Actualisation automatique chaque minute</div>
+      </div>
+
+      <div class="analytics-loading" id="analyticsLoading"><div class="spinner"></div>Chargement des statistiques d’audience…</div>
+      <div class="analytics-error" id="analyticsError" style="display:none;"></div>
+
+      <div id="analyticsContent" style="display:none;">
+        <div class="analytics-stats">
+          <div class="analytics-stat primary"><div class="analytics-stat-value" id="analyticsVisitors">0</div><div class="analytics-stat-label">Visiteurs</div><div class="analytics-stat-context" id="analyticsRangeLabel">7 derniers jours</div></div>
+          <div class="analytics-stat"><div class="analytics-stat-value" id="analyticsPageviews">0</div><div class="analytics-stat-label">Pages vues</div><div class="analytics-stat-context">Audience Vercel</div></div>
+          <div class="analytics-stat"><div class="analytics-stat-value" id="analyticsLeads">0</div><div class="analytics-stat-label">Simulations reçues</div><div class="analytics-stat-context">Leads Supabase</div></div>
+          <div class="analytics-stat"><div class="analytics-stat-value" id="analyticsConversion">0 %</div><div class="analytics-stat-label">Visiteur → lead</div><div class="analytics-stat-context">Taux de conversion</div></div>
+          <div class="analytics-stat"><div class="analytics-stat-value" id="analyticsDepth">0</div><div class="analytics-stat-label">Pages par visiteur</div><div class="analytics-stat-context">Profondeur moyenne</div></div>
+        </div>
+
+        <div class="analytics-layout">
+          <section class="analytics-panel">
+            <div class="analytics-panel-head">
+              <div><h2>Évolution de l’audience</h2><p>Visiteurs et pages vues par jour</p></div>
+              <div class="analytics-legend"><span><i></i>Visiteurs</span><span><i></i>Pages vues</span></div>
+            </div>
+            <div class="analytics-chart" id="analyticsTrend" aria-label="Évolution quotidienne des visiteurs et pages vues"></div>
+          </section>
+          <section class="analytics-panel">
+            <div class="analytics-panel-head"><div><h2>Pages principales</h2><p>Classées par visiteurs</p></div></div>
+            <div class="analytics-ranking" id="analyticsPages"></div>
+          </section>
+        </div>
+
+        <div class="analytics-breakdowns">
+          <section class="analytics-panel">
+            <div class="analytics-panel-head"><div><h2>Provenance</h2><p>Sites et campagnes d’origine</p></div></div>
+            <div class="analytics-ranking" id="analyticsReferrers"></div>
+          </section>
+          <section class="analytics-panel">
+            <div class="analytics-panel-head"><div><h2>Pays</h2><p>Localisation approximative</p></div></div>
+            <div class="analytics-ranking" id="analyticsCountries"></div>
+          </section>
+          <section class="analytics-panel">
+            <div class="analytics-panel-head"><div><h2>Appareils</h2><p>Mobile, ordinateur et tablette</p></div></div>
+            <div class="analytics-ranking" id="analyticsDevices"></div>
+          </section>
+        </div>
+        <p class="analytics-note">Les visiteurs sont anonymisés par Vercel et ne peuvent pas être suivis individuellement. Les statistiques peuvent avoir un léger délai de traitement.</p>
+      </div>
+    </div>
     </main>
   </div>
 </div>
@@ -721,6 +828,7 @@
   const SUPABASE_ANON_KEY = "sb_publishable_aF6YEQBB5UrjOrNo9RTMjw_SM3MPKvM";
   const ADMIN_FUNCTION_URL = "https://syzlvsfhdmegmebsvscm.supabase.co/functions/v1/admin-leads";
   const ADMIN_VEHICLES_FUNCTION_URL = "https://syzlvsfhdmegmebsvscm.supabase.co/functions/v1/admin-vehicles";
+  const ADMIN_ANALYTICS_URL = "/api/admin-analytics";
 
   interface Lead {
     id: string | number;
@@ -765,6 +873,27 @@
     autonomie_elec?: string; autonomie_cumulee?: string; recharge_dc?: string; recharge_ac?: string;
     temps_charge?: string; consommation?: string; co2?: string; coffre?: string;
     [key: string]: unknown;
+  }
+  interface AnalyticsRow {
+    label: string;
+    pageviews: number;
+    visitors: number;
+  }
+  interface AnalyticsPayload {
+    range: number;
+    generatedAt: string;
+    metrics: {
+      visitors: number;
+      pageviews: number;
+      leads: number;
+      conversionRate: number;
+      pagesPerVisitor: number;
+    };
+    trend: Array<{ date: string; pageviews: number; visitors: number }>;
+    pages: AnalyticsRow[];
+    countries: AnalyticsRow[];
+    referrers: AnalyticsRow[];
+    devices: AnalyticsRow[];
   }
 
   const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -817,6 +946,24 @@
 
   const tabVehiclesBtn = document.getElementById('tabVehiclesBtn')!;
   const vehiclesPanel = document.getElementById('vehiclesPanel')!;
+  const tabAnalyticsBtn = document.getElementById('tabAnalyticsBtn')!;
+  const analyticsPanel = document.getElementById('analyticsPanel')!;
+  const analyticsLoading = document.getElementById('analyticsLoading') as HTMLElement;
+  const analyticsError = document.getElementById('analyticsError') as HTMLElement;
+  const analyticsContent = document.getElementById('analyticsContent') as HTMLElement;
+  const analyticsFreshness = document.getElementById('analyticsFreshness')!;
+  const analyticsVisitors = document.getElementById('analyticsVisitors')!;
+  const analyticsPageviews = document.getElementById('analyticsPageviews')!;
+  const analyticsLeads = document.getElementById('analyticsLeads')!;
+  const analyticsConversion = document.getElementById('analyticsConversion')!;
+  const analyticsDepth = document.getElementById('analyticsDepth')!;
+  const analyticsRangeLabel = document.getElementById('analyticsRangeLabel')!;
+  const analyticsTrend = document.getElementById('analyticsTrend')!;
+  const analyticsPages = document.getElementById('analyticsPages')!;
+  const analyticsReferrers = document.getElementById('analyticsReferrers')!;
+  const analyticsCountries = document.getElementById('analyticsCountries')!;
+  const analyticsDevices = document.getElementById('analyticsDevices')!;
+  const analyticsRangeButtons = Array.from(document.querySelectorAll<HTMLButtonElement>('.analytics-range-btn'));
   const vehiclesSearchInput = document.getElementById('vehiclesSearchInput') as HTMLInputElement;
   const vehiclesStatusFilter = document.getElementById('vehiclesStatusFilter') as HTMLSelectElement;
   const vehiclesSortSelect = document.getElementById('vehiclesSortSelect') as HTMLSelectElement;
@@ -842,6 +989,10 @@
   let allLeads: Lead[] = [];
   let allMessages: ContactMessage[] = [];
   let allVehicles: VehicleAdmin[] = [];
+  let analyticsLoaded = false;
+  let analyticsRange = 7;
+  let analyticsRefreshTimer: number | undefined;
+  let activeAdminTab: 'leads' | 'messages' | 'vehicles' | 'analytics' = 'leads';
 
   const LEAD_STAGES = [
     { value: 'nouveau', label: 'Nouveau', short: 'Nouveau', color: '#f00078' },
@@ -877,24 +1028,163 @@
     return options.join('');
   }
 
-  function setActiveTab(tab: 'leads' | 'messages' | 'vehicles'){
+  function setActiveTab(tab: 'leads' | 'messages' | 'vehicles' | 'analytics'){
+    activeAdminTab = tab;
     tabLeadsBtn.classList.toggle('active', tab === 'leads');
     tabMessagesBtn.classList.toggle('active', tab === 'messages');
     tabVehiclesBtn.classList.toggle('active', tab === 'vehicles');
+    tabAnalyticsBtn.classList.toggle('active', tab === 'analytics');
     leadsPanel.classList.toggle('active', tab === 'leads');
     messagesPanel.classList.toggle('active', tab === 'messages');
     vehiclesPanel.classList.toggle('active', tab === 'vehicles');
+    analyticsPanel.classList.toggle('active', tab === 'analytics');
     const copy = tab === 'leads'
       ? ['Dossiers clients', 'Suivez chaque demande, de la simulation à la livraison.']
       : tab === 'messages'
         ? ['Messages de contact', 'Traitez rapidement les demandes reçues depuis le site.']
-        : ['Catalogue véhicules', 'Gérez les véhicules visibles sur ElevenLease.fr.'];
+        : tab === 'vehicles'
+          ? ['Catalogue véhicules', 'Gérez les véhicules visibles sur ElevenLease.fr.']
+          : ['Audience du site', 'Suivez les visites, leur provenance et la conversion en dossiers.'];
     dashboardTitle.textContent = copy[0];
     dashboardSubtitle.textContent = copy[1];
+    if(tab === 'analytics'){
+      if(!analyticsLoaded) loadAnalytics();
+      startAnalyticsRefresh();
+    }else{
+      stopAnalyticsRefresh();
+    }
   }
   tabLeadsBtn.addEventListener('click', () => setActiveTab('leads'));
   tabMessagesBtn.addEventListener('click', () => setActiveTab('messages'));
   tabVehiclesBtn.addEventListener('click', () => setActiveTab('vehicles'));
+  tabAnalyticsBtn.addEventListener('click', () => setActiveTab('analytics'));
+
+  const compactNumber = new Intl.NumberFormat('fr-FR', { notation: 'compact', maximumFractionDigits: 1 });
+  const exactNumber = new Intl.NumberFormat('fr-FR');
+  const countryNames = typeof Intl.DisplayNames === 'function'
+    ? new Intl.DisplayNames(['fr'], { type: 'region' })
+    : null;
+
+  function stopAnalyticsRefresh(){
+    if(analyticsRefreshTimer !== undefined){
+      window.clearInterval(analyticsRefreshTimer);
+      analyticsRefreshTimer = undefined;
+    }
+  }
+
+  function startAnalyticsRefresh(){
+    stopAnalyticsRefresh();
+    analyticsRefreshTimer = window.setInterval(() => {
+      if(activeAdminTab === 'analytics') loadAnalytics(true);
+    }, 60_000);
+  }
+
+  function analyticsPageLabel(value: string){
+    if(value === '/' || value === '/index.html') return 'Accueil';
+    return value.replace(/\.html$/, '').replace(/^\//, '').replace(/[-/]/g, ' ') || 'Accueil';
+  }
+
+  function analyticsCountryLabel(value: string){
+    if(value === 'Inconnu') return value;
+    try{ return countryNames?.of(value.toUpperCase()) || value; }catch{ return value; }
+  }
+
+  function analyticsDeviceLabel(value: string){
+    const labels: Record<string, string> = { desktop:'Ordinateur', mobile:'Mobile', tablet:'Tablette', unknown:'Inconnu', Inconnu:'Inconnu' };
+    return labels[value] || value;
+  }
+
+  function renderAnalyticsRanking(target: Element, rows: AnalyticsRow[], labelFormatter = (value: string) => value){
+    if(!rows.length){
+      target.innerHTML = '<div class="analytics-chart-empty">Aucune donnée pour cette période</div>';
+      return;
+    }
+    const max = Math.max(...rows.map(row => row.visitors), 1);
+    target.innerHTML = rows.map(row => {
+      const width = Math.max(3, (row.visitors / max) * 100);
+      return '<div class="analytics-rank-row" title="' + exactNumber.format(row.pageviews) + ' pages vues">' +
+        '<div class="analytics-rank-label">' + escapeHtml(labelFormatter(row.label)) + '</div>' +
+        '<div class="analytics-rank-value">' + compactNumber.format(row.visitors) + '</div>' +
+        '<div class="analytics-rank-track"><div class="analytics-rank-fill" style="width:' + width.toFixed(1) + '%"></div></div>' +
+      '</div>';
+    }).join('');
+  }
+
+  function renderAnalyticsTrend(rows: AnalyticsPayload['trend']){
+    if(!rows.length){
+      analyticsTrend.innerHTML = '<div class="analytics-chart-empty">Aucune visite enregistrée pour cette période</div>';
+      return;
+    }
+    const max = Math.max(...rows.flatMap(row => [row.pageviews, row.visitors]), 1);
+    analyticsTrend.innerHTML = rows.map((row, index) => {
+      const date = new Date(row.date + 'T12:00:00');
+      const label = analyticsRange === 30 && index % 5 !== 0 && index !== rows.length - 1
+        ? ''
+        : date.toLocaleDateString('fr-FR', { day:'2-digit', month:'2-digit' });
+      const visitorsHeight = Math.max(2, (row.visitors / max) * 100);
+      const viewsHeight = Math.max(2, (row.pageviews / max) * 100);
+      return '<div class="analytics-day" title="' + exactNumber.format(row.visitors) + ' visiteurs · ' + exactNumber.format(row.pageviews) + ' pages vues">' +
+        '<div class="analytics-bar" style="height:' + visitorsHeight.toFixed(1) + '%"></div>' +
+        '<div class="analytics-bar views" style="height:' + viewsHeight.toFixed(1) + '%"></div>' +
+        (label ? '<span class="analytics-day-label">' + label + '</span>' : '') +
+      '</div>';
+    }).join('');
+  }
+
+  function renderAnalytics(data: AnalyticsPayload){
+    analyticsVisitors.textContent = exactNumber.format(data.metrics.visitors);
+    analyticsPageviews.textContent = exactNumber.format(data.metrics.pageviews);
+    analyticsLeads.textContent = exactNumber.format(data.metrics.leads);
+    analyticsConversion.textContent = data.metrics.conversionRate.toLocaleString('fr-FR', { maximumFractionDigits: 1 }) + ' %';
+    analyticsDepth.textContent = data.metrics.pagesPerVisitor.toLocaleString('fr-FR', { maximumFractionDigits: 1 });
+    analyticsRangeLabel.textContent = data.range + ' derniers jours';
+    renderAnalyticsTrend(data.trend);
+    renderAnalyticsRanking(analyticsPages, data.pages, analyticsPageLabel);
+    renderAnalyticsRanking(analyticsReferrers, data.referrers);
+    renderAnalyticsRanking(analyticsCountries, data.countries, analyticsCountryLabel);
+    renderAnalyticsRanking(analyticsDevices, data.devices, analyticsDeviceLabel);
+    const refreshedAt = new Date(data.generatedAt).toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
+    analyticsFreshness.textContent = 'Mis à jour à ' + refreshedAt + ' · actualisation chaque minute';
+  }
+
+  async function loadAnalytics(silent = false){
+    if(!silent){
+      analyticsLoading.style.display = 'block';
+      analyticsContent.style.display = 'none';
+    }
+    analyticsError.style.display = 'none';
+    try{
+      const response = await fetch(ADMIN_ANALYTICS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...authPayload(), range: analyticsRange }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if(!response.ok) throw new Error(data.error || ('HTTP ' + response.status));
+      renderAnalytics(data as AnalyticsPayload);
+      analyticsLoaded = true;
+      analyticsLoading.style.display = 'none';
+      analyticsContent.style.display = 'block';
+      lastRefresh.textContent = 'Audience mise à jour';
+    }catch(error: any){
+      analyticsLoading.style.display = 'none';
+      if(!silent || !analyticsLoaded){
+        analyticsContent.style.display = 'none';
+        analyticsError.textContent = error.message || 'Impossible de charger les statistiques.';
+        analyticsError.style.display = 'block';
+      }
+    }
+  }
+
+  analyticsRangeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const nextRange = Number(button.dataset.range);
+      if(nextRange === analyticsRange) return;
+      analyticsRange = nextRange;
+      analyticsRangeButtons.forEach(item => item.classList.toggle('active', item === button));
+      loadAnalytics();
+    });
+  });
 
   function updateTabCounts(){
     const leadsCount = allLeads.filter(l => (l.status || 'nouveau') === 'nouveau').length;
@@ -2242,13 +2532,22 @@
   });
 
   logoutBtn.addEventListener('click', () => {
+    stopAnalyticsRefresh();
     sessionStorage.removeItem('adminPassword');
     sessionStorage.removeItem('adminUsername');
     sessionStorage.removeItem('adminRole');
     location.reload();
   });
 
-  refreshBtn.addEventListener('click', () => { loadLeads(); loadMessages(); loadVehicles(); });
+  refreshBtn.addEventListener('click', () => {
+    if(activeAdminTab === 'analytics'){
+      loadAnalytics();
+      return;
+    }
+    loadLeads();
+    loadMessages();
+    loadVehicles();
+  });
   pipelineReset.addEventListener('click', () => {
     activePipelineGroup = '';
     statusFilter.value = '';
