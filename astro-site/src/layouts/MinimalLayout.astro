@@ -1,4 +1,5 @@
 ---
+import Analytics from '@vercel/analytics/astro';
 import SpeedInsights from '@vercel/speed-insights/astro';
 
 // Layout minimal pour les pages autonomes qui n'utilisent pas le
@@ -66,6 +67,7 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
 </head>
 <body>
   <slot />
+  <Analytics />
   <SpeedInsights />
 </body>
 </html>
