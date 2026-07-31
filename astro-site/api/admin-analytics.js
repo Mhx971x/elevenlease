@@ -1,18 +1,21 @@
-export const runtime = 'nodejs';
-
 const SUPABASE_ADMIN_URL = 'https://syzlvsfhdmegmebsvscm.supabase.co/functions/v1/admin-leads';
 const SUPABASE_ANON_KEY = 'sb_publishable_aF6YEQBB5UrjOrNo9RTMjw_SM3MPKvM';
 const VERCEL_ANALYTICS_URL = 'https://api.vercel.com/v1/query/web-analytics/visits/aggregate';
 const ALLOWED_RANGES = new Set([7, 30]);
 
-function json(body, status = 200) {
-  return Response.json(body, {
-    status,
-    headers: {
-      'Cache-Control': 'private, no-store, max-age=0',
-      'Content-Type': 'application/json; charset=utf-8',
-    },
-  });
+function json(response, body, status = 200) {
+  response.setHeader('Cache-Control', 'private, no-store, max-age=0');
+  return response.status(status).json(body);
+}
+
+function parseBody(request) {
+  if (request.body && typeof request.body === 'object') return request.body;
+  if (typeof request.body !== 'string') return {};
+  try {
+    return JSON.parse(request.body);
+  } catch {
+    return {};
+  }
 }
 
 function dateOnly(date) {
@@ -70,21 +73,21 @@ async function queryAnalytics({ token, projectId, since, until, by, limit }) {
   return normalizeRows(data);
 }
 
-export default async function handler(request) {
+export default async function handler(request, response) {
   if (request.method !== 'POST') {
-    return json({ error: 'Méthode non autorisée' }, 405);
+    return json(response, { error: 'Méthode non autorisée' }, 405);
   }
 
   try {
-    const body = await request.json().catch(() => ({}));
-    if (!body.password) return json({ error: 'Identifiants manquants' }, 401);
+    const body = parseBody(request);
+    if (!body.password) return json(response, { error: 'Identifiants manquants' }, 401);
 
     const range = Number(body.range);
-    if (!ALLOWED_RANGES.has(range)) return json({ error: 'Période non prise en charge' }, 400);
+    if (!ALLOWED_RANGES.has(range)) return json(response, { error: 'Période non prise en charge' }, 400);
 
     const token = process.env.VERCEL_ANALYTICS_TOKEN;
     const projectId = process.env.VERCEL_PROJECT_ID;
-    if (!token || !projectId) return json({ error: 'Analytics serveur non configuré' }, 503);
+    if (!token || !projectId) return json(response, { error: 'Analytics serveur non configuré' }, 503);
 
     const adminData = await verifyAdmin(body);
     const untilDate = new Date();
@@ -117,7 +120,7 @@ export default async function handler(request) {
         }).length
       : 0;
 
-    return json({
+    return json(response, {
       range,
       generatedAt: new Date().toISOString(),
       role: adminData.role || 'admin',
@@ -152,6 +155,6 @@ export default async function handler(request) {
     });
   } catch (error) {
     const status = Number(error?.status) || 502;
-    return json({ error: error?.message || 'Impossible de charger les statistiques' }, status);
+    return json(response, { error: error?.message || 'Impossible de charger les statistiques' }, status);
   }
 }
