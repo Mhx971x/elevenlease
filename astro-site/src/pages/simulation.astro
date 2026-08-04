@@ -284,22 +284,16 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
         </div>
 
         <div class="success-screen" id="successScreen">
-          <div class="success-icon">🎉</div>
-          <h2>Votre demande a bien été envoyée !</h2>
-          <p>Votre dossier vient d'être transmis à notre réseau de partenaires.</p>
+          <div class="success-icon" aria-hidden="true">✓</div>
+          <h2>Votre demande a bien été enregistrée</h2>
+          <p>Dernière étape : confirmez votre demande sur WhatsApp afin qu’un conseiller puisse l’étudier.</p>
           <p class="success-email-notice" id="successEmailNotice" hidden>Un email de confirmation vient de vous être envoyé.</p>
-          <div class="success-steps">
-            <div class="s-label">Les prochaines étapes</div>
-            <div class="s-item">✓ Analyse de votre dossier</div>
-            <div class="s-item">✓ Recherche de la meilleure offre</div>
-            <div class="s-item">✓ Appel d'un conseiller sous 24h</div>
-          </div>
           <div class="success-contact">
-            <p>📞 Besoin d'aller plus vite ?</p>
+            <p class="success-reassurance">Aucun paiement requis. Un conseiller étudiera votre demande et vous répondra directement sur WhatsApp.</p>
             <div class="success-actions">
-              <a class="whatsapp-btn" href="https://taap.it/elevenleasewhatsapp" target="_blank" rel="noopener">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A8.86 8.86 0 0012.05 4c-4.9 0-8.9 4-8.9 8.9 0 1.57.42 3.1 1.2 4.44L3 22l4.8-1.26a8.9 8.9 0 004.25 1.08h0c4.9 0 8.9-4 8.9-8.9 0-2.38-.93-4.62-2.35-6.6zm-5.55 13.7h0a7.4 7.4 0 01-3.77-1.03l-.27-.16-2.8.74.75-2.73-.18-.28a7.38 7.38 0 01-1.13-3.94c0-4.08 3.32-7.4 7.4-7.4 1.98 0 3.84.77 5.24 2.17a7.35 7.35 0 012.16 5.23c0 4.08-3.32 7.4-7.4 7.4zm4.06-5.54c-.22-.11-1.31-.65-1.52-.72-.2-.08-.35-.11-.5.11-.15.22-.57.72-.7.87-.13.15-.26.16-.48.05-.22-.11-.94-.35-1.79-1.1-.66-.6-1.1-1.33-1.24-1.55-.13-.22-.01-.34.1-.45.1-.1.22-.26.33-.39.11-.13.15-.22.22-.37.07-.15.04-.28-.02-.39-.06-.11-.5-1.21-.69-1.66-.18-.43-.36-.38-.5-.38h-.43c-.15 0-.39.05-.59.28-.2.22-.78.76-.78 1.86s.8 2.16.91 2.31c.11.15 1.57 2.4 3.81 3.36.53.23.95.37 1.27.47.53.17 1.02.15 1.4.09.43-.06 1.31-.53 1.49-1.05.18-.51.18-.95.13-1.05-.05-.1-.2-.16-.42-.27z"/></svg>
-                Discuter sur WhatsApp
+              <a class="whatsapp-btn" id="whatsappCta" href="#" target="_blank" rel="noopener noreferrer">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A8.86 8.86 0 0012.05 4c-4.9 0-8.9 4-8.9 8.9 0 1.57.42 3.1 1.2 4.44L3 22l4.8-1.26a8.9 8.9 0 004.25 1.08h0c4.9 0 8.9-4 8.9-8.9 0-2.38-.93-4.62-2.35-6.6zm-5.55 13.7h0a7.4 7.4 0 01-3.77-1.03l-.27-.16-2.8.74.75-2.73-.18-.28a7.38 7.38 0 01-1.13-3.94c0-4.08 3.32-7.4 7.4-7.4 1.98 0 3.84.77 5.24 2.17a7.35 7.35 0 012.16 5.23c0 4.08-3.32 7.4-7.4 7.4zm4.06-5.54c-.22-.11-1.31-.65-1.52-.72-.2-.08-.35-.11-.5.11-.15.22-.57.72-.7.87-.13.15-.26.16-.48.05-.22-.11-.94-.35-1.79-1.1-.66-.6-1.1-1.33-1.24-1.55-.13-.22-.01-.34.1-.45.1-.1.22-.26.33-.39.11-.13.15-.22.22-.37.07-.15.04-.28-.02-.39-.06-.11-.5-1.21-.69-1.66-.18-.43-.36-.38-.5-.38h-.43c-.15 0-.39.05-.59.28-.2.22-.78.76-.78 1.86s.8 2.16.91 2.31c.11.15 1.57 2.4 3.81 3.36.53.23.95.37 1.27.47.53.17 1.02.15 1.4.09.43-.06 1.31-.53 1.49-1.05.18-.51.18-.95.13-1.05-.05-.1-.2-.16-.42-.27z"/></svg>
+                Continuer sur WhatsApp
               </a>
               <a class="btn-outline" href="/">← Retour à l'accueil</a>
             </div>
@@ -437,6 +431,8 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
   // ============================================================
   const SUPABASE_URL = "https://syzlvsfhdmegmebsvscm.supabase.co";
   const SUPABASE_ANON_KEY = "sb_publishable_aF6YEQBB5UrjOrNo9RTMjw_SM3MPKvM";
+  // Numéro international sans espace, signe + ni zéro initial.
+  const WHATSAPP_NUMBER = "33638014986";
 
   interface LeadPayload {
     prenom: string; nom: string; telephone: string; email: string; vehicule: string;
@@ -514,6 +510,7 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
   const formStatusText = document.getElementById('formStatusText')!;
   const successScreen = document.getElementById('successScreen')!;
   const successEmailNotice = document.getElementById('successEmailNotice') as HTMLParagraphElement;
+  const whatsappCta = document.getElementById('whatsappCta') as HTMLAnchorElement;
   const contactIntro = document.getElementById('contactIntro') as HTMLElement;
   const formNote = document.getElementById('formNote') as HTMLElement;
   const fVehiculeInput = document.getElementById('fVehicule') as HTMLInputElement;
@@ -526,6 +523,21 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
   function showFormError(message: string){
     formStatusText.textContent = message;
     formStatus.classList.add('show', 'error');
+  }
+
+  function buildWhatsAppUrl(payload: LeadPayload){
+    const valueOrFallback = (value: string, fallback = 'Non renseigné') => value?.trim() || fallback;
+    const vehicule = payload.vehicule || [payload.typeVehiculeSouhaite, payload.motorisation].filter(Boolean).join(' · ');
+    const message = `Bonjour, je viens de remplir une demande sur Eleven Lease.
+
+Prénom : ${valueOrFallback(payload.prenom)}
+Véhicule recherché : ${valueOrFallback(vehicule, 'À définir avec un conseiller')}
+Profil : ${valueOrFallback(payload.profil)}
+Budget mensuel : ${valueOrFallback(payload.budgetSouhaite)}
+Apport : ${valueOrFallback(payload.apport)}
+
+Je souhaite poursuivre ma demande sur WhatsApp.`;
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   }
 
   // ============================================================
@@ -855,6 +867,8 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
       formStatus.classList.remove('show', 'error');
       try{
         const result = await submitSimulation(payload, submissionId, formStartedAt);
+        // WhatsApp n'est proposé qu'après l'enregistrement réussi du lead.
+        whatsappCta.href = buildWhatsAppUrl(payload);
         successEmailNotice.hidden = result.emailSent !== true;
         stepperProgress.style.display = 'none';
         stepEls.forEach(el => el.classList.remove('active'));
@@ -1080,28 +1094,28 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
   .success-screen{display:none;text-align:center;}
   .success-screen.show{display:block;animation:fadeUp .5s cubic-bezier(.16,1,.3,1);}
   @keyframes fadeUp{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
-  .success-icon{font-size:40px;margin-bottom:14px;}
+  .success-icon{
+    width:56px;height:56px;margin:0 auto 18px;border-radius:50%;display:grid;place-items:center;font-size:40px;
+    color:#fff;background:linear-gradient(145deg,#25d366,#16a34a);box-shadow:0 10px 28px rgba(37,211,102,.3);
+  }
   .success-screen h2{font-size:clamp(22px,3.2vw,28px);margin-bottom:12px;}
   .success-screen > p{color:var(--text-dim);font-size:15px;max-width:420px;margin:0 auto 28px;}
   .success-screen > .success-email-notice{
     color:#18794e;font-size:13.5px;font-weight:600;margin-top:-18px;margin-bottom:24px;
   }
-  .success-steps{
-    text-align:left;max-width:380px;margin:0 auto 28px;border:1px solid var(--border);border-radius:16px;
-    padding:20px 22px;background:#fff;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:12px;
-  }
-  .success-steps .s-label{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:2px;}
-  .success-steps .s-item{display:flex;align-items:center;gap:10px;font-size:14.5px;color:var(--text);}
-  .success-contact{border-top:1px solid var(--border);padding-top:24px;margin-top:4px;}
-  .success-contact p{color:var(--text-dim);font-size:14.5px;margin-bottom:14px;}
+  .success-contact{border-top:1px solid var(--border);padding-top:24px;margin-top:2px;}
+  .success-contact .success-reassurance{color:var(--text-dim);font-size:13.5px;line-height:1.55;max-width:430px;margin:0 auto 18px;}
   .whatsapp-btn{
-    display:inline-flex;align-items:center;gap:9px;background:#fff;color:var(--text);
-    padding:14px 24px;border-radius:100px;font-weight:600;font-size:14.5px;
-    border:1px solid var(--border);box-shadow:var(--shadow-sm);
-    transition:transform .2s ease, border-color .2s ease, box-shadow .2s ease;
+    display:inline-flex;align-items:center;justify-content:center;gap:10px;color:#fff;
+    padding:16px 28px;border-radius:100px;font-weight:750;font-size:15.5px;
+    background:linear-gradient(135deg,#2ee675 0%,#25d366 48%,#16a34a 100%);
+    border:1px solid rgba(255,255,255,.3);
+    box-shadow:0 12px 30px rgba(37,211,102,.38),0 0 26px rgba(37,211,102,.22);
+    transition:transform .2s ease,filter .2s ease,box-shadow .25s ease;
   }
-  .whatsapp-btn svg{color:#25D366;flex:none;}
-  .whatsapp-btn:hover{transform:translateY(-2px);border-color:#25D366;box-shadow:var(--shadow-md);}
+  .whatsapp-btn svg{color:#fff;flex:none;}
+  .whatsapp-btn:hover{transform:translateY(-3px);filter:brightness(1.04);box-shadow:0 16px 38px rgba(37,211,102,.48),0 0 34px rgba(37,211,102,.3);}
+  .whatsapp-btn:active{transform:scale(.98);}
   .btn-outline{
     display:inline-block;border:1px solid var(--border);color:var(--text-dim);
     padding:14px 24px;border-radius:100px;font-weight:600;font-size:14.5px;
@@ -1253,12 +1267,8 @@ import MinimalLayout from '../layouts/MinimalLayout.astro';
     }
     .step-back{padding:12px 0;}
     .success-screen{padding-top:18px;}
-    .success-steps{
-      padding:18px;
-      border-color:transparent;
-      background:#f7f7f9;
-      box-shadow:none;
-    }
+    .success-actions{align-items:stretch;flex-direction:column;}
+    .whatsapp-btn,.btn-outline{width:100%;}
     footer{padding:28px 0;}
     .footer-bottom{padding:0 22px;font-size:11.5px;line-height:1.55;}
   }
