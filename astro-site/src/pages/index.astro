@@ -249,9 +249,9 @@ const breadcrumbSchema = {
         </div>
         <div class="hero-car-card" data-hero-car-card aria-live="polite">
           <strong class="hero-car-card-model">BMW Série 4</strong>
-          <span class="hero-car-card-price">à partir de <b>399 €/mois*</b></span>
-          <span class="hero-car-card-term">48 mois</span>
-          <small>*Exemple indicatif</small>
+          <span class="hero-car-card-price">Dès <b>399 €/mois*</b></span>
+          <span class="hero-car-card-term">Durée <b>48 mois</b></span>
+          <small>*Simulation indicative</small>
         </div>
         <picture class="hero-mobile-car">
           <source media="(min-width: 981px)" srcset="/hero-premium-coupe-v2.png" width="1536" height="1024">
@@ -1055,20 +1055,22 @@ const breadcrumbSchema = {
       position:absolute;
       z-index:3;
       top:18%;
-      right:clamp(90px,18vw,350px);
+      right:clamp(54px,12vw,240px);
       display:flex;
       flex-direction:column;
       align-items:flex-start;
-      width:178px;
-      padding:10px 13px 9px;
+      width:188px;
+      padding:12px 14px 11px;
       overflow:hidden;
       color:#17171b;
       border:1px solid rgba(255,255,255,.92);
-      border-radius:14px;
-      background:linear-gradient(135deg,rgba(255,255,255,.8),rgba(255,255,255,.48));
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 12px 30px rgba(17,17,19,.08),0 5px 18px rgba(255,0,127,.045);
-      backdrop-filter:blur(16px) saturate(1.3);
-      -webkit-backdrop-filter:blur(16px) saturate(1.3);
+      border-radius:16px;
+      background:
+        radial-gradient(circle at 100% 100%,rgba(255,0,127,.095),transparent 48%),
+        linear-gradient(135deg,rgba(255,255,255,.84),rgba(255,255,255,.5));
+      box-shadow:inset 0 1px 0 rgba(255,255,255,1),0 14px 34px rgba(17,17,19,.085),0 5px 20px rgba(255,0,127,.055);
+      backdrop-filter:blur(18px) saturate(1.38);
+      -webkit-backdrop-filter:blur(18px) saturate(1.38);
       pointer-events:none;
       transition:opacity .22s ease,transform .42s cubic-bezier(.16,1,.3,1),filter .3s ease;
     }
@@ -1096,34 +1098,60 @@ const breadcrumbSchema = {
     .hero-car-card-model{
       position:relative;
       z-index:1;
+      display:flex;
+      align-items:center;
+      gap:7px;
       font-family:'Space Grotesk',sans-serif;
-      font-size:13px;
+      font-size:13.5px;
       line-height:1.2;
       letter-spacing:-.02em;
+    }
+    .hero-car-card-model::before{
+      content:'';
+      flex:0 0 5px;
+      width:5px;
+      height:5px;
+      border-radius:50%;
+      background:var(--accent-1);
+      box-shadow:0 0 0 3px rgba(255,0,127,.08);
     }
     .hero-car-card-price{
       position:relative;
       z-index:1;
-      margin-top:4px;
+      display:flex;
+      align-items:baseline;
+      gap:5px;
+      margin-top:7px;
       color:#5e5f66;
-      font-size:10px;
+      font-size:9.5px;
       white-space:nowrap;
     }
-    .hero-car-card-price b{color:#17171b;font-size:12.5px;font-weight:700;}
+    .hero-car-card-price b{color:#17171b;font-size:14.5px;font-weight:700;letter-spacing:-.025em;}
     .hero-car-card-term{
       position:relative;
       z-index:1;
-      margin-top:4px;
+      display:inline-flex;
+      align-items:center;
+      gap:4px;
+      margin-top:6px;
+      padding:3px 7px;
+      color:#696a71;
+      border:1px solid rgba(255,0,127,.065);
+      border-radius:999px;
+      background:rgba(255,0,127,.045);
+      font-size:8.5px;
+    }
+    .hero-car-card-term b{
       color:#3f4046;
-      font-size:10px;
+      font-size:9px;
       font-weight:600;
     }
     .hero-car-card small{
       position:relative;
       z-index:1;
-      margin-top:3px;
+      margin-top:5px;
       color:#a0a1a8;
-      font-size:7.5px;
+      font-size:7.25px;
       letter-spacing:.02em;
     }
     .hero-project{
@@ -1703,7 +1731,7 @@ const breadcrumbSchema = {
     const carCard = document.querySelector('[data-hero-car-card]') as HTMLElement | null;
     const cardModel = carCard?.querySelector('.hero-car-card-model') as HTMLElement | null;
     const cardPrice = carCard?.querySelector('.hero-car-card-price b') as HTMLElement | null;
-    const cardTerm = carCard?.querySelector('.hero-car-card-term') as HTMLElement | null;
+    const cardTerm = carCard?.querySelector('.hero-car-card-term b') as HTMLElement | null;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(cars.length < 2 || reduceMotion) return;
 
