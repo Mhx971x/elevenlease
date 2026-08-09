@@ -126,12 +126,6 @@ const breadcrumbSchema = {
   <section class="hero">
     <div class="hero-grid"></div>
     <canvas class="hero-stars" id="heroStars"></canvas>
-    <div class="hero-shooting-stars" aria-hidden="true">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
     <div class="hero-waves" aria-hidden="true">
       <svg viewBox="0 0 1440 780" preserveAspectRatio="none">
         <defs>
@@ -676,13 +670,17 @@ const breadcrumbSchema = {
     pointer-events:none;
   }
   .hero-grid{
-    position:absolute;inset:0;
+    position:absolute;inset:0;z-index:0;
+    pointer-events:none;
     background-image:
-      linear-gradient(var(--border) 1px, transparent 1px),
-      linear-gradient(90deg, var(--border) 1px, transparent 1px);
-    background-size:64px 64px;
-    mask-image:radial-gradient(ellipse 60% 50% at 50% 40%, black, transparent);
-    opacity:0.5;
+      linear-gradient(rgba(17,17,19,.027) 1px, transparent 1px),
+      linear-gradient(90deg,rgba(17,17,19,.027) 1px, transparent 1px),
+      linear-gradient(rgba(255,0,127,.018) 1px, transparent 1px),
+      linear-gradient(90deg,rgba(255,0,127,.018) 1px, transparent 1px);
+    background-size:72px 72px,72px 72px,288px 288px,288px 288px;
+    mask-image:radial-gradient(ellipse 82% 72% at 50% 46%,black 8%,rgba(0,0,0,.78) 42%,transparent 82%);
+    -webkit-mask-image:radial-gradient(ellipse 82% 72% at 50% 46%,black 8%,rgba(0,0,0,.78) 42%,transparent 82%);
+    opacity:.72;
   }
   .eyebrow{
     display:inline-flex;align-items:center;gap:8px;
@@ -699,7 +697,7 @@ const breadcrumbSchema = {
     align-items:center;gap:34px;
   }
   .hero-copy{position:relative;z-index:2;max-width:590px;}
-  .hero-title-desktop,.hero-copy-desktop,.hero-waves,.hero-project,.hero-social-row,.trustpilot-proof,.hero-car-carousel,.hero-car-card,.hero-shooting-stars,.hero-brands{display:none;}
+  .hero-title-desktop,.hero-copy-desktop,.hero-waves,.hero-project,.hero-social-row,.trustpilot-proof,.hero-car-carousel,.hero-car-card,.hero-brands{display:none;}
   .hero h1{font-size:clamp(50px,5.2vw,70px);max-width:720px;}
   .hero h1 em{font-style:normal;color:var(--text-faint);}
   .hero p{font-size:18px;color:var(--text-dim);max-width:540px;margin-top:26px;line-height:1.65;}
@@ -827,31 +825,7 @@ const breadcrumbSchema = {
       height:100%;
       background:radial-gradient(ellipse 38% 20% at 50% 72%,rgba(255,0,127,.035),transparent 76%);
     }
-    .hero-grid,.hero-stars{display:none;}
-    .hero-shooting-stars{
-      display:block;
-      position:absolute;
-      z-index:1;
-      inset:clamp(76px,10vh,94px) 0 74px;
-      overflow:hidden;
-      pointer-events:none;
-    }
-    .hero-shooting-stars span{
-      position:absolute;
-      width:clamp(90px,9vw,150px);
-      height:2px;
-      border-radius:100%;
-      opacity:0;
-      background:linear-gradient(90deg,transparent 0%,rgba(255,0,127,.08) 32%,rgba(255,0,127,.72) 92%,rgba(255,255,255,.96) 100%);
-      box-shadow:0 0 10px rgba(255,0,127,.3);
-      transform:rotate(19deg);
-      transform-origin:right center;
-      animation:heroShootingStar 5.2s linear infinite;
-    }
-    .hero-shooting-stars span:nth-child(1){left:9%;top:16%;animation-delay:.35s;}
-    .hero-shooting-stars span:nth-child(2){left:58%;top:11%;width:112px;animation-delay:2.2s;animation-duration:6.1s;}
-    .hero-shooting-stars span:nth-child(3){left:24%;top:42%;width:82px;animation-delay:3.8s;animation-duration:7s;}
-    .hero-shooting-stars span:nth-child(4){left:70%;top:47%;width:128px;animation-delay:5.1s;animation-duration:6.6s;}
+    .hero-grid,.hero-stars{display:block;}
     .hero-waves{
       display:block;
       position:absolute;
@@ -1315,12 +1289,6 @@ const breadcrumbSchema = {
       65%{opacity:1;filter:blur(0) saturate(1);}
       100%{opacity:1;transform:translate(-50%,-50%) scale(1);filter:none;}
     }
-    @keyframes heroShootingStar{
-      0%,70%{opacity:0;transform:translate3d(-190px,-74px,0) rotate(19deg) scaleX(.18);}
-      73%{opacity:.92;}
-      82%{opacity:.72;}
-      88%,100%{opacity:0;transform:translate3d(330px,128px,0) rotate(19deg) scaleX(1);}
-    }
   }
 
   @media(min-width:981px) and (max-height:820px){
@@ -1657,8 +1625,8 @@ const breadcrumbSchema = {
 
   .hero-grid{animation:gridDrift 30s linear infinite;}
   @keyframes gridDrift{
-    from{background-position:0 0, 0 0;}
-    to{background-position:64px 64px, 64px 64px;}
+    from{background-position:0 0,0 0,0 0,0 0;}
+    to{background-position:72px 72px,72px 72px,0 0,0 0;}
   }
 
   /* hero stars */
@@ -1687,7 +1655,6 @@ const breadcrumbSchema = {
     .hero-car:not(.is-active){opacity:0;}
     .hero-car-card{transition:none;}
     .hero-speed-lines{display:none;}
-    .hero-shooting-stars{display:none;}
     .brands-track{animation:none;}
   }
 
@@ -1787,30 +1754,52 @@ const breadcrumbSchema = {
     let W: number, H: number, DPR: number;
     let particles: any[] = [], shootingStars: any[] = [];
     let mouseX = 0.5, mouseY = 0.5, targetX = 0.5, targetY = 0.5;
-    let rafId: number, lastT = 0, running = false;
+    let rafId: number, lastT = 0, running = false, nextShootingStarAt = 0;
 
     function makeParticle(fromTop: boolean){
       const depth = Math.random();
       return {
         x: rand(0, W),
         y: fromTop ? -10 : rand(0, H),
-        r: rand(0.5,1.1) + depth*1.7,
+        r: rand(0.42,.9) + depth*1.25,
         depth,
-        vy: rand(4,9) + depth*11,
+        vy: rand(3,7) + depth*8,
         driftAmp: rand(6,16) + depth*10,
         driftFreq: rand(0.15,0.35),
         phase: rand(0, Math.PI*2),
         twinkleFreq: rand(0.4,1.3),
         twinklePhase: rand(0, Math.PI*2),
-        baseAlpha: rand(0.08,0.16) + depth*0.12,
-        pink: Math.random() < 0.12,
+        baseAlpha: rand(0.055,0.12) + depth*0.1,
+        pink: Math.random() < 0.1,
+        glow: depth > .72 && Math.random() < .22,
       };
     }
 
     function seed(){
       const area = W*H;
-      const target = Math.max(28, Math.min(W < 640 ? 55 : 120, Math.round(area/9500)));
+      const target = Math.max(26, Math.min(W < 640 ? 48 : 78, Math.round(area/15000)));
       particles = Array.from({length: target}, () => makeParticle(false));
+    }
+
+    function scheduleShootingStar(now: number, first = false){
+      nextShootingStarAt = now + rand(first ? 3200 : 7200, first ? 6200 : 13800);
+    }
+
+    function createShootingStar(){
+      const angle = rand(.28,.5);
+      const lengthBias = Math.pow(Math.random(),.7);
+      shootingStars.push({
+        x:rand(-W*.06,W*.64),
+        y:rand(H*.04,H*.38),
+        len:72 + lengthBias*138,
+        speed:rand(560,860),
+        angle,
+        life:0,
+        maxLife:rand(.72,1.08),
+        width:rand(.75,1.35),
+        alpha:rand(.34,.58),
+        pink:Math.random() < .28,
+      });
     }
 
     function resize(){
@@ -1821,6 +1810,7 @@ const breadcrumbSchema = {
       canvas!.style.width = W+'px'; canvas!.style.height = H+'px';
       ctx!.setTransform(DPR,0,0,DPR,0,0);
       seed();
+      scheduleShootingStar(performance.now(),true);
       drawStatic();
     }
 
@@ -1859,32 +1849,46 @@ const breadcrumbSchema = {
         ctx!.fillStyle = p.pink ? `rgba(255,0,127,${alpha})` : `rgba(17,17,19,${alpha})`;
         ctx!.arc(px,py,p.r,0,Math.PI*2);
         ctx!.fill();
+        if(p.glow){
+          ctx!.beginPath();
+          ctx!.fillStyle = p.pink ? `rgba(255,0,127,${alpha*.08})` : `rgba(17,17,19,${alpha*.045})`;
+          ctx!.arc(px,py,p.r*4.2,0,Math.PI*2);
+          ctx!.fill();
+        }
       }
 
-      if(Math.random() < 0.0035 && shootingStars.length < 2){
-        const angle = rand(0.35,0.55);
-        const pink = Math.random() < 0.25;
-        shootingStars.push({x:rand(W*0.1,W*0.7), y:rand(0,H*0.3), len:rand(60,110), speed:rand(600,900), angle, life:0, maxLife:rand(0.5,0.8), pink});
+      if(t >= nextShootingStarAt && shootingStars.length === 0){
+        createShootingStar();
+        scheduleShootingStar(t);
       }
       shootingStars = shootingStars.filter(s => s.life < s.maxLife);
       for(const s of shootingStars){
         s.life += dt;
-        const progress = s.life/s.maxLife;
+        const progress = Math.min(s.life/s.maxLife,1);
+        const reveal = 1-Math.pow(1-Math.min(progress/.28,1),3);
+        const fade = progress < .18 ? progress/.18 : Math.max(0,1-(progress-.18)/.82);
+        const liveLength = s.len*(.28 + reveal*.72);
         const x2 = s.x + Math.cos(s.angle)*s.speed*s.life;
         const y2 = s.y + Math.sin(s.angle)*s.speed*s.life;
-        const x1 = x2 - Math.cos(s.angle)*s.len;
-        const y1 = y2 - Math.sin(s.angle)*s.len;
-        const fade = progress < 0.15 ? progress/0.15 : (1-progress)/0.85;
+        const x1 = x2 - Math.cos(s.angle)*liveLength;
+        const y1 = y2 - Math.sin(s.angle)*liveLength;
         const grad = ctx!.createLinearGradient(x1,y1,x2,y2);
         const rgb = s.pink ? '255,0,127' : '17,17,19';
         grad.addColorStop(0,`rgba(${rgb},0)`);
-        grad.addColorStop(1,`rgba(${rgb},${0.4*fade})`);
+        grad.addColorStop(.62,`rgba(${rgb},${s.alpha*.16*fade})`);
+        grad.addColorStop(.92,`rgba(${rgb},${s.alpha*.62*fade})`);
+        grad.addColorStop(1,`rgba(255,255,255,${.94*fade})`);
         ctx!.strokeStyle = grad;
-        ctx!.lineWidth = 1.4;
+        ctx!.lineWidth = s.width;
+        ctx!.lineCap = 'round';
         ctx!.beginPath();
         ctx!.moveTo(x1,y1);
         ctx!.lineTo(x2,y2);
         ctx!.stroke();
+        ctx!.beginPath();
+        ctx!.fillStyle = `rgba(255,255,255,${.75*fade})`;
+        ctx!.arc(x2,y2,s.width*1.15,0,Math.PI*2);
+        ctx!.fill();
       }
 
       rafId = requestAnimationFrame(frame);
