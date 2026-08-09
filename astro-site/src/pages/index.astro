@@ -194,10 +194,13 @@ const breadcrumbSchema = {
         <h1>
           <span class="hero-title-desktop">
             Le leasing qui s’adapte
-            <span class="hero-title-benefit">à <em aria-label="votre budget ou votre quotidien"><span class="hero-title-benefit-accent" aria-hidden="true">votre <span class="hero-word-rotator" data-hero-word-rotator>
+            <span class="hero-title-benefit" aria-label="à votre budget ou à votre quotidien">
+              <span class="hero-title-benefit-prefix" aria-hidden="true">à <em>votre</em></span>
+              <em class="hero-word-rotator" data-hero-word-rotator aria-hidden="true">
               <span class="hero-word is-active">budget.</span>
               <span class="hero-word">quotidien.</span>
-            </span></span></em></span>
+              </em>
+            </span>
           </span>
           <span class="hero-title-mobile">Roulez plus.<br><em>Comptez moins.</em></span>
         </h1>
@@ -904,22 +907,24 @@ const breadcrumbSchema = {
       align-items:baseline;
       justify-content:center;
       width:100%;
+      transform:translateX(.3em);
     }
-    .hero-title-benefit em,
-    .hero-title-benefit-accent{
+    .hero-title-benefit-prefix{
       display:inline-flex;
       align-items:baseline;
+      flex:0 0 auto;
+      white-space:nowrap;
     }
     .hero-word-rotator{
       position:relative;
       display:inline-block;
-      flex:0 0 8.6ch;
-      width:8.6ch;
+      flex:0 0 4.55em;
+      width:4.55em;
       height:1em;
-      margin-left:-.12ch;
+      margin-left:.18em;
       overflow:hidden;
       vertical-align:baseline;
-      text-align:center;
+      text-align:left;
       white-space:nowrap;
     }
     .hero-word{
