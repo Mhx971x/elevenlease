@@ -861,7 +861,10 @@ const breadcrumbSchema = {
       line-height:1.04;
     }
     .hero h1 em{
-      color:var(--accent-1);
+      background:var(--accent);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
       font-weight:500;
     }
     .hero p{
@@ -1748,7 +1751,7 @@ const breadcrumbSchema = {
     let W: number, H: number, DPR: number;
     let particles: any[] = [], shootingStars: any[] = [];
     let mouseX = 0.5, mouseY = 0.5, targetX = 0.5, targetY = 0.5;
-    let rafId: number, lastT = 0, lastPaint = 0, running = false, heroVisible = true, nextShootingStarAt = 0;
+    let rafId: number, lastT = 0, running = false, heroVisible = true, nextShootingStarAt = 0;
 
     function makeParticle(fromTop: boolean){
       const depth = Math.random();
@@ -1764,7 +1767,7 @@ const breadcrumbSchema = {
         twinkleFreq: rand(0.4,1.3),
         twinklePhase: rand(0, Math.PI*2),
         baseAlpha: rand(.12,.2) + depth*.08,
-        pink: Math.random() < .16,
+        pink: Math.random() < .3,
         glow: depth > .62 && Math.random() < .28,
       };
     }
@@ -1776,7 +1779,7 @@ const breadcrumbSchema = {
     }
 
     function scheduleShootingStar(now: number, first = false){
-      nextShootingStarAt = now + rand(first ? 900 : 6500,first ? 1800 : 10800);
+      nextShootingStarAt = now + rand(first ? 650 : 3600,first ? 1300 : 6200);
     }
 
     function createShootingStar(){
@@ -1820,13 +1823,8 @@ const breadcrumbSchema = {
 
     function frame(t: number){
       if(!running) return;
-      if(t-lastPaint < 32){
-        rafId = requestAnimationFrame(frame);
-        return;
-      }
       const dt = Math.min((t-lastT)/1000, 0.05);
       lastT = t;
-      lastPaint = t;
       mouseX += (targetX-mouseX)*0.04;
       mouseY += (targetY-mouseY)*0.04;
       const time = t/1000;
@@ -1913,7 +1911,6 @@ const breadcrumbSchema = {
       if(reduceMotion || document.hidden || !heroVisible || running) return;
       running = true;
       lastT = performance.now();
-      lastPaint = 0;
       rafId = requestAnimationFrame(frame);
     }
 
