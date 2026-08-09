@@ -230,22 +230,28 @@ const breadcrumbSchema = {
         </div>
       </div>
 
-      <div class="hero-visual" aria-hidden="true">
-        <div class="hero-speed-lines">
+      <div class="hero-visual">
+        <div class="hero-speed-lines" aria-hidden="true">
           <span></span>
           <span></span>
           <span></span>
         </div>
-        <div class="hero-visual-ring"></div>
-        <div class="hero-visual-label">
+        <div class="hero-visual-ring" aria-hidden="true"></div>
+        <div class="hero-visual-label" aria-hidden="true">
           <span>La liberté de rouler</span>
           <strong>sans compter.</strong>
         </div>
         <div class="hero-car-carousel" data-hero-car-carousel>
-          <img class="hero-car is-active is-initial" src="/hero-premium-coupe-shadow-v3.png" alt="" width="1536" height="1024" fetchpriority="high">
-          <img class="hero-car" src="/hero-cupra-formentor-shadow-v2.png" alt="" width="1536" height="1024" decoding="async">
-          <img class="hero-car" src="/hero-clio-alpine-black-shadow-v3.png" alt="" width="1536" height="1024" decoding="async">
-          <img class="hero-car" src="/hero-tesla-model-3-shadow-v2.png" alt="" width="1536" height="1024" decoding="async">
+          <img class="hero-car is-active is-initial" src="/hero-premium-coupe-shadow-v3.png" alt="" width="1536" height="1024" fetchpriority="high" data-model="BMW Série 4" data-price="399 €/mois*" data-term="48 mois">
+          <img class="hero-car" src="/hero-cupra-formentor-shadow-v2.png" alt="" width="1536" height="1024" decoding="async" data-model="CUPRA Formentor" data-price="359 €/mois*" data-term="48 mois">
+          <img class="hero-car" src="/hero-clio-alpine-black-shadow-v3.png" alt="" width="1536" height="1024" decoding="async" data-model="Renault Clio 5 Alpine" data-price="289 €/mois*" data-term="48 mois">
+          <img class="hero-car" src="/hero-tesla-model-3-shadow-v2.png" alt="" width="1536" height="1024" decoding="async" data-model="Tesla Model 3" data-price="429 €/mois*" data-term="48 mois">
+        </div>
+        <div class="hero-car-card" data-hero-car-card aria-live="polite">
+          <strong class="hero-car-card-model">BMW Série 4</strong>
+          <span class="hero-car-card-price">à partir de <b>399 €/mois*</b></span>
+          <span class="hero-car-card-term">48 mois</span>
+          <small>*Exemple indicatif</small>
         </div>
         <picture class="hero-mobile-car">
           <source media="(min-width: 981px)" srcset="/hero-premium-coupe-v2.png" width="1536" height="1024">
@@ -696,7 +702,7 @@ const breadcrumbSchema = {
     align-items:center;gap:34px;
   }
   .hero-copy{position:relative;z-index:2;max-width:590px;}
-  .hero-title-desktop,.hero-copy-desktop,.hero-waves,.hero-project,.hero-social-row,.trustpilot-proof,.hero-car-carousel,.hero-shooting-stars,.hero-brands{display:none;}
+  .hero-title-desktop,.hero-copy-desktop,.hero-waves,.hero-project,.hero-social-row,.trustpilot-proof,.hero-car-carousel,.hero-car-card,.hero-shooting-stars,.hero-brands{display:none;}
   .hero h1{font-size:clamp(50px,5.2vw,70px);max-width:720px;}
   .hero h1 em{font-style:normal;color:var(--text-faint);}
   .hero p{font-size:18px;color:var(--text-dim);max-width:540px;margin-top:26px;line-height:1.65;}
@@ -1044,6 +1050,81 @@ const breadcrumbSchema = {
     }
     .hero-car-carousel .hero-car.is-initial{
       animation:heroCoupeReveal 1.25s cubic-bezier(.22,1,.36,1) .12s both;
+    }
+    .hero-car-card{
+      position:absolute;
+      z-index:3;
+      top:18%;
+      right:clamp(90px,18vw,350px);
+      display:flex;
+      flex-direction:column;
+      align-items:flex-start;
+      width:178px;
+      padding:10px 13px 9px;
+      overflow:hidden;
+      color:#17171b;
+      border:1px solid rgba(255,255,255,.92);
+      border-radius:14px;
+      background:linear-gradient(135deg,rgba(255,255,255,.8),rgba(255,255,255,.48));
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 12px 30px rgba(17,17,19,.08),0 5px 18px rgba(255,0,127,.045);
+      backdrop-filter:blur(16px) saturate(1.3);
+      -webkit-backdrop-filter:blur(16px) saturate(1.3);
+      pointer-events:none;
+      transition:opacity .22s ease,transform .42s cubic-bezier(.16,1,.3,1),filter .3s ease;
+    }
+    .hero-car-card::before{
+      content:'';
+      position:absolute;
+      inset:0 auto 0 0;
+      width:2px;
+      background:linear-gradient(180deg,transparent,rgba(255,0,127,.72),transparent);
+    }
+    .hero-car-card::after{
+      content:'';
+      position:absolute;
+      inset:-70% auto -70% -22%;
+      width:42%;
+      transform:rotate(18deg);
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.72),transparent);
+      opacity:.48;
+    }
+    .hero-car-card.is-changing{
+      opacity:0;
+      transform:translate3d(8px,4px,0);
+      filter:blur(3px);
+    }
+    .hero-car-card-model{
+      position:relative;
+      z-index:1;
+      font-family:'Space Grotesk',sans-serif;
+      font-size:13px;
+      line-height:1.2;
+      letter-spacing:-.02em;
+    }
+    .hero-car-card-price{
+      position:relative;
+      z-index:1;
+      margin-top:4px;
+      color:#5e5f66;
+      font-size:10px;
+      white-space:nowrap;
+    }
+    .hero-car-card-price b{color:#17171b;font-size:12.5px;font-weight:700;}
+    .hero-car-card-term{
+      position:relative;
+      z-index:1;
+      margin-top:4px;
+      color:#3f4046;
+      font-size:10px;
+      font-weight:600;
+    }
+    .hero-car-card small{
+      position:relative;
+      z-index:1;
+      margin-top:3px;
+      color:#a0a1a8;
+      font-size:7.5px;
+      letter-spacing:.02em;
     }
     .hero-project{
       position:relative;
@@ -1582,6 +1663,7 @@ const breadcrumbSchema = {
   @media(prefers-reduced-motion:reduce){
     .hero-mobile-car img,.hero-car.is-active,.hero-visual-ring,.hero-visual-label{animation:none;opacity:1;filter:none;}
     .hero-car:not(.is-active){opacity:0;}
+    .hero-car-card{transition:none;}
     .hero-speed-lines{display:none;}
     .hero-shooting-stars{display:none;}
     .brands-track{animation:none;}
@@ -1618,11 +1700,28 @@ const breadcrumbSchema = {
     if(!carousel || !window.matchMedia('(min-width: 981px)').matches) return;
 
     const cars = Array.from(carousel.querySelectorAll('.hero-car')) as HTMLElement[];
+    const carCard = document.querySelector('[data-hero-car-card]') as HTMLElement | null;
+    const cardModel = carCard?.querySelector('.hero-car-card-model') as HTMLElement | null;
+    const cardPrice = carCard?.querySelector('.hero-car-card-price b') as HTMLElement | null;
+    const cardTerm = carCard?.querySelector('.hero-car-card-term') as HTMLElement | null;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(cars.length < 2 || reduceMotion) return;
 
     let currentIndex = 0;
     let cycleTimer = 0;
+    let cardSwapTimer = 0;
+
+    const updateCarCard = (car: HTMLElement) => {
+      if(!carCard || !cardModel || !cardPrice || !cardTerm) return;
+      window.clearTimeout(cardSwapTimer);
+      carCard.classList.add('is-changing');
+      cardSwapTimer = window.setTimeout(() => {
+        cardModel.textContent = car.dataset.model || '';
+        cardPrice.textContent = car.dataset.price || '';
+        cardTerm.textContent = car.dataset.term || '';
+        carCard.classList.remove('is-changing');
+      }, 190);
+    };
 
     const advanceCar = () => {
       const current = cars[currentIndex];
@@ -1633,6 +1732,7 @@ const breadcrumbSchema = {
       current.classList.add('is-leaving');
       next.classList.remove('is-leaving','is-initial');
       next.classList.add('is-active');
+      updateCarCard(next);
 
       window.setTimeout(() => current.classList.remove('is-leaving'), 980);
       currentIndex = nextIndex;
