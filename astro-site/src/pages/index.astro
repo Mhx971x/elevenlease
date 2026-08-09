@@ -192,7 +192,13 @@ const breadcrumbSchema = {
       <div class="hero-copy">
         <div class="eyebrow"><span class="dot"></span> Leasing à kilométrage illimité — partout en France</div>
         <h1>
-          <span class="hero-title-desktop">Le leasing qui s’adapte<br>à <em aria-label="votre budget ou votre quotidien"><span aria-hidden="true">votre <span class="hero-word-rotator" data-hero-word-rotator><span class="hero-word is-active">budget.</span><span class="hero-word">quotidien.</span></span></span></em></span>
+          <span class="hero-title-desktop">
+            Le leasing qui s’adapte
+            <span class="hero-title-benefit">à <em aria-label="votre budget ou votre quotidien"><span class="hero-title-benefit-accent" aria-hidden="true">votre <span class="hero-word-rotator" data-hero-word-rotator>
+              <span class="hero-word is-active">budget.</span>
+              <span class="hero-word">quotidien.</span>
+            </span></span></em></span>
+          </span>
           <span class="hero-title-mobile">Roulez plus.<br><em>Comptez moins.</em></span>
         </h1>
         <p>
@@ -893,20 +899,34 @@ const breadcrumbSchema = {
       color:var(--accent-1);
       font-weight:500;
     }
+    .hero-title-benefit{
+      display:flex;
+      align-items:baseline;
+      justify-content:center;
+      width:100%;
+    }
+    .hero-title-benefit em,
+    .hero-title-benefit-accent{
+      display:inline-flex;
+      align-items:baseline;
+    }
     .hero-word-rotator{
       position:relative;
       display:inline-block;
-      width:9ch;
-      height:1.06em;
+      flex:0 0 8.6ch;
+      width:8.6ch;
+      height:1em;
+      margin-left:-.12ch;
       overflow:hidden;
-      vertical-align:-.08em;
-      text-align:left;
+      vertical-align:baseline;
+      text-align:center;
       white-space:nowrap;
     }
     .hero-word{
       position:absolute;
       inset:0;
       display:block;
+      line-height:1;
       opacity:0;
       transform:translate3d(0,48%,0);
       transition:opacity .3s ease,transform .36s cubic-bezier(.22,1,.36,1);
