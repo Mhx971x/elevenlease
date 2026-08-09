@@ -673,14 +673,14 @@ const breadcrumbSchema = {
     position:absolute;inset:0;z-index:0;
     pointer-events:none;
     background-image:
-      linear-gradient(rgba(17,17,19,.027) 1px, transparent 1px),
-      linear-gradient(90deg,rgba(17,17,19,.027) 1px, transparent 1px),
-      linear-gradient(rgba(255,0,127,.018) 1px, transparent 1px),
-      linear-gradient(90deg,rgba(255,0,127,.018) 1px, transparent 1px);
+      linear-gradient(rgba(17,17,19,.042) 1px, transparent 1px),
+      linear-gradient(90deg,rgba(17,17,19,.042) 1px, transparent 1px),
+      linear-gradient(rgba(255,0,127,.03) 1px, transparent 1px),
+      linear-gradient(90deg,rgba(255,0,127,.03) 1px, transparent 1px);
     background-size:72px 72px,72px 72px,288px 288px,288px 288px;
     mask-image:radial-gradient(ellipse 82% 72% at 50% 46%,black 8%,rgba(0,0,0,.78) 42%,transparent 82%);
     -webkit-mask-image:radial-gradient(ellipse 82% 72% at 50% 46%,black 8%,rgba(0,0,0,.78) 42%,transparent 82%);
-    opacity:.72;
+    opacity:.9;
   }
   .eyebrow{
     display:inline-flex;align-items:center;gap:8px;
@@ -1623,12 +1623,6 @@ const breadcrumbSchema = {
   .hero-proof-row{animation:fadeUp .9s cubic-bezier(.16,1,.3,1) both;animation-delay:.5s;}
   .connect-diagram{animation:fadeUp 1s cubic-bezier(.16,1,.3,1) both;animation-delay:.55s;}
 
-  .hero-grid{animation:gridDrift 30s linear infinite;}
-  @keyframes gridDrift{
-    from{background-position:0 0,0 0,0 0,0 0;}
-    to{background-position:72px 72px,72px 72px,0 0,0 0;}
-  }
-
   /* hero stars */
   .hero-stars{
     position:absolute;inset:0;
@@ -1636,8 +1630,8 @@ const breadcrumbSchema = {
     display:block;
     pointer-events:none;
     z-index:1;
-    mask-image:radial-gradient(ellipse 60% 55% at 50% 40%, black, transparent);
-    -webkit-mask-image:radial-gradient(ellipse 60% 55% at 50% 40%, black, transparent);
+    mask-image:radial-gradient(ellipse 96% 88% at 50% 42%,black 42%,rgba(0,0,0,.82) 72%,transparent 100%);
+    -webkit-mask-image:radial-gradient(ellipse 96% 88% at 50% 42%,black 42%,rgba(0,0,0,.82) 72%,transparent 100%);
   }
 
   /* floating nodes */
@@ -1754,14 +1748,14 @@ const breadcrumbSchema = {
     let W: number, H: number, DPR: number;
     let particles: any[] = [], shootingStars: any[] = [];
     let mouseX = 0.5, mouseY = 0.5, targetX = 0.5, targetY = 0.5;
-    let rafId: number, lastT = 0, running = false, nextShootingStarAt = 0;
+    let rafId: number, lastT = 0, lastPaint = 0, running = false, heroVisible = true, nextShootingStarAt = 0;
 
     function makeParticle(fromTop: boolean){
       const depth = Math.random();
       return {
         x: rand(0, W),
         y: fromTop ? -10 : rand(0, H),
-        r: rand(0.42,.9) + depth*1.25,
+        r: rand(.6,1.35) + depth*.85,
         depth,
         vy: rand(3,7) + depth*8,
         driftAmp: rand(6,16) + depth*10,
@@ -1769,20 +1763,20 @@ const breadcrumbSchema = {
         phase: rand(0, Math.PI*2),
         twinkleFreq: rand(0.4,1.3),
         twinklePhase: rand(0, Math.PI*2),
-        baseAlpha: rand(0.055,0.12) + depth*0.1,
-        pink: Math.random() < 0.1,
-        glow: depth > .72 && Math.random() < .22,
+        baseAlpha: rand(.12,.2) + depth*.08,
+        pink: Math.random() < .16,
+        glow: depth > .62 && Math.random() < .28,
       };
     }
 
     function seed(){
       const area = W*H;
-      const target = Math.max(26, Math.min(W < 640 ? 48 : 78, Math.round(area/15000)));
+      const target = Math.max(24,Math.min(W < 640 ? 38 : 52,Math.round(area/18000)));
       particles = Array.from({length: target}, () => makeParticle(false));
     }
 
     function scheduleShootingStar(now: number, first = false){
-      nextShootingStarAt = now + rand(first ? 3200 : 7200, first ? 6200 : 13800);
+      nextShootingStarAt = now + rand(first ? 900 : 6500,first ? 1800 : 10800);
     }
 
     function createShootingStar(){
@@ -1791,21 +1785,21 @@ const breadcrumbSchema = {
       shootingStars.push({
         x:rand(-W*.06,W*.64),
         y:rand(H*.04,H*.38),
-        len:72 + lengthBias*138,
-        speed:rand(560,860),
+        len:105 + lengthBias*155,
+        speed:rand(620,900),
         angle,
         life:0,
-        maxLife:rand(.72,1.08),
-        width:rand(.75,1.35),
-        alpha:rand(.34,.58),
-        pink:Math.random() < .28,
+        maxLife:rand(.78,1.12),
+        width:rand(1.35,2.05),
+        alpha:rand(.72,.94),
+        pink:Math.random() < .68,
       });
     }
 
     function resize(){
       const rect = hero!.getBoundingClientRect();
       W = rect.width; H = rect.height;
-      DPR = Math.min(window.devicePixelRatio || 1, 2);
+      DPR = Math.min(window.devicePixelRatio || 1,1.25);
       canvas!.width = W*DPR; canvas!.height = H*DPR;
       canvas!.style.width = W+'px'; canvas!.style.height = H+'px';
       ctx!.setTransform(DPR,0,0,DPR,0,0);
@@ -1826,8 +1820,13 @@ const breadcrumbSchema = {
 
     function frame(t: number){
       if(!running) return;
+      if(t-lastPaint < 32){
+        rafId = requestAnimationFrame(frame);
+        return;
+      }
       const dt = Math.min((t-lastT)/1000, 0.05);
       lastT = t;
+      lastPaint = t;
       mouseX += (targetX-mouseX)*0.04;
       mouseY += (targetY-mouseY)*0.04;
       const time = t/1000;
@@ -1851,8 +1850,8 @@ const breadcrumbSchema = {
         ctx!.fill();
         if(p.glow){
           ctx!.beginPath();
-          ctx!.fillStyle = p.pink ? `rgba(255,0,127,${alpha*.08})` : `rgba(17,17,19,${alpha*.045})`;
-          ctx!.arc(px,py,p.r*4.2,0,Math.PI*2);
+          ctx!.fillStyle = p.pink ? `rgba(255,0,127,${alpha*.14})` : `rgba(17,17,19,${alpha*.08})`;
+          ctx!.arc(px,py,p.r*3.8,0,Math.PI*2);
           ctx!.fill();
         }
       }
@@ -1873,22 +1872,25 @@ const breadcrumbSchema = {
         const x1 = x2 - Math.cos(s.angle)*liveLength;
         const y1 = y2 - Math.sin(s.angle)*liveLength;
         const grad = ctx!.createLinearGradient(x1,y1,x2,y2);
-        const rgb = s.pink ? '255,0,127' : '17,17,19';
+        const rgb = s.pink ? '255,0,127' : '42,42,48';
         grad.addColorStop(0,`rgba(${rgb},0)`);
-        grad.addColorStop(.62,`rgba(${rgb},${s.alpha*.16*fade})`);
-        grad.addColorStop(.92,`rgba(${rgb},${s.alpha*.62*fade})`);
-        grad.addColorStop(1,`rgba(255,255,255,${.94*fade})`);
+        grad.addColorStop(.48,`rgba(${rgb},${s.alpha*.12*fade})`);
+        grad.addColorStop(.9,`rgba(${rgb},${s.alpha*.78*fade})`);
+        grad.addColorStop(1,`rgba(${rgb},${s.alpha*fade})`);
         ctx!.strokeStyle = grad;
         ctx!.lineWidth = s.width;
         ctx!.lineCap = 'round';
+        ctx!.shadowColor = s.pink ? `rgba(255,0,127,${.48*fade})` : `rgba(42,42,48,${.2*fade})`;
+        ctx!.shadowBlur = 9;
         ctx!.beginPath();
         ctx!.moveTo(x1,y1);
         ctx!.lineTo(x2,y2);
         ctx!.stroke();
         ctx!.beginPath();
-        ctx!.fillStyle = `rgba(255,255,255,${.75*fade})`;
-        ctx!.arc(x2,y2,s.width*1.15,0,Math.PI*2);
+        ctx!.fillStyle = `rgba(${rgb},${fade})`;
+        ctx!.arc(x2,y2,s.width*1.3,0,Math.PI*2);
         ctx!.fill();
+        ctx!.shadowBlur = 0;
       }
 
       rafId = requestAnimationFrame(frame);
@@ -1902,20 +1904,31 @@ const breadcrumbSchema = {
       });
     }
 
-    document.addEventListener('visibilitychange', ()=>{
-      if(reduceMotion) return;
-      if(document.hidden){ running = false; cancelAnimationFrame(rafId); }
-      else if(!running){ running = true; lastT = performance.now(); rafId = requestAnimationFrame(frame); }
-    });
+    function stop(){
+      running = false;
+      cancelAnimationFrame(rafId);
+    }
+
+    function start(){
+      if(reduceMotion || document.hidden || !heroVisible || running) return;
+      running = true;
+      lastT = performance.now();
+      lastPaint = 0;
+      rafId = requestAnimationFrame(frame);
+    }
+
+    document.addEventListener('visibilitychange',()=> document.hidden ? stop() : start());
+
+    const visibilityObserver = new IntersectionObserver(([entry])=>{
+      heroVisible = entry.isIntersecting;
+      heroVisible ? start() : stop();
+    },{rootMargin:'80px'});
+    visibilityObserver.observe(hero);
 
     window.addEventListener('resize', resize);
     resize();
 
-    if(!reduceMotion){
-      running = true;
-      lastT = performance.now();
-      rafId = requestAnimationFrame(frame);
-    }
+    start();
   })();
 
   // scroll reveal
