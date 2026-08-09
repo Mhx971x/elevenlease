@@ -111,44 +111,42 @@ const breadcrumbSchema = {
     <div class="hero-waves" aria-hidden="true">
       <svg viewBox="0 0 1440 780" preserveAspectRatio="none">
         <defs>
-          <linearGradient id="fuchsiaRibbon" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#ff007f" stop-opacity=".13" />
-            <stop offset=".4" stop-color="#ff42a0" stop-opacity=".07" />
-            <stop offset=".72" stop-color="#ff9dca" stop-opacity=".025" />
+          <radialGradient id="studioAura" cx="50%" cy="54%" r="50%">
+            <stop offset="0" stop-color="#ff007f" stop-opacity=".19" />
+            <stop offset=".32" stop-color="#ff1689" stop-opacity=".085" />
+            <stop offset=".68" stop-color="#ff79b8" stop-opacity=".024" />
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+          </radialGradient>
+          <linearGradient id="studioRing" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0" />
+            <stop offset=".22" stop-color="#ff007f" stop-opacity=".025" />
+            <stop offset=".5" stop-color="#ff007f" stop-opacity=".19" />
+            <stop offset=".78" stop-color="#ff007f" stop-opacity=".025" />
             <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
           </linearGradient>
-          <linearGradient id="fuchsiaHighlight" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#ffffff" stop-opacity=".72" />
-            <stop offset=".5" stop-color="#ffeaf4" stop-opacity=".22" />
-            <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+          <linearGradient id="studioFloor" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0" />
+            <stop offset=".5" stop-color="#ececf0" stop-opacity=".34" />
+            <stop offset="1" stop-color="#d8d8de" stop-opacity=".12" />
           </linearGradient>
-          <linearGradient id="textureFade" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#ffffff" stop-opacity=".72" />
-            <stop offset=".66" stop-color="#ffffff" stop-opacity=".12" />
-            <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
-          </linearGradient>
-          <mask id="textureMask">
-            <rect width="900" height="780" fill="url(#textureFade)" />
-          </mask>
-          <filter id="textureNoise" x="0" y="0" width="100%" height="100%">
-            <feTurbulence type="fractalNoise" baseFrequency=".72" numOctaves="2" seed="11" />
-            <feColorMatrix type="saturate" values="0" />
+          <filter id="auraGlow" x="-30%" y="-40%" width="160%" height="180%">
+            <feGaussianBlur stdDeviation="22" />
           </filter>
         </defs>
 
-        <g fill="none" stroke="url(#fuchsiaRibbon)" stroke-linecap="round">
-          <path d="M-150 -12 C 72 76 18 180 184 256 C 334 326 362 430 654 454" stroke-width="58" />
-          <path d="M-166 108 C 40 164 42 286 206 348 C 360 408 398 522 706 548" stroke-width="46" />
-          <path d="M-180 252 C 24 294 44 404 214 462 C 374 516 426 626 742 650" stroke-width="38" />
-          <path d="M-182 410 C 20 444 56 548 234 600 C 390 646 462 730 770 748" stroke-width="32" />
+        <ellipse cx="720" cy="494" rx="530" ry="236" fill="url(#studioAura)" filter="url(#auraGlow)" />
+
+        <g fill="none" stroke="url(#studioRing)">
+          <ellipse cx="720" cy="490" rx="420" ry="184" stroke-width="1.4" />
+          <ellipse cx="720" cy="490" rx="520" ry="224" stroke-width="1.1" opacity=".72" />
+          <ellipse cx="720" cy="490" rx="628" ry="266" stroke-width=".9" opacity=".46" />
         </g>
 
-        <g fill="none" stroke="url(#fuchsiaHighlight)" stroke-linecap="round" opacity=".65">
-          <path d="M-142 52 C 62 112 28 216 190 286 C 326 346 366 446 628 470" stroke-width="24" />
-          <path d="M-162 338 C 30 374 54 480 222 532 C 358 574 420 668 700 692" stroke-width="20" />
+        <rect x="0" y="560" width="1440" height="220" fill="url(#studioFloor)" />
+        <g fill="none" stroke-linecap="round">
+          <path d="M172 612 Q720 558 1268 612" stroke="#111119" stroke-opacity=".055" stroke-width="1" />
+          <path d="M292 632 Q720 590 1148 632" stroke="#ff007f" stroke-opacity=".085" stroke-width="1" />
         </g>
-
-        <rect width="860" height="780" filter="url(#textureNoise)" mask="url(#textureMask)" opacity=".02" style="mix-blend-mode:multiply" />
       </svg>
     </div>
     <div class="wrap hero-content">
@@ -730,13 +728,13 @@ const breadcrumbSchema = {
       padding:140px 0 28px;
       border-bottom:0;
       background:
-        radial-gradient(ellipse 34% 70% at 4% 48%,rgba(255,0,127,.035),transparent 72%),
-        linear-gradient(90deg,#fff 0%,#fff 48%,#fff 100%);
+        radial-gradient(ellipse 48% 42% at 50% 50%,rgba(255,255,255,1) 0 58%,rgba(255,255,255,.65) 82%,transparent 100%),
+        linear-gradient(180deg,#fff 0%,#fff 58%,#f7f7f9 100%);
     }
     .hero::before{
       inset:0;
       height:100%;
-      background:radial-gradient(ellipse 30% 42% at 5% 58%,rgba(255,0,127,.022),transparent 76%);
+      background:radial-gradient(ellipse 38% 20% at 50% 72%,rgba(255,0,127,.035),transparent 76%);
     }
     .hero-grid,.hero-stars{display:none;}
     .hero-waves{
@@ -745,8 +743,7 @@ const breadcrumbSchema = {
       z-index:0;
       inset:82px 0 76px;
       pointer-events:none;
-      opacity:.9;
-      transform:scale(1.018);
+      opacity:1;
       transform-origin:center;
     }
     .hero-waves svg{display:block;width:100%;height:100%;overflow:visible;}
