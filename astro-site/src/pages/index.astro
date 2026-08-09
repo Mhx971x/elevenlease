@@ -917,7 +917,6 @@ const breadcrumbSchema = {
       inset:-112px 0;
       overflow:hidden;
       pointer-events:none;
-      perspective:1800px;
     }
     .hero-car-carousel .hero-car{
       --ground-y:-50%;
@@ -929,14 +928,13 @@ const breadcrumbSchema = {
       max-width:none;
       height:auto;
       opacity:0;
-      transform:translate3d(-145%,calc(var(--ground-y) + 2%),0) scale(.92) rotateY(-7deg);
-      transform-origin:center bottom;
-      filter:blur(10px) saturate(.76);
+      transform:translate3d(-145%,var(--ground-y),0);
+      filter:blur(7px) saturate(.88);
       animation:none;
       transition:
-        transform .94s cubic-bezier(.22,1,.36,1),
-        opacity .52s ease,
-        filter .74s ease;
+        transform .9s cubic-bezier(.55,.05,.2,1),
+        opacity .42s ease,
+        filter .62s ease;
       will-change:transform,opacity,filter;
     }
     /* Ground line: align the lowest point of every tyre to the coupe baseline. */
@@ -946,13 +944,13 @@ const breadcrumbSchema = {
     .hero-car-carousel .hero-car:nth-child(4){--ground-y:-51.07%;}
     .hero-car-carousel .hero-car.is-active{
       opacity:1;
-      transform:translate3d(-50%,var(--ground-y),0) scale(1) rotateY(0deg);
+      transform:translate3d(-50%,var(--ground-y),0);
       filter:none;
     }
     .hero-car-carousel .hero-car.is-leaving{
       opacity:0;
-      transform:translate3d(145%,calc(var(--ground-y) - 2%),0) scale(.92) rotateY(7deg);
-      filter:blur(10px) saturate(.76);
+      transform:translate3d(145%,var(--ground-y),0);
+      filter:blur(7px) saturate(.88);
     }
     .hero-car-carousel .hero-car.is-initial{
       animation:heroCoupeReveal 1.25s cubic-bezier(.22,1,.36,1) .12s both;
