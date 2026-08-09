@@ -9,24 +9,22 @@ export interface Props {
 const { ctaHref = '/simulation', active, showProgressBar = false } = Astro.props;
 const cls = (key: string) => (active === key ? 'active' : undefined);
 ---
-<header>
-  <nav>
+<header class="site-header">
+  <nav class="site-nav">
     <a href="/" class="logo">
       <span class="logo-icon" role="img" aria-label="Eleven Lease"></span>
     </a>
     <div class="nav-links">
       <a href="/#comment-ca-marche">Comment ça marche</a>
-      <a href="/loa" class={cls('loa')}>Guide LOA</a>
       <a href="/vehicules" class={cls('vehicules')}>Nos offres</a>
-      <a href="/articles" class={cls('articles')}>Articles</a>
+      <a href="/loa" class={cls('loa')}>Guide leasing</a>
       <a href="/#avis">Avis</a>
-      <a href="/contact" class={cls('contact')}>Contact</a>
     </div>
     <div class="nav-right">
       <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
         <span></span><span></span><span></span>
       </button>
-      <a href={ctaHref} class="nav-cta">Simuler mon leasing</a>
+      <a href={ctaHref} class="nav-cta">Simuler mon leasing <span aria-hidden="true">↗</span></a>
     </div>
   </nav>
   {showProgressBar && <div class="progress-bar" id="progressBar"></div>}
@@ -49,7 +47,7 @@ const cls = (key: string) => (active === key ? 'active' : undefined);
     <a href="/contact" class={cls('contact')}>Contact</a>
   </nav>
   <div class="mobile-menu-cta">
-    <a href={ctaHref} class="nav-cta">Simuler mon leasing</a>
+    <a href={ctaHref} class="nav-cta">Simuler mon leasing <span aria-hidden="true">↗</span></a>
   </div>
 </div>
 
@@ -79,15 +77,17 @@ const cls = (key: string) => (active === key ? 'active' : undefined);
   }
 
   // header scroll state + barre de progression (pages avec showProgressBar)
-  const headerEl = document.querySelector('header');
+  const headerEl = document.querySelector('.site-header');
   const progressBar = document.getElementById('progressBar');
-  if(progressBar && headerEl){
-    window.addEventListener('scroll', ()=>{
-      if(window.scrollY > 40){ headerEl.classList.add('scrolled'); }
-      else{ headerEl.classList.remove('scrolled'); }
+  if(headerEl){
+    const updateHeader = ()=>{
+      headerEl.classList.toggle('scrolled', window.scrollY > 40);
+      if(!progressBar) return;
       const h = document.documentElement;
       const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
       progressBar.style.width = scrolled + '%';
-    }, {passive:true});
+    };
+    updateHeader();
+    window.addEventListener('scroll', updateHeader, {passive:true});
   }
 </script>
