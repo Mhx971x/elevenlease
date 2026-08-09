@@ -108,6 +108,12 @@ const breadcrumbSchema = {
   <section class="hero">
     <div class="hero-grid"></div>
     <canvas class="hero-stars" id="heroStars"></canvas>
+    <div class="hero-shooting-stars" aria-hidden="true">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
     <div class="hero-waves" aria-hidden="true">
       <svg viewBox="0 0 1440 780" preserveAspectRatio="none">
         <defs>
@@ -232,7 +238,13 @@ const breadcrumbSchema = {
           <span>La liberté de rouler</span>
           <strong>sans compter.</strong>
         </div>
-        <picture>
+        <div class="hero-car-carousel" data-hero-car-carousel>
+          <img class="hero-car is-active is-initial" src="/hero-premium-coupe-v2.png" alt="" width="1536" height="1024" fetchpriority="high">
+          <img class="hero-car" src="/hero-cupra-formentor.png" alt="" width="1536" height="1024" decoding="async">
+          <img class="hero-car" src="/hero-clio-alpine-v2.png" alt="" width="1536" height="1024" decoding="async">
+          <img class="hero-car" src="/hero-tesla-model-3.png" alt="" width="1536" height="1024" decoding="async">
+        </div>
+        <picture class="hero-mobile-car">
           <source media="(min-width: 981px)" srcset="/hero-premium-coupe-v2.png" width="1536" height="1024">
           <img src="/hero-sport-compact.png" alt="" width="1774" height="887" fetchpriority="high">
         </picture>
@@ -649,7 +661,7 @@ const breadcrumbSchema = {
     align-items:center;gap:34px;
   }
   .hero-copy{position:relative;z-index:2;max-width:590px;}
-  .hero-title-desktop,.hero-copy-desktop,.hero-waves,.hero-project,.trustpilot-proof{display:none;}
+  .hero-title-desktop,.hero-copy-desktop,.hero-waves,.hero-project,.trustpilot-proof,.hero-car-carousel,.hero-shooting-stars{display:none;}
   .hero h1{font-size:clamp(50px,5.2vw,70px);max-width:720px;}
   .hero h1 em{font-style:normal;color:var(--text-faint);}
   .hero p{font-size:18px;color:var(--text-dim);max-width:540px;margin-top:26px;line-height:1.65;}
@@ -726,7 +738,7 @@ const breadcrumbSchema = {
     animation:heroCarDriveIn 1.45s cubic-bezier(.22,1,.36,1) .12s both;
     will-change:transform,filter,opacity;
   }
-  .hero-visual picture{display:contents;}
+  .hero-mobile-car{display:contents;}
   .hero-visual-label{
     position:absolute;z-index:3;right:0;top:13%;
     display:flex;flex-direction:column;
@@ -778,6 +790,30 @@ const breadcrumbSchema = {
       background:radial-gradient(ellipse 38% 20% at 50% 72%,rgba(255,0,127,.035),transparent 76%);
     }
     .hero-grid,.hero-stars{display:none;}
+    .hero-shooting-stars{
+      display:block;
+      position:absolute;
+      z-index:1;
+      inset:clamp(76px,10vh,94px) 0 74px;
+      overflow:hidden;
+      pointer-events:none;
+    }
+    .hero-shooting-stars span{
+      position:absolute;
+      width:clamp(90px,9vw,150px);
+      height:2px;
+      border-radius:100%;
+      opacity:0;
+      background:linear-gradient(90deg,transparent 0%,rgba(255,0,127,.08) 32%,rgba(255,0,127,.72) 92%,rgba(255,255,255,.96) 100%);
+      box-shadow:0 0 10px rgba(255,0,127,.3);
+      transform:rotate(19deg);
+      transform-origin:right center;
+      animation:heroShootingStar 5.2s linear infinite;
+    }
+    .hero-shooting-stars span:nth-child(1){left:9%;top:16%;animation-delay:.35s;}
+    .hero-shooting-stars span:nth-child(2){left:58%;top:11%;width:112px;animation-delay:2.2s;animation-duration:6.1s;}
+    .hero-shooting-stars span:nth-child(3){left:24%;top:42%;width:82px;animation-delay:3.8s;animation-duration:7s;}
+    .hero-shooting-stars span:nth-child(4){left:70%;top:47%;width:128px;animation-delay:5.1s;animation-duration:6.6s;}
     .hero-waves{
       display:block;
       position:absolute;
@@ -887,16 +923,43 @@ const breadcrumbSchema = {
       filter:blur(10px);
       opacity:.9;
     }
-    .hero-visual img{
+    .hero-mobile-car{display:none;}
+    .hero-car-carousel{
+      display:block;
+      position:absolute;
+      z-index:2;
+      inset:-112px 0;
+      overflow:hidden;
+      pointer-events:none;
+    }
+    .hero-car{
       position:absolute;
       z-index:2;
       top:50%;
       left:50%;
-      width:min(850px,63vw,103svh);
+      width:min(785px,58vw,94svh);
       max-width:none;
       height:auto;
-      transform:translate(-50%,-50%);
+      opacity:0;
+      transform:translate(-145%,-50%) scale(.96);
+      filter:blur(7px) saturate(.78);
+      transition:
+        transform .72s cubic-bezier(.65,0,.22,1),
+        opacity .38s ease,
+        filter .58s ease;
+      will-change:transform,opacity,filter;
+    }
+    .hero-car.is-active{
+      opacity:1;
+      transform:translate(-50%,-50%) scale(1);
       filter:drop-shadow(0 13px 12px rgba(7,7,10,.28));
+    }
+    .hero-car.is-leaving{
+      opacity:0;
+      transform:translate(145%,-50%) scale(.96);
+      filter:blur(8px) saturate(.78);
+    }
+    .hero-car.is-initial{
       animation:heroCoupeReveal 1.25s cubic-bezier(.22,1,.36,1) .12s both;
     }
     .hero-project{
@@ -978,6 +1041,12 @@ const breadcrumbSchema = {
       0%{opacity:0;transform:translate(-42%,-47%) scale(.94);filter:blur(8px) saturate(.8);}
       65%{opacity:1;filter:blur(0) saturate(1);}
       100%{opacity:1;transform:translate(-50%,-50%) scale(1);filter:drop-shadow(0 13px 12px rgba(7,7,10,.28));}
+    }
+    @keyframes heroShootingStar{
+      0%,70%{opacity:0;transform:translate3d(-190px,-74px,0) rotate(19deg) scaleX(.18);}
+      73%{opacity:.92;}
+      82%{opacity:.72;}
+      88%,100%{opacity:0;transform:translate3d(330px,128px,0) rotate(19deg) scaleX(1);}
     }
   }
 
@@ -1321,8 +1390,10 @@ const breadcrumbSchema = {
   }
   @media(max-width:640px){ .node{animation:none;} }
   @media(prefers-reduced-motion:reduce){
-    .hero-visual img,.hero-visual-ring,.hero-visual-label{animation:none;opacity:1;filter:none;}
+    .hero-mobile-car img,.hero-car.is-active,.hero-visual-ring,.hero-visual-label{animation:none;opacity:1;filter:none;}
+    .hero-car:not(.is-active){opacity:0;}
     .hero-speed-lines{display:none;}
+    .hero-shooting-stars{display:none;}
   }
 
   /* faq */
@@ -1350,6 +1421,46 @@ const breadcrumbSchema = {
 </style>
 
 <script>
+  // desktop hero vehicle carousel — a new car enters from the left every 2 seconds
+  (function(){
+    const carousel = document.querySelector('[data-hero-car-carousel]') as HTMLElement | null;
+    if(!carousel || !window.matchMedia('(min-width: 981px)').matches) return;
+
+    const cars = Array.from(carousel.querySelectorAll('.hero-car')) as HTMLElement[];
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(cars.length < 2 || reduceMotion) return;
+
+    let currentIndex = 0;
+    let cycleTimer = 0;
+
+    const advanceCar = () => {
+      const current = cars[currentIndex];
+      const nextIndex = (currentIndex + 1) % cars.length;
+      const next = cars[nextIndex];
+
+      current.classList.remove('is-active','is-initial');
+      current.classList.add('is-leaving');
+      next.classList.remove('is-leaving','is-initial');
+      next.classList.add('is-active');
+
+      window.setTimeout(() => current.classList.remove('is-leaving'), 760);
+      currentIndex = nextIndex;
+    };
+
+    const startCarousel = () => {
+      window.clearInterval(cycleTimer);
+      cycleTimer = window.setInterval(advanceCar, 2000);
+    };
+
+    window.setTimeout(() => cars[0].classList.remove('is-initial'), 1450);
+    startCarousel();
+
+    document.addEventListener('visibilitychange', () => {
+      if(document.hidden) window.clearInterval(cycleTimer);
+      else startCarousel();
+    });
+  })();
+
   // hero floating stars — canvas particle field with depth, twinkle & parallax
   (function(){
     const canvas = document.getElementById('heroStars') as HTMLCanvasElement | null;
