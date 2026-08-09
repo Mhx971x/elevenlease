@@ -239,10 +239,10 @@ const breadcrumbSchema = {
           <strong>sans compter.</strong>
         </div>
         <div class="hero-car-carousel" data-hero-car-carousel>
-          <img class="hero-car is-active is-initial" src="/hero-premium-coupe-v2.png" alt="" width="1536" height="1024" fetchpriority="high">
-          <img class="hero-car" src="/hero-cupra-formentor.png" alt="" width="1536" height="1024" decoding="async">
-          <img class="hero-car" src="/hero-clio-alpine-v2.png" alt="" width="1536" height="1024" decoding="async">
-          <img class="hero-car" src="/hero-tesla-model-3.png" alt="" width="1536" height="1024" decoding="async">
+          <img class="hero-car is-active is-initial" src="/hero-premium-coupe-shadow-v3.png" alt="" width="1536" height="1024" fetchpriority="high">
+          <img class="hero-car" src="/hero-cupra-formentor-shadow-v2.png" alt="" width="1536" height="1024" decoding="async">
+          <img class="hero-car" src="/hero-clio-alpine-black-shadow-v3.png" alt="" width="1536" height="1024" decoding="async">
+          <img class="hero-car" src="/hero-tesla-model-3-shadow-v2.png" alt="" width="1536" height="1024" decoding="async">
         </div>
         <picture class="hero-mobile-car">
           <source media="(min-width: 981px)" srcset="/hero-premium-coupe-v2.png" width="1536" height="1024">
@@ -862,67 +862,53 @@ const breadcrumbSchema = {
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:10px;
+      gap:22px;
       width:fit-content;
       margin:clamp(9px,1.4vh,13px) auto 0;
-      padding:8px 14px;
-      border:1px solid rgba(255,255,255,.42);
-      border-radius:12px;
-      background:linear-gradient(135deg,#f70078 0%,#c80b5d 100%);
-      color:#fff;
-      box-shadow:0 12px 28px rgba(190,24,93,.18);
-      font-size:13px;
+      padding:11px 25px;
+      border:1px solid rgba(17,17,19,.045);
+      border-radius:999px;
+      background:rgba(255,255,255,.96);
+      color:#16171b;
+      box-shadow:0 10px 30px rgba(17,17,19,.08),0 5px 18px rgba(255,0,127,.07);
+      font-size:15px;
       line-height:1;
     }
     .trustpilot-brand{
       display:flex;
       align-items:center;
-      gap:5px;
+      gap:7px;
       font-weight:700;
       letter-spacing:-.02em;
+      white-space:nowrap;
     }
     .trustpilot-mark{
       color:#00b67a;
-      font-size:22px;
+      font-size:26px;
       line-height:.8;
     }
     .trustpilot-stars{display:flex;gap:2px;}
     .trustpilot-stars span{
       display:grid;
       place-items:center;
-      width:18px;
-      height:18px;
+      width:22px;
+      height:22px;
       background:#00b67a;
       color:#fff;
-      font-size:12px;
+      font-size:15px;
       line-height:1;
     }
     .trustpilot-stars .is-partial{
-      background:linear-gradient(90deg,#00b67a 80%,rgba(255,255,255,.34) 80%);
+      background:#00b67a;
     }
-    .trustpilot-score{color:rgba(255,255,255,.9);white-space:nowrap;}
-    .trustpilot-score strong{color:#fff;font-weight:700;}
+    .trustpilot-score{color:#34353b;white-space:nowrap;}
+    .trustpilot-score strong{color:#16171b;font-weight:700;}
     .hero-visual{
       width:100%;
       min-height:clamp(220px,33.3vh,300px);
       margin-top:2px;
     }
     .hero-speed-lines,.hero-visual-ring,.hero-visual-label{display:none;}
-    .hero-visual::after{
-      content:'';
-      position:absolute;
-      z-index:0;
-      left:50%;
-      bottom:40px;
-      width:min(620px,48vw,74svh);
-      height:clamp(22px,3vh,27px);
-      transform:translateX(-50%);
-      border-radius:50%;
-      background:rgba(4,4,7,.82);
-      box-shadow:0 10px 24px rgba(4,4,7,.52);
-      filter:blur(10px);
-      opacity:.9;
-    }
     .hero-mobile-car{display:none;}
     .hero-car-carousel{
       display:block;
@@ -931,34 +917,36 @@ const breadcrumbSchema = {
       inset:-112px 0;
       overflow:hidden;
       pointer-events:none;
+      perspective:1800px;
     }
     .hero-car-carousel .hero-car{
       position:absolute;
       z-index:2;
       top:50%;
       left:50%;
-      width:min(785px,58vw,94svh);
+      width:min(735px,54vw,88svh);
       max-width:none;
       height:auto;
       opacity:0;
-      transform:translate(-145%,-50%) scale(.96);
-      filter:blur(7px) saturate(.78);
+      transform:translate3d(-145%,-48%,0) scale(.92) rotateY(-7deg);
+      transform-origin:center bottom;
+      filter:blur(10px) saturate(.76);
       animation:none;
       transition:
-        transform .72s cubic-bezier(.65,0,.22,1),
-        opacity .38s ease,
-        filter .58s ease;
+        transform .94s cubic-bezier(.22,1,.36,1),
+        opacity .52s ease,
+        filter .74s ease;
       will-change:transform,opacity,filter;
     }
     .hero-car-carousel .hero-car.is-active{
       opacity:1;
-      transform:translate(-50%,-50%) scale(1);
-      filter:drop-shadow(0 13px 12px rgba(7,7,10,.28));
+      transform:translate3d(-50%,-50%,0) scale(1) rotateY(0deg);
+      filter:none;
     }
     .hero-car-carousel .hero-car.is-leaving{
       opacity:0;
-      transform:translate(145%,-50%) scale(.96);
-      filter:blur(8px) saturate(.78);
+      transform:translate3d(145%,-52%,0) scale(.92) rotateY(7deg);
+      filter:blur(10px) saturate(.76);
     }
     .hero-car-carousel .hero-car.is-initial{
       animation:heroCoupeReveal 1.25s cubic-bezier(.22,1,.36,1) .12s both;
@@ -1041,7 +1029,7 @@ const breadcrumbSchema = {
     @keyframes heroCoupeReveal{
       0%{opacity:0;transform:translate(-42%,-47%) scale(.94);filter:blur(8px) saturate(.8);}
       65%{opacity:1;filter:blur(0) saturate(1);}
-      100%{opacity:1;transform:translate(-50%,-50%) scale(1);filter:drop-shadow(0 13px 12px rgba(7,7,10,.28));}
+      100%{opacity:1;transform:translate(-50%,-50%) scale(1);filter:none;}
     }
     @keyframes heroShootingStar{
       0%,70%{opacity:0;transform:translate3d(-190px,-74px,0) rotate(19deg) scaleX(.18);}
@@ -1422,7 +1410,7 @@ const breadcrumbSchema = {
 </style>
 
 <script>
-  // desktop hero vehicle carousel — a new car enters from the left every 2 seconds
+  // desktop hero vehicle carousel — a new car enters from the left every 3 seconds
   (function(){
     const carousel = document.querySelector('[data-hero-car-carousel]') as HTMLElement | null;
     if(!carousel || !window.matchMedia('(min-width: 981px)').matches) return;
@@ -1444,13 +1432,13 @@ const breadcrumbSchema = {
       next.classList.remove('is-leaving','is-initial');
       next.classList.add('is-active');
 
-      window.setTimeout(() => current.classList.remove('is-leaving'), 760);
+      window.setTimeout(() => current.classList.remove('is-leaving'), 980);
       currentIndex = nextIndex;
     };
 
     const startCarousel = () => {
       window.clearInterval(cycleTimer);
-      cycleTimer = window.setInterval(advanceCar, 2000);
+      cycleTimer = window.setInterval(advanceCar, 3000);
     };
 
     window.setTimeout(() => cars[0].classList.remove('is-initial'), 1450);
