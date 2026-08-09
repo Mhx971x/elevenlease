@@ -277,38 +277,34 @@ const breadcrumbSchema = {
         <span class="project-text"><strong>Réponse sous 24h</strong></span>
       </div>
       <div class="project-actions">
-        <a href="/vehicules" class="project-stock-cta">Voir le stock</a>
+        <a href="/vehicules" class="project-stock-cta">Voir les véhicules <span aria-hidden="true">→</span></a>
         <a href="/simulation" class="project-cta">Simuler mon leasing <span aria-hidden="true">→</span></a>
       </div>
     </div>
 
   <div class="wrap hero-brands" aria-label="Les marques automobiles les plus demandées">
-    <span class="brands-label">Marques recherchées</span>
+    <span class="brands-label">Nos marques</span>
     <div class="brands-viewport">
       <div class="brands-track">
         <div class="brands-set">
-          <span class="brand-wordmark brand-audi">Audi</span>
-          <span class="brand-wordmark brand-renault">Renault</span>
-          <span class="brand-wordmark brand-mercedes">Mercedes-Benz</span>
-          <span class="brand-wordmark brand-volkswagen">Volkswagen</span>
-          <span class="brand-wordmark brand-tesla">Tesla</span>
-          <span class="brand-wordmark brand-bmw">BMW</span>
-          <span class="brand-wordmark brand-peugeot">Peugeot</span>
-          <span class="brand-wordmark brand-cupra">Cupra</span>
-          <span class="brand-wordmark brand-toyota">Toyota</span>
-          <span class="brand-wordmark brand-porsche">Porsche</span>
+          <span class="brand-logo"><img src="/brands/bmw.svg" alt="BMW" width="24" height="24"></span>
+          <span class="brand-logo"><img src="/brands/audi.svg" alt="Audi" width="24" height="24"></span>
+          <span class="brand-logo"><img src="/brands/volkswagen.svg" alt="Volkswagen" width="24" height="24"></span>
+          <span class="brand-logo"><img src="/brands/peugeot.svg" alt="Peugeot" width="24" height="24"></span>
+          <span class="brand-logo brand-logo-cupra"><img src="/brands/cupra.svg" alt="CUPRA" width="32" height="24"></span>
+          <span class="brand-logo"><img src="/brands/porsche.svg" alt="Porsche" width="24" height="24"></span>
+          <span class="brand-logo"><img src="/brands/renault.svg" alt="Renault" width="24" height="24"></span>
+          <span class="brand-logo"><img src="/brands/toyota.svg" alt="Toyota" width="24" height="24"></span>
         </div>
         <div class="brands-set" aria-hidden="true">
-          <span class="brand-wordmark brand-audi">Audi</span>
-          <span class="brand-wordmark brand-renault">Renault</span>
-          <span class="brand-wordmark brand-mercedes">Mercedes-Benz</span>
-          <span class="brand-wordmark brand-volkswagen">Volkswagen</span>
-          <span class="brand-wordmark brand-tesla">Tesla</span>
-          <span class="brand-wordmark brand-bmw">BMW</span>
-          <span class="brand-wordmark brand-peugeot">Peugeot</span>
-          <span class="brand-wordmark brand-cupra">Cupra</span>
-          <span class="brand-wordmark brand-toyota">Toyota</span>
-          <span class="brand-wordmark brand-porsche">Porsche</span>
+          <span class="brand-logo"><img src="/brands/bmw.svg" alt="" width="24" height="24"></span>
+          <span class="brand-logo"><img src="/brands/audi.svg" alt="" width="24" height="24"></span>
+          <span class="brand-logo"><img src="/brands/volkswagen.svg" alt="" width="24" height="24"></span>
+          <span class="brand-logo"><img src="/brands/peugeot.svg" alt="" width="24" height="24"></span>
+          <span class="brand-logo brand-logo-cupra"><img src="/brands/cupra.svg" alt="" width="32" height="24"></span>
+          <span class="brand-logo"><img src="/brands/porsche.svg" alt="" width="24" height="24"></span>
+          <span class="brand-logo"><img src="/brands/renault.svg" alt="" width="24" height="24"></span>
+          <span class="brand-logo"><img src="/brands/toyota.svg" alt="" width="24" height="24"></span>
         </div>
       </div>
     </div>
@@ -1159,26 +1155,21 @@ const breadcrumbSchema = {
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      min-height:46px;
-      padding:0 16px;
-      color:#56575e;
-      border:1px solid rgba(17,17,19,.075);
-      border-radius:15px;
-      background:rgba(255,255,255,.54);
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.96),0 8px 20px rgba(17,17,19,.045);
-      backdrop-filter:blur(14px);
-      -webkit-backdrop-filter:blur(14px);
+      gap:7px;
+      min-height:42px;
+      padding:0 9px;
+      color:#62636a;
       font-size:12px;
-      font-weight:600;
+      font-weight:500;
       white-space:nowrap;
-      transition:transform .2s ease,color .2s ease,border-color .2s ease,background .2s ease;
+      transition:transform .2s ease,color .2s ease;
     }
+    .project-stock-cta span{transition:transform .2s ease;}
     .project-stock-cta:hover{
-      transform:translateY(-2px);
+      transform:translateY(-1px);
       color:var(--accent-1);
-      border-color:rgba(255,0,127,.16);
-      background:rgba(255,255,255,.82);
     }
+    .project-stock-cta:hover span{transform:translateX(3px);}
     .project-cta{
       display:inline-flex;
       align-items:center;
@@ -1251,41 +1242,28 @@ const breadcrumbSchema = {
       display:flex;
       align-items:center;
       width:max-content;
-      animation:heroBrandsScroll 25s linear infinite;
+      animation:heroBrandsScroll 38s linear infinite;
       will-change:transform;
     }
     .brands-set{
       display:flex;
       align-items:center;
       flex:none;
-      gap:42px;
-      padding:0 21px;
+      gap:52px;
+      padding:0 26px;
     }
-    .brand-wordmark{
-      position:relative;
-      display:inline-flex;
+    .brand-logo{
+      display:flex;
       align-items:center;
+      justify-content:center;
+      flex:0 0 25px;
+      width:25px;
       height:32px;
-      color:#86878e;
-      font-size:12.5px;
-      font-weight:650;
-      letter-spacing:.02em;
-      white-space:nowrap;
-      transition:color .2s ease;
+      opacity:.56;
     }
-    .brand-wordmark::after{
-      content:'';
-      position:absolute;
-      right:-22px;
-      width:3px;
-      height:3px;
-      border-radius:50%;
-      background:rgba(255,0,127,.28);
-    }
-    .brand-audi,.brand-tesla,.brand-porsche{letter-spacing:.15em;text-transform:uppercase;}
-    .brand-renault,.brand-peugeot,.brand-toyota,.brand-cupra{text-transform:uppercase;letter-spacing:.07em;}
-    .brand-mercedes{font-family:Georgia,serif;font-weight:500;letter-spacing:.015em;}
-    .brand-volkswagen,.brand-bmw{font-weight:800;letter-spacing:.09em;}
+    .brand-logo img{display:block;width:auto;height:18px;max-width:28px;filter:grayscale(1);}
+    .brand-logo-cupra{width:31px;flex-basis:31px;}
+    .brand-logo-cupra img{height:17px;max-width:31px;}
     @keyframes heroBrandsScroll{
       to{transform:translateX(-50%);}
     }
@@ -1318,7 +1296,8 @@ const breadcrumbSchema = {
     .project-icon svg{width:22px;height:22px;}
     .project-cta{min-height:56px;}
     .hero-brands{min-height:30px;margin-top:4px;}
-    .brand-wordmark{height:28px;}
+    .brand-logo{height:28px;}
+    .brand-logo img{height:16px;}
   }
 
   /* connection diagram - signature element */
