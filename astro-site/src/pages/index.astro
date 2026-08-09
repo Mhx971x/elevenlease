@@ -1748,7 +1748,7 @@ const breadcrumbSchema = {
         cardPrice.textContent = car.dataset.price || '';
         cardTerm.textContent = car.dataset.term || '';
         carCard.classList.remove('is-changing');
-      }, 900);
+      }, 700);
     };
 
     const advanceCar = () => {
@@ -1771,10 +1771,8 @@ const breadcrumbSchema = {
       cycleTimer = window.setInterval(advanceCar, 3000);
     };
 
-    window.setTimeout(() => {
-      cars[0].classList.remove('is-initial');
-      carCard?.classList.remove('is-changing');
-    }, 1450);
+    window.setTimeout(() => carCard?.classList.remove('is-changing'), 1250);
+    window.setTimeout(() => cars[0].classList.remove('is-initial'), 1450);
     startCarousel();
 
     document.addEventListener('visibilitychange', () => {
