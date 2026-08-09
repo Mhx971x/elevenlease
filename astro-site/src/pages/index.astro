@@ -109,29 +109,49 @@ const breadcrumbSchema = {
     <div class="hero-grid"></div>
     <canvas class="hero-stars" id="heroStars"></canvas>
     <div class="hero-waves" aria-hidden="true">
-      <svg viewBox="0 0 1440 720" preserveAspectRatio="none">
+      <svg viewBox="0 0 1440 780" preserveAspectRatio="none">
         <defs>
-          <linearGradient id="wavePink" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#ff007f" stop-opacity="0.02" />
-            <stop offset="0.38" stop-color="#ff007f" stop-opacity="0.18" />
-            <stop offset="1" stop-color="#ff007f" stop-opacity="0.01" />
+          <linearGradient id="foldPearl" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffffff" />
+            <stop offset="0.42" stop-color="#f7f7f8" />
+            <stop offset="0.72" stop-color="#d7d7da" />
+            <stop offset="1" stop-color="#fefefe" />
           </linearGradient>
-          <linearGradient id="waveInk" x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0" stop-color="#46172c" stop-opacity="0.02" />
-            <stop offset="0.52" stop-color="#46172c" stop-opacity="0.14" />
-            <stop offset="1" stop-color="#46172c" stop-opacity="0.01" />
+          <linearGradient id="foldSoft" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fdfdfd" />
+            <stop offset="0.48" stop-color="#eeeeef" />
+            <stop offset="0.78" stop-color="#cfcfd3" />
+            <stop offset="1" stop-color="#fafafa" />
           </linearGradient>
-          <filter id="waveBlur" x="-10%" y="-20%" width="120%" height="140%">
-            <feGaussianBlur stdDeviation="9" />
+          <filter id="foldShadow" x="-12%" y="-25%" width="124%" height="160%">
+            <feDropShadow dx="0" dy="18" stdDeviation="24" flood-color="#24242b" flood-opacity=".16" />
+          </filter>
+          <filter id="pinkGlow" x="-60%" y="-80%" width="220%" height="260%">
+            <feGaussianBlur stdDeviation="38" />
+          </filter>
+          <filter id="softBlur" x="-30%" y="-60%" width="160%" height="220%">
+            <feGaussianBlur stdDeviation="12" />
           </filter>
         </defs>
-        <g filter="url(#waveBlur)">
-          <path d="M-130 286 C 80 330, 124 202, 286 242 S 486 470, 690 438" fill="none" stroke="url(#wavePink)" stroke-width="56" />
-          <path d="M-120 366 C 90 412, 150 266, 306 326 S 496 520, 710 492" fill="none" stroke="url(#wavePink)" stroke-width="42" />
-          <path d="M-116 470 C 106 506, 188 346, 354 420 S 518 588, 730 560" fill="none" stroke="url(#waveInk)" stroke-width="54" />
-          <path d="M1570 246 C 1378 262, 1328 434, 1160 424 S 970 326, 764 382" fill="none" stroke="url(#wavePink)" stroke-width="52" />
-          <path d="M1560 352 C 1368 354, 1300 514, 1136 504 S 964 400, 758 452" fill="none" stroke="url(#wavePink)" stroke-width="40" />
-          <path d="M1570 470 C 1370 446, 1308 610, 1130 576 S 950 478, 754 520" fill="none" stroke="url(#waveInk)" stroke-width="54" />
+
+        <g filter="url(#pinkGlow)" opacity=".9">
+          <ellipse cx="156" cy="326" rx="230" ry="94" fill="#ff007f" fill-opacity=".18" />
+          <ellipse cx="1260" cy="284" rx="212" ry="86" fill="#ff007f" fill-opacity=".13" />
+          <ellipse cx="790" cy="684" rx="252" ry="72" fill="#d30b64" fill-opacity=".10" />
+        </g>
+
+        <g filter="url(#foldShadow)">
+          <path d="M-90 52 C 106 62 178 166 334 124 C 482 84 478 -12 662 -4 C 828 4 876 68 1050 34 C 1196 6 1282 66 1534 106 L1534 254 C 1328 226 1236 170 1080 186 C 892 206 858 290 680 266 C 510 242 494 178 324 224 C 178 264 78 214 -90 190 Z" fill="url(#foldPearl)" />
+          <path d="M-108 226 C 94 248 188 310 340 274 C 506 236 552 150 700 172 C 852 194 864 310 1028 306 C 1182 302 1260 218 1548 276 L1548 430 C 1322 398 1248 352 1078 382 C 922 410 860 474 700 438 C 548 404 518 332 344 368 C 180 402 54 370 -108 342 Z" fill="url(#foldSoft)" />
+          <path d="M-116 404 C 54 406 134 520 322 484 C 474 456 516 376 674 402 C 824 428 864 534 1024 522 C 1182 510 1270 394 1548 448 L1548 608 C 1324 572 1246 526 1082 564 C 914 604 874 668 696 626 C 532 588 494 512 328 554 C 166 594 46 548 -116 522 Z" fill="url(#foldSoft)" />
+          <path d="M-126 562 C 42 574 148 688 326 648 C 484 612 538 536 684 566 C 844 598 870 708 1046 686 C 1218 664 1308 556 1554 610 L1554 790 L-126 790 Z" fill="url(#foldPearl)" />
+        </g>
+
+        <g fill="none" filter="url(#softBlur)" opacity=".75">
+          <path d="M-40 222 C 164 288 226 224 350 212 C 506 196 562 270 716 264" stroke="#ffffff" stroke-width="9" />
+          <path d="M716 438 C 874 488 906 408 1068 388 C 1220 370 1324 422 1490 434" stroke="#ffffff" stroke-width="8" />
+          <path d="M-30 514 C 148 576 244 512 362 500" stroke="#ff1689" stroke-opacity=".17" stroke-width="8" />
+          <path d="M1048 556 C 1214 506 1328 558 1486 586" stroke="#ff1689" stroke-opacity=".13" stroke-width="7" />
         </g>
       </svg>
     </div>
@@ -731,7 +751,7 @@ const breadcrumbSchema = {
       z-index:0;
       inset:92px 0 88px;
       pointer-events:none;
-      opacity:.96;
+      opacity:.84;
     }
     .hero-waves svg{display:block;width:100%;height:100%;overflow:visible;}
     .hero-content{
