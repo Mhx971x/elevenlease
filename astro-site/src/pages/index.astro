@@ -192,16 +192,7 @@ const breadcrumbSchema = {
       <div class="hero-copy">
         <div class="eyebrow"><span class="dot"></span> Leasing à kilométrage illimité — partout en France</div>
         <h1>
-          <span class="hero-title-desktop">
-            Le leasing qui s’adapte
-            <span class="hero-title-benefit" aria-label="à votre budget ou à votre quotidien">
-              <span class="hero-title-benefit-prefix" aria-hidden="true">à <em>votre</em></span>
-              <em class="hero-word-rotator" data-hero-word-rotator aria-hidden="true">
-              <span class="hero-word is-active">budget.</span>
-              <span class="hero-word">quotidien.</span>
-              </em>
-            </span>
-          </span>
+          <span class="hero-title-desktop">Le leasing qui s'adapte<br>à <em>votre budget.</em></span>
           <span class="hero-title-mobile">Roulez plus.<br><em>Comptez moins.</em></span>
         </h1>
         <p>
@@ -901,53 +892,6 @@ const breadcrumbSchema = {
     .hero h1 em{
       color:var(--accent-1);
       font-weight:500;
-    }
-    .hero-title-benefit{
-      display:flex;
-      align-items:baseline;
-      justify-content:center;
-      width:100%;
-      transform:translateX(.3em);
-    }
-    .hero-title-benefit-prefix{
-      display:inline-flex;
-      align-items:baseline;
-      flex:0 0 auto;
-      white-space:nowrap;
-    }
-    .hero-title-benefit-prefix em{margin-left:.16em;}
-    .hero-word-rotator{
-      position:relative;
-      top:.32em;
-      display:inline-block;
-      flex:0 0 4.55em;
-      width:4.55em;
-      height:1em;
-      margin-left:.18em;
-      overflow:hidden;
-      vertical-align:baseline;
-      text-align:left;
-      white-space:nowrap;
-    }
-    .hero-word{
-      position:absolute;
-      inset:0;
-      display:block;
-      line-height:1;
-      opacity:0;
-      transform:translate3d(0,48%,0);
-      transition:opacity .3s ease,transform .36s cubic-bezier(.22,1,.36,1);
-      will-change:opacity,transform;
-    }
-    .hero-word.is-active{
-      z-index:2;
-      opacity:1;
-      transform:translate3d(0,0,0);
-    }
-    .hero-word.is-exiting{
-      z-index:1;
-      opacity:0;
-      transform:translate3d(0,-48%,0);
     }
     .hero p{
       max-width:720px;
@@ -1748,7 +1692,6 @@ const breadcrumbSchema = {
     .hero-mobile-car img,.hero-car.is-active,.hero-visual-ring,.hero-visual-label{animation:none;opacity:1;filter:none;}
     .hero-car:not(.is-active){opacity:0;}
     .hero-car-card{transition:none;}
-    .hero-word{transition:none;}
     .hero-speed-lines{display:none;}
     .hero-shooting-stars{display:none;}
     .brands-track{animation:none;}
@@ -1779,45 +1722,6 @@ const breadcrumbSchema = {
 </style>
 
 <script>
-  // desktop hero benefit — fixed-width vertical swap every 3 seconds
-  (function(){
-    const rotator = document.querySelector('[data-hero-word-rotator]') as HTMLElement | null;
-    if(!rotator || !window.matchMedia('(min-width: 981px)').matches) return;
-
-    const words = Array.from(rotator.querySelectorAll('.hero-word')) as HTMLElement[];
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(words.length < 2 || reduceMotion) return;
-
-    let activeWord = 0;
-    let wordTimer = 0;
-    let wordCleanupTimer = 0;
-
-    const swapHeroWord = () => {
-      const current = words[activeWord];
-      const nextIndex = (activeWord + 1) % words.length;
-      const next = words[nextIndex];
-
-      window.clearTimeout(wordCleanupTimer);
-      current.classList.remove('is-active');
-      current.classList.add('is-exiting');
-      next.classList.remove('is-exiting');
-      next.classList.add('is-active');
-      wordCleanupTimer = window.setTimeout(() => current.classList.remove('is-exiting'), 400);
-      activeWord = nextIndex;
-    };
-
-    const startHeroWords = () => {
-      window.clearInterval(wordTimer);
-      wordTimer = window.setInterval(swapHeroWord, 3000);
-    };
-
-    startHeroWords();
-    document.addEventListener('visibilitychange', () => {
-      if(document.hidden) window.clearInterval(wordTimer);
-      else startHeroWords();
-    });
-  })();
-
   // desktop hero vehicle carousel — a new car enters from the left every 3 seconds
   (function(){
     const carousel = document.querySelector('[data-hero-car-carousel]') as HTMLElement | null;
