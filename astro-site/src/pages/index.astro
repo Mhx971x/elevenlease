@@ -111,55 +111,49 @@ const breadcrumbSchema = {
     <div class="hero-waves" aria-hidden="true">
       <svg viewBox="0 0 1440 780" preserveAspectRatio="none">
         <defs>
-          <linearGradient id="foldLeft" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#f5f5f6" />
-            <stop offset=".38" stop-color="#ffffff" />
-            <stop offset=".72" stop-color="#d3d3d7" />
-            <stop offset="1" stop-color="#ffffff" />
+          <linearGradient id="sandRibbon" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#e5b99e" stop-opacity=".36" />
+            <stop offset=".4" stop-color="#efcdc0" stop-opacity=".23" />
+            <stop offset=".72" stop-color="#f7e1e4" stop-opacity=".11" />
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
           </linearGradient>
-          <linearGradient id="foldRight" x1="1" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#f3f3f4" />
-            <stop offset=".4" stop-color="#ffffff" />
-            <stop offset=".76" stop-color="#ceced2" />
-            <stop offset="1" stop-color="#ffffff" />
+          <linearGradient id="sandHighlight" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#fff7f0" stop-opacity=".5" />
+            <stop offset=".5" stop-color="#ffeef4" stop-opacity=".18" />
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
           </linearGradient>
-          <linearGradient id="foldBase" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stop-color="#ffffff" />
-            <stop offset=".55" stop-color="#eeeeef" />
-            <stop offset=".82" stop-color="#c9c9ce" />
-            <stop offset="1" stop-color="#fafafa" />
+          <linearGradient id="sandFade" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0" stop-color="#ffffff" stop-opacity=".72" />
+            <stop offset=".66" stop-color="#ffffff" stop-opacity=".12" />
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0" />
           </linearGradient>
-          <filter id="foldShadow" x="-20%" y="-25%" width="140%" height="165%">
-            <feDropShadow dx="0" dy="18" stdDeviation="28" flood-color="#202027" flood-opacity=".18" />
+          <mask id="sandMask">
+            <rect width="900" height="780" fill="url(#sandFade)" />
+          </mask>
+          <filter id="sandSoft" x="-20%" y="-20%" width="150%" height="150%">
+            <feGaussianBlur stdDeviation="4" />
           </filter>
-          <filter id="pinkGlow" x="-60%" y="-80%" width="220%" height="260%">
-            <feGaussianBlur stdDeviation="34" />
-          </filter>
-          <filter id="softBlur" x="-30%" y="-60%" width="160%" height="220%">
-            <feGaussianBlur stdDeviation="10" />
+          <filter id="sandNoise" x="0" y="0" width="100%" height="100%">
+            <feTurbulence type="fractalNoise" baseFrequency=".72" numOctaves="2" seed="11" />
+            <feColorMatrix type="saturate" values="0" />
           </filter>
         </defs>
 
-        <g filter="url(#foldShadow)">
-          <path d="M-120 72 C 76 22 174 48 278 132 C 382 216 472 200 632 116 C 530 240 416 300 278 278 C 126 254 32 188 -120 214 Z" fill="url(#foldLeft)" />
-          <path d="M1560 58 C 1370 18 1262 58 1160 150 C 1062 238 974 216 838 132 C 928 256 1044 316 1178 286 C 1318 254 1402 188 1560 218 Z" fill="url(#foldRight)" />
-          <path d="M-138 302 C 64 244 180 274 302 366 C 410 448 502 434 604 372 C 510 502 392 554 262 520 C 118 482 18 430 -138 472 Z" fill="url(#foldLeft)" />
-          <path d="M1570 310 C 1372 260 1264 292 1146 382 C 1040 462 950 448 846 386 C 934 514 1054 562 1184 528 C 1324 490 1420 434 1570 480 Z" fill="url(#foldRight)" />
-          <path d="M-122 624 C 114 556 278 588 418 664 C 566 744 648 704 760 642 C 892 570 1044 582 1194 654 C 1304 706 1412 682 1562 624 L1562 806 L-122 806 Z" fill="url(#foldBase)" />
+        <ellipse cx="110" cy="402" rx="360" ry="430" fill="#f1d9c8" fill-opacity=".08" filter="url(#sandSoft)" />
+
+        <g fill="none" stroke="url(#sandRibbon)" stroke-linecap="round" filter="url(#sandSoft)">
+          <path d="M-150 -12 C 72 76 18 180 184 256 C 334 326 362 430 654 454" stroke-width="58" />
+          <path d="M-166 108 C 40 164 42 286 206 348 C 360 408 398 522 706 548" stroke-width="46" />
+          <path d="M-180 252 C 24 294 44 404 214 462 C 374 516 426 626 742 650" stroke-width="38" />
+          <path d="M-182 410 C 20 444 56 548 234 600 C 390 646 462 730 770 748" stroke-width="32" />
         </g>
 
-        <g filter="url(#pinkGlow)">
-          <ellipse cx="166" cy="352" rx="150" ry="48" fill="#ff007f" fill-opacity=".17" />
-          <ellipse cx="1270" cy="408" rx="138" ry="44" fill="#ff007f" fill-opacity=".13" />
-          <ellipse cx="742" cy="706" rx="174" ry="36" fill="#c70c58" fill-opacity=".09" />
+        <g fill="none" stroke="url(#sandHighlight)" stroke-linecap="round" filter="url(#sandSoft)" opacity=".65">
+          <path d="M-142 52 C 62 112 28 216 190 286 C 326 346 366 446 628 470" stroke-width="24" />
+          <path d="M-162 338 C 30 374 54 480 222 532 C 358 574 420 668 700 692" stroke-width="20" />
         </g>
 
-        <g fill="none" filter="url(#softBlur)" opacity=".8">
-          <path d="M-40 272 C 122 232 210 286 316 318" stroke="#ffffff" stroke-width="10" />
-          <path d="M1462 286 C 1320 246 1234 302 1122 338" stroke="#ffffff" stroke-width="10" />
-          <path d="M-12 452 C 142 416 220 474 316 502" stroke="#ff1689" stroke-opacity=".16" stroke-width="7" />
-          <path d="M1450 470 C 1322 434 1242 486 1140 516" stroke="#ff1689" stroke-opacity=".12" stroke-width="7" />
-        </g>
+        <rect width="860" height="780" filter="url(#sandNoise)" mask="url(#sandMask)" opacity=".024" style="mix-blend-mode:multiply" />
       </svg>
     </div>
     <div class="wrap hero-content">
@@ -741,17 +735,13 @@ const breadcrumbSchema = {
       padding:140px 0 28px;
       border-bottom:0;
       background:
-        radial-gradient(ellipse 45% 36% at 50% 33%,rgba(255,255,255,1) 0 58%,rgba(255,255,255,.62) 82%,transparent 100%),
-        radial-gradient(ellipse 26% 38% at 7% 48%,rgba(255,0,127,.06),transparent 72%),
-        radial-gradient(ellipse 24% 34% at 93% 52%,rgba(141,10,50,.05),transparent 74%),
-        linear-gradient(180deg,#fff 0%,#f8f8f9 66%,#f2f2f4 100%);
+        radial-gradient(ellipse 34% 70% at 4% 48%,rgba(225,184,151,.10),transparent 72%),
+        linear-gradient(90deg,#fffaf7 0%,#fff 48%,#fff 100%);
     }
     .hero::before{
       inset:0;
       height:100%;
-      background:
-        radial-gradient(ellipse 32% 30% at 12% 64%,rgba(255,0,127,.045),transparent 74%),
-        radial-gradient(ellipse 30% 28% at 89% 66%,rgba(141,10,50,.04),transparent 76%);
+      background:radial-gradient(ellipse 30% 42% at 5% 58%,rgba(255,0,127,.022),transparent 76%);
     }
     .hero-grid,.hero-stars{display:none;}
     .hero-waves{
@@ -760,9 +750,9 @@ const breadcrumbSchema = {
       z-index:0;
       inset:82px 0 76px;
       pointer-events:none;
-      opacity:.91;
-      filter:blur(7px);
-      transform:scale(1.025);
+      opacity:.9;
+      filter:blur(2px);
+      transform:scale(1.018);
       transform-origin:center;
     }
     .hero-waves svg{display:block;width:100%;height:100%;overflow:visible;}
