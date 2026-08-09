@@ -7,9 +7,10 @@
             <span class="footer-logo-icon" role="img" aria-label="Eleven Lease"></span>
           </a>
           <p>Votre projet de leasing, recherché sur mesure grâce à notre réseau de partenaires partout en France.</p>
-          <a class="footer-cta" href="/simulation">
+          <a class="footer-cta cta-with-calculator" href="/simulation">
+            <span class="cta-calculator-icon" aria-hidden="true"></span>
             Simuler mon leasing
-            <span aria-hidden="true">→</span>
+            <span class="footer-cta-arrow" aria-hidden="true">→</span>
           </a>
           <div class="footer-socials" aria-label="Réseaux sociaux">
             <a href="https://taap.it/elevenleasewhatsapp" target="_blank" rel="noopener" aria-label="WhatsApp">
@@ -151,13 +152,13 @@
     font-weight:600;
     transition:background .25s ease,border-color .25s ease,transform .25s ease;
   }
-  .footer-cta span{color:#ff55aa;transition:transform .25s ease;}
+  .footer-cta-arrow{color:#ff55aa;transition:transform .25s ease;}
   .footer-cta:hover{
     border-color:rgba(255,0,127,.7);
     background:rgba(255,0,127,.16);
     transform:translateY(-2px);
   }
-  .footer-cta:hover span{transform:translateX(3px);}
+  .footer-cta:hover .footer-cta-arrow{transform:translateX(3px);}
   .footer-socials{display:flex;gap:10px;margin-top:24px;}
   .footer-socials a{
     width:42px;

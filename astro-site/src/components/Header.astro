@@ -24,7 +24,7 @@ const cls = (key: string) => (active === key ? 'active' : undefined);
       <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
         <span></span><span></span><span></span>
       </button>
-      <a href={ctaHref} class="nav-cta">Simuler mon leasing <span aria-hidden="true">↗</span></a>
+      <a href={ctaHref} class="nav-cta cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span> Simuler mon leasing <span class="nav-cta-arrow" aria-hidden="true">↗</span></a>
     </div>
   </nav>
   {showProgressBar && <div class="progress-bar" id="progressBar"></div>}
@@ -47,7 +47,7 @@ const cls = (key: string) => (active === key ? 'active' : undefined);
     <a href="/contact" class={cls('contact')}>Contact</a>
   </nav>
   <div class="mobile-menu-cta">
-    <a href={ctaHref} class="nav-cta">Simuler mon leasing <span aria-hidden="true">↗</span></a>
+    <a href={ctaHref} class="nav-cta cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span> Simuler mon leasing <span class="nav-cta-arrow" aria-hidden="true">↗</span></a>
   </div>
 </div>
 

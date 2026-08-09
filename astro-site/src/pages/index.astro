@@ -227,7 +227,7 @@ const breadcrumbSchema = {
           </div>
         </div>
         <div class="hero-actions">
-          <a href="/simulation" class="btn-primary">Simuler mon leasing</a>
+          <a href="/simulation" class="btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing</a>
           <a href="/vehicules" class="btn-secondary-link">Voir les véhicules <span aria-hidden="true">→</span></a>
         </div>
 
@@ -296,7 +296,7 @@ const breadcrumbSchema = {
       </div>
       <div class="project-actions">
         <a href="/vehicules" class="project-stock-cta">Voir les véhicules <span aria-hidden="true">→</span></a>
-        <a href="/simulation" class="project-cta">Simuler mon leasing <span aria-hidden="true">→</span></a>
+        <a href="/simulation" class="project-cta cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing <span class="project-cta-arrow" aria-hidden="true">→</span></a>
       </div>
     </div>
 
@@ -1199,8 +1199,8 @@ const breadcrumbSchema = {
       filter:brightness(1.08);
       box-shadow:0 18px 36px rgba(190,24,93,.28);
     }
-    .project-cta span{transition:transform .2s ease;}
-    .project-cta:hover span{transform:translateX(3px);}
+    .project-cta-arrow{transition:transform .2s ease;}
+    .project-cta:hover .project-cta-arrow{transform:translateX(3px);}
     .hero-brands{
       position:relative;
       z-index:4;
