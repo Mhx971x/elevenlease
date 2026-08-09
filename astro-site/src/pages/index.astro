@@ -193,6 +193,13 @@ const breadcrumbSchema = {
           <span class="hero-copy-desktop">On ne vous impose pas une voiture.<br>On trouve l'offre qui correspond à votre budget et à votre usage.</span>
           <span class="hero-copy-mobile">Le leasing automobile pensé pour les particuliers et les professionnels qui roulent vraiment. Sans compteur à surveiller, avec un seul interlocuteur.</span>
         </p>
+        <div class="trustpilot-proof" aria-label="Trustpilot : 4,8 sur 5 basé sur plus de 200 avis">
+          <span class="trustpilot-brand"><span class="trustpilot-mark" aria-hidden="true">★</span>Trustpilot</span>
+          <span class="trustpilot-stars" aria-hidden="true">
+            <span>★</span><span>★</span><span>★</span><span>★</span><span class="is-partial">★</span>
+          </span>
+          <span class="trustpilot-score"><strong>4,8/5</strong> basé sur + de 200 avis</span>
+        </div>
         <div class="hero-actions">
           <a href="/simulation" class="btn-primary">Obtenir mon offre</a>
           <a href="/vehicules" class="btn-secondary-link">Voir les véhicules <span aria-hidden="true">→</span></a>
@@ -642,7 +649,7 @@ const breadcrumbSchema = {
     align-items:center;gap:34px;
   }
   .hero-copy{position:relative;z-index:2;max-width:590px;}
-  .hero-title-desktop,.hero-copy-desktop,.hero-waves,.hero-project{display:none;}
+  .hero-title-desktop,.hero-copy-desktop,.hero-waves,.hero-project,.trustpilot-proof{display:none;}
   .hero h1{font-size:clamp(50px,5.2vw,70px);max-width:720px;}
   .hero h1 em{font-style:normal;color:var(--text-faint);}
   .hero p{font-size:18px;color:var(--text-dim);max-width:540px;margin-top:26px;line-height:1.65;}
@@ -815,9 +822,53 @@ const breadcrumbSchema = {
       line-height:1.5;
       letter-spacing:-.01em;
     }
+    .trustpilot-proof{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      width:fit-content;
+      margin:clamp(9px,1.4vh,13px) auto 0;
+      padding:8px 14px;
+      border:1px solid rgba(255,255,255,.42);
+      border-radius:12px;
+      background:linear-gradient(135deg,#f70078 0%,#c80b5d 100%);
+      color:#fff;
+      box-shadow:0 12px 28px rgba(190,24,93,.18);
+      font-size:13px;
+      line-height:1;
+    }
+    .trustpilot-brand{
+      display:flex;
+      align-items:center;
+      gap:5px;
+      font-weight:700;
+      letter-spacing:-.02em;
+    }
+    .trustpilot-mark{
+      color:#00b67a;
+      font-size:22px;
+      line-height:.8;
+    }
+    .trustpilot-stars{display:flex;gap:2px;}
+    .trustpilot-stars span{
+      display:grid;
+      place-items:center;
+      width:18px;
+      height:18px;
+      background:#00b67a;
+      color:#fff;
+      font-size:12px;
+      line-height:1;
+    }
+    .trustpilot-stars .is-partial{
+      background:linear-gradient(90deg,#00b67a 80%,rgba(255,255,255,.34) 80%);
+    }
+    .trustpilot-score{color:rgba(255,255,255,.9);white-space:nowrap;}
+    .trustpilot-score strong{color:#fff;font-weight:700;}
     .hero-visual{
       width:100%;
-      min-height:clamp(260px,38.9vh,350px);
+      min-height:clamp(220px,33.3vh,300px);
       margin-top:2px;
     }
     .hero-speed-lines,.hero-visual-ring,.hero-visual-label{display:none;}
