@@ -732,7 +732,7 @@ const breadcrumbSchema = {
     box-shadow:0 45px 90px rgba(17,17,19,.08);
     animation:heroRingReveal 1.15s cubic-bezier(.16,1,.3,1) .08s both;
   }
-  .hero-visual img{
+  .hero-mobile-car img{
     position:relative;z-index:2;width:123%;max-width:none;height:auto;
     transform:translateX(var(--car-rest-x));
     animation:heroCarDriveIn 1.45s cubic-bezier(.22,1,.36,1) .12s both;
@@ -932,7 +932,7 @@ const breadcrumbSchema = {
       overflow:hidden;
       pointer-events:none;
     }
-    .hero-car{
+    .hero-car-carousel .hero-car{
       position:absolute;
       z-index:2;
       top:50%;
@@ -943,23 +943,24 @@ const breadcrumbSchema = {
       opacity:0;
       transform:translate(-145%,-50%) scale(.96);
       filter:blur(7px) saturate(.78);
+      animation:none;
       transition:
         transform .72s cubic-bezier(.65,0,.22,1),
         opacity .38s ease,
         filter .58s ease;
       will-change:transform,opacity,filter;
     }
-    .hero-car.is-active{
+    .hero-car-carousel .hero-car.is-active{
       opacity:1;
       transform:translate(-50%,-50%) scale(1);
       filter:drop-shadow(0 13px 12px rgba(7,7,10,.28));
     }
-    .hero-car.is-leaving{
+    .hero-car-carousel .hero-car.is-leaving{
       opacity:0;
       transform:translate(145%,-50%) scale(.96);
       filter:blur(8px) saturate(.78);
     }
-    .hero-car.is-initial{
+    .hero-car-carousel .hero-car.is-initial{
       animation:heroCoupeReveal 1.25s cubic-bezier(.22,1,.36,1) .12s both;
     }
     .hero-project{
@@ -1094,7 +1095,7 @@ const breadcrumbSchema = {
     .hero-copy{max-width:720px;}
     .hero-visual{min-height:430px;max-width:720px;width:100%;margin:0 auto;}
     .hero-visual-ring{width:min(470px,70vw);}
-    .hero-visual img{width:min(760px,112%);}
+    .hero-mobile-car img{width:min(760px,112%);}
     .hero-visual-label{right:4%;top:8%;}
   }
   @media(max-width:640px){
@@ -1111,7 +1112,7 @@ const breadcrumbSchema = {
     .hero-proof span{font-size:10.5px;}
     .hero-visual{--car-rest-x:-2%;min-height:300px;margin-top:12px;}
     .hero-visual-ring{width:270px;}
-    .hero-visual img{width:118%;}
+    .hero-mobile-car img{width:118%;}
     .hero-visual-label{display:none;}
     .hero-speed-lines{inset:31% -8% auto 8%;height:110px;}
     .connection-strip{padding:32px 0;}
