@@ -199,12 +199,15 @@ const breadcrumbSchema = {
           <span class="hero-copy-desktop">On ne vous impose pas une voiture.<br>On trouve l'offre qui correspond à votre budget et à votre usage.</span>
           <span class="hero-copy-mobile">Le leasing automobile pensé pour les particuliers et les professionnels qui roulent vraiment. Sans compteur à surveiller, avec un seul interlocuteur.</span>
         </p>
-        <div class="trustpilot-proof" aria-label="Trustpilot : 4,8 sur 5 basé sur plus de 200 avis">
-          <span class="trustpilot-brand"><span class="trustpilot-mark" aria-hidden="true">★</span>Trustpilot</span>
-          <span class="trustpilot-stars" aria-hidden="true">
-            <span>★</span><span>★</span><span>★</span><span>★</span><span class="is-partial">★</span>
-          </span>
-          <span class="trustpilot-score"><strong>4,8/5</strong> basé sur + de 200 avis</span>
+        <div class="hero-social-row">
+          <div class="trustpilot-proof" aria-label="Trustpilot : 4,8 sur 5 basé sur plus de 200 avis">
+            <span class="trustpilot-brand"><span class="trustpilot-mark" aria-hidden="true">★</span>Trustpilot</span>
+            <span class="trustpilot-stars" aria-hidden="true">
+              <span>★</span><span>★</span><span>★</span><span>★</span><span class="is-partial">★</span>
+            </span>
+            <span class="trustpilot-score"><strong>4,8/5</strong> basé sur + de 200 avis</span>
+          </div>
+          <a href="/vehicules" class="hero-stock-cta">Voir le stock <span aria-hidden="true">→</span></a>
         </div>
         <div class="hero-actions">
           <a href="/simulation" class="btn-primary">Obtenir mon offre</a>
@@ -277,6 +280,38 @@ const breadcrumbSchema = {
         <span class="project-text"><small>Mise en relation</small><strong>Sous 24h</strong></span>
       </div>
       <a href="/simulation" class="project-cta">Simuler mon projet <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="wrap hero-brands" aria-label="Les marques automobiles les plus demandées">
+      <span class="brands-label">Marques recherchées</span>
+      <div class="brands-viewport">
+        <div class="brands-track">
+          <div class="brands-set">
+            <span class="brand-wordmark brand-audi">Audi</span>
+            <span class="brand-wordmark brand-renault">Renault</span>
+            <span class="brand-wordmark brand-mercedes">Mercedes-Benz</span>
+            <span class="brand-wordmark brand-volkswagen">Volkswagen</span>
+            <span class="brand-wordmark brand-tesla">Tesla</span>
+            <span class="brand-wordmark brand-bmw">BMW</span>
+            <span class="brand-wordmark brand-peugeot">Peugeot</span>
+            <span class="brand-wordmark brand-cupra">Cupra</span>
+            <span class="brand-wordmark brand-toyota">Toyota</span>
+            <span class="brand-wordmark brand-porsche">Porsche</span>
+          </div>
+          <div class="brands-set" aria-hidden="true">
+            <span class="brand-wordmark brand-audi">Audi</span>
+            <span class="brand-wordmark brand-renault">Renault</span>
+            <span class="brand-wordmark brand-mercedes">Mercedes-Benz</span>
+            <span class="brand-wordmark brand-volkswagen">Volkswagen</span>
+            <span class="brand-wordmark brand-tesla">Tesla</span>
+            <span class="brand-wordmark brand-bmw">BMW</span>
+            <span class="brand-wordmark brand-peugeot">Peugeot</span>
+            <span class="brand-wordmark brand-cupra">Cupra</span>
+            <span class="brand-wordmark brand-toyota">Toyota</span>
+            <span class="brand-wordmark brand-porsche">Porsche</span>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -661,7 +696,7 @@ const breadcrumbSchema = {
     align-items:center;gap:34px;
   }
   .hero-copy{position:relative;z-index:2;max-width:590px;}
-  .hero-title-desktop,.hero-copy-desktop,.hero-waves,.hero-project,.trustpilot-proof,.hero-car-carousel,.hero-shooting-stars{display:none;}
+  .hero-title-desktop,.hero-copy-desktop,.hero-waves,.hero-project,.hero-social-row,.trustpilot-proof,.hero-car-carousel,.hero-shooting-stars,.hero-brands{display:none;}
   .hero h1{font-size:clamp(50px,5.2vw,70px);max-width:720px;}
   .hero h1 em{font-style:normal;color:var(--text-faint);}
   .hero p{font-size:18px;color:var(--text-dim);max-width:540px;margin-top:26px;line-height:1.65;}
@@ -858,21 +893,48 @@ const breadcrumbSchema = {
       line-height:1.5;
       letter-spacing:-.01em;
     }
+    .hero-social-row{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      width:fit-content;
+      margin:clamp(8px,1.25vh,12px) auto 0;
+    }
     .trustpilot-proof{
       display:flex;
       align-items:center;
       justify-content:center;
-      gap:22px;
+      gap:14px;
       width:fit-content;
-      margin:clamp(9px,1.4vh,13px) auto 0;
-      padding:11px 25px;
-      border:1px solid rgba(17,17,19,.045);
+      position:relative;
+      isolation:isolate;
+      overflow:hidden;
+      padding:8px 16px;
+      border:1px solid rgba(255,255,255,.92);
       border-radius:999px;
-      background:rgba(255,255,255,.96);
+      background:linear-gradient(135deg,rgba(255,255,255,.82),rgba(255,255,255,.5));
       color:#16171b;
-      box-shadow:0 10px 30px rgba(17,17,19,.08),0 5px 18px rgba(255,0,127,.07);
-      font-size:15px;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,1),
+        inset 0 -1px 0 rgba(255,0,127,.045),
+        0 10px 28px rgba(17,17,19,.075),
+        0 5px 18px rgba(255,0,127,.055);
+      backdrop-filter:blur(18px) saturate(1.35);
+      -webkit-backdrop-filter:blur(18px) saturate(1.35);
+      font-size:13px;
       line-height:1;
+    }
+    .trustpilot-proof::before{
+      content:'';
+      position:absolute;
+      z-index:-1;
+      inset:-100% auto -100% -14%;
+      width:36%;
+      transform:rotate(18deg);
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.78),transparent);
+      opacity:.65;
+      pointer-events:none;
     }
     .trustpilot-brand{
       display:flex;
@@ -884,18 +946,18 @@ const breadcrumbSchema = {
     }
     .trustpilot-mark{
       color:#00b67a;
-      font-size:26px;
+      font-size:21px;
       line-height:.8;
     }
     .trustpilot-stars{display:flex;gap:2px;}
     .trustpilot-stars span{
       display:grid;
       place-items:center;
-      width:22px;
-      height:22px;
+      width:18px;
+      height:18px;
       background:#00b67a;
       color:#fff;
-      font-size:15px;
+      font-size:12px;
       line-height:1;
     }
     .trustpilot-stars .is-partial{
@@ -903,6 +965,30 @@ const breadcrumbSchema = {
     }
     .trustpilot-score{color:#34353b;white-space:nowrap;}
     .trustpilot-score strong{color:#16171b;font-weight:700;}
+    .hero-stock-cta{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      min-height:38px;
+      padding:0 17px;
+      color:#fff;
+      border:1px solid rgba(255,255,255,.34);
+      border-radius:999px;
+      background:linear-gradient(135deg,rgba(255,0,127,.96),rgba(178,0,73,.98));
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.28),0 10px 24px rgba(190,24,93,.2);
+      font-size:12.5px;
+      font-weight:650;
+      white-space:nowrap;
+      transition:transform .2s ease,filter .2s ease,box-shadow .2s ease;
+    }
+    .hero-stock-cta span{transition:transform .2s ease;}
+    .hero-stock-cta:hover{
+      transform:translateY(-2px);
+      filter:brightness(1.08);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.34),0 14px 30px rgba(190,24,93,.27);
+    }
+    .hero-stock-cta:hover span{transform:translateX(3px);}
     .hero-visual{
       width:100%;
       min-height:clamp(220px,33.3vh,300px);
@@ -1030,6 +1116,90 @@ const breadcrumbSchema = {
     }
     .project-cta span{transition:transform .2s ease;}
     .project-cta:hover span{transform:translateX(3px);}
+    .hero-brands{
+      position:relative;
+      z-index:4;
+      display:flex;
+      align-items:center;
+      width:calc(100% - 96px);
+      max-width:1220px;
+      min-height:34px;
+      margin-top:clamp(5px,.8vh,8px);
+      color:#8c8d94;
+      border:1px solid rgba(17,17,19,.045);
+      border-radius:999px;
+      background:rgba(255,255,255,.58);
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 8px 22px rgba(17,17,19,.035);
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+      overflow:hidden;
+    }
+    .brands-label{
+      position:relative;
+      z-index:2;
+      align-self:stretch;
+      display:flex;
+      align-items:center;
+      flex:0 0 auto;
+      padding:0 16px 0 19px;
+      color:#a00049;
+      border-right:1px solid rgba(17,17,19,.065);
+      background:rgba(255,255,255,.78);
+      font-size:9.5px;
+      font-weight:700;
+      letter-spacing:.09em;
+      text-transform:uppercase;
+      white-space:nowrap;
+    }
+    .brands-viewport{
+      min-width:0;
+      flex:1;
+      overflow:hidden;
+      mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+      -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+    }
+    .brands-track{
+      display:flex;
+      align-items:center;
+      width:max-content;
+      animation:heroBrandsScroll 25s linear infinite;
+      will-change:transform;
+    }
+    .brands-set{
+      display:flex;
+      align-items:center;
+      flex:none;
+      gap:42px;
+      padding:0 21px;
+    }
+    .brand-wordmark{
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      height:32px;
+      color:#86878e;
+      font-size:12.5px;
+      font-weight:650;
+      letter-spacing:.02em;
+      white-space:nowrap;
+      transition:color .2s ease;
+    }
+    .brand-wordmark::after{
+      content:'';
+      position:absolute;
+      right:-22px;
+      width:3px;
+      height:3px;
+      border-radius:50%;
+      background:rgba(255,0,127,.28);
+    }
+    .brand-audi,.brand-tesla,.brand-porsche{letter-spacing:.15em;text-transform:uppercase;}
+    .brand-renault,.brand-peugeot,.brand-toyota,.brand-cupra{text-transform:uppercase;letter-spacing:.07em;}
+    .brand-mercedes{font-family:Georgia,serif;font-weight:500;letter-spacing:.015em;}
+    .brand-volkswagen,.brand-bmw{font-weight:800;letter-spacing:.09em;}
+    @keyframes heroBrandsScroll{
+      to{transform:translateX(-50%);}
+    }
     @keyframes heroCoupeReveal{
       0%{opacity:0;transform:translate(-42%,-47%) scale(.94);filter:blur(8px) saturate(.8);}
       65%{opacity:1;filter:blur(0) saturate(1);}
@@ -1041,6 +1211,25 @@ const breadcrumbSchema = {
       82%{opacity:.72;}
       88%,100%{opacity:0;transform:translate3d(330px,128px,0) rotate(19deg) scaleX(1);}
     }
+  }
+
+  @media(min-width:981px) and (max-height:820px){
+    .hero{padding:98px 0 10px;}
+    .hero h1{font-size:48px;}
+    .hero p{margin-top:7px;font-size:15.5px;line-height:1.4;}
+    .hero-social-row{margin-top:7px;}
+    .hero-visual{min-height:210px;}
+    .hero-car-carousel .hero-car{width:min(660px,51vw,84svh);}
+    .hero-project{
+      min-height:78px;
+      margin-top:-4px;
+      padding:8px 14px 8px 20px;
+    }
+    .project-icon{flex-basis:44px;width:44px;height:44px;}
+    .project-icon svg{width:22px;height:22px;}
+    .project-cta{min-height:56px;}
+    .hero-brands{min-height:30px;margin-top:4px;}
+    .brand-wordmark{height:28px;}
   }
 
   /* connection diagram - signature element */
@@ -1387,6 +1576,7 @@ const breadcrumbSchema = {
     .hero-car:not(.is-active){opacity:0;}
     .hero-speed-lines{display:none;}
     .hero-shooting-stars{display:none;}
+    .brands-track{animation:none;}
   }
 
   /* faq */
