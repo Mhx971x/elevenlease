@@ -186,10 +186,20 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
   }
   @media(max-width:480px){
     .logo{gap:7px;}
-    .logo-icon{width:83px;height:36px;}
-    .site-header.scrolled .logo-icon{width:76px;height:32px;}
-    .nav-cta{height:40px;padding:0 14px;border-radius:14px;font-size:12px;}
-    .site-header.scrolled .nav-cta{height:38px;padding:0 12px;}
+    .site-header{top:10px;width:calc(100% - 24px);}
+    .site-header.scrolled{top:7px;width:calc(100% - 18px);}
+    .site-nav{height:64px;padding:0 18px;border-radius:21px;grid-template-columns:1fr auto;}
+    .site-header.scrolled .site-nav{height:58px;border-radius:19px;}
+    .logo-icon{width:88px;height:39px;}
+    .site-header.scrolled .logo-icon{width:82px;height:35px;}
+    .site-nav > .nav-right{grid-column:2;}
+    .site-nav > .nav-right > .nav-cta{display:none!important;}
+    .nav-right{gap:0;}
+    .menu-toggle{width:26px;height:20px;}
+    .menu-toggle span{height:2.5px;}
+    .menu-toggle span:nth-child(2){top:8.75px;}
+    .menu-toggle span:nth-child(3){top:17.5px;}
+    .menu-toggle.active span:nth-child(1),.menu-toggle.active span:nth-child(3){top:8.75px;}
   }
 
   /* nav right group + mobile menu toggle */
