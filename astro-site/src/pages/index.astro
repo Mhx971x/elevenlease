@@ -756,9 +756,10 @@ const breadcrumbSchema = {
 
   @media(min-width:981px){
     .hero{
-      min-height:900px;
+      height:100svh;
+      min-height:680px;
       justify-content:flex-start;
-      padding:140px 0 28px;
+      padding:clamp(108px,15.5vh,140px) 0 clamp(16px,3.1vh,28px);
       border-bottom:0;
       background:
         radial-gradient(ellipse 48% 42% at 50% 50%,rgba(255,255,255,1) 0 58%,rgba(255,255,255,.65) 82%,transparent 100%),
@@ -774,7 +775,7 @@ const breadcrumbSchema = {
       display:block;
       position:absolute;
       z-index:0;
-      inset:82px 0 76px;
+      inset:clamp(64px,9.1vh,82px) 0 clamp(54px,8.4vh,76px);
       pointer-events:none;
       opacity:1;
       transform-origin:center;
@@ -808,7 +809,7 @@ const breadcrumbSchema = {
     }
     .hero p{
       max-width:720px;
-      margin:16px auto 0;
+      margin:clamp(10px,1.8vh,16px) auto 0;
       color:#29292f;
       font-size:17px;
       line-height:1.5;
@@ -816,7 +817,7 @@ const breadcrumbSchema = {
     }
     .hero-visual{
       width:100%;
-      min-height:350px;
+      min-height:clamp(260px,38.9vh,350px);
       margin-top:2px;
     }
     .hero-speed-lines,.hero-visual-ring,.hero-visual-label{display:none;}
@@ -855,9 +856,9 @@ const breadcrumbSchema = {
       align-items:center;
       width:calc(100% - 64px);
       max-width:1280px;
-      min-height:110px;
+      min-height:clamp(88px,12.2vh,110px);
       margin-top:-6px;
-      padding:15px 16px 15px 22px;
+      padding:clamp(10px,1.7vh,15px) 16px clamp(10px,1.7vh,15px) 22px;
       background:rgba(255,255,255,.9);
       border:1px solid rgba(255,255,255,.96);
       border-radius:24px;
@@ -903,7 +904,7 @@ const breadcrumbSchema = {
       align-items:center;
       justify-content:center;
       gap:10px;
-      min-height:68px;
+      min-height:clamp(58px,7.6vh,68px);
       margin-left:14px;
       padding:0 26px;
       color:#fff;
