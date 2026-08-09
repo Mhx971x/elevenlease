@@ -810,7 +810,7 @@ const breadcrumbSchema = {
 
   @media(min-width:981px){
     .hero{
-      height:min(100svh,900px);
+      height:100svh;
       min-height:680px;
       justify-content:flex-start;
       padding:clamp(108px,15.5vh,140px) 0 clamp(16px,3.1vh,28px);
@@ -862,8 +862,10 @@ const breadcrumbSchema = {
     .hero-content{
       display:flex;
       flex-direction:column;
+      flex:1 1 auto;
       align-items:center;
       gap:0;
+      min-height:0;
       width:100%;
     }
     .hero-copy{
@@ -990,6 +992,7 @@ const breadcrumbSchema = {
     }
     .hero-stock-cta:hover span{transform:translateX(3px);}
     .hero-visual{
+      flex:1 1 auto;
       width:100%;
       min-height:clamp(220px,33.3vh,300px);
       margin-top:2px;
@@ -1044,6 +1047,7 @@ const breadcrumbSchema = {
     .hero-project{
       position:relative;
       z-index:4;
+      flex:0 0 auto;
       display:grid;
       grid-template-columns:1.05fr 1.25fr .88fr .9fr auto;
       align-items:center;
