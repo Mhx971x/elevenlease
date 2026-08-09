@@ -247,7 +247,7 @@ const breadcrumbSchema = {
           <img class="hero-car" src="/hero-clio-alpine-black-shadow-v3.png" alt="" width="1536" height="1024" decoding="async" data-model="Renault Clio 5 Alpine" data-price="289 €/mois*" data-term="48 mois">
           <img class="hero-car" src="/hero-tesla-model-3-shadow-v2.png" alt="" width="1536" height="1024" decoding="async" data-model="Tesla Model 3" data-price="429 €/mois*" data-term="48 mois">
         </div>
-        <div class="hero-car-card" data-hero-car-card aria-live="polite">
+        <div class="hero-car-card is-changing" data-hero-car-card aria-live="polite">
           <strong class="hero-car-card-model">BMW Série 4</strong>
           <span class="hero-car-card-price">Dès <b>399 €/mois*</b></span>
           <span class="hero-car-card-term">Durée <b>48 mois</b></span>
@@ -1748,7 +1748,7 @@ const breadcrumbSchema = {
         cardPrice.textContent = car.dataset.price || '';
         cardTerm.textContent = car.dataset.term || '';
         carCard.classList.remove('is-changing');
-      }, 190);
+      }, 900);
     };
 
     const advanceCar = () => {
@@ -1771,7 +1771,10 @@ const breadcrumbSchema = {
       cycleTimer = window.setInterval(advanceCar, 3000);
     };
 
-    window.setTimeout(() => cars[0].classList.remove('is-initial'), 1450);
+    window.setTimeout(() => {
+      cars[0].classList.remove('is-initial');
+      carCard?.classList.remove('is-changing');
+    }, 1450);
     startCarousel();
 
     document.addEventListener('visibilitychange', () => {
