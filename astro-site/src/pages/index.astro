@@ -9,6 +9,24 @@ try {
   console.error('Erreur de chargement du catalogue (accueil) au build :', e);
 }
 
+const heroBrands = [
+  { name: 'Mercedes-Benz', src: '/brands/mercedesbenz.svg' },
+  { name: 'BMW', src: '/brands/bmw.svg' },
+  { name: 'Audi', src: '/brands/audi.svg' },
+  { name: 'Volkswagen', src: '/brands/volkswagen.svg' },
+  { name: 'Peugeot', src: '/brands/peugeot.svg' },
+  { name: 'Renault', src: '/brands/renault.svg' },
+  { name: 'CUPRA', src: '/brands/cupra.svg', className: 'brand-logo-cupra', width: 32 },
+  { name: 'Toyota', src: '/brands/toyota.svg' },
+  { name: 'Škoda', src: '/brands/skoda.svg' },
+  { name: 'Tesla', src: '/brands/tesla.svg' },
+  { name: 'Citroën', src: '/brands/citroen.svg' },
+  { name: 'Hyundai', src: '/brands/hyundai.svg' },
+  { name: 'Kia', src: '/brands/kia.svg' },
+  { name: 'Volvo', src: '/brands/volvo.svg' },
+  { name: 'Ford', src: '/brands/ford.svg' }
+];
+
 const fleetCarIcon = `<svg viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M20 68 L32 40 Q38 30 52 30 L140 30 Q154 30 160 40 L172 68 L172 80 Q172 84 168 84 L158 84 Q158 92 150 92 Q142 92 142 84 L58 84 Q58 92 50 92 Q42 92 42 84 L32 84 Q28 84 28 80 Z" stroke="#111113" stroke-width="2.5" fill="rgba(17,17,19,0.03)"/>
   <path d="M46 40 L54 40 L50 30" stroke="#111113" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
@@ -286,26 +304,15 @@ const breadcrumbSchema = {
     <span class="brands-label">Nos marques</span>
     <div class="brands-viewport">
       <div class="brands-track">
-        <div class="brands-set">
-          <span class="brand-logo"><img src="/brands/bmw.svg" alt="BMW" width="24" height="24"></span>
-          <span class="brand-logo"><img src="/brands/audi.svg" alt="Audi" width="24" height="24"></span>
-          <span class="brand-logo"><img src="/brands/volkswagen.svg" alt="Volkswagen" width="24" height="24"></span>
-          <span class="brand-logo"><img src="/brands/peugeot.svg" alt="Peugeot" width="24" height="24"></span>
-          <span class="brand-logo brand-logo-cupra"><img src="/brands/cupra.svg" alt="CUPRA" width="32" height="24"></span>
-          <span class="brand-logo"><img src="/brands/porsche.svg" alt="Porsche" width="24" height="24"></span>
-          <span class="brand-logo"><img src="/brands/renault.svg" alt="Renault" width="24" height="24"></span>
-          <span class="brand-logo"><img src="/brands/toyota.svg" alt="Toyota" width="24" height="24"></span>
-        </div>
-        <div class="brands-set" aria-hidden="true">
-          <span class="brand-logo"><img src="/brands/bmw.svg" alt="" width="24" height="24"></span>
-          <span class="brand-logo"><img src="/brands/audi.svg" alt="" width="24" height="24"></span>
-          <span class="brand-logo"><img src="/brands/volkswagen.svg" alt="" width="24" height="24"></span>
-          <span class="brand-logo"><img src="/brands/peugeot.svg" alt="" width="24" height="24"></span>
-          <span class="brand-logo brand-logo-cupra"><img src="/brands/cupra.svg" alt="" width="32" height="24"></span>
-          <span class="brand-logo"><img src="/brands/porsche.svg" alt="" width="24" height="24"></span>
-          <span class="brand-logo"><img src="/brands/renault.svg" alt="" width="24" height="24"></span>
-          <span class="brand-logo"><img src="/brands/toyota.svg" alt="" width="24" height="24"></span>
-        </div>
+        {[0, 1, 2].map((setIndex) => (
+          <div class="brands-set" aria-hidden={setIndex === 0 ? undefined : 'true'}>
+            {heroBrands.map((brand) => (
+              <span class={brand.className ? `brand-logo ${brand.className}` : 'brand-logo'}>
+                <img src={brand.src} alt={setIndex === 0 ? brand.name : ''} width={brand.width ?? 24} height="24">
+              </span>
+            ))}
+          </div>
+        ))}
       </div>
     </div>
   </div>
@@ -1242,7 +1249,7 @@ const breadcrumbSchema = {
       display:flex;
       align-items:center;
       width:max-content;
-      animation:heroBrandsScroll 38s linear infinite;
+      animation:heroBrandsScroll 54s linear infinite;
       will-change:transform;
     }
     .brands-set{
@@ -1265,7 +1272,7 @@ const breadcrumbSchema = {
     .brand-logo-cupra{width:31px;flex-basis:31px;}
     .brand-logo-cupra img{height:17px;max-width:31px;}
     @keyframes heroBrandsScroll{
-      to{transform:translateX(-50%);}
+      to{transform:translateX(-33.333333%);}
     }
     @keyframes heroCoupeReveal{
       0%{opacity:0;transform:translate(-42%,-47%) scale(.94);filter:blur(8px) saturate(.8);}
