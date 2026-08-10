@@ -80,6 +80,19 @@ const breadcrumbSchema = {
     { "@type": "ListItem", "position": 2, "name": "Guide LOA", "item": "https://elevenlease.fr/loa" }
   ]
 };
+
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "Comment fonctionne une LOA, en pratique",
+  "description": "Les quatre étapes du parcours LOA, du choix du véhicule à la prise de route.",
+  "step": [
+    { "@type": "HowToStep", "position": 1, "name": "Vous choisissez", "text": "Véhicule neuf ou occasion, leasing en priorité. Parcourez notre catalogue ou décrivez ce que vous cherchez." },
+    { "@type": "HowToStep", "position": 2, "name": "Vous réglez les paramètres", "text": "Durée du contrat, kilométrage annuel, apport éventuel : ces trois curseurs déterminent votre loyer." },
+    { "@type": "HowToStep", "position": 3, "name": "Votre dossier est étudié", "text": "Revenus, charges, situation professionnelle : les critères habituels des organismes de financement." },
+    { "@type": "HowToStep", "position": 4, "name": "Vous roulez", "text": "Contrat signé, véhicule livré. Vous payez un loyer fixe chaque mois, sans surprise." }
+  ]
+};
 ---
 <BaseLayout
   title="LOA voiture : fonctionnement et coût | Eleven Lease"
@@ -92,6 +105,7 @@ const breadcrumbSchema = {
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
   </Fragment>
 
   <section class="page-hero">
@@ -130,6 +144,7 @@ const breadcrumbSchema = {
         <p>La Location avec Option d'Achat vous permet de conduire un véhicule pendant une durée fixée à l'avance — généralement entre 24 et 60 mois — en échange d'un loyer mensuel. À la fin du contrat, trois choix s'offrent à vous : racheter le véhicule au prix convenu dès le départ, le restituer, ou repartir sur un nouveau modèle.</p>
         <p>C'est aujourd'hui le mode de financement automobile le plus choisi en France, loin devant le crédit classique — pour une raison simple : il combine mensualités maîtrisées et liberté de changer de véhicule régulièrement.</p>
         <p>La différence avec la LLD (location longue durée) ? En LOA, le prix de rachat final est fixé dès la signature du contrat. Vous savez, dès le premier jour, combien il vous en coûterait de devenir propriétaire si vous choisissiez cette option.</p>
+        <p class="source-note">Pour la définition officielle et le cadre juridique, consultez la fiche <a href="https://www.service-public.gouv.fr/particuliers/vosdroits/F2437" target="_blank" rel="noopener">Location de voiture : LOA ou LLD sur service-public.fr</a>.</p>
       </div>
     </div>
   </section>
@@ -403,6 +418,9 @@ const breadcrumbSchema = {
   .section-border{border-top:1px solid var(--border);}
   .body-text{color:var(--text-dim);font-size:16px;line-height:1.75;max-width:760px;}
   .body-text p + p{margin-top:18px;}
+  .source-note{font-size:13.5px;color:var(--text-faint);}
+  .source-note a{color:var(--text-dim);text-decoration:underline;text-underline-offset:3px;transition:color .2s ease;}
+  .source-note a:hover{color:var(--accent-1);}
 
   /* steps (comment ça marche) */
   .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:20px;overflow:hidden;}

@@ -26,7 +26,13 @@ const articleSchema = {
   dateModified: isoDate,
   url: canonicalUrl,
   mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
-  author: { '@type': 'Organization', name: 'Eleven Lease', url: 'https://elevenlease.fr/' },
+  author: {
+    '@type': 'Person',
+    name: 'Mehdi Djaffar',
+    jobTitle: 'Fondateur, Eleven Lease',
+    url: 'https://elevenlease.fr/a-propos',
+    sameAs: ['https://www.linkedin.com/in/mehdielevenlease/'],
+  },
   publisher: {
     '@type': 'Organization',
     name: 'Eleven Lease',
@@ -64,6 +70,8 @@ const dateLabel = entry.data.publishDate.toLocaleDateString('fr-FR', { day: 'num
       <div class="article-cat">{entry.data.category}</div>
       <h1>{entry.data.title}</h1>
       <div class="article-meta-row">
+        <span>Par <a href="/a-propos">Mehdi Djaffar</a></span>
+        <span class="dot-sep">·</span>
         <span>{dateLabel}</span>
         <span class="dot-sep">·</span>
         <span>{entry.data.readTime} de lecture</span>
@@ -95,6 +103,8 @@ const dateLabel = entry.data.publishDate.toLocaleDateString('fr-FR', { day: 'num
   .article-cat{font-size:12.5px;color:var(--accent-1);text-transform:uppercase;letter-spacing:0.06em;font-weight:600;margin-bottom:14px;}
   .article-hero h1{font-size:clamp(28px,4.4vw,44px);max-width:780px;}
   .article-meta-row{display:flex;align-items:center;gap:10px;color:var(--text-faint);font-size:13.5px;margin-top:18px;}
+  .article-meta-row a{color:var(--text-dim);text-decoration:underline;text-underline-offset:3px;transition:color .2s ease;}
+  .article-meta-row a:hover{color:var(--accent-1);}
   .dot-sep{opacity:0.6;}
 
   .article-body{padding:56px 0 60px;}

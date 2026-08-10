@@ -17,7 +17,7 @@ export async function getStaticPaths() {
 
 const { vehicle: v } = Astro.props as { vehicle: Vehicle };
 
-const pageTitle = `${v.brand} ${v.name} — Eleven Lease`;
+const pageTitle = `${v.brand} ${v.name} — Leasing LOA/LLD | Eleven Lease`;
 const pageDescription = (v.description && v.description.trim())
   ? v.description.trim().slice(0, 155)
   : `Découvrez le ${v.brand} ${v.name} en leasing (LOA/LLD) adapté à votre budget via le réseau de partenaires Eleven Lease. Kilométrage illimité, simulation en 2 minutes.`;
@@ -134,7 +134,7 @@ function buildSpecRows(v: Vehicle): [string, string][] {
 const specRows = buildSpecRows(v);
 const optionEntries = Object.entries(v.options).filter(([, items]) => items.length > 0);
 ---
-<MinimalLayout title={pageTitle} description={pageDescription} path={canonicalPath}>
+<MinimalLayout title={pageTitle} description={pageDescription} path={canonicalPath} ogImage={photos[0]}>
 <script type="application/ld+json" set:html={JSON.stringify(vehicleSchema)} />
 <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 <div id="pageContent">

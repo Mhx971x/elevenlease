@@ -53,12 +53,27 @@ const orgSchema = {
   "url": "https://elevenlease.fr/",
   "logo": "https://elevenlease.fr/eleven-lease-logo.png",
   "email": "contact@elevenlease.fr",
+  "telephone": "+33638014986",
   "foundingDate": "2023",
   "description": "Eleven Lease connecte particuliers et professionnels à un réseau de partenaires financiers pour trouver, toutes marques confondues, le leasing automobile adapté à leur budget, partout en France.",
+  "founder": {
+    "@type": "Person",
+    "name": "Mehdi Djaffar",
+    "jobTitle": "Fondateur",
+    "sameAs": ["https://www.linkedin.com/in/mehdielevenlease/"]
+  },
   "sameAs": [
     "https://www.instagram.com/elevenlease",
-    "https://www.tiktok.com/@elevenlease"
+    "https://www.tiktok.com/@elevenlease",
+    "https://www.linkedin.com/company/elevenlease/"
   ]
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Eleven Lease",
+  "url": "https://elevenlease.fr/"
 };
 
 const howToSchema = {
@@ -122,6 +137,7 @@ const breadcrumbSchema = {
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />

@@ -39,6 +39,23 @@ const collectionSchema = {
     })),
   },
 };
+
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: "Le véhicule que je cherche n'est pas dans le catalogue, que faire ?",
+      acceptedAnswer: { '@type': 'Answer', text: 'Décrivez votre projet, notre réseau de partenaires vous trouve la bonne offre : les modèles affichés sont présentés à titre d\'exemple, bien plus de véhicules sont disponibles via notre réseau.' },
+    },
+    {
+      '@type': 'Question',
+      name: 'Y a-t-il une limite de kilométrage sur ces véhicules ?',
+      acceptedAnswer: { '@type': 'Answer', text: 'Non, le kilométrage illimité est proposé selon contrat sur les véhicules du catalogue.' },
+    },
+  ],
+};
 ---
 <BaseLayout
   title="Eleven Lease — Véhicules disponibles, toutes marques et budgets"
@@ -48,6 +65,7 @@ const collectionSchema = {
 >
   <Fragment slot="head">
     <script type="application/ld+json" set:html={JSON.stringify(collectionSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
   </Fragment>
 <section class="page-hero">
   <div class="wrap">

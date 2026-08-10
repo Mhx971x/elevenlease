@@ -1,11 +1,20 @@
 ---
 import MinimalLayout from '../layouts/MinimalLayout.astro';
+const webPageSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "name": "Simulez votre leasing — Eleven Lease",
+  "url": "https://elevenlease.fr/simulation",
+  "description": "Simulez votre leasing en 2 minutes : décrivez votre projet et votre budget, notre réseau de partenaires vous trouve l'offre LOA/LLD adaptée sous 24h.",
+  "isPartOf": { "@type": "WebSite", "name": "Eleven Lease", "url": "https://elevenlease.fr/" }
+};
 ---
 <MinimalLayout
   title="Eleven Lease — Simulez votre leasing"
   description="Simulez votre leasing en 2 minutes : décrivez votre projet et votre budget, notre réseau de partenaires vous trouve l'offre LOA/LLD adaptée sous 24h."
   path="/simulation"
 >
+<script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />
 
 <header>
   <nav>
