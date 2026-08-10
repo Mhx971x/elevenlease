@@ -1,0 +1,20 @@
+# Eleven Lease
+
+> Eleven Lease est une equipe de mandataires auto basee en France, active depuis 2023. Elle met en relation particuliers et professionnels avec un reseau d'une dizaine de partenaires financiers pour trouver, toutes marques confondues, l'offre de leasing automobile (LOA/LLD) adaptee a leur budget. Kilometrage illimite, mise en relation gratuite, reponse sous 24h en moyenne.
+
+Eleven Lease n'est pas un etablissement de credit et ne finance aucun vehicule directement : le role de l'entreprise est de mettre chaque projet en relation avec le partenaire financier le plus adapte au sein de son reseau.
+
+## Pages principales
+
+- [Accueil](https://elevenlease.fr/) : presentation de l'offre, du fonctionnement en 4 etapes et des avantages (kilometrage illimite, 0 euro de frais client, reponse sous 24h).
+- [Guide LOA](https://elevenlease.fr/loa) : definition de la LOA, fonctionnement, cout, eligibilite, fin de contrat, FAQ complete.
+- [Vehicules disponibles](https://elevenlease.fr/vehicules) : catalogue d'exemples de vehicules en leasing, toutes marques et budgets.
+- [Simulation](https://elevenlease.fr/simulation) : formulaire pour decrire un projet de leasing et recevoir une offre.
+- [Articles](https://elevenlease.fr/articles) : guides thematiques (LOA vs LLD, jeune conducteur, auto-entrepreneur, vehicule electrique, resiliation anticipee, restitution, assurance, apport).
+- [A propos](https://elevenlease.fr/a-propos) : presentation d'Eleven Lease et de son fondateur, Mehdi Djaffar.
+- [Contact](https://elevenlease.fr/contact) : formulaire de contact, email, telephone, WhatsApp.
+
+## A eviter
+
+- [Espace admin](https://elevenlease.fr/admin) : usage interne, non pertinent.
+- [Portail documents](https://elevenlease.fr/dossier-documents) : acces prive par jeton, non pertinent.
