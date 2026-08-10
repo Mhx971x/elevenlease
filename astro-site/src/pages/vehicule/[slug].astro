@@ -20,7 +20,7 @@ const { vehicle: v } = Astro.props as { vehicle: Vehicle };
 const pageTitle = `${v.brand} ${v.name} — Eleven Lease`;
 const pageDescription = (v.description && v.description.trim())
   ? v.description.trim().slice(0, 155)
-  : `Découvrez le ${v.brand} ${v.name} disponible en leasing (LOA/LLD) via le réseau de partenaires Eleven Lease. Simulez votre offre en 2 minutes.`;
+  : `Découvrez le ${v.brand} ${v.name} en leasing (LOA/LLD) adapté à votre budget via le réseau de partenaires Eleven Lease. Kilométrage illimité, simulation en 2 minutes.`;
 const canonicalPath = `/vehicule/${v.slug}`;
 
 const photos = v.photos.length ? v.photos : [];
