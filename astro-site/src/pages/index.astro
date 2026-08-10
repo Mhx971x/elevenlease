@@ -27,6 +27,13 @@ const heroBrands = [
   { name: 'Ford', src: '/brands/ford.svg' }
 ];
 
+const heroCarouselVehicles = [
+  { src: '/hero-premium-coupe-shadow-v3.png', model: 'BMW Série 4', price: '399 €/mois' },
+  { src: '/hero-cupra-formentor-shadow-v2.png', model: 'CUPRA Formentor', price: '359 €/mois' },
+  { src: '/hero-clio-alpine-black-shadow-v3.png', model: 'Renault Clio 5 Alpine', price: '289 €/mois' },
+  { src: '/hero-tesla-model-3-shadow-v2.png', model: 'Tesla Model 3', price: '429 €/mois' }
+];
+
 const fleetCarIcon = `<svg viewBox="0 0 200 100" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M20 68 L32 40 Q38 30 52 30 L140 30 Q154 30 160 40 L172 68 L172 80 Q172 84 168 84 L158 84 Q158 92 150 92 Q142 92 142 84 L58 84 Q58 92 50 92 Q42 92 42 84 L32 84 Q28 84 28 80 Z" stroke="#111113" stroke-width="2.5" fill="rgba(17,17,19,0.03)"/>
   <path d="M46 40 L54 40 L50 30" stroke="#111113" stroke-width="2.2" fill="none" stroke-linejoin="round"/>
@@ -60,10 +67,10 @@ const howToSchema = {
   "name": "Comment obtenir un leasing avec Eleven Lease",
   "description": "Les quatre étapes du parcours Eleven Lease, de la description du projet à la livraison du véhicule.",
   "step": [
-    { "@type": "HowToStep", "position": 1, "name": "Décrivez votre projet", "text": "Modèle recherché, budget, délai — quelques infos suffisent pour lancer votre demande." },
-    { "@type": "HowToStep", "position": 2, "name": "Nous sélectionnons", "text": "Notre réseau de partenaires financiers identifie les meilleures offres — avec un taux d'acceptation supérieur à une demande en direct." },
-    { "@type": "HowToStep", "position": 3, "name": "Vous êtes mis en relation", "text": "Un conseiller vous contacte directement avec une offre adaptée, sans frais cachés." },
-    { "@type": "HowToStep", "position": 4, "name": "Vous validez, il s'occupe du reste", "text": "Négociation, paperasse, livraison — on gère, vous récupérez le véhicule." }
+    { "@type": "HowToStep", "position": 1, "name": "Décrivez votre projet", "text": "Véhicule, budget et besoins : quelques informations suffisent." },
+    { "@type": "HowToStep", "position": 2, "name": "Nous étudions votre dossier", "text": "Votre situation est analysée pour identifier les solutions adaptées." },
+    { "@type": "HowToStep", "position": 3, "name": "Recevez votre offre", "text": "Un conseiller vous présente une proposition claire et personnalisée." },
+    { "@type": "HowToStep", "position": 4, "name": "Validez et prenez la route", "text": "Contrat, démarches et livraison : votre expert s'occupe du reste." }
   ]
 };
 
@@ -252,11 +259,21 @@ const breadcrumbSchema = {
           <span>La liberté de rouler</span>
           <strong>sans compter.</strong>
         </div>
-        <div class="hero-car-carousel" data-hero-car-carousel>
-          <img class="hero-car is-active is-initial" src="/hero-premium-coupe-shadow-v3.png" alt="" width="1536" height="1024" fetchpriority="high" data-model="BMW Série 4" data-price="399 €/mois">
-          <img class="hero-car" src="/hero-cupra-formentor-shadow-v2.png" alt="" width="1536" height="1024" decoding="async" data-model="CUPRA Formentor" data-price="359 €/mois">
-          <img class="hero-car" src="/hero-clio-alpine-black-shadow-v3.png" alt="" width="1536" height="1024" decoding="async" data-model="Renault Clio 5 Alpine" data-price="289 €/mois">
-          <img class="hero-car" src="/hero-tesla-model-3-shadow-v2.png" alt="" width="1536" height="1024" decoding="async" data-model="Tesla Model 3" data-price="429 €/mois">
+        <div class="hero-car-carousel" data-vehicle-carousel data-hero-car-carousel>
+          {heroCarouselVehicles.map((vehicle, index) => (
+            <img
+              class={`hero-car${index === 0 ? ' is-active is-initial' : ''}`}
+              src={vehicle.src}
+              alt=""
+              width="1536"
+              height="1024"
+              fetchpriority={index === 0 ? 'high' : undefined}
+              decoding={index === 0 ? undefined : 'async'}
+              data-carousel-car
+              data-model={vehicle.model}
+              data-price={vehicle.price}
+            >
+          ))}
         </div>
         <div class="hero-car-card is-changing" data-hero-car-card aria-live="polite">
           <strong class="hero-car-card-model">BMW Série 4</strong>
@@ -489,65 +506,63 @@ const breadcrumbSchema = {
         <div class="process-head">
           <div>
             <div class="section-eyebrow">Notre process</div>
-            <h2>Un leasing simple,<br>rapide et <em>efficace.</em></h2>
+            <h2>Un leasing simple,<br> rapide et <em>efficace.</em></h2>
           </div>
-          <p class="process-intro">Nous vous accompagnons à chaque étape pour un leasing sans stress.</p>
+          <p class="process-intro">Un parcours clair, un interlocuteur unique et un accompagnement du premier échange jusqu'à la livraison.</p>
         </div>
-        <div class="process-steps">
-          <div class="process-step">
+        <ol class="process-steps">
+          <li class="process-step">
             <div class="process-icon-wrap">
               <span class="process-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none"><path d="M4 5.5h16a1 1 0 011 1v9a1 1 0 01-1 1H9.5L5 20.5V16.5H4a1 1 0 01-1-1v-9a1 1 0 011-1z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>
               <span class="process-num">1</span>
             </div>
-            <h3>Présentez votre projet</h3>
-            <p>Parlez-nous de vos besoins en quelques clics.</p>
-          </div>
-          <div class="process-step">
+            <div class="process-step-copy">
+              <h3>Décrivez votre projet</h3>
+              <p>Véhicule, budget et besoins : quelques informations suffisent.</p>
+            </div>
+          </li>
+          <li class="process-step">
             <div class="process-icon-wrap">
               <span class="process-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none"><path d="M6 3.5h8l4 4v13a1 1 0 01-1 1H6a1 1 0 01-1-1v-16a1 1 0 011-1z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 3.5v4h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.5 14l4.2-4.2 1.7 1.7L10.2 15.7H8.5V14z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>
               <span class="process-num">2</span>
             </div>
-            <h3>Étude de votre dossier</h3>
-            <p>Nous analysons votre situation et vos possibilités.</p>
-          </div>
-          <div class="process-step">
+            <div class="process-step-copy">
+              <h3>Nous étudions votre dossier</h3>
+              <p>Votre situation est analysée pour identifier les solutions adaptées.</p>
+            </div>
+          </li>
+          <li class="process-step">
             <div class="process-icon-wrap">
               <span class="process-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none"><path d="M3 14.5l1.2-3.6A2 2 0 016.1 9.6h7.8a2 2 0 011.9 1.3l1.2 3.6M4.5 14.5h12v2.8H4.5v-2.8zM6.5 17.3v1.2m8-1.2v1.2M6.8 13h7.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M19.3 6.2a2.6 2.6 0 100 3.6M17.1 7.6h2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>
               <span class="process-num">3</span>
             </div>
-            <h3>Proposition sur-mesure</h3>
-            <p>Recevez une offre adaptée à votre budget.</p>
-          </div>
-          <div class="process-step">
-            <div class="process-icon-wrap">
-              <span class="process-icon" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none"><path d="M9 4.5h6a1 1 0 011 1V6h1a1 1 0 011 1v12a1 1 0 01-1 1H7a1 1 0 01-1-1V7a1 1 0 011-1h1v-.5a1 1 0 011-1z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 4.5a1 1 0 011-1h4a1 1 0 011 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M8.7 13.2l2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              </span>
-              <span class="process-num">4</span>
+            <div class="process-step-copy">
+              <h3>Recevez votre offre</h3>
+              <p>Un conseiller vous présente une proposition claire et personnalisée.</p>
             </div>
-            <h3>Validation &amp; contrat</h3>
-            <p>Validez votre offre, nous nous occupons du reste.</p>
-          </div>
-          <div class="process-step">
+          </li>
+          <li class="process-step">
             <div class="process-icon-wrap">
               <span class="process-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none"><circle cx="7.8" cy="15.2" r="3.3" stroke="currentColor" stroke-width="1.6"/><path d="M10.1 12.9L17.8 5.2M15.3 7.7l2 2M17.8 5.2l2 2-2.3 2.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
               </span>
-              <span class="process-num">5</span>
+              <span class="process-num">4</span>
             </div>
-            <h3>Prenez la route</h3>
-            <p>Récupérez votre véhicule et profitez pleinement.</p>
-          </div>
-        </div>
+            <div class="process-step-copy">
+              <h3>Validez et prenez la route</h3>
+              <p>Contrat, démarches et livraison : votre expert s'occupe du reste.</p>
+            </div>
+          </li>
+        </ol>
         <div class="process-banner">
           <svg class="process-banner-icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 3l1.5 5.5L19 10l-5.5 1.5L12 17l-1.5-5.5L5 10l5.5-1.5L12 3z"/></svg>
-          <span>Un <strong>expert dédié</strong> vous accompagne à chaque étape.</span>
+          <span><strong>Un expert dédié, un seul interlocuteur</strong> du projet à la livraison.</span>
         </div>
       </div>
 
@@ -557,20 +572,29 @@ const breadcrumbSchema = {
         <div class="process-cta-glow process-cta-glow-2" aria-hidden="true"></div>
         <div class="process-cta-content">
           <div class="process-cta-eyebrow">Votre prochain véhicule</div>
-          <h3>Vous l'imaginez,<br><span class="process-cta-accent">nous le trouvons.</span></h3>
-          <p>Faites une simulation gratuite et obtenez votre offre personnalisée en quelques minutes.</p>
+          <h3>Votre projet<br><span class="process-cta-accent">commence ici.</span></h3>
+          <p>Décrivez votre besoin en quelques minutes. Un conseiller revient vers vous avec une solution adaptée.</p>
           <a href="/simulation" class="btn-primary cta-with-calculator process-cta-btn"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing <span aria-hidden="true">→</span></a>
           <div class="process-cta-proof">
-            <div class="proof-avatars" aria-hidden="true">
-              <span class="proof-avatar" style="--av:#ff2e87">M</span>
-              <span class="proof-avatar" style="--av:#e0187a">L</span>
-              <span class="proof-avatar" style="--av:#b3125f">S</span>
-              <span class="proof-avatar proof-avatar-more" style="--av:#8d0a32">+</span>
-            </div>
-            <span class="proof-text">+ de 1000 clients<br>nous font déjà confiance</span>
+            <span>Gratuit</span>
+            <span>Sans engagement</span>
+            <span>Réponse sous 24h</span>
           </div>
         </div>
-        <img class="process-cta-car" src="/hero-clio-alpine-black-shadow-v3.png" alt="Renault Clio 5 Alpine" width="1536" height="1024" loading="lazy" decoding="async">
+        <div class="process-car-carousel" data-vehicle-carousel data-process-car-carousel aria-hidden="true">
+          {heroCarouselVehicles.map((vehicle, index) => (
+            <img
+              class={`process-car${index === 0 ? ' is-active' : ''}`}
+              src={vehicle.src}
+              alt=""
+              width="1536"
+              height="1024"
+              loading="lazy"
+              decoding="async"
+              data-carousel-car
+            >
+          ))}
+        </div>
       </div>
     </div>
   </section>
@@ -1875,40 +1899,40 @@ const breadcrumbSchema = {
   .social-btn:hover{border-color:var(--accent-1);color:var(--accent-1);transform:translateY(-2px);}
 
   /* process + cta */
-  .process-wrap{display:grid;grid-template-columns:1.35fr 1fr;gap:24px;align-items:stretch;}
+  .process-wrap{display:grid;gap:24px;}
   .process-card{
     background:#fff;border:1px solid var(--border);border-radius:28px;
-    padding:44px 40px;box-shadow:var(--shadow-sm);
+    padding:48px;box-shadow:var(--shadow-sm);
   }
-  .process-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:40px;}
-  .process-head h2{font-size:clamp(24px,2.6vw,32px);line-height:1.16;margin-top:12px;}
+  .process-head{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);align-items:end;gap:64px;margin-bottom:38px;}
+  .process-head h2{font-size:clamp(30px,3.4vw,42px);line-height:1.1;margin-top:0;}
   .process-head h2 em{font-style:normal;color:var(--accent-1);}
-  .process-intro{max-width:230px;color:var(--text-dim);font-size:14.5px;line-height:1.55;padding-bottom:4px;}
-  .process-steps{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;position:relative;}
-  .process-step{position:relative;padding-top:4px;}
-  .process-step::before{
-    content:'';position:absolute;top:29px;left:calc(-50% + 29px);width:calc(100% - 58px);height:0;
-    border-top:1.5px dashed var(--border);z-index:0;
+  .process-intro{max-width:390px;color:var(--text-dim);font-size:15.5px;line-height:1.65;padding-bottom:3px;}
+  .process-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;position:relative;list-style:none;margin:0;padding:0;}
+  .process-step{
+    position:relative;min-height:202px;padding:22px 20px 20px;
+    border:1px solid #ececf0;border-radius:20px;background:linear-gradient(155deg,#fff 0%,#fafafd 100%);
+    transition:transform .3s cubic-bezier(.16,1,.3,1),border-color .3s ease,box-shadow .3s ease;
   }
-  .process-step:first-child::before{display:none;}
-  .process-icon-wrap{position:relative;width:58px;height:58px;margin-bottom:18px;}
+  .process-step:hover{transform:translateY(-4px);border-color:#ead0dc;box-shadow:0 18px 34px rgba(17,17,19,.07);}
+  .process-icon-wrap{position:relative;width:54px;height:54px;margin-bottom:22px;}
   .process-icon{
-    display:grid;place-items:center;width:58px;height:58px;border-radius:50%;
-    background:linear-gradient(145deg,#fff0f7,#fbe2ed);color:var(--accent-1);position:relative;z-index:1;
+    display:grid;place-items:center;width:54px;height:54px;border-radius:16px;
+    background:linear-gradient(145deg,#fff2f8,#f9dce9);color:var(--accent-1);position:relative;z-index:1;
   }
-  .process-icon svg{width:24px;height:24px;}
+  .process-icon svg{width:23px;height:23px;}
   .process-num{
-    position:absolute;bottom:-2px;right:-2px;z-index:2;
-    display:grid;place-items:center;width:20px;height:20px;border-radius:50%;
-    background:var(--accent);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:10.5px;font-weight:700;
+    position:absolute;top:-7px;right:-7px;z-index:2;
+    display:grid;place-items:center;width:22px;height:22px;border-radius:50%;
+    background:var(--accent);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:700;
     border:2px solid #fff;
   }
-  .process-step h3{font-size:15px;margin-bottom:6px;line-height:1.3;}
-  .process-step p{font-size:13px;color:var(--text-dim);line-height:1.5;}
+  .process-step h3{font-size:16px;margin-bottom:8px;line-height:1.28;}
+  .process-step p{font-size:13.5px;color:var(--text-dim);line-height:1.55;}
   .process-banner{
     display:flex;align-items:center;justify-content:center;gap:10px;
-    margin-top:36px;padding:16px;border-radius:14px;
-    background:linear-gradient(90deg,#fff5f9,#fdeef4);color:var(--text-dim);font-size:14px;
+    margin-top:20px;padding:15px 18px;border-radius:14px;
+    background:linear-gradient(90deg,#fff6fa,#fceaf2);color:var(--text-dim);font-size:14px;
   }
   .process-banner-icon{width:16px;height:16px;color:var(--accent-1);flex:none;}
   .process-banner strong{color:var(--accent-1);font-weight:700;}
@@ -1916,9 +1940,14 @@ const breadcrumbSchema = {
   .process-cta-card{
     position:relative;overflow:hidden;isolation:isolate;
     background:linear-gradient(155deg, #131316 0%, #1c1c22 55%, #17121a 100%);
-    border-radius:28px;padding:40px 36px;
+    border-radius:28px;padding:48px;min-height:390px;
     box-shadow:0 30px 60px rgba(17,17,19,0.2), 0 8px 24px rgba(255,0,127,0.1);
-    display:flex;flex-direction:column;justify-content:flex-start;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .process-cta-card::after{
+    content:'';position:absolute;z-index:0;right:-5%;bottom:-56%;width:64%;aspect-ratio:1;border-radius:50%;
+    background:radial-gradient(circle,rgba(255,0,127,.24) 0%,rgba(255,0,127,.07) 42%,transparent 70%);
+    filter:blur(8px);pointer-events:none;
   }
   .process-cta-grid{
     position:absolute;inset:0;z-index:0;
@@ -1930,39 +1959,69 @@ const breadcrumbSchema = {
   .process-cta-glow{position:absolute;border-radius:50%;filter:blur(64px);pointer-events:none;z-index:0;}
   .process-cta-glow-1{width:300px;height:300px;background:radial-gradient(circle, rgba(255,0,127,.4), transparent 70%);top:-90px;right:-70px;}
   .process-cta-glow-2{width:260px;height:260px;background:radial-gradient(circle, rgba(255,0,127,.22), transparent 70%);bottom:-40px;left:-60px;}
-  .process-cta-content{position:relative;z-index:2;}
+  .process-cta-content{position:relative;z-index:2;max-width:470px;}
   .process-cta-eyebrow{font-size:12px;color:var(--accent-1);text-transform:uppercase;letter-spacing:0.1em;font-weight:700;margin-bottom:14px;}
-  .process-cta-card h3{font-size:clamp(22px,2.4vw,27px);line-height:1.22;color:#fff;font-weight:600;}
+  .process-cta-card h3{font-size:clamp(28px,3.2vw,40px);line-height:1.12;color:#fff;font-weight:600;}
   .process-cta-accent{color:var(--accent-1);}
-  .process-cta-card > .process-cta-content > p{color:rgba(255,255,255,.62);font-size:14.5px;line-height:1.6;margin-top:14px;max-width:300px;}
+  .process-cta-card > .process-cta-content > p{color:rgba(255,255,255,.64);font-size:15px;line-height:1.65;margin-top:16px;max-width:430px;}
   .process-cta-btn{margin-top:24px;padding:15px 26px;font-size:14.5px;}
-  .process-cta-proof{display:flex;align-items:center;gap:12px;margin-top:28px;}
-  .proof-avatars{display:flex;}
-  .proof-avatar{
-    display:grid;place-items:center;width:34px;height:34px;border-radius:50%;
-    background:var(--av);color:#fff;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;
-    border:2px solid #1c1c22;margin-left:-10px;
+  .process-cta-proof{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:26px;}
+  .process-cta-proof span{
+    display:inline-flex;align-items:center;gap:7px;padding:7px 10px;border:1px solid rgba(255,255,255,.11);border-radius:999px;
+    background:rgba(255,255,255,.055);color:rgba(255,255,255,.72);font-size:11.5px;line-height:1;
   }
-  .proof-avatar:first-child{margin-left:0;}
-  .proof-avatar-more{background:rgba(255,255,255,.12);}
-  .proof-text{color:rgba(255,255,255,.7);font-size:12.5px;line-height:1.4;}
-  .process-cta-car{
-    position:relative;z-index:1;width:112%;height:auto;max-width:none;margin:24px -12% -12px auto;display:block;
-    filter:drop-shadow(0 20px 30px rgba(0,0,0,.5));
+  .process-cta-proof span::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--accent-1);box-shadow:0 0 0 3px rgba(255,0,127,.12);}
+  .process-car-carousel{
+    position:absolute;z-index:1;inset:0 0 0 auto;width:60%;overflow:hidden;pointer-events:none;
   }
+  .process-car{
+    --ground-y:-50%;position:absolute;top:55%;left:50%;width:min(646px,92%);height:auto;max-width:none;
+    opacity:0;transform:translate3d(-145%,var(--ground-y),0);filter:blur(7px) saturate(.88);
+    transition:transform .9s cubic-bezier(.55,.05,.2,1),opacity .42s ease,filter .62s ease;
+    will-change:transform,opacity,filter;
+  }
+  .process-car:nth-child(1){--ground-y:-50%;}
+  .process-car:nth-child(2){--ground-y:-54.79%;}
+  .process-car:nth-child(3){--ground-y:-53.32%;}
+  .process-car:nth-child(4){--ground-y:-51.07%;}
+  .process-car.is-active{opacity:1;transform:translate3d(-50%,var(--ground-y),0);filter:drop-shadow(0 20px 30px rgba(0,0,0,.5));}
+  .process-car.is-leaving{opacity:0;transform:translate3d(145%,var(--ground-y),0);filter:blur(7px) saturate(.88);}
   @media(max-width:1080px){
-    .process-wrap{grid-template-columns:1fr;}
-    .process-cta-card{padding-bottom:0;}
-    .process-cta-car{width:64%;margin:16px auto 0;}
+    .process-head{gap:36px;}
+    .process-steps{grid-template-columns:1fr 1fr;}
+    .process-step{min-height:176px;}
+    .process-car-carousel{width:62%;}
   }
-  @media(max-width:900px){ .process-steps{grid-template-columns:1fr 1fr;row-gap:32px;} .process-step::before{display:none;} }
-  @media(max-width:640px){
-    .process-card{padding:32px 24px;border-radius:22px;}
-    .process-head{flex-direction:column;align-items:flex-start;gap:14px;}
+  @media(max-width:760px){
+    .process-head{grid-template-columns:1fr;align-items:start;gap:16px;margin-bottom:30px;}
+    .process-head h2 br{display:none;}
     .process-intro{max-width:none;}
-    .process-steps{grid-template-columns:1fr;row-gap:26px;}
-    .process-cta-card{padding:32px 24px;border-radius:22px;}
-    .process-cta-car{width:78%;}
+    .process-cta-card{justify-content:flex-start;min-height:600px;}
+    .process-cta-content{max-width:none;}
+    .process-car-carousel{inset:auto 0 0;width:100%;height:285px;}
+    .process-car{top:53%;width:min(595px,88%);}
+  }
+  @media(max-width:640px){
+    .process-card{padding:30px 22px 22px;border-radius:22px;}
+    .process-head h2{font-size:29px;}
+    .process-intro{font-size:14.5px;line-height:1.58;}
+    .process-steps{grid-template-columns:1fr;gap:10px;}
+    .process-step{display:grid;grid-template-columns:50px 1fr;gap:16px;align-items:start;min-height:0;padding:17px 16px;border-radius:16px;}
+    .process-step:hover{transform:none;}
+    .process-icon-wrap{width:50px;height:50px;margin:0;}
+    .process-icon{width:50px;height:50px;border-radius:14px;}
+    .process-icon svg{width:21px;height:21px;}
+    .process-step h3{font-size:15px;margin-top:1px;margin-bottom:5px;}
+    .process-step p{font-size:13px;line-height:1.48;}
+    .process-banner{justify-content:flex-start;margin-top:12px;padding:14px;font-size:13px;line-height:1.45;}
+    .process-cta-card{padding:32px 24px;border-radius:22px;min-height:560px;}
+    .process-cta-card h3{font-size:30px;}
+    .process-cta-card > .process-cta-content > p{font-size:14px;line-height:1.55;}
+    .process-cta-btn{width:100%;justify-content:center;}
+    .process-cta-proof{gap:7px;}
+    .process-cta-proof span{font-size:10.5px;padding:7px 9px;}
+    .process-car-carousel{height:245px;}
+    .process-car{top:52%;width:88%;}
   }
 
   /* categories */
@@ -2195,17 +2254,24 @@ const breadcrumbSchema = {
 </style>
 
 <script>
-  // hero vehicle carousel — a new car enters from the left every 3 seconds
+  // shared vehicle carousel — hero and process CTA stay in sync every 3 seconds
   (function(){
-    const carousel = document.querySelector('[data-hero-car-carousel]') as HTMLElement | null;
-    if(!carousel) return;
+    const carousels = Array.from(document.querySelectorAll('[data-vehicle-carousel]')) as HTMLElement[];
+    const carGroups = carousels
+      .map(carousel => Array.from(carousel.querySelectorAll('[data-carousel-car]')) as HTMLElement[])
+      .filter(cars => cars.length > 0);
+    if(carGroups.length === 0) return;
 
-    const cars = Array.from(carousel.querySelectorAll('.hero-car')) as HTMLElement[];
+    const heroCarousel = document.querySelector('[data-hero-car-carousel]') as HTMLElement | null;
+    const heroCars = heroCarousel
+      ? Array.from(heroCarousel.querySelectorAll('[data-carousel-car]')) as HTMLElement[]
+      : [];
     const carCard = document.querySelector('[data-hero-car-card]') as HTMLElement | null;
     const cardModel = carCard?.querySelector('.hero-car-card-model') as HTMLElement | null;
     const cardPrice = carCard?.querySelector('.hero-car-card-price b') as HTMLElement | null;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(cars.length < 2 || reduceMotion) return;
+    const carCount = Math.min(...carGroups.map(cars => cars.length));
+    if(carCount < 2 || reduceMotion) return;
 
     let currentIndex = 0;
     let cycleTimer = 0;
@@ -2223,17 +2289,19 @@ const breadcrumbSchema = {
     };
 
     const advanceCar = () => {
-      const current = cars[currentIndex];
-      const nextIndex = (currentIndex + 1) % cars.length;
-      const next = cars[nextIndex];
+      const nextIndex = (currentIndex + 1) % carCount;
 
-      current.classList.remove('is-active','is-initial');
-      current.classList.add('is-leaving');
-      next.classList.remove('is-leaving','is-initial');
-      next.classList.add('is-active');
-      updateCarCard(next);
+      carGroups.forEach(cars => {
+        const current = cars[currentIndex];
+        const next = cars[nextIndex];
+        current.classList.remove('is-active','is-initial');
+        current.classList.add('is-leaving');
+        next.classList.remove('is-leaving','is-initial');
+        next.classList.add('is-active');
+        window.setTimeout(() => current.classList.remove('is-leaving'), 980);
+      });
 
-      window.setTimeout(() => current.classList.remove('is-leaving'), 980);
+      if(heroCars[nextIndex]) updateCarCard(heroCars[nextIndex]);
       currentIndex = nextIndex;
     };
 
@@ -2243,7 +2311,7 @@ const breadcrumbSchema = {
     };
 
     window.setTimeout(() => carCard?.classList.remove('is-changing'), 1250);
-    window.setTimeout(() => cars[0].classList.remove('is-initial'), 1450);
+    window.setTimeout(() => heroCars[0]?.classList.remove('is-initial'), 1450);
     startCarousel();
 
     document.addEventListener('visibilitychange', () => {
