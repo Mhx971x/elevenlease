@@ -280,13 +280,13 @@ const breadcrumbSchema = {
         <span class="project-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none"><path d="M17.2 7a6 7 0 1 0 0 10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 10h9M4 14h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M4 4l16 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
         </span>
-        <span class="project-text"><strong>0€ de frais client</strong></span>
+        <span class="project-text"><strong><span class="proof-full">0€ de frais client</span><span class="proof-compact">0€ de frais</span></strong></span>
       </div>
       <div class="project-item">
         <span class="project-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none"><path d="M7 3v3m10-3v3M4 9h16M5 5h14a1 1 0 011 1v14H4V6a1 1 0 011-1zM8 13h3m2 0h3m-8 3h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
-        <span class="project-text"><strong>Réponse sous 24h</strong></span>
+        <span class="project-text"><strong><span class="proof-full">Réponse sous 24h</span><span class="proof-compact">Réponse 24h</span></strong></span>
       </div>
       <div class="project-actions">
         <a href="/vehicules" class="project-stock-cta">Voir les véhicules <span aria-hidden="true">→</span></a>
@@ -738,6 +738,7 @@ const breadcrumbSchema = {
   .hero-proof:last-child{border-right:0;}
   .hero-proof strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:20px;letter-spacing:-.02em;}
   .hero-proof span{display:block;color:var(--text-faint);font-size:11.5px;margin-top:4px;}
+  .proof-compact{display:none;}
 
   .hero-visual{
     --car-rest-x:-1%;
@@ -1580,7 +1581,9 @@ const breadcrumbSchema = {
     .project-icon{display:grid;place-items:center;flex:0 0 30px;width:30px;height:30px;border-radius:50%;background:linear-gradient(145deg,#fff0f7,#fbe2ed);}
     .project-icon svg{width:15px;height:15px;}
     .project-text{display:block;min-width:0;}
-    .project-text strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:9.25px;line-height:1.28;letter-spacing:-.02em;white-space:normal;}
+    .project-text strong{display:block;font-family:'Space Grotesk',sans-serif;font-size:9px;line-height:1.28;letter-spacing:-.025em;white-space:nowrap;}
+    .proof-full{display:none;}
+    .proof-compact{display:inline;}
     .project-actions{display:none;}
     .hero-brands{
       position:relative;
@@ -1689,7 +1692,9 @@ const breadcrumbSchema = {
     .project-item{gap:10px;padding:5px 14px;}
     .project-icon{flex-basis:38px;width:38px;height:38px;}
     .project-icon svg{width:19px;height:19px;}
-    .project-text strong{font-size:11.5px;line-height:1.24;}
+    .project-text strong{font-size:11.5px;line-height:1.24;white-space:normal;}
+    .proof-full{display:inline;}
+    .proof-compact{display:none;}
     .hero-brands{
       display:flex;
       align-items:center;
