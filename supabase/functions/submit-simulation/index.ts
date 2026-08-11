@@ -41,6 +41,7 @@ type LeadPayload = {
   motorisation: string
   budgetSouhaite: string
   neufOccasion: string
+  kilometrageAnnuel: string
   dureeContrat: string
   apport: string
   dateLivraison: string
@@ -173,6 +174,13 @@ function normalizePayload(input: Record<string, unknown>): LeadPayload {
       'Plus de 1 000 €/mois',
     ]),
     neufOccasion: oneOf(input.neufOccasion, 'État du véhicule', ['Neuf', 'Occasion', 'Peu importe']),
+    kilometrageAnnuel: oneOf(input.kilometrageAnnuel, 'Kilométrage annuel', [
+      '10 000 km/an',
+      '15 000 km/an',
+      '20 000 km/an',
+      '30 000 km/an',
+      'Kilométrage illimité (Crédit-bail)',
+    ]),
     dureeContrat: oneOf(input.dureeContrat, 'Durée du contrat', ['36 mois', '48 mois', '60 mois', 'À définir']),
     apport: oneOf(input.apport, 'Apport', ['0 €', 'Moins de 2 000 €', '2 000 à 5 000 €', 'Plus de 5 000 €']),
     dateLivraison: oneOf(input.dateLivraison, 'Date de livraison', [
@@ -306,6 +314,7 @@ function toDatabaseRow(payload: LeadPayload) {
     motorisation: payload.rechercheVehicule === 'Modèle précis' ? '' : payload.motorisation,
     budget_souhaite: payload.budgetSouhaite,
     neuf_occasion: payload.neufOccasion,
+    kilometrage_annuel: payload.kilometrageAnnuel,
     duree_contrat: payload.dureeContrat,
     apport: payload.apport,
     date_livraison: payload.dateLivraison,
@@ -353,6 +362,7 @@ function emailHtml(payload: LeadPayload) {
     ['Véhicule recherché', vehicle],
     ['État', escapeHtml(payload.neufOccasion)],
     ['Budget mensuel', escapeHtml(payload.budgetSouhaite)],
+    ['Kilométrage annuel', escapeHtml(payload.kilometrageAnnuel)],
     ['Durée envisagée', escapeHtml(payload.dureeContrat)],
     ['Apport', escapeHtml(payload.apport)],
     ['Livraison souhaitée', escapeHtml(payload.dateLivraison)],
@@ -441,6 +451,7 @@ function emailText(payload: LeadPayload) {
     `Véhicule recherché : ${projectVehicle(payload)}`,
     `État : ${payload.neufOccasion}`,
     `Budget mensuel : ${payload.budgetSouhaite}`,
+    `Kilométrage annuel : ${payload.kilometrageAnnuel}`,
     `Durée envisagée : ${payload.dureeContrat}`,
     `Apport : ${payload.apport}`,
     `Livraison souhaitée : ${payload.dateLivraison}`,

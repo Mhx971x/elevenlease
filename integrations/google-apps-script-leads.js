@@ -8,7 +8,7 @@ const LEAD_HEADERS = [
   'Date', 'Vehicule', 'ModeRecherche', 'Prenom', 'Nom', 'Telephone', 'Email',
   'Profil', 'Entreprise', 'StatutJuridique', 'SIREN', 'Financement',
   'Carrosserie', 'Motorisation', 'BudgetSouhaite', 'NeufOccasion',
-  'DureeContrat', 'Apport', 'DateLivraison', 'VehiculeReprise',
+  'KilometrageAnnuel', 'DureeContrat', 'Apport', 'DateLivraison', 'VehiculeReprise',
   'VehiculeRepriseDetails', 'StatutPro', 'Revenus', 'Charges', 'Anciennete',
   'ChiffreAffaires', 'AncienneteEntreprise', 'Age', 'FICP', 'Eligible',
   'CriteresRisque', 'ConsentementRecontact', 'Message'
@@ -86,6 +86,7 @@ function doPost(e) {
     Motorisation: data.motorisation || '',
     BudgetSouhaite: data.budgetSouhaite || '',
     NeufOccasion: data.neufOccasion || '',
+    KilometrageAnnuel: data.kilometrageAnnuel || '',
     DureeContrat: data.dureeContrat || '',
     Apport: data.apport || '',
     DateLivraison: data.dateLivraison || '',

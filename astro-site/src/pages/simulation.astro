@@ -113,6 +113,16 @@ const webPageSchema = {
         <div class="form-step" data-step="4">
           <label><span class="step-icon" aria-hidden="true">⚙️</span>Configurons votre projet</label>
           <div class="field-stack">
+            <div class="field-item" id="kilometrageAnnuelField">
+              <label>Kilométrage annuel prévu</label>
+              <div class="choice-grid compact-choice-grid">
+                <label class="radio-option"><input type="radio" name="kilometrageAnnuel" value="10 000 km/an"> 10 000 km/an</label>
+                <label class="radio-option"><input type="radio" name="kilometrageAnnuel" value="15 000 km/an"> 15 000 km/an</label>
+                <label class="radio-option"><input type="radio" name="kilometrageAnnuel" value="20 000 km/an"> 20 000 km/an</label>
+                <label class="radio-option"><input type="radio" name="kilometrageAnnuel" value="30 000 km/an"> 30 000 km/an</label>
+                <label class="radio-option"><input type="radio" name="kilometrageAnnuel" value="Kilométrage illimité (Crédit-bail)"> Kilométrage illimité (Crédit-bail)</label>
+              </div>
+            </div>
             <div class="field-item" id="dureeContratField">
               <label>Durée de contrat souhaitée</label>
               <div class="choice-grid compact-choice-grid">
@@ -447,7 +457,7 @@ const webPageSchema = {
     prenom: string; nom: string; telephone: string; email: string; vehicule: string;
     rechercheVehicule: string; profil: string; entreprise: string; financement: string;
     typeVehiculeSouhaite: string; motorisation: string;
-    budgetSouhaite: string; neufOccasion: string; dureeContrat: string;
+    budgetSouhaite: string; neufOccasion: string; kilometrageAnnuel: string; dureeContrat: string;
     apport: string; dateLivraison: string; vehiculeReprise: string; vehiculeRepriseDetails: string;
     statutPro: string; revenus: string; charges: string; anciennete: string; age: string; ficp: string;
     statutJuridique: string; siren: string; chiffreAffaires: string; ancienneteEntreprise: string;
@@ -597,6 +607,7 @@ Je souhaite poursuivre ma demande sur WhatsApp.`;
         case 3:
           return radioValue('budget') ? null : 'Merci de choisir une tranche de budget mensuel.';
         case 4:
+          if(!radioValue('kilometrageAnnuel')) return 'Merci de préciser le kilométrage annuel prévu.';
           if(!radioValue('dureeContrat')) return 'Merci de choisir une durée de contrat.';
           if(!radioValue('apport')) return 'Merci de préciser votre apport.';
           if(!radioValue('dateLivraison')) return 'Merci d’indiquer la date de livraison souhaitée.';
@@ -687,6 +698,7 @@ Je souhaite poursuivre ma demande sur WhatsApp.`;
             ['Véhicule', vehicle || 'À conseiller'],
             ['État', radioValue('neufOccasion')],
             ['Budget', radioValue('budget')],
+            ['Kilométrage annuel', radioValue('kilometrageAnnuel')],
             ['Durée', radioValue('dureeContrat')],
             ['Apport', radioValue('apport')],
             ['Livraison', radioValue('dateLivraison')],
@@ -844,6 +856,7 @@ Je souhaite poursuivre ma demande sur WhatsApp.`;
         motorisation: radioValue('rechercheVehicule') === 'Modèle précis' ? '' : radioValue('motorisation'),
         budgetSouhaite: radioValue('budget'),
         neufOccasion: radioValue('neufOccasion'),
+        kilometrageAnnuel: radioValue('kilometrageAnnuel'),
         dureeContrat: radioValue('dureeContrat'),
         apport: radioValue('apport'),
         dateLivraison: radioValue('dateLivraison'),
