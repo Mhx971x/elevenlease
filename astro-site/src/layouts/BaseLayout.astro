@@ -97,11 +97,29 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
   }
   .cta-with-calculator{display:inline-flex !important;align-items:center;justify-content:center;gap:8px;}
 
+  /* promo bar */
+  .promo-bar{
+    position:fixed;top:0;left:0;right:0;z-index:101;
+    background:var(--accent);color:#fff;
+    padding:9px 16px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    transition:transform .35s cubic-bezier(.16,1,.3,1),opacity .3s ease;
+  }
+  .promo-bar::-webkit-scrollbar{display:none;}
+  .promo-bar-inner{
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    max-width:1180px;margin:0 auto;width:max-content;min-width:100%;
+    font-size:13px;font-weight:600;letter-spacing:.01em;white-space:nowrap;
+  }
+  .promo-dot{opacity:.6;}
+  body.scrolled .promo-bar{transform:translateY(-100%);opacity:0;pointer-events:none;}
+
   /* nav */
   .site-header{
     position:fixed;
     z-index:100;
-    top:20px;
+    top:58px;
     left:50%;
     width:calc(100% - 40px);
     max-width:1180px;
@@ -178,15 +196,19 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
   .nav-cta:active{transform:scale(.95);}
   .site-header.scrolled .nav-cta{height:40px;padding:0 20px;}
   @media(max-width:980px){
+    .promo-bar{padding:7px 14px;}
+    .promo-bar-inner{font-size:12px;gap:8px;}
     .nav-links{display:none;}
-    .site-header{top:12px;width:calc(100% - 24px);}
+    .site-header{top:46px;width:calc(100% - 24px);}
     .site-header.scrolled{top:8px;width:calc(100% - 20px);}
     .site-nav{height:64px;padding:0 12px 0 17px;border-radius:20px;}
     .site-header.scrolled .site-nav{height:58px;border-radius:18px;}
   }
   @media(max-width:480px){
+    .promo-bar{padding:6px 12px;}
+    .promo-bar-inner{font-size:11px;gap:6px;}
     .logo{gap:7px;}
-    .site-header{top:10px;width:calc(100% - 24px);}
+    .site-header{top:40px;width:calc(100% - 24px);}
     .site-header.scrolled{top:7px;width:calc(100% - 18px);}
     .site-nav{height:64px;padding:0 18px;border-radius:21px;grid-template-columns:1fr auto;}
     .site-header.scrolled .site-nav{height:58px;border-radius:19px;}

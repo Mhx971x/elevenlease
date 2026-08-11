@@ -9,6 +9,15 @@ export interface Props {
 const { ctaHref = '/simulation', active, showProgressBar = false } = Astro.props;
 const cls = (key: string) => (active === key ? 'active' : undefined);
 ---
+<div class="promo-bar" id="promoBar">
+  <div class="promo-bar-inner">
+    <span>0€ d'apport possible</span>
+    <span class="promo-dot" aria-hidden="true">·</span>
+    <span>Auto &amp; Moto</span>
+    <span class="promo-dot" aria-hidden="true">·</span>
+    <span>Réponse sous 24h</span>
+  </div>
+</div>
 <header class="site-header">
   <nav class="site-nav">
     <a href="/" class="logo">
@@ -81,7 +90,9 @@ const cls = (key: string) => (active === key ? 'active' : undefined);
   const progressBar = document.getElementById('progressBar');
   if(headerEl){
     const updateHeader = ()=>{
-      headerEl.classList.toggle('scrolled', window.scrollY > 40);
+      const isScrolled = window.scrollY > 40;
+      headerEl.classList.toggle('scrolled', isScrolled);
+      document.body.classList.toggle('scrolled', isScrolled);
       if(!progressBar) return;
       const h = document.documentElement;
       const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
