@@ -2292,6 +2292,7 @@ const breadcrumbSchema = {
     let currentIndex = 0;
     let cycleTimer = 0;
     let cardSwapTimer = 0;
+    let leavingTimers: number[] = [];
 
     const updateCarCard = (car: HTMLElement) => {
       if(!carCard || !cardModel || !cardPrice) return;
@@ -2314,11 +2315,17 @@ const breadcrumbSchema = {
         current.classList.add('is-leaving');
         next.classList.remove('is-leaving','is-initial');
         next.classList.add('is-active');
-        window.setTimeout(() => current.classList.remove('is-leaving'), 980);
+        leavingTimers.push(window.setTimeout(() => current.classList.remove('is-leaving'), 980));
       });
 
       if(heroCars[nextIndex]) updateCarCard(heroCars[nextIndex]);
       currentIndex = nextIndex;
+    };
+
+    const clearLeavingState = () => {
+      leavingTimers.forEach(t => window.clearTimeout(t));
+      leavingTimers = [];
+      carGroups.forEach(cars => cars.forEach(car => car.classList.remove('is-leaving')));
     };
 
     const startCarousel = () => {
@@ -2331,8 +2338,12 @@ const breadcrumbSchema = {
     startCarousel();
 
     document.addEventListener('visibilitychange', () => {
-      if(document.hidden) window.clearInterval(cycleTimer);
-      else startCarousel();
+      if(document.hidden) {
+        window.clearInterval(cycleTimer);
+      } else {
+        clearLeavingState();
+        startCarousel();
+      }
     });
   })();
 
