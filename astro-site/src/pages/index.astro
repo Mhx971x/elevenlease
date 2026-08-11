@@ -890,13 +890,11 @@ const breadcrumbSchema = {
     0%{
       opacity:0;
       transform:translate3d(calc(var(--car-rest-x) + 24%),5px,0) scale(.92);
-      filter:blur(11px) saturate(.78);
     }
     58%{
       opacity:1;
-      filter:blur(0) saturate(1);
     }
-    100%{opacity:1;transform:translate3d(var(--car-rest-x),0,0) scale(1);filter:none;}
+    100%{opacity:1;transform:translate3d(var(--car-rest-x),0,0) scale(1);}
   }
   @keyframes heroSpeedLine{
     0%{opacity:0;transform:translateX(210px) scaleX(.2);}
@@ -1076,13 +1074,13 @@ const breadcrumbSchema = {
       height:auto;
       opacity:0;
       transform:translate3d(-145%,var(--ground-y),0);
-      filter:blur(7px) saturate(.88);
+      filter:none;
       animation:none;
       transition:
         transform .9s cubic-bezier(.55,.05,.2,1),
         opacity .42s ease,
         filter .62s ease;
-      will-change:transform,opacity,filter;
+      will-change:transform,opacity;
     }
     /* Ground line: align the lowest point of every tyre to the coupe baseline. */
     .hero-car-carousel .hero-car:nth-child(1){--ground-y:-50%;}
@@ -1097,7 +1095,7 @@ const breadcrumbSchema = {
     .hero-car-carousel .hero-car.is-leaving{
       opacity:0;
       transform:translate3d(145%,var(--ground-y),0);
-      filter:blur(7px) saturate(.88);
+      filter:none;
     }
     .hero-car-carousel .hero-car.is-initial{
       animation:heroCoupeReveal 1.25s cubic-bezier(.22,1,.36,1) .12s both;
@@ -1150,7 +1148,6 @@ const breadcrumbSchema = {
     .hero-car-card.is-changing{
       opacity:0;
       transform:translate3d(8px,4px,0);
-      filter:blur(3px);
     }
     .hero-car-card-model{
       position:relative;
@@ -1389,9 +1386,9 @@ const breadcrumbSchema = {
       to{transform:translateX(-33.333333%);}
     }
     @keyframes heroCoupeReveal{
-      0%{opacity:0;transform:translate(-42%,-47%) scale(.94);filter:blur(8px) saturate(.8);}
-      65%{opacity:1;filter:blur(0) saturate(1);}
-      100%{opacity:1;transform:translate(-50%,-50%) scale(1);filter:none;}
+      0%{opacity:0;transform:translate(-42%,-47%) scale(.94);}
+      65%{opacity:1;}
+      100%{opacity:1;transform:translate(-50%,-50%) scale(1);}
     }
   }
 
@@ -1615,16 +1612,16 @@ const breadcrumbSchema = {
       height:auto;
       opacity:0;
       transform:translate3d(-145%,var(--ground-y),0);
-      filter:blur(5px) saturate(.9);
+      filter:none;
       transition:transform .82s cubic-bezier(.55,.05,.2,1),opacity .38s ease,filter .56s ease;
-      will-change:transform,opacity,filter;
+      will-change:transform,opacity;
     }
     .hero-car-carousel .hero-car:nth-child(1){--ground-y:-50%;}
     .hero-car-carousel .hero-car:nth-child(2){--ground-y:-54.79%;}
     .hero-car-carousel .hero-car:nth-child(3){--ground-y:-53.32%;}
     .hero-car-carousel .hero-car:nth-child(4){--ground-y:-51.07%;}
     .hero-car-carousel .hero-car.is-active{opacity:1;transform:translate3d(-50%,var(--ground-y),0);filter:none;}
-    .hero-car-carousel .hero-car.is-leaving{opacity:0;transform:translate3d(145%,var(--ground-y),0);filter:blur(5px) saturate(.9);}
+    .hero-car-carousel .hero-car.is-leaving{opacity:0;transform:translate3d(145%,var(--ground-y),0);filter:none;}
     .hero-car-card{
       position:absolute;
       z-index:4;
@@ -1646,7 +1643,7 @@ const breadcrumbSchema = {
       pointer-events:none;
       transition:opacity .2s ease,transform .38s cubic-bezier(.16,1,.3,1),filter .28s ease;
     }
-    .hero-car-card.is-changing{opacity:0;transform:translate3d(7px,3px,0);filter:blur(2px);}
+    .hero-car-card.is-changing{opacity:0;transform:translate3d(7px,3px,0);}
     .hero-car-card-model{display:flex;align-items:center;gap:6px;font-family:'Space Grotesk',sans-serif;font-size:10.5px;font-weight:600;line-height:1.2;}
     .hero-car-card-model::before{content:'';flex:0 0 5px;width:5px;height:5px;border-radius:50%;background:var(--accent-1);box-shadow:0 0 0 4px rgba(255,0,127,.08);}
     .hero-car-card-price{display:flex;align-items:baseline;justify-content:space-between;gap:4px;width:100%;margin-top:6px;padding-top:6px;color:#606169;border-top:1px solid rgba(17,17,19,.07);font-size:7.5px;white-space:nowrap;}
@@ -1992,16 +1989,16 @@ const breadcrumbSchema = {
   }
   .process-car{
     --ground-y:-50%;position:absolute;top:55%;left:50%;width:min(646px,92%);height:auto;max-width:none;
-    opacity:0;transform:translate3d(-145%,var(--ground-y),0);filter:blur(7px) saturate(.88);
+    opacity:0;transform:translate3d(-145%,var(--ground-y),0);filter:none;
     transition:transform .9s cubic-bezier(.55,.05,.2,1),opacity .42s ease,filter .62s ease;
-    will-change:transform,opacity,filter;
+    will-change:transform,opacity;
   }
   .process-car:nth-child(1){--ground-y:-50%;}
   .process-car:nth-child(2){--ground-y:-54.79%;}
   .process-car:nth-child(3){--ground-y:-53.32%;}
   .process-car:nth-child(4){--ground-y:-51.07%;}
   .process-car.is-active{opacity:1;transform:translate3d(-50%,var(--ground-y),0);filter:drop-shadow(0 20px 30px rgba(0,0,0,.5));}
-  .process-car.is-leaving{opacity:0;transform:translate3d(145%,var(--ground-y),0);filter:blur(7px) saturate(.88);}
+  .process-car.is-leaving{opacity:0;transform:translate3d(145%,var(--ground-y),0);filter:none;}
   @media(max-width:1080px){
     .process-head{gap:36px;}
     .process-steps{grid-template-columns:1fr 1fr;}
