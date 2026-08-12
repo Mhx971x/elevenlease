@@ -2184,10 +2184,11 @@ const breadcrumbSchema = {
     display:flex;flex-direction:column;
   }
   .compare-badge{
-    position:absolute;top:-15px;left:32px;z-index:2;
+    position:absolute;top:-15px;left:50%;transform:translateX(-50%);z-index:2;
     background:var(--accent);color:#fff;font-size:11.5px;font-weight:700;
     text-transform:uppercase;letter-spacing:0.05em;padding:6px 16px;border-radius:100px;
     box-shadow:0 6px 16px rgba(255,0,127,0.28);
+    white-space:nowrap;
   }
   .compare-them{background:var(--surface);border:1px solid var(--border);display:flex;flex-direction:column;}
   .compare-card-head{
@@ -2228,7 +2229,7 @@ const breadcrumbSchema = {
       grid-template-areas:"text" "photo" "apport";
       row-gap:0;margin-bottom:12px;
     }
-    .compare-badge{left:12px;top:-11px;font-size:9px;padding:4px 10px;}
+    .compare-badge{top:-11px;font-size:9px;padding:4px 10px;}
     .compare-card-head{font-size:12px;gap:5px;margin-bottom:2px;}
     .compare-vehicle-name{font-size:11px;}
     .compare-photo{justify-self:stretch;align-self:center;justify-content:center;margin:4px 0 0;}
@@ -2258,7 +2259,7 @@ const breadcrumbSchema = {
     .compare-card-head{margin-bottom:2px;}
     .compare-photo{align-self:stretch;justify-content:flex-end;align-items:flex-end;margin-left:auto;}
     .compare-photo img{width:285px;}
-    .compare-us .compare-photo img{width:310px;}
+    .compare-us .compare-photo img{width:325px;}
     .compare-apport{padding-bottom:0;margin-top:6px;border-bottom:none;align-self:end;}
     .compare-apport-amount{line-height:1;}
     .compare-top{padding-bottom:8px;border-bottom:1px solid var(--border);}
