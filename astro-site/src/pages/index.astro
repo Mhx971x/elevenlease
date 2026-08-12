@@ -2216,19 +2216,28 @@ const breadcrumbSchema = {
     margin:0 -10px;padding:6px 10px;border-radius:10px;
   }
   .compare-cta{margin-top:26px;width:100%;justify-content:center;}
-  @media(max-width:860px){ .compare-grid{grid-template-columns:1fr;} }
   @media(max-width:640px){
-    .compare-card{padding:26px 24px;}
+    .compare-grid{gap:10px;}
+    .compare-card{padding:16px 12px;border-radius:16px;}
     .compare-top{
       grid-template-columns:1fr;
       grid-template-areas:"text" "photo" "apport";
-      row-gap:0;
+      row-gap:0;margin-bottom:12px;
     }
-    .compare-photo{justify-self:center;align-self:center;margin:6px 0 10px;}
-    .compare-photo img{width:78%;max-width:230px;}
-    .compare-list li{font-size:12.5px;gap:9px;}
-    .compare-list-strong{margin:0 -8px;padding:6px 8px;}
-    .compare-cta{padding:14px 20px;font-size:13.5px;white-space:nowrap;}
+    .compare-badge{left:12px;top:-11px;font-size:9px;padding:4px 10px;}
+    .compare-card-head{font-size:12px;gap:5px;margin-bottom:2px;}
+    .compare-vehicle-name{font-size:11px;}
+    .compare-photo{justify-self:center;align-self:center;margin:4px 0 6px;}
+    .compare-photo img{width:64%;max-width:100px;}
+    .compare-apport{padding-bottom:10px;margin-top:8px;gap:0;}
+    .compare-apport-amount{font-size:20px;}
+    .compare-apport-label{font-size:9.5px;}
+    .compare-list{gap:7px;}
+    .compare-list li{font-size:10px;gap:5px;align-items:flex-start;line-height:1.3;}
+    .compare-list li svg{width:12px;height:12px;margin-top:1px;}
+    .compare-list-strong{margin:0 -5px;padding:4px 5px;border-radius:7px;}
+    .compare-cta{margin-top:14px;padding:10px 8px;font-size:10.5px;gap:5px;white-space:nowrap;}
+    .compare-cta .cta-calculator-icon{width:12px;height:12px;flex-basis:12px;}
   }
   @media(min-width:861px){
     .compare-head{max-width:none;}
