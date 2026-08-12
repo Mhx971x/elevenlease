@@ -584,37 +584,6 @@ const breadcrumbSchema = {
           <span><strong>Un expert dédié, un seul interlocuteur</strong> du projet à la livraison.</span>
         </div>
       </div>
-
-      <div class="process-cta-card">
-        <div class="process-cta-grid" aria-hidden="true"></div>
-        <div class="process-cta-glow process-cta-glow-1" aria-hidden="true"></div>
-        <div class="process-cta-glow process-cta-glow-2" aria-hidden="true"></div>
-        <div class="process-cta-content">
-          <div class="process-cta-eyebrow">Votre prochain véhicule</div>
-          <h3>Votre projet<br><span class="process-cta-accent">commence ici.</span></h3>
-          <p>Décrivez votre besoin en quelques minutes. Un conseiller revient vers vous avec une solution adaptée.</p>
-          <a href="/simulation" class="btn-primary cta-with-calculator process-cta-btn"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing <span aria-hidden="true">→</span></a>
-          <div class="process-cta-proof">
-            <span>Gratuit</span>
-            <span>Sans engagement</span>
-            <span>Réponse sous 24h</span>
-          </div>
-        </div>
-        <div class="process-car-carousel" data-vehicle-carousel data-process-car-carousel aria-hidden="true">
-          {heroCarouselVehicles.map((vehicle, index) => (
-            <img
-              class={`process-car${index === 0 ? ' is-active' : ''}`}
-              src={vehicle.src}
-              alt=""
-              width="1536"
-              height="1024"
-              loading="lazy"
-              decoding="async"
-              data-carousel-car
-            >
-          ))}
-        </div>
-      </div>
     </div>
   </section>
 
@@ -772,38 +741,36 @@ const breadcrumbSchema = {
     </div>
   </section>
 
-  <section class="contact-cta">
+  <section class="process-cta-section">
     <div class="wrap">
-      <div class="cta-panel reveal">
-        <div class="cta-panel-grid"></div>
-        <div class="cta-panel-glow cta-panel-glow-1"></div>
-        <div class="cta-panel-glow cta-panel-glow-2"></div>
-        <div class="cta-panel-content">
-          <div class="section-head">
-            <div class="section-eyebrow">L'étape suivante</div>
-            <h2>Parlons de votre projet.</h2>
-            <p>Notre équipe est disponible pour répondre à vos questions et vous accompagner dans votre projet de financement.</p>
+      <div class="process-cta-card reveal">
+        <div class="process-cta-grid" aria-hidden="true"></div>
+        <div class="process-cta-glow process-cta-glow-1" aria-hidden="true"></div>
+        <div class="process-cta-glow process-cta-glow-2" aria-hidden="true"></div>
+        <div class="process-cta-content">
+          <div class="process-cta-eyebrow">Votre prochain véhicule</div>
+          <h3>Votre projet<br><span class="process-cta-accent">commence ici.</span></h3>
+          <p>Décrivez votre besoin en quelques minutes. Un conseiller revient vers vous avec une solution adaptée.</p>
+          <a href="/simulation" class="btn-primary cta-with-calculator process-cta-btn"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing <span aria-hidden="true">→</span></a>
+          <div class="process-cta-proof">
+            <span>Gratuit</span>
+            <span>Sans engagement</span>
+            <span>Réponse sous 24h</span>
           </div>
-          <div class="contact-cta-btn">
-            <a href="https://taap.it/elevenleasewhatsapp" target="_blank" rel="noopener" class="btn-primary">Parler à un conseiller →</a>
-          </div>
-          <div class="contact-cta-info">
-            <div class="cta-info-item">
-              <div class="cta-info-label">Email</div>
-              <a href="mailto:contact@elevenlease.fr">contact@elevenlease.fr</a>
-            </div>
-          </div>
-          <div class="cta-socials">
-            <a class="social-btn" href="https://taap.it/elevenleasewhatsapp" target="_blank" rel="noopener" aria-label="WhatsApp">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.32A8.86 8.86 0 0012.05 4c-4.9 0-8.9 4-8.9 8.9 0 1.57.42 3.1 1.2 4.44L3 22l4.8-1.26a8.9 8.9 0 004.25 1.08h0c4.9 0 8.9-4 8.9-8.9 0-2.38-.93-4.62-2.35-6.6zm-5.55 13.7h0a7.4 7.4 0 01-3.77-1.03l-.27-.16-2.8.74.75-2.73-.18-.28a7.38 7.38 0 01-1.13-3.94c0-4.08 3.32-7.4 7.4-7.4 1.98 0 3.84.77 5.24 2.17a7.35 7.35 0 012.16 5.23c0 4.08-3.32 7.4-7.4 7.4zm4.06-5.54c-.22-.11-1.31-.65-1.52-.72-.2-.08-.35-.11-.5.11-.15.22-.57.72-.7.87-.13.15-.26.16-.48.05-.22-.11-.94-.35-1.79-1.1-.66-.6-1.1-1.33-1.24-1.55-.13-.22-.01-.34.1-.45.1-.1.22-.26.33-.39.11-.13.15-.22.22-.37.07-.15.04-.28-.02-.39-.06-.11-.5-1.21-.69-1.66-.18-.43-.36-.38-.5-.38h-.43c-.15 0-.39.05-.59.28-.2.22-.78.76-.78 1.86s.8 2.16.91 2.31c.11.15 1.57 2.4 3.81 3.36.53.23.95.37 1.27.47.53.17 1.02.15 1.4.09.43-.06 1.31-.53 1.49-1.05.18-.51.18-.95.13-1.05-.05-.1-.2-.16-.42-.27z"/></svg>
-            </a>
-            <a class="social-btn" href="https://www.instagram.com/elevenlease" target="_blank" rel="noopener" aria-label="Instagram">
-              <svg width="19" height="19" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.7"/><circle cx="17.3" cy="6.7" r="1.1" fill="currentColor"/></svg>
-            </a>
-            <a class="social-btn" href="https://www.tiktok.com/@elevenlease" target="_blank" rel="noopener" aria-label="TikTok">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.6 5.82a4.28 4.28 0 01-2.66-1.28A4.53 4.53 0 0112.9 2H10.1v13.6a2.6 2.6 0 11-2.1-2.55V10.3a5.4 5.4 0 105.1 5.38V9.4a7 7 0 003.5 1.02V7.6a4.3 4.3 0 01-.9-.18v.02c-1.34-.42-.09 0 0 0z"/></svg>
-            </a>
-          </div>
+        </div>
+        <div class="process-car-carousel" data-vehicle-carousel data-process-car-carousel aria-hidden="true">
+          {heroCarouselVehicles.map((vehicle, index) => (
+            <img
+              class={`process-car${index === 0 ? ' is-active' : ''}`}
+              src={vehicle.src}
+              alt=""
+              width="1536"
+              height="1024"
+              loading="lazy"
+              decoding="async"
+              data-carousel-car
+            >
+          ))}
         </div>
       </div>
     </div>
@@ -1877,59 +1844,6 @@ const breadcrumbSchema = {
   .section-eyebrow{font-size:13px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:14px;}
   .section-head h2{font-size:clamp(28px,4vw,42px);}
   .section-head p{color:var(--text-dim);font-size:16px;margin-top:14px;}
-
-  /* contact CTA (bas de page) — panneau sombre signature */
-  .contact-cta{text-align:center;}
-  .cta-panel{
-    position:relative;overflow:hidden;isolation:isolate;
-    background:linear-gradient(155deg, #131316 0%, #1c1c22 55%, #17121a 100%);
-    border-radius:32px;
-    padding:96px 48px;
-    box-shadow:0 40px 80px rgba(17,17,19,0.22), 0 8px 28px rgba(255,0,127,0.10);
-  }
-  @media(max-width:768px){ .cta-panel{padding:64px 24px;border-radius:24px;} }
-  .cta-panel-grid{
-    position:absolute;inset:0;z-index:0;
-    background-image:
-      linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
-    background-size:48px 48px;
-    mask-image:radial-gradient(ellipse 70% 60% at 50% 35%, black, transparent);
-    -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 35%, black, transparent);
-  }
-  .cta-panel-glow{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;z-index:0;}
-  .cta-panel-glow-1{width:420px;height:420px;background:radial-gradient(circle, rgba(255,0,127,.32), transparent 70%);top:-170px;left:-110px;animation:ctaDrift1 15s ease-in-out infinite;}
-  .cta-panel-glow-2{width:360px;height:360px;background:radial-gradient(circle, rgba(255,255,255,.08), transparent 70%);bottom:-150px;right:-90px;animation:ctaDrift2 17s ease-in-out infinite;}
-  @keyframes ctaDrift1{0%,100%{transform:translate(0,0);}50%{transform:translate(26px,18px);}}
-  @keyframes ctaDrift2{0%,100%{transform:translate(0,0);}50%{transform:translate(-22px,-14px);}}
-  @media (prefers-reduced-motion: reduce){ .cta-panel-glow{animation:none;} }
-  .cta-panel-content{position:relative;z-index:2;}
-  .cta-panel .section-head{margin:0 auto 32px;}
-  .cta-panel .section-head p{margin-left:auto;margin-right:auto;}
-  .cta-panel .section-eyebrow{color:rgba(255,255,255,.5);}
-  .cta-panel h2{color:#fff;}
-  .cta-panel .section-head p{color:rgba(255,255,255,.66);}
-  .contact-cta-btn{margin-bottom:56px;}
-  .contact-cta-info{
-    display:flex;justify-content:center;gap:48px;flex-wrap:wrap;
-    padding-top:40px;border-top:1px solid var(--border);margin-bottom:40px;
-  }
-  .cta-panel .contact-cta-info{border-top-color:rgba(255,255,255,.14);}
-  .cta-info-item .cta-info-label{font-size:12px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px;}
-  .cta-info-item a{color:var(--text-dim);font-size:15px;transition:color .2s ease;}
-  .cta-info-item a:hover{color:var(--accent-1);}
-  .cta-panel .cta-info-item .cta-info-label{color:rgba(255,255,255,.4);}
-  .cta-panel .cta-info-item a{color:rgba(255,255,255,.85);}
-  .cta-panel .cta-info-item a:hover{color:var(--accent-1);}
-  .cta-socials{display:flex;justify-content:center;gap:14px;}
-  .cta-panel .social-btn{border-color:rgba(255,255,255,.16);color:rgba(255,255,255,.7);}
-  .cta-panel .social-btn:hover{border-color:var(--accent-1);color:var(--accent-1);}
-  .social-btn{
-    width:44px;height:44px;border-radius:50%;border:1px solid var(--border);
-    display:flex;align-items:center;justify-content:center;color:var(--text-dim);
-    transition:border-color .2s ease, color .2s ease, transform .2s ease;
-  }
-  .social-btn:hover{border-color:var(--accent-1);color:var(--accent-1);transform:translateY(-2px);}
 
   /* process + cta */
   .process-wrap{display:grid;gap:24px;}
