@@ -621,25 +621,34 @@ const breadcrumbSchema = {
     <div class="wrap">
       <div class="section-head accept-head reveal">
         <div class="accept-eyebrow"><Fragment set:html={acceptSparkleIcon} />Pourquoi ça marche mieux avec nous</div>
-        <h2>Plus de chances d'être <em>accepté.</em></h2>
+        <h2>Plus de chances <br class="accept-break-mobile">d'être <em>accepté.</em></h2>
         <p class="accept-intro">Votre dossier peut être présenté à plusieurs partenaires.<br>Si l'un refuse, un autre peut accepter.</p>
       </div>
 
       <div class="accept-diagram" id="acceptDiagram">
         <svg class="accept-lines" id="acceptLines" aria-hidden="true">
           <path class="accept-bus-line" data-part="trunk"></path>
-          <path class="accept-bus-line" data-part="bus-pink"></path>
-          <path class="accept-bus-line accept-bus-line-accepted" data-part="bus-green"></path>
-          <path class="accept-line" data-to="0"></path>
-          <path class="accept-line" data-to="1"></path>
-          <path class="accept-line" data-to="2"></path>
-          <path class="accept-line-accepted" data-to="3"></path>
-          <path class="accept-line-flow" data-to="3"></path>
+          <g class="accept-lines-wide">
+            <path class="accept-bus-line" data-part="bus-pink"></path>
+            <path class="accept-bus-line accept-bus-line-accepted" data-part="bus-green"></path>
+            <path class="accept-line" data-to="0"></path>
+            <path class="accept-line" data-to="1"></path>
+            <path class="accept-line" data-to="2"></path>
+            <path class="accept-line-accepted" data-to="3"></path>
+            <path class="accept-line-flow" data-to="3"></path>
+            <circle class="accept-dot" data-dot="end-0" r="4.5"></circle>
+            <circle class="accept-dot" data-dot="end-1" r="4.5"></circle>
+            <circle class="accept-dot" data-dot="end-2" r="4.5"></circle>
+            <circle class="accept-dot accept-dot-accepted" data-dot="end-3" r="4.5"></circle>
+          </g>
+          <g class="accept-lines-narrow">
+            <path class="accept-bus-line" data-part="bus-2col"></path>
+            <path class="accept-line" data-to2="0"></path>
+            <path class="accept-line" data-to2="1"></path>
+            <circle class="accept-dot" data-dot="end2-0" r="4.5"></circle>
+            <circle class="accept-dot" data-dot="end2-1" r="4.5"></circle>
+          </g>
           <circle class="accept-dot accept-dot-start" data-dot="hub" r="5"></circle>
-          <circle class="accept-dot" data-dot="end-0" r="4.5"></circle>
-          <circle class="accept-dot" data-dot="end-1" r="4.5"></circle>
-          <circle class="accept-dot" data-dot="end-2" r="4.5"></circle>
-          <circle class="accept-dot accept-dot-accepted" data-dot="end-3" r="4.5"></circle>
         </svg>
         <div class="accept-file-card" id="acceptFile">
           <span class="accept-icon"><Fragment set:html={acceptDocIcon} /></span>
@@ -678,14 +687,17 @@ const breadcrumbSchema = {
         <div class="accept-stat">
           <span class="accept-icon"><Fragment set:html={acceptDocCheckIcon} /></span>
           <span>Une seule demande</span>
+          <span class="accept-stat-arrow" aria-hidden="true">›</span>
         </div>
         <div class="accept-stat">
           <span class="accept-icon"><Fragment set:html={acceptPeopleIcon} /></span>
           <span>Plusieurs partenaires consultés</span>
+          <span class="accept-stat-arrow" aria-hidden="true">›</span>
         </div>
         <div class="accept-stat">
           <span class="accept-icon"><Fragment set:html={acceptTrendIcon} /></span>
           <span>Plus de chances d'obtenir un accord</span>
+          <span class="accept-stat-arrow" aria-hidden="true">›</span>
         </div>
       </div>
     </div>
@@ -2056,6 +2068,7 @@ const breadcrumbSchema = {
   .accept-eyebrow :global(svg){width:13px;height:13px;flex:none;}
   .accept-head h2{font-size:clamp(30px,4vw,42px);}
   .accept-head h2 em{font-style:normal;color:var(--accent-1);}
+  .accept-break-mobile{display:none;}
   .accept-intro{margin:16px auto 0;max-width:480px;color:var(--text-dim);font-size:15.5px;line-height:1.6;}
 
   /* accept diagram */
@@ -2101,6 +2114,7 @@ const breadcrumbSchema = {
   .accept-partner-accepted .accept-partner-name{color:#166534;}
   .accept-partner-accepted .accept-icon{background:linear-gradient(145deg,#dcfce7,#c5f4d3);color:#16a34a;box-shadow:inset 0 0 0 1px rgba(22,163,74,.08);}
   .accept-lines{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible;}
+  .accept-lines-narrow{display:none;}
   .accept-bus-line{fill:none;stroke:var(--accent-1);stroke-width:2;stroke-linecap:round;opacity:.4;}
   .accept-bus-line-accepted{stroke:#16a34a;opacity:.7;}
   .accept-line{fill:none;stroke:var(--accent-1);stroke-width:2;stroke-linecap:round;opacity:.4;}
@@ -2121,17 +2135,21 @@ const breadcrumbSchema = {
   .accept-stat:last-child{border-right:0;}
   .accept-stat .accept-icon{width:44px;height:44px;border-radius:14px;color:var(--accent-1);}
   .accept-stat .accept-icon :global(svg){width:19px;height:19px;}
+  .accept-stat-arrow{display:none;flex:none;margin-left:auto;color:var(--text-faint);font-size:22px;line-height:1;}
   @media(max-width:900px){
     .accept-partners{grid-template-columns:1fr 1fr;}
-    .accept-lines{display:none;}
+    .accept-lines-wide{display:none;}
+    .accept-lines-narrow{display:block;}
   }
   @media(max-width:760px){
+    .accept-break-mobile{display:block;}
     .accept-diagram{gap:28px;}
     .accept-file-card{width:100%;}
-    .accept-stats{grid-template-columns:1fr;gap:18px;padding:24px 26px;}
-    .accept-stat{border-right:0;padding:0;}
+    .accept-stats{grid-template-columns:1fr;gap:0;padding:6px 22px;}
+    .accept-stat{border-right:0;border-bottom:1px solid var(--border);padding:16px 0;}
+    .accept-stat:last-child{border-bottom:0;}
+    .accept-stat-arrow{display:block;}
   }
-  @media(max-width:480px){ .accept-partners{grid-template-columns:1fr;} }
   @media(prefers-reduced-motion:reduce){
     .accept-line-flow{animation:none;stroke-dasharray:none;display:none;}
   }
@@ -2865,7 +2883,6 @@ const breadcrumbSchema = {
     }
 
     function draw(){
-      if(window.innerWidth <= 900) return;
       const box = diagram!.getBoundingClientRect();
       const fileRect = fileCard!.getBoundingClientRect();
       const startX = fileRect.left + fileRect.width / 2 - box.left;
@@ -2877,20 +2894,28 @@ const breadcrumbSchema = {
       });
       const cardTopY = points[0].y;
       const busY = startY + (cardTopY - startY) * 0.42;
-      const leftX = points[0].x;
-      const rightX = points[points.length - 1].x;
-      const splitX = (points[2].x + points[3].x) / 2;
-
       setDot('hub', startX, busY);
       setPath('[data-part="trunk"]', `M${startX},${startY} L${startX},${busY}`);
-      setPath('[data-part="bus-pink"]', `M${leftX},${busY} L${splitX},${busY}`);
-      setPath('[data-part="bus-green"]', `M${splitX},${busY} L${rightX},${busY}`);
 
-      points.forEach((p, i)=>{
-        const d = `M${p.x},${busY} L${p.x},${p.y}`;
-        setPath(`[data-to="${i}"]`, d);
-        setDot(`end-${i}`, p.x, p.y);
-      });
+      if(window.innerWidth > 900){
+        const leftX = points[0].x;
+        const rightX = points[points.length - 1].x;
+        const splitX = (points[2].x + points[3].x) / 2;
+        setPath('[data-part="bus-pink"]', `M${leftX},${busY} L${splitX},${busY}`);
+        setPath('[data-part="bus-green"]', `M${splitX},${busY} L${rightX},${busY}`);
+        points.forEach((p, i)=>{
+          setPath(`[data-to="${i}"]`, `M${p.x},${busY} L${p.x},${p.y}`);
+          setDot(`end-${i}`, p.x, p.y);
+        });
+      } else {
+        const col0X = points[0].x;
+        const col1X = points[1].x;
+        setPath('[data-part="bus-2col"]', `M${col0X},${busY} L${col1X},${busY}`);
+        setPath('[data-to2="0"]', `M${col0X},${busY} L${col0X},${points[0].y}`);
+        setPath('[data-to2="1"]', `M${col1X},${busY} L${col1X},${points[1].y}`);
+        setDot('end2-0', col0X, points[0].y);
+        setDot('end2-1', col1X, points[1].y);
+      }
     }
 
     draw();
