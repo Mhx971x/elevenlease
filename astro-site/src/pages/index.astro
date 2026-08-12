@@ -8,6 +8,7 @@ try {
 } catch (e) {
   console.error('Erreur de chargement du catalogue (accueil) au build :', e);
 }
+const compareVehicle = fleetVehicles.find(v => v.slug === 'cupra-formentor') || fleetVehicles.find(v => v.photo) || fleetVehicles[0] || null;
 
 const heroBrands = [
   { name: 'Mercedes-Benz', src: '/brands/mercedesbenz.svg' },
@@ -345,49 +346,98 @@ const breadcrumbSchema = {
   </div>
   </section>
 
-  <section class="connection-strip" aria-label="Le rôle d'Eleven Lease">
+  <section id="avantages" class="compare-section">
     <div class="wrap">
-      <div class="connect-diagram">
-        <div class="node"><div class="label">Vous</div><div class="value">Votre projet auto</div></div>
-        <div class="connect-line"></div>
-        <div class="node"><div class="label">Eleven Lease</div><div class="value">Mise en relation</div></div>
-        <div class="connect-line"></div>
-        <div class="node"><div class="label">Partenaire</div><div class="value">Meilleure offre</div></div>
+      <div class="section-head compare-head reveal">
+        <h2>La différence <span class="highlight-mark">Eleven Lease</span></h2>
+        <p>Le même modèle, sans l'apport ni les frais cachés du constructeur.</p>
+      </div>
+      <div class="compare-grid reveal reveal-stagger">
+        <div class="compare-card compare-them">
+          <div class="compare-top">
+            <div class="compare-top-text">
+              <div class="compare-card-head">En concession</div>
+              {compareVehicle && (
+                <div class="compare-vehicle-name">{compareVehicle.brand} {compareVehicle.name}</div>
+              )}
+            </div>
+            <div class="compare-photo"><img src="/compare-cupra-formentor.webp" alt={compareVehicle ? `${compareVehicle.brand} ${compareVehicle.name}` : 'CUPRA Formentor'} loading="lazy" /></div>
+            <div class="compare-apport">
+              <span class="compare-apport-amount">~800€</span>
+              <span class="compare-apport-label">/mois</span>
+            </div>
+          </div>
+          <ul class="compare-list">
+            <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--border)"/><path d="M6.5 10h7" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round"/></svg> ~2 000€ d'apport en moyenne</li>
+            <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--border)"/><path d="M6.5 10h7" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round"/></svg> Kilométrage limité</li>
+            <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--border)"/><path d="M6.5 10h7" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round"/></svg> Apport souvent exigé</li>
+            <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--border)"/><path d="M6.5 10h7" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round"/></svg> Un seul organisme sollicité</li>
+            <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--border)"/><path d="M6.5 10h7" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round"/></svg> Stock limité</li>
+            <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--border)"/><path d="M6.5 10h7" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round"/></svg> Délai de plusieurs jours</li>
+            <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--border)"/><path d="M6.5 10h7" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round"/></svg> À gérer soi-même</li>
+            <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--border)"/><path d="M6.5 10h7" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round"/></svg> Frais annexes fréquents</li>
+          </ul>
+        </div>
+        <div class="compare-card compare-us">
+          <div class="compare-badge">Recommandé</div>
+          <div class="compare-top">
+            <div class="compare-top-text">
+              <div class="compare-card-head"><span class="compare-logo-dot"></span>Eleven Lease</div>
+              {compareVehicle && (
+                <div class="compare-vehicle-name">{compareVehicle.brand} {compareVehicle.name}</div>
+              )}
+            </div>
+            <div class="compare-photo"><img src="/compare-cupra-formentor.webp" alt={compareVehicle ? `${compareVehicle.brand} ${compareVehicle.name}` : 'CUPRA Formentor'} loading="lazy" /></div>
+            <div class="compare-apport">
+              <span class="compare-apport-amount">~500€</span>
+              <span class="compare-apport-label">/mois</span>
+            </div>
+          </div>
+          <ul class="compare-list">
+            <li class="compare-list-strong"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> 0€ d'apport possible</li>
+            <li class="compare-list-strong"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Kilométrage illimité possible</li>
+            <li class="compare-list-strong"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Taux d'acceptation plus élevé</li>
+            <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Véhicules récents, finition premium</li>
+            <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Réponse sous 24h</li>
+            <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Accompagnement de A à Z</li>
+            <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Aucun frais caché</li>
+          </ul>
+          <a href="/simulation" class="btn-primary cta-with-calculator compare-cta"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing</a>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="pourquoi" class="why-section">
+  <section id="pourquoi" class="profiles-section">
     <div class="wrap">
-      <div class="section-head reveal">
-        <div class="section-eyebrow">Pourquoi Eleven Lease</div>
-        <h2>Une offre pensée pour ceux qui roulent vraiment.</h2>
+      <div class="section-head profiles-head reveal">
+        <div class="section-eyebrow">Pour qui</div>
+        <h2>Des solutions pour chaque profil</h2>
       </div>
-      <div class="why-grid reveal reveal-stagger">
-        <div class="why-card">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M6.5 8a4 4 0 100 8 4 4 0 003.2-1.6L12 12l2.3 2.4A4 4 0 1017.5 8a4 4 0 00-3.2 1.6L12 12l-2.3-2.4A4 4 0 006.5 8z" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <h3>Kilométrage illimité</h3>
-          <p>Aucun forfait à surveiller, aucune facture de dépassement en fin de contrat. Roulez selon votre besoin réel, pas selon une case cochée à la signature.</p>
+      <div class="profiles-grid reveal reveal-stagger">
+        <div class="profile-card particulier">
+          <div class="profile-icon particulier">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#fff" stroke-width="1.8"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <h3>Particuliers</h3>
+          <ul class="profile-list">
+            <li><svg width="17" height="17" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Budget maîtrisé</li>
+            <li><svg width="17" height="17" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Sans apport possible</li>
+            <li><svg width="17" height="17" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Large choix de véhicules</li>
+          </ul>
+          <a href="/contact" class="profile-cta"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.7 3.6 4.9 6.3 6.3l2.1-2.1c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.5 21 3 13.5 3 4c0-.6.4-1 1-1h3.6c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg> Être rappelé</a>
         </div>
-        <div class="why-card">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 12h4l2-7 4 14 2-7h6" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <h3>Taillé pour les gros rouleurs</h3>
-          <p>Trajets quotidiens, tournées professionnelles, longue distance : notre offre est conçue pour un usage intensif du véhicule.</p>
-        </div>
-        <div class="why-card">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="var(--text)" stroke-width="1.6"/><path d="M21 21l-4.3-4.3" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round"/></svg>
-          <h3>Le véhicule adapté à votre besoin</h3>
-          <p>Nous cherchons le modèle qui correspond réellement à votre usage, pas seulement ce qu'il y a en stock.</p>
-        </div>
-        <div class="why-card">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M4 19.5A2.5 2.5 0 016.5 17H20M4 19.5A2.5 2.5 0 006.5 22H20V4H6.5A2.5 2.5 0 004 6.5v13z" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <h3>Véhicules récents</h3>
-          <p>Un catalogue renouvelé régulièrement, en neuf comme en occasion récente, pour particuliers et professionnels.</p>
-        </div>
-        <div class="why-card">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M3 13l1.5-5A2 2 0 016.4 6.5h11.2a2 2 0 011.9 1.5L21 13M3 13v5a1 1 0 001 1h1a1 1 0 001-1v-1h12v1a1 1 0 001 1h1a1 1 0 001-1v-5M3 13h18" stroke="var(--text)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <h3>Accompagnement de A à Z</h3>
-          <p>Financement, négociation, livraison : on gère tout le parcours, vous récupérez les clés.</p>
+        <div class="profile-card pro">
+          <div class="profile-icon pro">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="12" rx="2" stroke="#fff" stroke-width="1.8"/><path d="M8 7V5a2 2 0 012-2h4a2 2 0 012 2v2" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/><path d="M3 12h18" stroke="#fff" stroke-width="1.8"/></svg>
+          </div>
+          <h3>Professionnels</h3>
+          <ul class="profile-list">
+            <li><svg width="17" height="17" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Utilitaires et VP</li>
+            <li><svg width="17" height="17" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Financement sur mesure</li>
+            <li><svg width="17" height="17" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Accompagnement pour l'activité</li>
+          </ul>
+          <a href="/contact" class="profile-cta"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.7 3.6 4.9 6.3 6.3l2.1-2.1c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.5 21 3 13.5 3 4c0-.6.4-1 1-1h3.6c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg> Être rappelé</a>
         </div>
       </div>
     </div>
@@ -434,84 +484,6 @@ const breadcrumbSchema = {
       </div>
       <div class="fleet-foot reveal">
         <a href="/vehicules" class="btn-ghost">Voir les véhicules →</a>
-      </div>
-    </div>
-  </section>
-
-  <section id="avantages" class="compare-section">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <div class="section-eyebrow">La différence Eleven Lease</div>
-        <h2>Le même projet auto, <span>vécu autrement.</span></h2>
-        <p>Ce que change un accompagnement pensé pour les gros rouleurs, comparé à une démarche de financement classique.</p>
-      </div>
-      <div class="compare-grid reveal reveal-stagger">
-        <div class="compare-card compare-us">
-          <div class="compare-card-head"><span class="compare-logo-dot"></span>Eleven Lease</div>
-          <ul class="compare-list">
-            <li>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <div><strong>Kilométrage illimité</strong><span>Aucun forfait à surveiller, aucun dépassement facturé</span></div>
-            </li>
-            <li>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <div><strong>0€ d'apport possible</strong><span>Un projet accessible dès le départ</span></div>
-            </li>
-            <li>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <div><strong>Taux d'acceptation plus élevé</strong><span>Grâce à notre réseau de partenaires financiers</span></div>
-            </li>
-            <li>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <div><strong>Véhicules récents, finition premium</strong><span>Neuf ou occasion récente, catalogue renouvelé</span></div>
-            </li>
-            <li>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <div><strong>Réponse sous 24h</strong><span>Un seul formulaire, une offre rapide</span></div>
-            </li>
-            <li>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <div><strong>Accompagnement de A à Z</strong><span>Un seul interlocuteur, du choix à la livraison</span></div>
-            </li>
-            <li>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-              <div><strong>Aucun frais caché</strong><span>La mise en relation est gratuite pour le client</span></div>
-            </li>
-          </ul>
-        </div>
-        <div class="compare-card compare-them">
-          <div class="compare-card-head">Financement classique</div>
-          <ul class="compare-list">
-            <li>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--border)"/><path d="M6.5 10h7" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round"/></svg>
-              <div><strong>Kilométrage limité</strong><span>Dépassement facturé en fin de contrat</span></div>
-            </li>
-            <li>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--border)"/><path d="M6.5 10h7" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round"/></svg>
-              <div><strong>Apport souvent exigé</strong><span>Un frein pour démarrer le projet</span></div>
-            </li>
-            <li>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--border)"/><path d="M6.5 10h7" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round"/></svg>
-              <div><strong>Un seul organisme sollicité</strong><span>Moins de chances d'être accepté</span></div>
-            </li>
-            <li>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--border)"/><path d="M6.5 10h7" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round"/></svg>
-              <div><strong>Stock limité</strong><span>Choix restreint, finitions standards</span></div>
-            </li>
-            <li>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--border)"/><path d="M6.5 10h7" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round"/></svg>
-              <div><strong>Délai de plusieurs jours</strong><span>Parfois plusieurs semaines de traitement</span></div>
-            </li>
-            <li>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--border)"/><path d="M6.5 10h7" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round"/></svg>
-              <div><strong>À gérer soi-même</strong><span>Plusieurs interlocuteurs à démarcher</span></div>
-            </li>
-            <li>
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--border)"/><path d="M6.5 10h7" stroke="var(--text-faint)" stroke-width="1.8" stroke-linecap="round"/></svg>
-              <div><strong>Frais annexes fréquents</strong><span>Dossier, gestion, dépassement de forfait...</span></div>
-            </li>
-          </ul>
-        </div>
       </div>
     </div>
   </section>
@@ -1412,45 +1384,6 @@ const breadcrumbSchema = {
     .brand-logo img{height:24px;}
   }
 
-  /* connection diagram - signature element */
-  .connection-strip{padding:38px 0;background:var(--surface);border-bottom:1px solid var(--border);}
-  .connect-diagram{
-    position:relative;z-index:2;
-    display:flex;align-items:center;justify-content:center;gap:0;
-    max-width:880px;margin:0 auto;
-  }
-  .node{
-    border:1px solid var(--border);
-    background:#fff;
-    box-shadow:var(--shadow-sm);
-    border-radius:16px;
-    padding:20px 26px;
-    min-width:180px;
-    text-align:center;
-  }
-  .node .label{font-size:11px;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-faint);margin-bottom:6px;}
-  .node .value{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;}
-  .connect-line{
-    flex:1;height:1px;position:relative;
-    background:linear-gradient(90deg, var(--border), var(--text), var(--border));
-    margin:0 16px;
-    overflow:hidden;
-  }
-  .connect-line::after{
-    content:'';position:absolute;top:-1.5px;left:-20%;
-    width:20%;height:4px;
-    background:radial-gradient(circle, rgba(255,0,127,0.85), transparent 70%);
-    animation:travel 2.8s linear infinite;
-  }
-  @keyframes travel{
-    0%{left:-20%;}
-    100%{left:100%;}
-  }
-  @media(max-width:640px){
-    .connect-diagram{flex-direction:column;gap:16px;}
-    .connect-line{width:1px;height:40px;margin:0;background:linear-gradient(180deg, var(--border), var(--text), var(--border));}
-    .connect-line::after{display:none;}
-  }
   @media(max-width:980px){
     .hero-content{grid-template-columns:1fr;gap:10px;}
     .hero-copy{max-width:720px;}
@@ -1720,7 +1653,6 @@ const breadcrumbSchema = {
     .brand-logo-cupra{width:35px;flex-basis:35px;}
     .brand-logo-cupra img{height:19px;max-width:35px;}
     @keyframes heroBrandsScrollMobile{to{transform:translateX(-33.333333%);}}
-    .connection-strip{padding:32px 0;}
   }
 
   @media(min-width:641px) and (max-width:980px){
@@ -2056,52 +1988,152 @@ const breadcrumbSchema = {
   @media(max-width:900px){ .cat-grid{grid-template-columns:1fr;} }
 
   /* comparison table */
-  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
-  .compare-card{border-radius:24px;padding:36px 32px;}
-  .compare-us{
-    background:#fff;position:relative;overflow:hidden;
-    border:1px solid var(--border);
-    box-shadow:var(--shadow-md);
+  .compare-head{margin:0 auto 44px;text-align:center;max-width:640px;}
+  .compare-head h2{font-size:clamp(32px,4.6vw,48px);}
+  .compare-head p{font-size:16.5px;margin:14px auto 0;max-width:520px;}
+  .highlight-mark{position:relative;display:inline-block;padding:0 4px;white-space:nowrap;}
+  .highlight-mark::before{
+    content:'';position:absolute;left:-3px;right:-3px;top:0.08em;bottom:0.05em;
+    background:rgba(255,0,127,0.16);border-radius:8px;z-index:-1;
   }
-  .compare-us::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:var(--accent);}
-  .compare-them{background:var(--surface);border:1px solid var(--border);}
+  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:stretch;}
+  .compare-top{
+    display:grid;grid-template-columns:1fr auto;
+    grid-template-areas:"text photo" "apport apport";
+    column-gap:14px;row-gap:0;align-items:center;margin-bottom:22px;
+  }
+  .compare-top-text{grid-area:text;min-width:0;}
+  .compare-photo{grid-area:photo;display:flex;align-self:center;}
+  .compare-them .compare-photo{filter:grayscale(.4) opacity(.85);}
+  .compare-photo img{width:150px;height:auto;display:block;}
+  .compare-vehicle-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:15.5px;}
+  .compare-them .compare-vehicle-name{color:var(--text-dim);}
+  .compare-card{border-radius:24px;padding:32px;}
+  .compare-us{
+    background:#fff;position:relative;overflow:visible;
+    border:2px solid var(--accent-1);
+    box-shadow:0 20px 44px rgba(255,0,127,0.14), var(--shadow-md);
+    display:flex;flex-direction:column;
+  }
+  .compare-badge{
+    position:absolute;top:-15px;left:32px;z-index:2;
+    background:var(--accent);color:#fff;font-size:11.5px;font-weight:700;
+    text-transform:uppercase;letter-spacing:0.05em;padding:6px 16px;border-radius:100px;
+    box-shadow:0 6px 16px rgba(255,0,127,0.28);
+  }
+  .compare-them{background:var(--surface);border:1px solid var(--border);display:flex;flex-direction:column;}
   .compare-card-head{
-    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px;
-    display:flex;align-items:center;gap:9px;margin-bottom:28px;
+    font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;
+    display:flex;align-items:center;gap:9px;margin-bottom:6px;
   }
   .compare-them .compare-card-head{color:var(--text-faint);font-weight:600;}
   .compare-logo-dot{width:8px;height:8px;border-radius:50%;background:var(--accent);flex:none;}
-  .compare-list{list-style:none;display:flex;flex-direction:column;gap:20px;}
-  .compare-list li{display:flex;align-items:flex-start;gap:14px;}
-  .compare-list li svg{flex:none;margin-top:1px;}
-  .compare-list strong{display:block;font-size:15px;font-weight:600;margin-bottom:2px;}
-  .compare-us .compare-list strong{color:var(--text);}
-  .compare-them .compare-list strong{color:var(--text-dim);font-weight:500;}
-  .compare-list span{display:block;font-size:13.5px;color:var(--text-dim);line-height:1.5;}
-  .compare-them .compare-list span{color:var(--text-faint);}
+  .compare-apport{
+    grid-area:apport;
+    display:flex;flex-direction:column;gap:2px;padding-bottom:22px;margin-top:22px;
+    border-bottom:1px solid var(--border);
+  }
+  .compare-us .compare-apport{border-bottom-color:rgba(255,0,127,0.15);}
+  .compare-apport-amount{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;}
+  .compare-them .compare-apport-amount{color:var(--text-dim);}
+  .compare-us .compare-apport-amount{color:var(--accent-1);}
+  .compare-apport-label{font-size:13px;color:var(--text-faint);}
+  .compare-list{list-style:none;display:flex;flex-direction:column;gap:13px;}
+  .compare-list li{display:flex;align-items:center;gap:11px;font-size:14px;}
+  .compare-list li svg{flex:none;}
+  .compare-us .compare-list li{color:var(--text);}
+  .compare-them .compare-list li{color:var(--text-faint);}
+  .compare-list-strong{
+    font-weight:700;color:var(--text);
+    background:rgba(255,0,127,0.08);
+    margin:0 -10px;padding:6px 10px;border-radius:10px;
+  }
+  .compare-cta{margin-top:26px;width:100%;justify-content:center;}
   @media(max-width:860px){ .compare-grid{grid-template-columns:1fr;} }
-  @media(max-width:640px){ .compare-card{padding:28px 24px;} }
+  @media(max-width:640px){
+    .compare-card{padding:26px 24px;}
+  }
+  @media(min-width:861px){
+    .compare-head{max-width:none;}
+    .compare-head p{max-width:none;white-space:nowrap;}
+    .compare-card{padding:20px 30px 22px;}
+    .compare-top{
+      grid-template-areas:"text photo" "apport photo";
+      grid-template-rows:auto 1fr;
+      column-gap:10px;row-gap:2px;align-items:start;margin-bottom:8px;
+    }
+    .compare-card-head{margin-bottom:2px;}
+    .compare-photo{align-self:stretch;justify-content:flex-end;align-items:flex-end;margin-left:auto;}
+    .compare-photo img{width:270px;}
+    .compare-apport{padding-bottom:0;margin-top:6px;border-bottom:none;align-self:end;}
+    .compare-apport-amount{line-height:1;}
+    .compare-top{padding-bottom:8px;border-bottom:1px solid var(--border);}
+    .compare-us .compare-top{border-bottom-color:rgba(255,0,127,0.15);}
+    .compare-list{gap:6px;}
+    .compare-cta{margin-top:8px;padding:11px 26px;}
+  }
 
-  /* why us */
-  .why-section{border-top:1px solid var(--border);background:var(--surface);}
+  /* des solutions pour chaque profil */
+  .profiles-section{padding:100px 0;border-top:1px solid var(--border);background:var(--surface);}
   #comment-ca-marche{background:var(--surface);}
   #avis{background:var(--surface);}
-  .why-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;}
-  .why-card{
-    background:#fff;
-    border:1px solid var(--border);
-    border-radius:18px;
-    padding:28px 24px;
-    box-shadow:var(--shadow-sm);
+  .profiles-head{text-align:center;max-width:none;margin:0 auto 52px;}
+  .profiles-head .section-eyebrow{
+    display:inline-flex;align-items:center;gap:8px;margin:0 auto 16px;
+    border:1px solid var(--border);padding:6px 14px;border-radius:100px;background:#fff;
+  }
+  .profiles-head .section-eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent-1);}
+  .profiles-head h2{position:relative;padding-bottom:22px;}
+  .profiles-head h2::after{
+    content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+    width:36px;height:3px;border-radius:100px;background:var(--accent);
+  }
+  .profiles-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:920px;margin:0 auto;}
+  .profile-card{
+    position:relative;overflow:hidden;isolation:isolate;
+    background:linear-gradient(155deg, #131316 0%, #1c1c22 55%, #17121a 100%);
+    border:1px solid rgba(255,255,255,.1);border-radius:26px;padding:40px 38px;
+    box-shadow:0 24px 48px rgba(17,17,19,0.2), 0 8px 20px rgba(255,0,127,0.08);
     transition:transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease, border-color .35s ease;
   }
-  .why-card:hover{border-color:#d8d8dd;transform:translateY(-6px);box-shadow:var(--shadow-md);}
-  .why-card svg{margin-bottom:18px;}
-  .why-card h3{font-size:17px;margin-bottom:10px;}
-  .why-card p{color:var(--text-dim);font-size:13.5px;line-height:1.55;}
-  @media(max-width:1080px){ .why-grid{grid-template-columns:repeat(3,1fr);} }
-  @media(max-width:768px){ .why-grid{grid-template-columns:1fr 1fr;} }
-  @media(max-width:560px){ .why-grid{grid-template-columns:1fr;} }
+  .profile-card::before{
+    content:'';position:absolute;inset:0;z-index:0;
+    background-image:
+      radial-gradient(120% 100% at 100% 0%, var(--tint, transparent), transparent 60%),
+      linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+    background-size:auto, 32px 32px, 32px 32px;
+    mask-image:radial-gradient(ellipse 90% 85% at 25% 15%, black, transparent);
+    -webkit-mask-image:radial-gradient(ellipse 90% 85% at 25% 15%, black, transparent);
+  }
+  .profile-card::after{
+    content:'';position:absolute;z-index:0;top:-70px;right:-70px;width:230px;height:230px;border-radius:50%;
+    background:radial-gradient(circle, var(--glow, rgba(255,0,127,.35)), transparent 70%);
+    filter:blur(56px);pointer-events:none;
+  }
+  .profile-card > *{position:relative;z-index:1;}
+  .profile-card.particulier{--tint:rgba(255,0,127,0.18);--glow:rgba(255,0,127,.4);}
+  .profile-card.pro{--tint:rgba(255,255,255,0.08);--glow:rgba(255,255,255,.18);}
+  .profile-card:hover{border-color:rgba(255,255,255,.2);transform:translateY(-8px);box-shadow:0 32px 60px rgba(17,17,19,0.26), 0 10px 26px rgba(255,0,127,0.14);}
+  .profile-icon{
+    width:60px;height:60px;border-radius:18px;display:flex;align-items:center;justify-content:center;margin-bottom:24px;
+  }
+  .profile-icon.particulier{background:var(--accent);box-shadow:0 10px 24px rgba(255,0,127,0.35);}
+  .profile-icon.pro{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);box-shadow:0 10px 24px rgba(0,0,0,.25);}
+  .profile-card h3{font-size:22px;margin-bottom:20px;color:#fff;}
+  .profile-list{display:flex;flex-direction:column;gap:13px;margin-bottom:24px;padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,.12);}
+  .profile-list li{display:flex;align-items:center;gap:10px;font-size:14.5px;color:rgba(255,255,255,.68);list-style:none;}
+  .profile-list svg{flex:none;}
+  .profile-cta{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;width:100%;
+    background:var(--accent);color:#fff;padding:15px 26px;border-radius:100px;
+    font-weight:600;font-size:14.5px;
+    transition:transform .2s ease, filter .2s ease, box-shadow .3s ease;
+  }
+  .profile-cta:hover{filter:brightness(1.12);transform:translateY(-2px);box-shadow:0 14px 32px rgba(255,0,127,0.3), 0 4px 10px rgba(255,0,127,0.16);}
+  .profile-cta:active{transform:scale(.96);}
+  @media(max-width:768px){ .profiles-section{padding:72px 0;} }
+  @media(max-width:640px){ .profiles-grid{grid-template-columns:1fr;} .profile-card{padding:30px 26px;} }
 
   /* fleet teaser */
   .fleet-teaser{border-top:1px solid var(--border);}
@@ -2211,7 +2243,6 @@ const breadcrumbSchema = {
   .hero-content p{animation:fadeUp .9s cubic-bezier(.16,1,.3,1) both;animation-delay:.28s;}
   .hero-actions{animation:fadeUp .9s cubic-bezier(.16,1,.3,1) both;animation-delay:.4s;}
   .hero-proof-row{animation:fadeUp .9s cubic-bezier(.16,1,.3,1) both;animation-delay:.5s;}
-  .connect-diagram{animation:fadeUp 1s cubic-bezier(.16,1,.3,1) both;animation-delay:.55s;}
 
   /* hero stars */
   .hero-stars{
@@ -2224,16 +2255,6 @@ const breadcrumbSchema = {
     -webkit-mask-image:radial-gradient(ellipse 96% 88% at 50% 42%,black 42%,rgba(0,0,0,.82) 72%,transparent 100%);
   }
 
-  /* floating nodes */
-  .node{animation:float 5s ease-in-out infinite;}
-  .node:nth-child(1){animation-delay:0s;}
-  .node:nth-child(3){animation-delay:.6s;}
-  .node:nth-child(5){animation-delay:1.2s;}
-  @keyframes float{
-    0%,100%{transform:translateY(0);}
-    50%{transform:translateY(-6px);}
-  }
-  @media(max-width:640px){ .node{animation:none;} }
   @media(prefers-reduced-motion:reduce){
     .hero-mobile-car img,.hero-car.is-active,.hero-visual-ring,.hero-visual-label{animation:none;opacity:1;filter:none;}
     .hero-car:not(.is-active){opacity:0;}
