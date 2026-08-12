@@ -55,6 +55,8 @@ const acceptBankIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M3 10l9-6 
 const acceptShieldIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12l2 2 4-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const acceptPeopleIcon = `<svg viewBox="0 0 24 24" fill="none"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.6"/><circle cx="16.5" cy="9" r="2.6" stroke="currentColor" stroke-width="1.6"/><path d="M3 19c0-3.3 2.5-5.3 5.5-5.3S14 15.7 14 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M14.8 13.8c2.2.3 3.7 2 3.7 5.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
 const acceptTrendIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M3 17l6-6 4 4 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 6h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const acceptXIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>`;
+const acceptCheckIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 const orgSchema = {
   "@context": "https://schema.org",
@@ -623,15 +625,39 @@ const breadcrumbSchema = {
 
       <div class="accept-diagram" id="acceptDiagram">
         <svg class="accept-lines" id="acceptLines" aria-hidden="true">
+          <defs>
+            <linearGradient id="acceptLineGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ff007f" stop-opacity="0.3"></stop>
+              <stop offset="55%" stop-color="#ff5c9e" stop-opacity="0.48"></stop>
+              <stop offset="100%" stop-color="#ffa8ca" stop-opacity="0.58"></stop>
+            </linearGradient>
+            <linearGradient id="acceptLineGradGreen" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ff007f" stop-opacity="0.5"></stop>
+              <stop offset="55%" stop-color="#4fd07a" stop-opacity="0.85"></stop>
+              <stop offset="100%" stop-color="#16a34a" stop-opacity="1"></stop>
+            </linearGradient>
+            <filter id="acceptGlow" x="-60%" y="-30%" width="220%" height="180%">
+              <feGaussianBlur stdDeviation="5" result="b"></feGaussianBlur>
+              <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
+            </filter>
+          </defs>
+          <g class="accept-line-glow-group" filter="url(#acceptGlow)">
+            <path class="accept-line accept-line-glow" data-to="0"></path>
+            <path class="accept-line accept-line-glow" data-to="1"></path>
+            <path class="accept-line accept-line-glow" data-to="2"></path>
+          </g>
           <path class="accept-line" data-to="0"></path>
           <path class="accept-line" data-to="1"></path>
           <path class="accept-line" data-to="2"></path>
-          <path class="accept-line accept-line-accepted" data-to="3"></path>
-          <circle class="accept-dot accept-dot-start" data-dot="start" r="4.5"></circle>
-          <circle class="accept-dot" data-dot="end-0" r="4"></circle>
-          <circle class="accept-dot" data-dot="end-1" r="4"></circle>
-          <circle class="accept-dot" data-dot="end-2" r="4"></circle>
-          <circle class="accept-dot accept-dot-accepted" data-dot="end-3" r="4"></circle>
+          <path class="accept-line-accepted-glow" data-to="3" filter="url(#acceptGlow)"></path>
+          <path class="accept-line-accepted" data-to="3"></path>
+          <path class="accept-line-flow" data-to="3"></path>
+          <circle class="accept-dot-pulse" data-dot="start" r="7"></circle>
+          <circle class="accept-dot accept-dot-start" data-dot="start" r="6"></circle>
+          <circle class="accept-dot" data-dot="end-0" r="4.5"></circle>
+          <circle class="accept-dot" data-dot="end-1" r="4.5"></circle>
+          <circle class="accept-dot" data-dot="end-2" r="4.5"></circle>
+          <circle class="accept-dot accept-dot-accepted" data-dot="end-3" r="4.5"></circle>
         </svg>
         <div class="accept-file-card" id="acceptFile">
           <span class="accept-icon"><Fragment set:html={acceptDocIcon} /></span>
@@ -641,22 +667,22 @@ const breadcrumbSchema = {
           <div class="accept-partner" data-accept-node>
             <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
             <span class="accept-partner-name">Partenaire A</span>
-            <span class="accept-status accept-status-refused">Refus</span>
+            <span class="accept-status accept-status-refused"><Fragment set:html={acceptXIcon} />Refus</span>
           </div>
           <div class="accept-partner" data-accept-node>
             <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
             <span class="accept-partner-name">Partenaire B</span>
-            <span class="accept-status accept-status-refused">Refus</span>
+            <span class="accept-status accept-status-refused"><Fragment set:html={acceptXIcon} />Refus</span>
           </div>
           <div class="accept-partner" data-accept-node>
             <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
             <span class="accept-partner-name">Partenaire C</span>
-            <span class="accept-status accept-status-refused">Refus</span>
+            <span class="accept-status accept-status-refused"><Fragment set:html={acceptXIcon} />Refus</span>
           </div>
           <div class="accept-partner accept-partner-accepted" data-accept-node>
             <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
             <span class="accept-partner-name">Partenaire D</span>
-            <span class="accept-status accept-status-accepted">Accord</span>
+            <span class="accept-status accept-status-accepted"><Fragment set:html={acceptCheckIcon} />Accord</span>
           </div>
         </div>
       </div>
@@ -2041,6 +2067,8 @@ const breadcrumbSchema = {
   .accept-intro{margin-top:16px;max-width:600px;color:var(--text-dim);font-size:15.5px;line-height:1.6;}
 
   /* accept diagram */
+  @keyframes acceptPulse{0%{r:6px;opacity:.55;}100%{r:20px;opacity:0;}}
+  @keyframes acceptFlowDash{to{stroke-dashoffset:-22;}}
   .accept-icon{
     display:flex;align-items:center;justify-content:center;flex:none;
     width:48px;height:48px;
@@ -2049,33 +2077,46 @@ const breadcrumbSchema = {
     box-shadow:inset 0 0 0 1px rgba(255,0,127,.035);
   }
   .accept-icon svg{width:22px;height:22px;}
-  .accept-diagram{position:relative;display:flex;align-items:center;gap:72px;margin:56px 0 32px;}
+  .accept-diagram{position:relative;display:flex;flex-direction:column;align-items:center;gap:60px;margin:56px 0 32px;}
   .accept-file-card{
-    position:relative;z-index:2;flex:0 0 210px;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+    position:relative;z-index:2;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+    width:230px;
     background:#fff;border:1px solid var(--border);border-radius:20px;
-    padding:34px 20px;box-shadow:var(--shadow-sm);text-align:center;
+    padding:26px 20px;box-shadow:0 22px 46px -26px rgba(17,24,39,.24);text-align:center;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease;
   }
-  .accept-file-label{font-weight:700;font-size:15.5px;letter-spacing:-.01em;}
-  .accept-partners{position:relative;z-index:2;flex:1;display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  .accept-file-card:hover{transform:translateY(-4px);}
+  .accept-file-label{font-weight:700;font-size:16px;letter-spacing:-.01em;}
+  .accept-partners{position:relative;z-index:2;width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
   .accept-partner{
-    display:flex;flex-direction:column;align-items:center;gap:12px;
-    background:#fff;border:1px solid var(--border);border-radius:18px;
-    padding:26px 20px;box-shadow:var(--shadow-sm);text-align:center;
-    transition:border-color .3s ease, box-shadow .3s ease;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+    background:#fff;border:1px solid var(--border);border-radius:20px;
+    padding:26px 18px;box-shadow:0 18px 40px -28px rgba(17,24,39,.2);text-align:center;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1), border-color .3s ease, box-shadow .3s ease;
   }
-  .accept-partner-name{font-weight:700;font-size:15.5px;letter-spacing:-.01em;}
-  .accept-status{display:inline-flex;padding:4px 13px;border-radius:100px;font-size:12px;font-weight:600;}
-  .accept-status-refused{background:#fdeceb;color:#c0392b;}
-  .accept-status-accepted{background:#e7f8ee;color:#1e8e4a;}
-  .accept-partner-accepted{border-color:rgba(30,142,74,.3);background:linear-gradient(180deg,#f5fbf7,#fff);}
-  .accept-partner-accepted .accept-icon{background:linear-gradient(145deg,#e7f8ee,#d3f1de);color:#1e8e4a;box-shadow:inset 0 0 0 1px rgba(30,142,74,.06);}
+  .accept-partner:hover{transform:translateY(-6px);}
+  .accept-partner-name{font-weight:700;font-size:15px;letter-spacing:-.01em;color:#4b515c;}
+  .accept-status{display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:100px;font-size:12px;font-weight:600;}
+  .accept-status svg{width:10px;height:10px;}
+  .accept-status-refused{background:#fdecef;color:#e5484d;}
+  .accept-status-accepted{background:#16a34a;color:#fff;box-shadow:0 6px 16px -6px rgba(22,163,74,.6);}
+  .accept-partner-accepted{
+    border-color:#bfe8ca;background:linear-gradient(160deg,#f4fdf6,#e9faef);
+    box-shadow:0 24px 50px -26px rgba(22,163,74,.4);
+  }
+  .accept-partner-accepted .accept-partner-name{color:#166534;}
+  .accept-partner-accepted .accept-icon{background:linear-gradient(145deg,#dcfce7,#c5f4d3);color:#16a34a;box-shadow:inset 0 0 0 1px rgba(22,163,74,.08);}
   .accept-lines{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible;}
-  .accept-line{fill:none;stroke:var(--accent-1);stroke-width:2;stroke-linecap:round;opacity:.32;}
-  .accept-line-accepted{stroke:#1e8e4a;opacity:.6;stroke-width:2.25;}
+  .accept-line{fill:none;stroke:url(#acceptLineGrad);stroke-width:2.5;stroke-linecap:round;}
+  .accept-line-glow{stroke-width:7;opacity:.4;}
+  .accept-line-accepted{fill:none;stroke:url(#acceptLineGradGreen);stroke-width:3.5;stroke-linecap:round;}
+  .accept-line-accepted-glow{fill:none;stroke:url(#acceptLineGradGreen);stroke-width:9;opacity:.28;}
+  .accept-line-flow{fill:none;stroke:#fff;stroke-width:3.5;stroke-linecap:round;stroke-dasharray:2 15;animation:acceptFlowDash 1s linear infinite;}
   .accept-dot{fill:var(--accent-1);stroke:#fff;stroke-width:2;}
-  .accept-dot-start{fill:#17171b;}
-  .accept-dot-accepted{fill:#1e8e4a;}
+  .accept-dot-start{fill:var(--accent-1);}
+  .accept-dot-accepted{fill:#16a34a;}
+  .accept-dot-pulse{fill:none;stroke:var(--accent-1);stroke-width:2;opacity:.5;animation:acceptPulse 1.8s ease-out infinite;}
   .accept-note{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:36px;color:var(--text-dim);font-size:14.5px;font-weight:500;}
   .accept-note-icon{display:flex;color:var(--accent-1);}
   .accept-note-icon svg{width:18px;height:18px;}
@@ -2087,13 +2128,20 @@ const breadcrumbSchema = {
   .accept-stat{display:flex;align-items:center;gap:14px;font-size:14.5px;font-weight:600;color:var(--text);}
   .accept-stat .accept-icon{width:42px;height:42px;}
   .accept-stat .accept-icon svg{width:19px;height:19px;}
-  @media(max-width:760px){
-    .accept-diagram{flex-direction:column;align-items:stretch;gap:28px;}
-    .accept-file-card{flex:none;width:100%;}
+  @media(max-width:900px){
+    .accept-partners{grid-template-columns:1fr 1fr;}
     .accept-lines{display:none;}
+  }
+  @media(max-width:760px){
+    .accept-diagram{gap:28px;}
+    .accept-file-card{width:100%;}
     .accept-stats{flex-direction:column;align-items:flex-start;gap:18px;padding:24px 26px;}
   }
   @media(max-width:480px){ .accept-partners{grid-template-columns:1fr;} }
+  @media(prefers-reduced-motion:reduce){
+    .accept-dot-pulse{display:none;}
+    .accept-line-flow{animation:none;stroke-dasharray:none;display:none;}
+  }
 
   /* comparison table */
   .compare-head{margin:0 auto 44px;text-align:center;max-width:640px;}
@@ -2813,28 +2861,28 @@ const breadcrumbSchema = {
     const partners = Array.from(document.querySelectorAll<HTMLElement>('#acceptPartners [data-accept-node]'));
 
     function setDot(name: string, x: number, y: number){
-      const dot = svg!.querySelector(`[data-dot="${name}"]`);
-      if(dot){ dot.setAttribute('cx', String(x)); dot.setAttribute('cy', String(y)); }
+      svg!.querySelectorAll(`[data-dot="${name}"]`).forEach(dot=>{
+        dot.setAttribute('cx', String(x));
+        dot.setAttribute('cy', String(y));
+      });
     }
 
     function draw(){
-      if(window.innerWidth <= 760) return;
+      if(window.innerWidth <= 900) return;
       const box = diagram!.getBoundingClientRect();
       const fileRect = fileCard!.getBoundingClientRect();
-      const startX = fileRect.right - box.left;
-      const startY = fileRect.top + fileRect.height / 2 - box.top;
+      const startX = fileRect.left + fileRect.width / 2 - box.left;
+      const startY = fileRect.bottom - box.top;
       setDot('start', startX, startY);
       partners.forEach((node, i)=>{
         const r = node.getBoundingClientRect();
-        const endX = r.left - box.left;
-        const endY = r.top + r.height / 2 - box.top;
-        const dx = endX - startX;
-        const fanY = startY + (i - 1.5) * 18;
-        const c1x = startX + dx * 0.42;
-        const c2x = endX - dx * 0.46;
-        const d = `M${startX},${startY} C${c1x},${fanY} ${c2x},${endY} ${endX},${endY}`;
-        const path = svg!.querySelector(`[data-to="${i}"]`);
-        if(path) path.setAttribute('d', d);
+        const endX = r.left + r.width / 2 - box.left;
+        const endY = r.top - box.top;
+        const dy = endY - startY;
+        const c1y = startY + dy * 0.55;
+        const c2y = endY - dy * 0.55;
+        const d = `M${startX},${startY} C${startX},${c1y} ${endX},${c2y} ${endX},${endY}`;
+        svg!.querySelectorAll(`[data-to="${i}"]`).forEach(path=> path.setAttribute('d', d));
         setDot(`end-${i}`, endX, endY);
       });
     }
