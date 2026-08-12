@@ -2219,6 +2219,16 @@ const breadcrumbSchema = {
   @media(max-width:860px){ .compare-grid{grid-template-columns:1fr;} }
   @media(max-width:640px){
     .compare-card{padding:26px 24px;}
+    .compare-top{
+      grid-template-columns:1fr;
+      grid-template-areas:"text" "photo" "apport";
+      row-gap:0;
+    }
+    .compare-photo{justify-self:center;align-self:center;margin:6px 0 10px;}
+    .compare-photo img{width:78%;max-width:230px;}
+    .compare-list li{font-size:12.5px;gap:9px;}
+    .compare-list-strong{margin:0 -8px;padding:6px 8px;}
+    .compare-cta{padding:14px 20px;font-size:13.5px;white-space:nowrap;}
   }
   @media(min-width:861px){
     .compare-head{max-width:none;}
