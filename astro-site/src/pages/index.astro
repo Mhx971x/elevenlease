@@ -627,6 +627,11 @@ const breadcrumbSchema = {
           <path class="accept-line" data-to="1"></path>
           <path class="accept-line" data-to="2"></path>
           <path class="accept-line accept-line-accepted" data-to="3"></path>
+          <circle class="accept-dot accept-dot-start" data-dot="start" r="4.5"></circle>
+          <circle class="accept-dot" data-dot="end-0" r="4"></circle>
+          <circle class="accept-dot" data-dot="end-1" r="4"></circle>
+          <circle class="accept-dot" data-dot="end-2" r="4"></circle>
+          <circle class="accept-dot accept-dot-accepted" data-dot="end-3" r="4"></circle>
         </svg>
         <div class="accept-file-card" id="acceptFile">
           <span class="accept-icon"><Fragment set:html={acceptDocIcon} /></span>
@@ -2066,8 +2071,11 @@ const breadcrumbSchema = {
   .accept-partner-accepted{border-color:rgba(30,142,74,.3);background:linear-gradient(180deg,#f5fbf7,#fff);}
   .accept-partner-accepted .accept-icon{background:linear-gradient(145deg,#e7f8ee,#d3f1de);color:#1e8e4a;box-shadow:inset 0 0 0 1px rgba(30,142,74,.06);}
   .accept-lines{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible;}
-  .accept-line{fill:none;stroke:var(--accent-1);stroke-width:1.75;opacity:.4;}
-  .accept-line-accepted{opacity:.85;stroke-width:2.25;}
+  .accept-line{fill:none;stroke:var(--accent-1);stroke-width:2;stroke-linecap:round;opacity:.32;}
+  .accept-line-accepted{stroke:#1e8e4a;opacity:.6;stroke-width:2.25;}
+  .accept-dot{fill:var(--accent-1);stroke:#fff;stroke-width:2;}
+  .accept-dot-start{fill:#17171b;}
+  .accept-dot-accepted{fill:#1e8e4a;}
   .accept-note{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:36px;color:var(--text-dim);font-size:14.5px;font-weight:500;}
   .accept-note-icon{display:flex;color:var(--accent-1);}
   .accept-note-icon svg{width:18px;height:18px;}
@@ -2804,20 +2812,30 @@ const breadcrumbSchema = {
     if(!diagram || !fileCard || !svg) return;
     const partners = Array.from(document.querySelectorAll<HTMLElement>('#acceptPartners [data-accept-node]'));
 
+    function setDot(name: string, x: number, y: number){
+      const dot = svg!.querySelector(`[data-dot="${name}"]`);
+      if(dot){ dot.setAttribute('cx', String(x)); dot.setAttribute('cy', String(y)); }
+    }
+
     function draw(){
       if(window.innerWidth <= 760) return;
       const box = diagram!.getBoundingClientRect();
       const fileRect = fileCard!.getBoundingClientRect();
       const startX = fileRect.right - box.left;
       const startY = fileRect.top + fileRect.height / 2 - box.top;
+      setDot('start', startX, startY);
       partners.forEach((node, i)=>{
         const r = node.getBoundingClientRect();
         const endX = r.left - box.left;
         const endY = r.top + r.height / 2 - box.top;
-        const midX = startX + (endX - startX) * 0.55;
-        const d = `M${startX},${startY} C${midX},${startY} ${midX},${endY} ${endX},${endY}`;
+        const dx = endX - startX;
+        const fanY = startY + (i - 1.5) * 18;
+        const c1x = startX + dx * 0.42;
+        const c2x = endX - dx * 0.46;
+        const d = `M${startX},${startY} C${c1x},${fanY} ${c2x},${endY} ${endX},${endY}`;
         const path = svg!.querySelector(`[data-to="${i}"]`);
         if(path) path.setAttribute('d', d);
+        setDot(`end-${i}`, endX, endY);
       });
     }
 
