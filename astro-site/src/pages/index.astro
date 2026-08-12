@@ -58,6 +58,7 @@ const acceptPeopleIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentCo
 const acceptTrendIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 7 13 15 8.5 10.5 3 16"></polyline><polyline points="15.5 7 21 7 21 12.5"></polyline></svg>`;
 const acceptXIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>`;
 const acceptCheckIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const acceptSparkleIcon = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l1.7 5.3 5.3 1.7-5.3 1.7-1.7 5.3-1.7-5.3-5.3-1.7 5.3-1.7 1.7-5.3z"/></svg>`;
 
 const orgSchema = {
   "@context": "https://schema.org",
@@ -619,42 +620,22 @@ const breadcrumbSchema = {
   <section id="acceptation">
     <div class="wrap">
       <div class="section-head accept-head reveal">
-        <div class="section-eyebrow">Pourquoi ça marche mieux avec nous</div>
-        <h2>Plus de partenaires,<br>plus de <em>chances d'être accepté.</em></h2>
-        <p class="accept-intro">Au lieu d'envoyer votre dossier à un seul partenaire, nous pouvons le présenter à plusieurs. Si l'un refuse, un autre peut accepter.</p>
+        <div class="accept-eyebrow"><Fragment set:html={acceptSparkleIcon} />Pourquoi ça marche mieux avec nous</div>
+        <h2>Plus de chances d'être <em>accepté.</em></h2>
+        <p class="accept-intro">Votre dossier peut être présenté à plusieurs partenaires.<br>Si l'un refuse, un autre peut accepter.</p>
       </div>
 
       <div class="accept-diagram" id="acceptDiagram">
         <svg class="accept-lines" id="acceptLines" aria-hidden="true">
-          <defs>
-            <linearGradient id="acceptLineGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#ff007f" stop-opacity="0.3"></stop>
-              <stop offset="55%" stop-color="#ff5c9e" stop-opacity="0.48"></stop>
-              <stop offset="100%" stop-color="#ffa8ca" stop-opacity="0.58"></stop>
-            </linearGradient>
-            <linearGradient id="acceptLineGradGreen" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stop-color="#ff007f" stop-opacity="0.5"></stop>
-              <stop offset="55%" stop-color="#4fd07a" stop-opacity="0.85"></stop>
-              <stop offset="100%" stop-color="#16a34a" stop-opacity="1"></stop>
-            </linearGradient>
-            <filter id="acceptGlow" x="-60%" y="-30%" width="220%" height="180%">
-              <feGaussianBlur stdDeviation="5" result="b"></feGaussianBlur>
-              <feMerge><feMergeNode in="b"></feMergeNode><feMergeNode in="SourceGraphic"></feMergeNode></feMerge>
-            </filter>
-          </defs>
-          <g class="accept-line-glow-group" filter="url(#acceptGlow)">
-            <path class="accept-line accept-line-glow" data-to="0"></path>
-            <path class="accept-line accept-line-glow" data-to="1"></path>
-            <path class="accept-line accept-line-glow" data-to="2"></path>
-          </g>
+          <path class="accept-bus-line" data-part="trunk"></path>
+          <path class="accept-bus-line" data-part="bus-pink"></path>
+          <path class="accept-bus-line accept-bus-line-accepted" data-part="bus-green"></path>
           <path class="accept-line" data-to="0"></path>
           <path class="accept-line" data-to="1"></path>
           <path class="accept-line" data-to="2"></path>
-          <path class="accept-line-accepted-glow" data-to="3" filter="url(#acceptGlow)"></path>
           <path class="accept-line-accepted" data-to="3"></path>
           <path class="accept-line-flow" data-to="3"></path>
-          <circle class="accept-dot-pulse" data-dot="start" r="7"></circle>
-          <circle class="accept-dot accept-dot-start" data-dot="start" r="6"></circle>
+          <circle class="accept-dot accept-dot-start" data-dot="hub" r="5"></circle>
           <circle class="accept-dot" data-dot="end-0" r="4.5"></circle>
           <circle class="accept-dot" data-dot="end-1" r="4.5"></circle>
           <circle class="accept-dot" data-dot="end-2" r="4.5"></circle>
@@ -2064,11 +2045,20 @@ const breadcrumbSchema = {
   }
 
   /* categories */
+  .accept-head{text-align:center;max-width:640px;margin:0 auto;}
+  .accept-eyebrow{
+    display:inline-flex;align-items:center;gap:7px;
+    font-size:13px;font-weight:700;color:var(--accent-1);
+    text-transform:uppercase;letter-spacing:.04em;
+    background:rgba(255,0,127,.08);border:1px solid rgba(255,0,127,.16);
+    padding:8px 16px;border-radius:100px;margin-bottom:20px;
+  }
+  .accept-eyebrow :global(svg){width:13px;height:13px;flex:none;}
+  .accept-head h2{font-size:clamp(30px,4vw,42px);}
   .accept-head h2 em{font-style:normal;color:var(--accent-1);}
-  .accept-intro{margin-top:16px;max-width:600px;color:var(--text-dim);font-size:15.5px;line-height:1.6;}
+  .accept-intro{margin:16px auto 0;max-width:480px;color:var(--text-dim);font-size:15.5px;line-height:1.6;}
 
   /* accept diagram */
-  @keyframes acceptPulse{0%{r:6px;opacity:.55;}100%{r:20px;opacity:0;}}
   @keyframes acceptFlowDash{to{stroke-dashoffset:-22;}}
   .accept-icon{
     display:flex;align-items:center;justify-content:center;flex:none;
@@ -2077,7 +2067,7 @@ const breadcrumbSchema = {
     background:linear-gradient(145deg,#fff0f7,#fbe2ed);
     box-shadow:inset 0 0 0 1px rgba(255,0,127,.08), 0 2px 8px rgba(255,0,127,.06);
   }
-  .accept-icon svg{width:22px;height:22px;}
+  .accept-icon :global(svg){width:22px;height:22px;}
   .accept-diagram{position:relative;display:flex;flex-direction:column;align-items:center;gap:60px;margin:56px 0 32px;}
   .accept-file-card{
     position:relative;z-index:2;
@@ -2100,7 +2090,7 @@ const breadcrumbSchema = {
   .accept-partner:hover{transform:translateY(-6px);}
   .accept-partner-name{font-weight:700;font-size:15px;letter-spacing:-.01em;color:#4b515c;}
   .accept-status{display:inline-flex;align-items:center;gap:6px;padding:5px 13px;border-radius:100px;font-size:12px;font-weight:600;}
-  .accept-status svg{width:10px;height:10px;}
+  .accept-status :global(svg){width:10px;height:10px;}
   .accept-status-refused{background:#fdecef;color:#e5484d;}
   .accept-status-accepted{background:#16a34a;color:#fff;box-shadow:0 6px 16px -6px rgba(22,163,74,.6);}
   .accept-partner .accept-icon{background:linear-gradient(145deg,#fff0f7,#fbe2ed);color:#c11060;box-shadow:inset 0 0 0 1px rgba(255,0,127,.08);}
@@ -2111,26 +2101,26 @@ const breadcrumbSchema = {
   .accept-partner-accepted .accept-partner-name{color:#166534;}
   .accept-partner-accepted .accept-icon{background:linear-gradient(145deg,#dcfce7,#c5f4d3);color:#16a34a;box-shadow:inset 0 0 0 1px rgba(22,163,74,.08);}
   .accept-lines{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible;}
-  .accept-line{fill:none;stroke:url(#acceptLineGrad);stroke-width:2.5;stroke-linecap:round;}
-  .accept-line-glow{stroke-width:7;opacity:.4;}
-  .accept-line-accepted{fill:none;stroke:url(#acceptLineGradGreen);stroke-width:3.5;stroke-linecap:round;}
-  .accept-line-accepted-glow{fill:none;stroke:url(#acceptLineGradGreen);stroke-width:9;opacity:.28;}
-  .accept-line-flow{fill:none;stroke:#fff;stroke-width:3.5;stroke-linecap:round;stroke-dasharray:2 15;animation:acceptFlowDash 1s linear infinite;}
+  .accept-bus-line{fill:none;stroke:var(--accent-1);stroke-width:2;stroke-linecap:round;opacity:.4;}
+  .accept-bus-line-accepted{stroke:#16a34a;opacity:.7;}
+  .accept-line{fill:none;stroke:var(--accent-1);stroke-width:2;stroke-linecap:round;opacity:.4;}
+  .accept-line-accepted{fill:none;stroke:#16a34a;stroke-width:2.25;stroke-linecap:round;opacity:.75;}
+  .accept-line-flow{fill:none;stroke:#fff;stroke-width:2.25;stroke-linecap:round;stroke-dasharray:1.5 11;animation:acceptFlowDash .9s linear infinite;}
   .accept-dot{fill:var(--accent-1);stroke:#fff;stroke-width:2;}
   .accept-dot-start{fill:var(--accent-1);}
   .accept-dot-accepted{fill:#16a34a;}
-  .accept-dot-pulse{fill:none;stroke:var(--accent-1);stroke-width:2;opacity:.5;animation:acceptPulse 1.8s ease-out infinite;}
   .accept-note{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:36px;color:var(--text-dim);font-size:14.5px;font-weight:500;}
   .accept-note-icon{display:flex;color:var(--accent-1);}
-  .accept-note-icon svg{width:18px;height:18px;}
+  .accept-note-icon :global(svg){width:18px;height:18px;}
   .accept-stats{
-    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;
+    display:grid;grid-template-columns:repeat(3,1fr);align-items:center;
     background:#fff;border:1px solid var(--border);border-radius:20px;
-    padding:22px 30px;box-shadow:var(--shadow-sm);
+    padding:22px 10px;box-shadow:var(--shadow-sm);
   }
-  .accept-stat{display:flex;align-items:center;gap:14px;font-size:14.5px;font-weight:600;color:var(--text);}
+  .accept-stat{display:flex;align-items:center;gap:14px;font-size:14.5px;font-weight:600;color:var(--text);padding:0 24px;border-right:1px solid var(--border);}
+  .accept-stat:last-child{border-right:0;}
   .accept-stat .accept-icon{width:44px;height:44px;border-radius:14px;color:var(--accent-1);}
-  .accept-stat .accept-icon svg{width:19px;height:19px;}
+  .accept-stat .accept-icon :global(svg){width:19px;height:19px;}
   @media(max-width:900px){
     .accept-partners{grid-template-columns:1fr 1fr;}
     .accept-lines{display:none;}
@@ -2138,11 +2128,11 @@ const breadcrumbSchema = {
   @media(max-width:760px){
     .accept-diagram{gap:28px;}
     .accept-file-card{width:100%;}
-    .accept-stats{flex-direction:column;align-items:flex-start;gap:18px;padding:24px 26px;}
+    .accept-stats{grid-template-columns:1fr;gap:18px;padding:24px 26px;}
+    .accept-stat{border-right:0;padding:0;}
   }
   @media(max-width:480px){ .accept-partners{grid-template-columns:1fr;} }
   @media(prefers-reduced-motion:reduce){
-    .accept-dot-pulse{display:none;}
     .accept-line-flow{animation:none;stroke-dasharray:none;display:none;}
   }
 
@@ -2870,23 +2860,36 @@ const breadcrumbSchema = {
       });
     }
 
+    function setPath(selector: string, d: string){
+      svg!.querySelectorAll(selector).forEach(path=> path.setAttribute('d', d));
+    }
+
     function draw(){
       if(window.innerWidth <= 900) return;
       const box = diagram!.getBoundingClientRect();
       const fileRect = fileCard!.getBoundingClientRect();
       const startX = fileRect.left + fileRect.width / 2 - box.left;
       const startY = fileRect.bottom - box.top;
-      setDot('start', startX, startY);
-      partners.forEach((node, i)=>{
+
+      const points = partners.map(node=>{
         const r = node.getBoundingClientRect();
-        const endX = r.left + r.width / 2 - box.left;
-        const endY = r.top - box.top;
-        const dy = endY - startY;
-        const c1y = startY + dy * 0.55;
-        const c2y = endY - dy * 0.55;
-        const d = `M${startX},${startY} C${startX},${c1y} ${endX},${c2y} ${endX},${endY}`;
-        svg!.querySelectorAll(`[data-to="${i}"]`).forEach(path=> path.setAttribute('d', d));
-        setDot(`end-${i}`, endX, endY);
+        return { x: r.left + r.width / 2 - box.left, y: r.top - box.top };
+      });
+      const cardTopY = points[0].y;
+      const busY = startY + (cardTopY - startY) * 0.42;
+      const leftX = points[0].x;
+      const rightX = points[points.length - 1].x;
+      const splitX = (points[2].x + points[3].x) / 2;
+
+      setDot('hub', startX, busY);
+      setPath('[data-part="trunk"]', `M${startX},${startY} L${startX},${busY}`);
+      setPath('[data-part="bus-pink"]', `M${leftX},${busY} L${splitX},${busY}`);
+      setPath('[data-part="bus-green"]', `M${splitX},${busY} L${rightX},${busY}`);
+
+      points.forEach((p, i)=>{
+        const d = `M${p.x},${busY} L${p.x},${p.y}`;
+        setPath(`[data-to="${i}"]`, d);
+        setDot(`end-${i}`, p.x, p.y);
       });
     }
 
