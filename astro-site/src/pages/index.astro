@@ -401,6 +401,7 @@ const breadcrumbSchema = {
             </div>
             <div class="compare-photo"><img src="/compare-cupra-formentor.webp" alt={compareVehicle ? `${compareVehicle.brand} ${compareVehicle.name}` : 'CUPRA Formentor'} loading="lazy" /></div>
             <div class="compare-apport">
+              <span class="compare-apport-from">dès</span>
               <span class="compare-apport-amount">~500€</span>
               <span class="compare-apport-label">/mois</span>
             </div>
@@ -2200,6 +2201,7 @@ const breadcrumbSchema = {
     border-bottom:1px solid var(--border);
   }
   .compare-us .compare-apport{border-bottom-color:rgba(255,0,127,0.15);}
+  .compare-apport-from{font-size:13px;font-weight:600;color:var(--accent-1);}
   .compare-apport-amount{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:34px;}
   .compare-them .compare-apport-amount{color:var(--text-dim);}
   .compare-us .compare-apport-amount{color:var(--accent-1);}
@@ -2227,9 +2229,10 @@ const breadcrumbSchema = {
     .compare-badge{left:12px;top:-11px;font-size:9px;padding:4px 10px;}
     .compare-card-head{font-size:12px;gap:5px;margin-bottom:2px;}
     .compare-vehicle-name{font-size:11px;}
-    .compare-photo{justify-self:center;align-self:center;margin:4px 0 6px;}
-    .compare-photo img{width:64%;max-width:100px;}
+    .compare-photo{justify-self:center;align-self:center;margin:8px 0 10px;}
+    .compare-photo img{width:88%;max-width:150px;}
     .compare-apport{padding-bottom:10px;margin-top:8px;gap:0;}
+    .compare-apport-from{font-size:9.5px;}
     .compare-apport-amount{font-size:20px;}
     .compare-apport-label{font-size:9.5px;}
     .compare-list{gap:7px;}
