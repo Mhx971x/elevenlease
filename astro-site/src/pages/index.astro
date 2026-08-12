@@ -51,10 +51,11 @@ const fleetFuelIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="non
 const fleetGearIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v2.4M12 18.6V21M21 12h-2.4M5.4 12H3M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7M18.4 18.4l-1.7-1.7M7.3 7.3L5.6 5.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
 
 const acceptDocIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M6 3.5h8l4 4v13a1 1 0 01-1 1H6a1 1 0 01-1-1v-16a1 1 0 011-1z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 3.5v4h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-const acceptBankIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M3 10l9-6 9 6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 10.5v8M9 10.5v8M15 10.5v8M20 10.5v8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M3 19h18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
+const acceptDocCheckIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M6 3.5h8l4 4v13a1 1 0 01-1 1H6a1 1 0 01-1-1v-16a1 1 0 011-1z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 3.5v4h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 14.3l2 2 4-4.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const acceptBankIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="21" x2="21" y2="21"></line><line x1="6" y1="18" x2="6" y2="11"></line><line x1="10" y1="18" x2="10" y2="11"></line><line x1="14" y1="18" x2="14" y2="11"></line><line x1="18" y1="18" x2="18" y2="11"></line><polygon points="12 2.5 20 7.5 4 7.5"></polygon></svg>`;
 const acceptShieldIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12l2 2 4-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-const acceptPeopleIcon = `<svg viewBox="0 0 24 24" fill="none"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.6"/><circle cx="16.5" cy="9" r="2.6" stroke="currentColor" stroke-width="1.6"/><path d="M3 19c0-3.3 2.5-5.3 5.5-5.3S14 15.7 14 19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M14.8 13.8c2.2.3 3.7 2 3.7 5.2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>`;
-const acceptTrendIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M3 17l6-6 4 4 8-8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 6h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const acceptPeopleIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20.5a6.5 6.5 0 00-13 0"></path><circle cx="10.5" cy="8.5" r="4.5"></circle><path d="M20.5 20c0-2.9-1.6-5.5-3.4-6.9a4.3 4.3 0 00-.4-7.1"></path></svg>`;
+const acceptTrendIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 7 13 15 8.5 10.5 3 16"></polyline><polyline points="15.5 7 21 7 21 12.5"></polyline></svg>`;
 const acceptXIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>`;
 const acceptCheckIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
@@ -694,7 +695,7 @@ const breadcrumbSchema = {
 
       <div class="accept-stats reveal reveal-stagger">
         <div class="accept-stat">
-          <span class="accept-icon"><Fragment set:html={acceptDocIcon} /></span>
+          <span class="accept-icon"><Fragment set:html={acceptDocCheckIcon} /></span>
           <span>Une seule demande</span>
         </div>
         <div class="accept-stat">
@@ -2074,7 +2075,7 @@ const breadcrumbSchema = {
     width:48px;height:48px;
     border-radius:50%;color:#17171b;
     background:linear-gradient(145deg,#fff0f7,#fbe2ed);
-    box-shadow:inset 0 0 0 1px rgba(255,0,127,.035);
+    box-shadow:inset 0 0 0 1px rgba(255,0,127,.08), 0 2px 8px rgba(255,0,127,.06);
   }
   .accept-icon svg{width:22px;height:22px;}
   .accept-diagram{position:relative;display:flex;flex-direction:column;align-items:center;gap:60px;margin:56px 0 32px;}
@@ -2101,6 +2102,7 @@ const breadcrumbSchema = {
   .accept-status svg{width:10px;height:10px;}
   .accept-status-refused{background:#fdecef;color:#e5484d;}
   .accept-status-accepted{background:#16a34a;color:#fff;box-shadow:0 6px 16px -6px rgba(22,163,74,.6);}
+  .accept-partner .accept-icon{background:linear-gradient(145deg,#f6f7f9,#eef0f3);color:#9aa0ab;box-shadow:none;}
   .accept-partner-accepted{
     border-color:#bfe8ca;background:linear-gradient(160deg,#f4fdf6,#e9faef);
     box-shadow:0 24px 50px -26px rgba(22,163,74,.4);
@@ -2126,7 +2128,7 @@ const breadcrumbSchema = {
     padding:22px 30px;box-shadow:var(--shadow-sm);
   }
   .accept-stat{display:flex;align-items:center;gap:14px;font-size:14.5px;font-weight:600;color:var(--text);}
-  .accept-stat .accept-icon{width:42px;height:42px;}
+  .accept-stat .accept-icon{width:44px;height:44px;border-radius:14px;color:var(--accent-1);}
   .accept-stat .accept-icon svg{width:19px;height:19px;}
   @media(max-width:900px){
     .accept-partners{grid-template-columns:1fr 1fr;}
