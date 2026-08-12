@@ -47,6 +47,9 @@ const fleetCarIcon = `<svg viewBox="0 0 200 100" fill="none" xmlns="http://www.w
   <circle cx="142" cy="84" r="3" fill="#111113"/>
 </svg>`;
 
+const fleetFuelIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const fleetGearIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v2.4M12 18.6V21M21 12h-2.4M5.4 12H3M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7M18.4 18.4l-1.7-1.7M7.3 7.3L5.6 5.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
+
 const orgSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -444,11 +447,16 @@ const breadcrumbSchema = {
   </section>
 
   <section id="catalogue" class="fleet-teaser">
+    <div class="fleet-glow fleet-glow-1" aria-hidden="true"></div>
+    <div class="fleet-glow fleet-glow-2" aria-hidden="true"></div>
     <div class="wrap">
       <div class="fleet-head reveal">
         <div>
-          <div class="section-eyebrow">Le catalogue</div>
+          <div class="fleet-eyebrow"><span class="dot"></span> Le catalogue</div>
           <h2>Nos offres. <span>À saisir maintenant.</span></h2>
+          {fleetVehicles.length > 0 && (
+            <p class="fleet-subline">{fleetVehicles.length} véhicules disponibles en leasing, toutes marques.</p>
+          )}
         </div>
         <div class="fleet-nav">
           <button class="fleet-arrow" id="fleetPrev" aria-label="Véhicule précédent" disabled>
@@ -475,15 +483,28 @@ const breadcrumbSchema = {
               <div class="fleet-body">
                 <div class="fleet-brand">{v.brand}</div>
                 <div class="fleet-name">{v.name}</div>
-                <div class="fleet-price-label">À partir de</div>
-                <div class="fleet-price"><span class="amount">{v.price} €</span><span class="period"> / mois</span></div>
+                {(v.fuel || v.transmission) && (
+                  <div class="fleet-chips">
+                    {v.fuel && <span class="fleet-chip"><Fragment set:html={fleetFuelIcon} />{v.fuel}</span>}
+                    {v.transmission && <span class="fleet-chip"><Fragment set:html={fleetGearIcon} />{v.transmission}</span>}
+                  </div>
+                )}
+                <div class="fleet-foot-row">
+                  <div>
+                    <div class="fleet-price-label">À partir de</div>
+                    <div class="fleet-price"><span class="amount">{v.price} €</span><span class="period">/mois</span></div>
+                  </div>
+                  <span class="fleet-card-arrow" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </div>
               </div>
             </a>
           ))}
         </div>
       </div>
       <div class="fleet-foot reveal">
-        <a href="/vehicules" class="btn-ghost">Voir les véhicules →</a>
+        <a href="/vehicules" class="btn-ghost">Voir tout le catalogue <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
@@ -2136,52 +2157,109 @@ const breadcrumbSchema = {
   @media(max-width:640px){ .profiles-grid{grid-template-columns:1fr;} .profile-card{padding:30px 26px;} }
 
   /* fleet teaser */
-  .fleet-teaser{border-top:1px solid var(--border);}
+  .fleet-teaser{position:relative;overflow:clip;border-top:1px solid var(--border);}
+  .fleet-glow{position:absolute;z-index:0;border-radius:50%;pointer-events:none;filter:blur(60px);opacity:.55;}
+  .fleet-glow-1{top:-120px;left:-100px;width:420px;height:420px;background:radial-gradient(circle,rgba(255,0,127,.09),transparent 70%);}
+  .fleet-glow-2{bottom:-160px;right:-120px;width:480px;height:480px;background:radial-gradient(circle,rgba(255,0,127,.06),transparent 70%);}
+  .fleet-teaser .wrap{position:relative;z-index:1;}
   .fleet-head{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;margin-bottom:40px;}
-  .fleet-head h2{font-size:clamp(26px,3.6vw,38px);margin-top:10px;}
+  .fleet-eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;color:var(--text-dim);
+    border:1px solid var(--border);
+    padding:6px 14px;border-radius:100px;
+    margin-bottom:16px;
+  }
+  .fleet-eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-1);}
+  .fleet-head h2{font-size:clamp(26px,3.6vw,38px);letter-spacing:-.02em;}
   .fleet-head h2 span{color:var(--text-faint);}
+  .fleet-subline{margin-top:10px;color:var(--text-dim);font-size:15px;}
   .fleet-nav{display:flex;align-items:center;gap:12px;}
   .fleet-arrow{
-    width:40px;height:40px;border-radius:50%;border:1px solid var(--border);background:none;color:var(--text);
+    width:44px;height:44px;border-radius:50%;border:1px solid var(--border);background:#fff;color:var(--text);
     display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;
-    transition:border-color .2s ease, color .2s ease, transform .15s ease;
+    box-shadow:var(--shadow-sm);
+    transition:border-color .2s ease, color .2s ease, transform .15s ease, box-shadow .25s ease, background .25s ease;
   }
-  .fleet-arrow:hover{border-color:var(--accent-1);color:var(--accent-1);}
+  .fleet-arrow:hover{border-color:transparent;color:#fff;background:var(--accent);box-shadow:0 10px 24px rgba(190,24,93,.25);transform:translateY(-2px);}
   .fleet-arrow:active{transform:scale(.92);}
   .fleet-arrow:disabled{opacity:.35;cursor:default;}
-  .fleet-arrow:disabled:hover{border-color:var(--border);color:var(--text);}
+  .fleet-arrow:disabled:hover{border-color:var(--border);color:var(--text);background:#fff;box-shadow:var(--shadow-sm);transform:none;}
   .fleet-counter{font-size:13px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;margin-left:6px;white-space:nowrap;}
   .fleet-counter #fleetIndex{color:var(--text);font-weight:600;}
-  .fleet-track-wrap{overflow-x:hidden;margin:0 -32px;padding:0 32px;}
-  @media(max-width:768px){ .fleet-track-wrap{margin:0 -20px;padding:0 20px;} }
+  .fleet-track-wrap{
+    overflow-x:hidden;margin:0 -32px;padding:0 32px;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 32px,#000 calc(100% - 32px),transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 32px,#000 calc(100% - 32px),transparent);
+  }
+  @media(max-width:768px){
+    .fleet-track-wrap{
+      margin:0 -20px;padding:0 20px;
+      -webkit-mask-image:linear-gradient(90deg,transparent,#000 20px,#000 calc(100% - 20px),transparent);
+      mask-image:linear-gradient(90deg,transparent,#000 20px,#000 calc(100% - 20px),transparent);
+    }
+  }
   .fleet-track{
-    display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;
-    padding:10px 0 6px;scrollbar-width:none;-ms-overflow-style:none;
+    display:flex;gap:22px;overflow-x:auto;scroll-snap-type:x mandatory;
+    padding:12px 0 10px;scrollbar-width:none;-ms-overflow-style:none;
   }
   .fleet-track::-webkit-scrollbar{display:none;}
   .fleet-loading{color:var(--text-dim);padding:60px 20px;white-space:nowrap;}
   .fleet-card{
-    flex:0 0 280px;scroll-snap-align:start;
-    background:#fff;border:1px solid var(--border);border-radius:18px;overflow:hidden;
+    flex:0 0 292px;scroll-snap-align:start;
+    background:#fff;border:1px solid var(--border);border-radius:22px;overflow:hidden;
     display:flex;flex-direction:column;
     box-shadow:var(--shadow-sm);
-    transition:border-color .3s ease, transform .3s ease, box-shadow .3s ease;
+    transition:border-color .3s ease, transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s ease;
   }
-  .fleet-card:hover{border-color:#d8d8dd;transform:translateY(-6px);box-shadow:var(--shadow-md);}
-  @media(max-width:640px){ .fleet-card{flex-basis:240px;} }
-  .fleet-visual{position:relative;height:170px;background:linear-gradient(180deg, var(--surface-2), var(--surface));display:flex;align-items:center;justify-content:center;overflow:hidden;}
-  .fleet-visual img{width:100%;height:100%;object-fit:cover;transition:transform .4s cubic-bezier(.16,1,.3,1);}
-  .fleet-visual svg{width:60%;transition:transform .4s cubic-bezier(.16,1,.3,1);}
+  .fleet-card:hover{
+    border-color:rgba(255,0,127,.28);
+    transform:translateY(-8px);
+    box-shadow:0 24px 44px rgba(190,24,93,.14), 0 4px 14px rgba(17,17,19,.05);
+  }
+  @media(max-width:640px){ .fleet-card{flex-basis:248px;} }
+  .fleet-visual{
+    position:relative;height:176px;overflow:hidden;
+    background:radial-gradient(ellipse 90% 80% at 50% 115%,rgba(255,0,127,.09),transparent 68%),
+      linear-gradient(180deg,#fbfbfc,var(--surface-2));
+    display:flex;align-items:center;justify-content:center;
+  }
+  .fleet-visual img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.16,1,.3,1);}
+  .fleet-visual svg{width:60%;transition:transform .5s cubic-bezier(.16,1,.3,1);}
   .fleet-card:hover .fleet-visual img,
-  .fleet-card:hover .fleet-visual svg{transform:scale(1.06);}
-  .fleet-badge{position:absolute;top:12px;left:12px;font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:5px 10px;border-radius:100px;background:var(--accent);color:#fff;}
-  .fleet-badge.occasion{background:transparent;border:1px solid var(--text-dim);color:var(--text-dim);}
-  .fleet-body{padding:18px 20px 20px;}
+  .fleet-card:hover .fleet-visual svg{transform:scale(1.07);}
+  .fleet-badge{
+    position:absolute;top:12px;left:12px;z-index:2;
+    font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;
+    padding:5px 11px;border-radius:100px;background:var(--accent);color:#fff;
+    box-shadow:0 4px 12px rgba(190,24,93,.28);
+  }
+  .fleet-badge.occasion{background:rgba(255,255,255,.92);border:1px solid rgba(17,17,19,.1);color:var(--text-dim);box-shadow:0 2px 6px rgba(17,17,19,.06);backdrop-filter:blur(6px);}
+  .fleet-body{display:flex;flex-direction:column;flex:1;padding:19px 20px 20px;}
   .fleet-brand{font-size:11.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;}
-  .fleet-name{font-size:17px;margin-bottom:14px;}
+  .fleet-name{font-size:18px;font-weight:600;letter-spacing:-.01em;}
+  .fleet-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:11px;}
+  .fleet-chip{
+    display:inline-flex;align-items:center;gap:5px;
+    padding:4px 9px;border-radius:100px;
+    background:var(--surface);color:var(--text-dim);
+    font-size:11px;font-weight:500;white-space:nowrap;
+  }
+  .fleet-chip svg{flex:none;opacity:.7;}
+  .fleet-foot-row{
+    display:flex;align-items:flex-end;justify-content:space-between;gap:10px;
+    margin-top:auto;padding-top:16px;
+  }
   .fleet-price-label{font-size:10.5px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;}
   .fleet-price .amount{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:21px;}
   .fleet-price .period{font-size:12.5px;color:var(--text-faint);}
+  .fleet-card-arrow{
+    display:flex;align-items:center;justify-content:center;flex:none;
+    width:36px;height:36px;border-radius:50%;
+    color:var(--text-dim);background:var(--surface);
+    transition:background .25s ease, color .25s ease, transform .25s ease;
+  }
+  .fleet-card:hover .fleet-card-arrow{background:var(--accent);color:#fff;transform:translateX(2px);}
   .fleet-foot{margin-top:36px;text-align:center;}
 
   /* trust */
