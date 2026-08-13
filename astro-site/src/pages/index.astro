@@ -2158,7 +2158,8 @@ const breadcrumbSchema = {
   .fleet-subline-mobile{display:none;}
   .fleet-carousel{position:relative;}
   .fleet-nav{
-    position:absolute;z-index:3;left:-24px;right:-24px;top:calc(50% - 12px);
+    position:absolute;z-index:3;
+    left:clamp(-60px,-5vw,-42px);right:clamp(-60px,-5vw,-42px);top:calc(50% - 12px);
     display:flex;align-items:center;justify-content:space-between;
     pointer-events:none;transform:translateY(-50%);
   }
