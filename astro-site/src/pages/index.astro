@@ -605,17 +605,6 @@ const breadcrumbSchema = {
     </div>
   </section>
 
-  <section>
-    <div class="wrap">
-      <div class="trust-strip reveal reveal-stagger">
-        <div class="trust-item"><div class="value" data-count="24" data-suffix="h">24h</div><div class="label">Délai moyen de mise en relation</div></div>
-        <div class="trust-item"><div class="value" data-count="100" data-suffix="%">100%</div><div class="label">Offres vérifiées</div></div>
-        <div class="trust-item"><div class="value" data-count="0" data-suffix="€">0€</div><div class="label">Frais pour le client</div></div>
-        <div class="trust-item"><div class="value">FR</div><div class="label">Réseau national</div></div>
-      </div>
-    </div>
-  </section>
-
   <section id="avis">
     <div class="wrap">
       <div class="section-head reveal">
@@ -2219,15 +2208,6 @@ const breadcrumbSchema = {
   .fleet-card:hover .fleet-card-arrow{background:var(--accent);color:#fff;transform:translateX(2px);}
   .fleet-foot{margin-top:4px;text-align:center;}
 
-  /* trust */
-  .trust-strip{
-    display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px;
-    border-top:1px solid var(--border);border-bottom:1px solid var(--border);
-    padding:48px 0;
-  }
-  .trust-item .value{font-family:'Space Grotesk',sans-serif;font-size:34px;font-weight:700;}
-  .trust-item .label{color:var(--text-dim);font-size:14px;margin-top:4px;}
-
   /* testimonials */
   .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
   .testi-card{background:#fff;border:1px solid var(--border);border-radius:18px;padding:28px;box-shadow:var(--shadow-sm);transition:transform .35s cubic-bezier(.16,1,.3,1), border-color .35s ease, box-shadow .35s ease;}
@@ -2622,30 +2602,6 @@ const breadcrumbSchema = {
       btn.addEventListener('mouseleave', ()=>{ btn.style.transform = 'translate(0,0)'; });
     });
   }
-
-  // animated counters
-  const counters = document.querySelectorAll<HTMLElement>('[data-count]');
-  const counterIO = new IntersectionObserver((entries)=>{
-    entries.forEach(entry=>{
-      if(entry.isIntersecting){
-        const el = entry.target as HTMLElement;
-        const target = parseInt(el.dataset.count!, 10);
-        const suffix = el.dataset.suffix || '';
-        const duration = 1200;
-        const start = performance.now();
-        function tick(now: number){
-          const p = Math.min((now-start)/duration, 1);
-          const eased = 1 - Math.pow(1-p, 3);
-          const val = Math.round(target * eased);
-          el.textContent = val + suffix;
-          if(p < 1) requestAnimationFrame(tick);
-        }
-        requestAnimationFrame(tick);
-        counterIO.unobserve(el);
-      }
-    });
-  },{threshold:0.5});
-  counters.forEach(c=>counterIO.observe(c));
 
   // fleet teaser (catalogue preview carousel) — véhicules déjà rendus au
   // build ; ce script ne gère plus que le défilement horizontal.
