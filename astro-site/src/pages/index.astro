@@ -360,48 +360,53 @@ const breadcrumbSchema = {
     <div class="wrap">
       <div class="fleet-head reveal">
         <h2>Nos offres <span class="highlight-mark">à la une</span>.</h2>
-        <p class="fleet-subline">Une sélection parmi des milliers de véhicules disponibles.</p>
+        <p class="fleet-subline">
+          <span class="fleet-subline-desktop">Une sélection parmi des milliers de véhicules disponibles.</span>
+          <span class="fleet-subline-mobile">Une sélection parmi +10 000 véhicules.</span>
+        </p>
       </div>
-      <div class="fleet-nav reveal" aria-label="Navigation des véhicules à la une">
-        <span class="fleet-counter"><span id="fleetIndex">01</span> / <span id="fleetTotal">{String(fleetVehicles.length).padStart(2, '0')}</span></span>
-        <button class="fleet-arrow" id="fleetPrev" aria-label="Véhicule précédent" disabled>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-        <button class="fleet-arrow" id="fleetNext" aria-label="Véhicule suivant">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </button>
-      </div>
-      <div class="fleet-track-wrap reveal">
-        <div class="fleet-track" id="fleetTrack">
-          {fleetVehicles.length === 0 && <p class="fleet-loading">Catalogue momentanément indisponible.</p>}
-          {fleetVehicles.map(v => (
-            <a class="fleet-card" href={`/vehicule/${v.slug}`} aria-label={`Voir les détails : ${v.brand} ${v.name}`}>
-              <div class="fleet-visual">
-                {v.photo
-                  ? <img src={v.photo} alt={`${v.brand} ${v.name}`} loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'), {innerHTML: window.__fleetCarIcon}).firstElementChild)" />
-                  : <Fragment set:html={fleetCarIcon} />
-                }
-              </div>
-              <div class="fleet-body">
-                <div class="fleet-brand">{v.brand}</div>
-                <div class="fleet-name">{v.name}</div>
-                <div class="fleet-chips" aria-label="Conditions indicatives">
-                  <span class="fleet-chip">48 mois</span>
-                  <span class="fleet-chip">0€ d'apport</span>
+      <div class="fleet-carousel reveal">
+        <div class="fleet-track-wrap">
+          <div class="fleet-track" id="fleetTrack">
+            {fleetVehicles.length === 0 && <p class="fleet-loading">Catalogue momentanément indisponible.</p>}
+            {fleetVehicles.map(v => (
+              <a class="fleet-card" href={`/vehicule/${v.slug}`} aria-label={`Voir les détails : ${v.brand} ${v.name}`}>
+                <div class="fleet-visual">
+                  {v.photo
+                    ? <img src={v.photo} alt={`${v.brand} ${v.name}`} loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'), {innerHTML: window.__fleetCarIcon}).firstElementChild)" />
+                    : <Fragment set:html={fleetCarIcon} />
+                  }
                 </div>
-                <div class="fleet-foot-row">
-                  <div>
-                    <div class="fleet-price-label">À partir de</div>
-                    <div class="fleet-price"><span class="amount">{v.price} €</span><span class="period">/mois</span></div>
+                <div class="fleet-body">
+                  <div class="fleet-brand">{v.brand}</div>
+                  <div class="fleet-name">{v.name}</div>
+                  <div class="fleet-chips" aria-label="Conditions indicatives">
+                    <span class="fleet-chip">48 mois</span>
+                    <span class="fleet-chip">0€ d'apport</span>
                   </div>
-                  <span class="fleet-card-arrow" aria-hidden="true">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
+                  <div class="fleet-foot-row">
+                    <div>
+                      <div class="fleet-price-label">À partir de</div>
+                      <div class="fleet-price"><span class="amount">{v.price} €</span><span class="period">/mois</span></div>
+                    </div>
+                    <span class="fleet-card-arrow" aria-hidden="true">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </span>
+                  </div>
                 </div>
-              </div>
-            </a>
-          ))}
+              </a>
+            ))}
+          </div>
         </div>
+        <div class="fleet-nav" aria-label="Navigation des véhicules à la une">
+          <button class="fleet-arrow" id="fleetPrev" aria-label="Véhicule précédent" disabled>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="fleet-arrow" id="fleetNext" aria-label="Véhicule suivant">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <span class="fleet-counter"><span id="fleetIndex">01</span> / <span id="fleetTotal">{String(fleetVehicles.length).padStart(2, '0')}</span></span>
       </div>
       <div class="fleet-foot reveal">
         <a href="/vehicules" class="btn-ghost">Voir tout le catalogue <span aria-hidden="true">→</span></a>
@@ -2147,26 +2152,33 @@ const breadcrumbSchema = {
   .fleet-glow-1{top:-160px;left:-120px;width:460px;height:460px;background:radial-gradient(circle,rgba(255,0,127,.08),transparent 70%);}
   .fleet-glow-2{bottom:-180px;right:-140px;width:520px;height:520px;background:radial-gradient(circle,rgba(255,0,127,.055),transparent 70%);}
   .fleet-teaser .wrap{position:relative;z-index:1;}
-  .fleet-head{max-width:720px;margin:0 auto 30px;text-align:center;}
+  .fleet-head{max-width:720px;margin:0 auto 18px;text-align:center;}
   .fleet-head h2{font-size:clamp(32px,4.6vw,48px);letter-spacing:-.035em;}
   .fleet-subline{max-width:600px;margin:14px auto 0;color:var(--text-dim);font-size:16.5px;line-height:1.55;}
+  .fleet-subline-mobile{display:none;}
+  .fleet-carousel{position:relative;}
   .fleet-nav{
-    display:flex;align-items:center;gap:7px;width:fit-content;
-    margin:0 0 4px auto;padding:6px;
-    border:1px solid rgba(17,17,19,.08);border-radius:999px;
-    background:rgba(255,255,255,.82);box-shadow:0 10px 30px rgba(17,17,19,.06);
-    backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+    position:absolute;z-index:3;left:-24px;right:-24px;top:calc(50% - 12px);
+    display:flex;align-items:center;justify-content:space-between;
+    pointer-events:none;transform:translateY(-50%);
   }
   .fleet-arrow{
-    width:38px;height:38px;border-radius:50%;border:1px solid transparent;background:var(--surface);color:var(--text);
+    width:48px;height:48px;border-radius:50%;border:1px solid rgba(17,17,19,.09);background:rgba(255,255,255,.94);color:var(--text);
     display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none;
+    pointer-events:auto;box-shadow:0 12px 32px rgba(17,17,19,.12);
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
     transition:border-color .2s ease, color .2s ease, transform .15s ease, box-shadow .25s ease, background .25s ease;
   }
   .fleet-arrow:hover{border-color:transparent;color:#fff;background:var(--accent);box-shadow:0 10px 24px rgba(190,24,93,.25);transform:translateY(-2px);}
   .fleet-arrow:active{transform:scale(.92);}
   .fleet-arrow:disabled{opacity:.32;cursor:default;}
-  .fleet-arrow:disabled:hover{border-color:transparent;color:var(--text);background:var(--surface);box-shadow:none;transform:none;}
-  .fleet-counter{font-size:12.5px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;padding:0 9px 0 7px;white-space:nowrap;}
+  .fleet-arrow:disabled:hover{border-color:rgba(17,17,19,.09);color:var(--text);background:rgba(255,255,255,.94);box-shadow:0 12px 32px rgba(17,17,19,.12);transform:none;}
+  .fleet-counter{
+    position:absolute;right:2px;bottom:2px;
+    font-size:12.5px;color:var(--text-faint);font-family:'Space Grotesk',sans-serif;
+    padding:6px 10px;border:1px solid rgba(17,17,19,.07);border-radius:999px;
+    background:rgba(255,255,255,.88);white-space:nowrap;
+  }
   .fleet-counter #fleetIndex{color:var(--text);font-weight:600;}
   .fleet-track-wrap{
     overflow-x:hidden;margin:0 -28px;padding:0 28px;
@@ -2175,10 +2187,18 @@ const breadcrumbSchema = {
   }
   @media(max-width:768px){
     .fleet-teaser{padding:72px 0 78px;}
-    .fleet-head{margin-bottom:24px;}
+    .fleet-head{margin-bottom:12px;}
     .fleet-head h2{font-size:clamp(31px,9vw,38px);}
     .fleet-subline{margin-top:12px;font-size:15px;line-height:1.5;}
-    .fleet-nav{margin:0 auto 4px;}
+    .fleet-subline-desktop{display:none;}
+    .fleet-subline-mobile{display:inline;}
+    .fleet-carousel{padding-bottom:48px;}
+    .fleet-nav{
+      left:auto;right:0;top:auto;bottom:0;gap:8px;
+      justify-content:flex-end;transform:none;
+    }
+    .fleet-arrow{width:40px;height:40px;box-shadow:0 8px 22px rgba(17,17,19,.1);}
+    .fleet-counter{left:0;right:auto;bottom:7px;}
     .fleet-track-wrap{
       margin:0 -20px;padding:0 20px;
       -webkit-mask-image:linear-gradient(90deg,transparent,#000 20px,#000 calc(100% - 20px),transparent);
@@ -2187,8 +2207,9 @@ const breadcrumbSchema = {
   }
   .fleet-track{
     display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;
-    padding:20px 0 38px;scrollbar-width:none;-ms-overflow-style:none;
+    padding:20px 0 42px;scrollbar-width:none;-ms-overflow-style:none;
   }
+  @media(max-width:768px){.fleet-track{padding-bottom:18px;}}
   .fleet-track::-webkit-scrollbar{display:none;}
   .fleet-loading{color:var(--text-dim);padding:60px 20px;white-space:nowrap;}
   .fleet-card{
