@@ -51,14 +51,12 @@ const fleetFuelIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="non
 const fleetGearIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="1.8"/><path d="M12 3v2.4M12 18.6V21M21 12h-2.4M5.4 12H3M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7M18.4 18.4l-1.7-1.7M7.3 7.3L5.6 5.6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`;
 
 const acceptDocIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M6 3.5h8l4 4v13a1 1 0 01-1 1H6a1 1 0 01-1-1v-16a1 1 0 011-1z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 3.5v4h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-const acceptDocCheckIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M6 3.5h8l4 4v13a1 1 0 01-1 1H6a1 1 0 01-1-1v-16a1 1 0 011-1z" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 3.5v4h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 14.3l2 2 4-4.3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const acceptBankIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="21" x2="21" y2="21"></line><line x1="6" y1="18" x2="6" y2="11"></line><line x1="10" y1="18" x2="10" y2="11"></line><line x1="14" y1="18" x2="14" y2="11"></line><line x1="18" y1="18" x2="18" y2="11"></line><polygon points="12 2.5 20 7.5 4 7.5"></polygon></svg>`;
 const acceptShieldIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M9 12l2 2 4-4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const acceptPeopleIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M17 20.5a6.5 6.5 0 00-13 0"></path><circle cx="10.5" cy="8.5" r="4.5"></circle><path d="M20.5 20c0-2.9-1.6-5.5-3.4-6.9a4.3 4.3 0 00-.4-7.1"></path></svg>`;
 const acceptTrendIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="21 7 13 15 8.5 10.5 3 16"></polyline><polyline points="15.5 7 21 7 21 12.5"></polyline></svg>`;
 const acceptXIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>`;
 const acceptCheckIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
-const acceptSparkleIcon = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l1.7 5.3 5.3 1.7-5.3 1.7-1.7 5.3-1.7-5.3-5.3-1.7 5.3-1.7 1.7-5.3z"/></svg>`;
 
 const orgSchema = {
   "@context": "https://schema.org",
@@ -522,9 +520,8 @@ const breadcrumbSchema = {
   <section id="acceptation">
     <div class="wrap">
       <div class="section-head accept-head reveal">
-        <div class="accept-eyebrow"><Fragment set:html={acceptSparkleIcon} />Pourquoi ça marche mieux avec nous</div>
-        <h2>Plus de chances <br class="accept-break-mobile">d'être <em>accepté.</em></h2>
-        <p class="accept-intro">Votre dossier peut être présenté à plusieurs partenaires.<br>Si l'un refuse, un autre peut accepter.</p>
+        <h2>+ de chances <span class="highlight-mark">d'être accepté</span>.</h2>
+        <p class="accept-intro">Un dossier, plusieurs partenaires.<br>Plus de possibilités d'acceptation.</p>
       </div>
 
       <div class="accept-diagram" id="acceptDiagram">
@@ -550,6 +547,16 @@ const breadcrumbSchema = {
             <circle class="accept-dot" data-dot="end2-0" r="4.5"></circle>
             <circle class="accept-dot" data-dot="end2-1" r="4.5"></circle>
           </g>
+          <g class="accept-lines-mobile">
+            <path class="accept-line" data-tom="0"></path>
+            <path class="accept-line-accepted" data-tom="2"></path>
+            <path class="accept-line-flow" data-tom="2"></path>
+            <circle class="accept-dot accept-dot-start" data-dot="hubm-left" r="4"></circle>
+            <circle class="accept-dot accept-dot-start" data-dot="hubm-right" r="4"></circle>
+            <circle class="accept-dot" data-dot="endm-0" r="4"></circle>
+            <circle class="accept-dot" data-dot="endm-1" r="4"></circle>
+            <circle class="accept-dot accept-dot-accepted" data-dot="endm-2" r="4"></circle>
+          </g>
           <circle class="accept-dot accept-dot-start" data-dot="hub" r="5"></circle>
         </svg>
         <div class="accept-file-card" id="acceptFile">
@@ -557,50 +564,62 @@ const breadcrumbSchema = {
           <span class="accept-file-label">Votre dossier</span>
         </div>
         <div class="accept-partners" id="acceptPartners">
-          <div class="accept-partner" data-accept-node>
-            <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
-            <span class="accept-partner-name">Partenaire A</span>
-            <span class="accept-status accept-status-refused"><Fragment set:html={acceptXIcon} />Refus</span>
+          <div class="accept-partners-desktop">
+            <div class="accept-partner" data-accept-node>
+              <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
+              <span class="accept-partner-name">Partenaire A</span>
+              <span class="accept-status accept-status-refused"><Fragment set:html={acceptXIcon} />Refus</span>
+            </div>
+            <div class="accept-partner" data-accept-node>
+              <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
+              <span class="accept-partner-name">Partenaire B</span>
+              <span class="accept-status accept-status-refused"><Fragment set:html={acceptXIcon} />Refus</span>
+            </div>
+            <div class="accept-partner" data-accept-node>
+              <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
+              <span class="accept-partner-name">Partenaire C</span>
+              <span class="accept-status accept-status-refused"><Fragment set:html={acceptXIcon} />Refus</span>
+            </div>
+            <div class="accept-partner accept-partner-accepted" data-accept-node>
+              <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
+              <span class="accept-partner-name">Partenaire D</span>
+              <span class="accept-status accept-status-accepted"><Fragment set:html={acceptCheckIcon} />Accord</span>
+            </div>
           </div>
-          <div class="accept-partner" data-accept-node>
-            <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
-            <span class="accept-partner-name">Partenaire B</span>
-            <span class="accept-status accept-status-refused"><Fragment set:html={acceptXIcon} />Refus</span>
+          <div class="accept-partners-mobile">
+            <div class="accept-partner accept-partner-compact" data-accept-node>
+              <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
+              <span class="accept-partner-name">Partenaire A</span>
+              <span class="accept-status accept-status-refused"><Fragment set:html={acceptXIcon} />Refus</span>
+            </div>
+            <div class="accept-partner accept-partner-compact" data-accept-node>
+              <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
+              <span class="accept-partner-name">Partenaire B</span>
+              <span class="accept-status accept-status-refused"><Fragment set:html={acceptXIcon} />Refus</span>
+            </div>
+            <div class="accept-partner accept-partner-compact accept-partner-accepted" data-accept-node>
+              <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
+              <span class="accept-partner-name">Partenaire C</span>
+              <span class="accept-status accept-status-accepted"><Fragment set:html={acceptCheckIcon} />Accord</span>
+            </div>
           </div>
-          <div class="accept-partner" data-accept-node>
-            <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
-            <span class="accept-partner-name">Partenaire C</span>
-            <span class="accept-status accept-status-refused"><Fragment set:html={acceptXIcon} />Refus</span>
-          </div>
-          <div class="accept-partner accept-partner-accepted" data-accept-node>
-            <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
-            <span class="accept-partner-name">Partenaire D</span>
-            <span class="accept-status accept-status-accepted"><Fragment set:html={acceptCheckIcon} />Accord</span>
-          </div>
+        </div>
+      </div>
+
+      <div class="accept-stats reveal reveal-stagger">
+        <div class="accept-stat">
+          <span class="accept-icon"><Fragment set:html={acceptPeopleIcon} /></span>
+          <span class="accept-stat-label">+15 partenaires</span>
+        </div>
+        <div class="accept-stat">
+          <span class="accept-icon"><Fragment set:html={acceptTrendIcon} /></span>
+          <span class="accept-stat-label">Taux d'acceptation + élevé</span>
         </div>
       </div>
 
       <div class="accept-note reveal">
         <span class="accept-note-icon"><Fragment set:html={acceptShieldIcon} /></span>
         Un refus ne bloque pas forcément votre projet.
-      </div>
-
-      <div class="accept-stats reveal reveal-stagger">
-        <div class="accept-stat">
-          <span class="accept-icon"><Fragment set:html={acceptDocCheckIcon} /></span>
-          <span>Une seule demande</span>
-          <span class="accept-stat-arrow" aria-hidden="true">›</span>
-        </div>
-        <div class="accept-stat">
-          <span class="accept-icon"><Fragment set:html={acceptPeopleIcon} /></span>
-          <span>Plusieurs partenaires consultés</span>
-          <span class="accept-stat-arrow" aria-hidden="true">›</span>
-        </div>
-        <div class="accept-stat">
-          <span class="accept-icon"><Fragment set:html={acceptTrendIcon} /></span>
-          <span>Plus de chances d'obtenir un accord</span>
-          <span class="accept-stat-arrow" aria-hidden="true">›</span>
-        </div>
       </div>
     </div>
   </section>
@@ -1837,47 +1856,43 @@ const breadcrumbSchema = {
   }
 
   /* categories */
-  .accept-head{text-align:center;max-width:640px;margin:0 auto;}
-  .accept-eyebrow{
-    display:inline-flex;align-items:center;gap:7px;
-    font-size:13px;font-weight:700;color:var(--accent-1);
-    text-transform:uppercase;letter-spacing:.04em;
-    background:rgba(255,0,127,.08);border:1px solid rgba(255,0,127,.16);
-    padding:8px 16px;border-radius:100px;margin-bottom:20px;
+  #acceptation{padding:64px 0;}
+  .accept-head{text-align:center;max-width:640px;margin:0 auto;margin-bottom:28px;}
+  .accept-head h2{font-size:clamp(32px,4.6vw,48px);}
+  @media(min-width:761px){
+    .accept-head h2{white-space:nowrap;}
   }
-  .accept-eyebrow :global(svg){width:13px;height:13px;flex:none;}
-  .accept-head h2{font-size:clamp(30px,4vw,42px);}
-  .accept-head h2 em{font-style:normal;color:var(--accent-1);}
-  .accept-break-mobile{display:none;}
-  .accept-intro{margin:16px auto 0;max-width:480px;color:var(--text-dim);font-size:15.5px;line-height:1.6;}
+  .accept-intro{margin:10px auto 0;max-width:480px;color:var(--text-dim);font-size:14.5px;line-height:1.55;}
 
   /* accept diagram */
   @keyframes acceptFlowDash{to{stroke-dashoffset:-22;}}
   .accept-icon{
     display:flex;align-items:center;justify-content:center;flex:none;
-    width:48px;height:48px;
+    width:38px;height:38px;
     border-radius:50%;color:#17171b;
     background:linear-gradient(145deg,#fff0f7,#fbe2ed);
     box-shadow:inset 0 0 0 1px rgba(255,0,127,.08), 0 2px 8px rgba(255,0,127,.06);
   }
-  .accept-icon :global(svg){width:22px;height:22px;}
-  .accept-diagram{position:relative;display:flex;flex-direction:column;align-items:center;gap:60px;margin:56px 0 32px;}
+  .accept-icon :global(svg){width:18px;height:18px;}
+  .accept-diagram{position:relative;display:flex;flex-direction:column;align-items:center;gap:32px;margin:24px 0 16px;}
   .accept-file-card{
     position:relative;z-index:2;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
-    width:230px;
-    background:#fff;border:1px solid var(--border);border-radius:20px;
-    padding:26px 20px;box-shadow:0 22px 46px -26px rgba(17,24,39,.24);text-align:center;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+    width:200px;
+    background:#fff;border:1px solid var(--border);border-radius:16px;
+    padding:14px 18px;box-shadow:0 22px 46px -26px rgba(17,24,39,.24);text-align:center;
     transition:transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s ease;
   }
   .accept-file-card:hover{transform:translateY(-4px);}
-  .accept-file-card .accept-icon{border-radius:14px;color:var(--accent-1);}
-  .accept-file-label{font-weight:700;font-size:16px;letter-spacing:-.01em;}
-  .accept-partners{position:relative;z-index:2;width:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .accept-file-card .accept-icon{border-radius:12px;color:var(--accent-1);}
+  .accept-file-label{font-weight:700;font-size:14.5px;letter-spacing:-.01em;}
+  .accept-partners{position:relative;z-index:2;width:100%;}
+  .accept-partners-desktop{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .accept-partners-mobile{display:none;}
   .accept-partner{
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
-    background:#fff;border:1px solid var(--border);border-radius:20px;
-    padding:26px 18px;box-shadow:0 18px 40px -28px rgba(17,24,39,.2);text-align:center;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+    background:#fff;border:1px solid var(--border);border-radius:16px;
+    padding:14px 14px;box-shadow:0 18px 40px -28px rgba(17,24,39,.2);text-align:center;
     transition:transform .35s cubic-bezier(.2,.7,.2,1), border-color .3s ease, box-shadow .3s ease;
   }
   .accept-partner:hover{transform:translateY(-6px);}
@@ -1895,6 +1910,7 @@ const breadcrumbSchema = {
   .accept-partner-accepted .accept-icon{background:linear-gradient(145deg,#dcfce7,#c5f4d3);color:#16a34a;box-shadow:inset 0 0 0 1px rgba(22,163,74,.08);}
   .accept-lines{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;overflow:visible;}
   .accept-lines-narrow{display:none;}
+  .accept-lines-mobile{display:none;}
   .accept-bus-line{fill:none;stroke:var(--accent-1);stroke-width:2;stroke-linecap:round;opacity:.4;}
   .accept-bus-line-accepted{stroke:#16a34a;opacity:.7;}
   .accept-line{fill:none;stroke:var(--accent-1);stroke-width:2;stroke-linecap:round;opacity:.4;}
@@ -1903,37 +1919,59 @@ const breadcrumbSchema = {
   .accept-dot{fill:var(--accent-1);stroke:#fff;stroke-width:2;}
   .accept-dot-start{fill:var(--accent-1);}
   .accept-dot-accepted{fill:#16a34a;}
-  .accept-note{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:36px;color:var(--text-dim);font-size:14.5px;font-weight:500;}
+  .accept-note{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:20px;color:var(--text-dim);font-size:14px;font-weight:500;}
   .accept-note-icon{display:flex;color:var(--accent-1);}
-  .accept-note-icon :global(svg){width:18px;height:18px;}
+  .accept-note-icon :global(svg){width:16px;height:16px;}
   .accept-stats{
-    display:grid;grid-template-columns:repeat(3,1fr);align-items:center;
-    background:#fff;border:1px solid var(--border);border-radius:20px;
-    padding:22px 10px;box-shadow:var(--shadow-sm);
+    display:grid;grid-template-columns:repeat(2,1fr);align-items:center;
+    background:#fff;border:1px solid var(--border);border-radius:16px;
+    padding:12px 8px;box-shadow:var(--shadow-sm);
   }
-  .accept-stat{display:flex;align-items:center;gap:14px;font-size:14.5px;font-weight:600;color:var(--text);padding:0 24px;border-right:1px solid var(--border);}
-  .accept-stat:last-child{border-right:0;}
-  .accept-stat .accept-icon{width:44px;height:44px;border-radius:14px;color:var(--accent-1);}
-  .accept-stat .accept-icon :global(svg){width:19px;height:19px;}
-  .accept-stat-arrow{display:none;flex:none;margin-left:auto;color:var(--text-faint);font-size:22px;line-height:1;}
+  .accept-stat{
+    position:relative;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    padding:4px 16px;
+    font-size:13px;font-weight:600;color:var(--text);line-height:1.3;
+  }
+  .accept-stat:not(:first-child)::before{
+    content:'';position:absolute;left:0;top:22%;bottom:22%;width:1px;background:var(--border);
+  }
+  .accept-stat .accept-icon{width:32px;height:32px;color:var(--accent-1);flex:none;}
+  .accept-stat .accept-icon :global(svg){width:15px;height:15px;}
   @media(max-width:900px){
-    .accept-partners{grid-template-columns:1fr 1fr;}
+    .accept-partners-desktop{grid-template-columns:1fr 1fr;}
     .accept-lines-wide{display:none;}
     .accept-lines-narrow{display:block;}
   }
   @media(max-width:760px){
-    .accept-break-mobile{display:block;}
-    .accept-diagram{gap:28px;}
-    .accept-file-card{width:100%;}
-    .accept-stats{grid-template-columns:1fr;gap:0;padding:6px 22px;}
-    .accept-stat{border-right:0;border-bottom:1px solid var(--border);padding:16px 0;}
-    .accept-stat:last-child{border-bottom:0;}
-    .accept-stat-arrow{display:block;}
+    #acceptation{padding:48px 0;}
+    .accept-diagram{gap:20px;}
+    .accept-file-card{width:calc((100% - 16px) / 3);padding:10px 6px;gap:6px;border-radius:14px;}
+    .accept-file-card .accept-icon{width:28px;height:28px;}
+    .accept-file-card .accept-icon :global(svg){width:14px;height:14px;}
+    .accept-file-label{font-size:11px;}
+    .accept-partners-desktop{display:none;}
+    .accept-partners-mobile{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+    .accept-lines-narrow{display:none;}
+    .accept-lines-mobile{display:block;}
+    .accept-partner-compact{padding:10px 6px;gap:6px;border-radius:14px;}
+    .accept-partner-compact .accept-icon{width:28px;height:28px;}
+    .accept-partner-compact .accept-icon :global(svg){width:14px;height:14px;}
+    .accept-partner-compact .accept-partner-name{font-size:11px;}
+    .accept-partner-compact .accept-status{padding:3px 8px;font-size:9.5px;gap:3px;}
+    .accept-partner-compact .accept-status :global(svg){width:8px;height:8px;}
+    .accept-stats{gap:4px;padding:12px 4px;}
+    .accept-stat{
+      flex-direction:column;justify-content:flex-start;text-align:center;
+      gap:6px;padding:2px 6px;font-size:10.5px;
+    }
+    .accept-stat:not(:first-child)::before{top:4px;bottom:4px;}
+    .accept-stat .accept-icon{width:28px;height:28px;}
+    .accept-stat .accept-icon :global(svg){width:13px;height:13px;}
   }
   @media(prefers-reduced-motion:reduce){
     .accept-line-flow{animation:none;stroke-dasharray:none;display:none;}
   }
-
   /* comparison table */
   .compare-head{margin:0 auto 44px;text-align:center;max-width:640px;}
   .compare-head h2{font-size:clamp(32px,4.6vw,48px);}
@@ -2643,7 +2681,11 @@ const breadcrumbSchema = {
     const fileCard = document.getElementById('acceptFile');
     const svg = document.getElementById('acceptLines');
     if(!diagram || !fileCard || !svg) return;
-    const partners = Array.from(document.querySelectorAll<HTMLElement>('#acceptPartners [data-accept-node]'));
+
+    function getPartners(){
+      return Array.from(document.querySelectorAll<HTMLElement>('#acceptPartners [data-accept-node]'))
+        .filter(node => node.offsetParent !== null);
+    }
 
     function setDot(name: string, x: number, y: number){
       svg!.querySelectorAll(`[data-dot="${name}"]`).forEach(dot=>{
@@ -2657,6 +2699,8 @@ const breadcrumbSchema = {
     }
 
     function draw(){
+      const partners = getPartners();
+      if(!partners.length) return;
       const box = diagram!.getBoundingClientRect();
       const fileRect = fileCard!.getBoundingClientRect();
       const startX = fileRect.left + fileRect.width / 2 - box.left;
@@ -2681,7 +2725,7 @@ const breadcrumbSchema = {
           setPath(`[data-to="${i}"]`, `M${p.x},${busY} L${p.x},${p.y}`);
           setDot(`end-${i}`, p.x, p.y);
         });
-      } else {
+      } else if(window.innerWidth > 760){
         const col0X = points[0].x;
         const col1X = points[1].x;
         setPath('[data-part="bus-2col"]', `M${col0X},${busY} L${col1X},${busY}`);
@@ -2689,6 +2733,22 @@ const breadcrumbSchema = {
         setPath('[data-to2="1"]', `M${col1X},${busY} L${col1X},${points[1].y}`);
         setDot('end2-0', col0X, points[0].y);
         setDot('end2-1', col1X, points[1].y);
+      } else {
+        const midY = fileRect.top + fileRect.height / 2 - box.top;
+        const cardLeftX = fileRect.left - box.left;
+        const cardRightX = fileRect.right - box.left;
+        const left = points[0];
+        const mid = points[1];
+        const right = points[points.length - 1];
+        setDot('hub', startX, startY);
+        setPath('[data-part="trunk"]', `M${startX},${startY} L${mid.x},${mid.y}`);
+        setDot('hubm-left', cardLeftX, midY);
+        setDot('hubm-right', cardRightX, midY);
+        setPath('[data-tom="0"]', `M${cardLeftX},${midY} L${left.x},${midY} L${left.x},${left.y}`);
+        setPath('[data-tom="2"]', `M${cardRightX},${midY} L${right.x},${midY} L${right.x},${right.y}`);
+        setDot('endm-0', left.x, left.y);
+        setDot('endm-1', mid.x, mid.y);
+        setDot('endm-2', right.x, right.y);
       }
     }
 
