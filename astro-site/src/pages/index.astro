@@ -359,6 +359,68 @@ const breadcrumbSchema = {
   </div>
   </section>
 
+  <section id="catalogue" class="fleet-teaser">
+    <div class="fleet-glow fleet-glow-1" aria-hidden="true"></div>
+    <div class="fleet-glow fleet-glow-2" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="fleet-head reveal">
+        <div>
+          <div class="fleet-eyebrow"><span class="dot"></span> Le catalogue</div>
+          <h2>Nos offres. <span>À saisir maintenant.</span></h2>
+          {fleetVehicles.length > 0 && (
+            <p class="fleet-subline">{fleetVehicles.length} véhicules disponibles en leasing, toutes marques.</p>
+          )}
+        </div>
+        <div class="fleet-nav">
+          <button class="fleet-arrow" id="fleetPrev" aria-label="Véhicule précédent" disabled>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="fleet-arrow" id="fleetNext" aria-label="Véhicule suivant">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <span class="fleet-counter"><span id="fleetIndex">01</span> / <span id="fleetTotal">{String(fleetVehicles.length).padStart(2, '0')}</span></span>
+        </div>
+      </div>
+      <div class="fleet-track-wrap reveal">
+        <div class="fleet-track" id="fleetTrack">
+          {fleetVehicles.length === 0 && <p class="fleet-loading">Catalogue momentanément indisponible.</p>}
+          {fleetVehicles.map(v => (
+            <a class="fleet-card" href={`/vehicule/${v.slug}`} aria-label={`Voir les détails : ${v.brand} ${v.name}`}>
+              <div class="fleet-visual">
+                {v.photo
+                  ? <img src={v.photo} alt={`${v.brand} ${v.name}`} loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'), {innerHTML: window.__fleetCarIcon}).firstElementChild)" />
+                  : <Fragment set:html={fleetCarIcon} />
+                }
+              </div>
+              <div class="fleet-body">
+                <div class="fleet-brand">{v.brand}</div>
+                <div class="fleet-name">{v.name}</div>
+                {(v.fuel || v.transmission) && (
+                  <div class="fleet-chips">
+                    {v.fuel && <span class="fleet-chip"><Fragment set:html={fleetFuelIcon} />{v.fuel}</span>}
+                    {v.transmission && <span class="fleet-chip"><Fragment set:html={fleetGearIcon} />{v.transmission}</span>}
+                  </div>
+                )}
+                <div class="fleet-foot-row">
+                  <div>
+                    <div class="fleet-price-label">À partir de</div>
+                    <div class="fleet-price"><span class="amount">{v.price} €</span><span class="period">/mois</span></div>
+                  </div>
+                  <span class="fleet-card-arrow" aria-hidden="true">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                  </span>
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      </div>
+      <div class="fleet-foot reveal">
+        <a href="/vehicules" class="btn-ghost">Voir tout le catalogue <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
   <section id="avantages" class="compare-section">
     <div class="wrap">
       <div class="section-head compare-head reveal">
@@ -453,68 +515,6 @@ const breadcrumbSchema = {
           </ul>
           <a href="/contact" class="profile-cta"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6.6 10.8c1.4 2.7 3.6 4.9 6.3 6.3l2.1-2.1c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.5 21 3 13.5 3 4c0-.6.4-1 1-1h3.6c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg> Être rappelé</a>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="catalogue" class="fleet-teaser">
-    <div class="fleet-glow fleet-glow-1" aria-hidden="true"></div>
-    <div class="fleet-glow fleet-glow-2" aria-hidden="true"></div>
-    <div class="wrap">
-      <div class="fleet-head reveal">
-        <div>
-          <div class="fleet-eyebrow"><span class="dot"></span> Le catalogue</div>
-          <h2>Nos offres. <span>À saisir maintenant.</span></h2>
-          {fleetVehicles.length > 0 && (
-            <p class="fleet-subline">{fleetVehicles.length} véhicules disponibles en leasing, toutes marques.</p>
-          )}
-        </div>
-        <div class="fleet-nav">
-          <button class="fleet-arrow" id="fleetPrev" aria-label="Véhicule précédent" disabled>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <button class="fleet-arrow" id="fleetNext" aria-label="Véhicule suivant">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <span class="fleet-counter"><span id="fleetIndex">01</span> / <span id="fleetTotal">{String(fleetVehicles.length).padStart(2, '0')}</span></span>
-        </div>
-      </div>
-      <div class="fleet-track-wrap reveal">
-        <div class="fleet-track" id="fleetTrack">
-          {fleetVehicles.length === 0 && <p class="fleet-loading">Catalogue momentanément indisponible.</p>}
-          {fleetVehicles.map(v => (
-            <a class="fleet-card" href={`/vehicule/${v.slug}`} aria-label={`Voir les détails : ${v.brand} ${v.name}`}>
-              <div class="fleet-visual">
-                {v.photo
-                  ? <img src={v.photo} alt={`${v.brand} ${v.name}`} loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'), {innerHTML: window.__fleetCarIcon}).firstElementChild)" />
-                  : <Fragment set:html={fleetCarIcon} />
-                }
-              </div>
-              <div class="fleet-body">
-                <div class="fleet-brand">{v.brand}</div>
-                <div class="fleet-name">{v.name}</div>
-                {(v.fuel || v.transmission) && (
-                  <div class="fleet-chips">
-                    {v.fuel && <span class="fleet-chip"><Fragment set:html={fleetFuelIcon} />{v.fuel}</span>}
-                    {v.transmission && <span class="fleet-chip"><Fragment set:html={fleetGearIcon} />{v.transmission}</span>}
-                  </div>
-                )}
-                <div class="fleet-foot-row">
-                  <div>
-                    <div class="fleet-price-label">À partir de</div>
-                    <div class="fleet-price"><span class="amount">{v.price} €</span><span class="period">/mois</span></div>
-                  </div>
-                  <span class="fleet-card-arrow" aria-hidden="true">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                  </span>
-                </div>
-              </div>
-            </a>
-          ))}
-        </div>
-      </div>
-      <div class="fleet-foot reveal">
-        <a href="/vehicules" class="btn-ghost">Voir tout le catalogue <span aria-hidden="true">→</span></a>
       </div>
     </div>
   </section>
