@@ -251,20 +251,7 @@ const specIcons: Record<string, string> = {
       <div class="vd-spec-item"><span><Fragment set:html={specIcons.calendar} /></span><p><small>Visuels</small><strong>Photos à titre indicatif</strong></p></div>
     </section>
 
-    <section class="vd-offer-overview">
-      <article class="vd-panel vd-key-points">
-        <h2>Les points clés de l'offre</h2>
-        <div class="vd-check-grid">
-          <div><Fragment set:html={checkIcon} /> Motorisation {v.fuel || 'adaptée'}</div>
-          <div><Fragment set:html={checkIcon} /> Offre sur étude de dossier</div>
-          <div><Fragment set:html={checkIcon} /> Boîte {v.transmission || 'selon configuration'}</div>
-          <div><Fragment set:html={checkIcon} /> Particulier et professionnel</div>
-          <div><Fragment set:html={checkIcon} /> {v.finition ? `Finition ${v.finition}` : 'Configuration personnalisable'}</div>
-          <div><Fragment set:html={checkIcon} /> Photos à titre indicatif</div>
-        </div>
-        <p class="vd-panel-note">Offre indicative sous réserve d'acceptation du dossier.</p>
-      </article>
-
+    <section class="vd-offer-overview is-single">
       <article class="vd-panel vd-services">
         <h2>Selon l'offre sélectionnée</h2>
         <div class="vd-service-grid">
@@ -872,6 +859,7 @@ const specIcons: Record<string, string> = {
   .vd-spec-item strong{font-size:11px;line-height:1.3;font-weight:650;overflow-wrap:anywhere;}
 
   .vd-offer-overview{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;}
+  .vd-offer-overview.is-single{grid-template-columns:minmax(0,720px);justify-content:center;}
   .vd-panel{min-width:0;padding:22px 24px;border:1px solid #e4e4e8;border-radius:13px;background:#fff;box-shadow:0 5px 16px rgba(17,17,19,.025);}
   .vd-panel h2{font-size:17px;letter-spacing:-.02em;}
   .vd-check-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px 18px;margin-top:15px;}
@@ -1052,9 +1040,8 @@ const specIcons: Record<string, string> = {
     .vd-technical-list{grid-template-columns:1fr;}
     .vd-options-grid{grid-template-columns:1fr;}
     .financing-section{padding:38px 0 34px;}
-    .vd-financing-grid{display:flex;gap:12px;overflow-x:auto;margin:0 -18px;padding:8px 18px 12px;scroll-snap-type:x mandatory;scrollbar-width:none;}
-    .vd-financing-grid::-webkit-scrollbar{display:none;}
-    .vd-financing-card{min-width:278px;scroll-snap-align:center;}
+    .vd-financing-grid{display:grid;grid-template-columns:1fr;gap:14px;overflow:visible;margin:0;padding:8px 0 0;}
+    .vd-financing-card{min-width:0;}
     .vd-why-grid{grid-template-columns:1fr 1fr;gap:18px 12px;}
     .vd-why-grid > div:last-child{grid-column:1/-1;max-width:230px;margin:auto;}
     .vd-proof-section{padding-top:22px;}
