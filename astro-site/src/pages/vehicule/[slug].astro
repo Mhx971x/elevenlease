@@ -253,14 +253,16 @@ const specIcons: Record<string, string> = {
 
     <section class="vd-offer-overview is-single">
       <article class="vd-panel vd-services">
-        <h2>Selon l'offre sélectionnée</h2>
+        <header class="vd-card-head">
+          <h2>Selon l'offre <span class="highlight-mark">sélectionnée</span></h2>
+          <p>Les prestations exactes sont précisées dans votre proposition personnalisée.</p>
+        </header>
         <div class="vd-service-grid">
           <div><span><Fragment set:html={specIcons.gear} /></span><strong>Entretien</strong></div>
           <div><span><Fragment set:html={checkIcon} /></span><strong>Garantie</strong></div>
           <div><span><Fragment set:html={phoneIcon} /></span><strong>Assistance</strong></div>
           <div><span><Fragment set:html={specIcons.leaf} /></span><strong>Services</strong></div>
         </div>
-        <p>Les prestations exactes sont précisées dans votre proposition personnalisée.</p>
       </article>
     </section>
 
@@ -305,7 +307,10 @@ const specIcons: Record<string, string> = {
 
   <section class="wrap vd-proof-section">
     <article class="vd-journey-card">
-      <h2>Votre leasing en 3 étapes</h2>
+      <header class="vd-card-head">
+        <h2>Votre leasing en <span class="highlight-mark">3 étapes</span></h2>
+        <p>Un parcours simple, de la simulation à votre proposition.</p>
+      </header>
       <div class="vd-journey-list">
         {journeySteps.map(step => (
           <div class="vd-journey-step">
@@ -318,7 +323,7 @@ const specIcons: Record<string, string> = {
 
     <article class="vd-reviews-card">
       <div class="vd-reviews-head">
-        <div><h2>Ils nous font confiance</h2><p><strong>4,9/5</strong> basé sur les retours de nos clients</p></div>
+        <div class="vd-card-head"><h2>Ils nous <span class="highlight-mark">font confiance</span></h2><p><strong>4,9/5</strong> basé sur les retours de nos clients</p></div>
         <div class="vd-rating-stars" aria-label="Note de 4,9 sur 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
       </div>
       <div class="vd-review-grid">
@@ -348,7 +353,7 @@ const specIcons: Record<string, string> = {
 
   {similarVehicles.length > 0 && (
     <section class="wrap vd-similar-section">
-      <header class="vd-section-head vd-section-head-left"><h2>Véhicules similaires</h2></header>
+      <header class="vd-section-head"><h2>Véhicules <span class="highlight-mark">similaires</span></h2><p>Découvrez d'autres modèles adaptés à votre projet.</p></header>
       <div class="vd-similar-grid">
         {similarVehicles.map(sv => (
           <a class="vd-similar-card" href={`/vehicule/${sv.slug}`} aria-label={`Voir les détails : ${sv.brand} ${sv.name}`}>
@@ -861,6 +866,10 @@ const specIcons: Record<string, string> = {
   .vd-offer-overview.is-single{grid-template-columns:minmax(0,720px);justify-content:center;}
   .vd-panel{min-width:0;padding:22px 24px;border:1px solid #e4e4e8;border-radius:13px;background:#fff;box-shadow:0 5px 16px rgba(17,17,19,.025);}
   .vd-panel h2{font-size:17px;letter-spacing:-.02em;}
+  .highlight-mark{position:relative;display:inline-block;padding:0 4px;white-space:nowrap;isolation:isolate;}
+  .highlight-mark::before{content:'';position:absolute;left:-3px;right:-3px;top:.08em;bottom:.05em;background:rgba(255,0,127,.16);border-radius:7px;z-index:-1;}
+  .vd-card-head{text-align:center;}
+  .vd-card-head p{max-width:430px;margin:7px auto 0;color:#74757d;font-size:10.5px;line-height:1.5;text-align:center;}
   .vd-check-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px 18px;margin-top:15px;}
   .vd-check-grid div{display:flex;align-items:center;gap:8px;color:#55565e;font-size:11.5px;line-height:1.35;}
   .vd-check-grid :global(svg){flex:none;width:16px;height:16px;}
@@ -870,7 +879,6 @@ const specIcons: Record<string, string> = {
   .vd-service-grid span{display:grid;place-items:center;width:42px;height:42px;color:var(--accent-1);}
   .vd-service-grid span :global(svg){width:31px;height:31px;}
   .vd-service-grid strong{font-size:11.5px;}
-  .vd-services > p{max-width:360px;margin:17px auto 0;color:#777982;font-size:10.5px;line-height:1.5;text-align:center;}
 
   .vd-details{padding:42px 0 12px;}
   .vd-section-head{margin:0 auto 22px;text-align:center;}
@@ -930,8 +938,8 @@ const specIcons: Record<string, string> = {
   .vd-journey-step p{display:flex;flex-direction:column;gap:3px;}
   .vd-journey-step strong{font-size:11.5px;}
   .vd-journey-step small{color:#74757d;font-size:9.5px;line-height:1.45;}
-  .vd-reviews-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;}
-  .vd-reviews-head p{margin-top:5px;color:#65666e;font-size:11px;}
+  .vd-reviews-head{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;text-align:center;}
+  .vd-reviews-head p{margin-top:6px;color:#65666e;font-size:11px;text-align:center;}
   .vd-rating-stars{display:flex;gap:2px;color:var(--accent-1);font-size:15px;white-space:nowrap;}
   .vd-review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;}
   .vd-review{display:flex;min-height:124px;flex-direction:column;padding:14px;border:1px solid #e8e8ec;border-radius:9px;background:#fff;}
@@ -958,6 +966,7 @@ const specIcons: Record<string, string> = {
   .vd-faq-list .faq-content p{padding:0 40px 16px 0;color:#686973;font-size:12.5px;line-height:1.65;}
 
   .vd-similar-section{padding-top:30px;}
+  .vd-similar-section .vd-section-head{text-align:center;}
   .vd-similar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
   .vd-similar-card{position:relative;display:grid;grid-template-columns:41% 1fr;min-width:0;min-height:120px;border:1px solid #e5e5e9;border-radius:11px;background:#fff;overflow:hidden;transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;}
   .vd-similar-card:hover{transform:translateY(-3px);border-color:#d4d4da;box-shadow:0 9px 22px rgba(17,17,19,.055);}
