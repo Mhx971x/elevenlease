@@ -48,7 +48,6 @@ const vehicleSchema: Record<string, unknown> = {
       enginePower: { '@type': 'QuantitativeValue', value: v.puissance, unitCode: 'HUR' },
     },
   }),
-  itemCondition: v.condition === 'occasion' ? 'https://schema.org/UsedCondition' : 'https://schema.org/NewCondition',
   ...(v.price && {
     offers: {
       '@type': 'Offer',
@@ -127,7 +126,6 @@ const faqSchema = {
   })),
 };
 
-const DUREE_STEPS = [36, 48, 60];
 const APPORT_STEPS = [0, 2000, 5000];
 
 // exemples de financement à durée native du véhicule (cohérent avec le prix catalogue)
@@ -179,36 +177,6 @@ const specIcons: Record<string, string> = {
   seats: `<svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M6 17V6a2 2 0 012-2h2a2 2 0 012 2v11M6 17h6M16 10v7M16 10h3a2 2 0 012 2v5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
 };
 
-type SpecItem = { icon: string; label: string; value: string };
-
-function buildMainSpecs(v: Vehicle): SpecItem[] {
-  const items: SpecItem[] = [];
-  if (v.fuel) items.push({ icon: specIcons.fuel, label: 'Carburant', value: v.fuel });
-  if (v.transmission) items.push({ icon: specIcons.gear, label: 'Boîte', value: v.transmission });
-  if (v.puissance) items.push({ icon: specIcons.gauge, label: 'Puissance', value: /^\d+$/.test(v.puissance) ? v.puissance + ' ch' : v.puissance });
-  items.push({ icon: specIcons.road, label: 'Kilométrage annuel', value: 'Illimité' });
-  items.push({ icon: specIcons.clock, label: 'Durée possible', value: `${DUREE_STEPS[0]} à ${DUREE_STEPS[DUREE_STEPS.length - 1]} mois` });
-  items.push({ icon: euroIcon, label: 'Apport', value: `${APPORT_STEPS[0].toLocaleString('fr-FR')}€ possible` });
-  if (v.places) items.push({ icon: specIcons.seats, label: 'Nombre de places', value: `${v.places} places` });
-  if (v.annee) items.push({ icon: specIcons.calendar, label: 'Année', value: v.annee });
-  return items;
-}
-const mainSpecs = buildMainSpecs(v);
-
-function buildExtraSpecs(v: Vehicle): SpecItem[] {
-  const items: SpecItem[] = [];
-  if (v.moteur) items.push({ icon: specIcons.engine, label: 'Moteur', value: v.moteur });
-  if (v.autonomieElec) items.push({ icon: specIcons.battery, label: 'Autonomie électrique', value: v.autonomieElec });
-  if (v.autonomieCumulee) items.push({ icon: specIcons.road, label: 'Autonomie cumulée', value: v.autonomieCumulee });
-  if (v.rechargeDC || v.rechargeAC) items.push({ icon: specIcons.plug, label: 'Recharge', value: [v.rechargeDC, v.rechargeAC].filter(Boolean).join(' / ') });
-  if (v.tempsCharge) items.push({ icon: specIcons.clock, label: 'Temps de charge', value: v.tempsCharge });
-  if (v.consommation || v.co2) items.push({ icon: specIcons.leaf, label: 'Consommation / CO2', value: [v.consommation, v.co2].filter(Boolean).join(', ') });
-  if (v.coffre) items.push({ icon: specIcons.trunk, label: 'Coffre', value: /^\d+$/.test(v.coffre) ? v.coffre + ' litres' : v.coffre });
-  return items;
-}
-const extraSpecs = buildExtraSpecs(v);
-
-const optionEntries = Object.entries(v.options).filter(([, items]) => items.length > 0);
 ---
 <BaseLayout title={pageTitle} description={pageDescription} path={canonicalPath} ogImage={photos[0]} active="vehicules">
 <Fragment slot="head">
@@ -233,7 +201,6 @@ const optionEntries = Object.entries(v.options).filter(([, items]) => items.leng
             ? <img id="carouselImg" src={photos[0]} alt={`${v.brand} ${v.name}`} onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'carousel-icon',innerHTML:window.__vehCarIcon}))" />
             : <div class="carousel-icon"><Fragment set:html={carIcon} /></div>
           }
-          <span class="vd-condition">{v.condition === 'neuf' ? 'Neuf' : 'Occasion'}</span>
           {photos.length > 1 && (
             <>
               <button type="button" class="vd-carousel-arrow prev" id="prevBtn" aria-label="Photo précédente"><Fragment set:html={chevronIcon} /></button>
@@ -254,8 +221,8 @@ const optionEntries = Object.entries(v.options).filter(([, items]) => items.leng
 
       <div class="vd-offer">
         <div class="vd-offer-badge">Offre indicative</div>
-        <h1><span>{v.brand}</span> {v.name}{v.finition ? ` ${v.finition}` : ''}</h1>
-        <p class="vd-hero-meta">{[v.fuel, v.transmission, v.condition === 'neuf' ? 'Véhicule neuf' : 'Véhicule d’occasion'].filter(Boolean).join(' · ')}</p>
+        <h1><span class="vd-title-main"><span>{v.brand}</span> {v.name}</span>{v.finition && <small class="vd-title-finish">{v.finition}</small>}</h1>
+        <p class="vd-hero-meta">{[v.fuel, v.transmission].filter(Boolean).join(' · ')}</p>
 
         <div class="vd-price-card">
           <div class="vd-price-eyebrow">Dès</div>
@@ -310,56 +277,6 @@ const optionEntries = Object.entries(v.options).filter(([, items]) => items.leng
       </article>
     </section>
 
-    <section class="vd-details">
-      <header class="vd-section-head">
-        <h2>Le véhicule en détail</h2>
-        <p>Les informations essentielles de cette configuration.</p>
-      </header>
-
-      <div class="vd-main-specs">
-        {mainSpecs.map(s => (
-          <div class="vd-main-spec">
-            <span><Fragment set:html={s.icon} /></span>
-            <p><small>{s.label}</small><strong>{s.value}</strong></p>
-          </div>
-        ))}
-      </div>
-
-      {(v.description || extraSpecs.length > 0) && (
-        <div class="vd-detail-panels">
-          {v.description && (
-            <article class="vd-detail-card vd-description-card">
-              <h3>À propos de ce véhicule</h3>
-              <p>{v.description}</p>
-            </article>
-          )}
-          {extraSpecs.length > 0 && (
-            <article class="vd-detail-card">
-              <h3>Caractéristiques techniques</h3>
-              <div class="vd-technical-list">
-                {extraSpecs.map(s => (
-                  <div><span><Fragment set:html={s.icon} /></span><p><small>{s.label}</small><strong>{s.value}</strong></p></div>
-                ))}
-              </div>
-            </article>
-          )}
-        </div>
-      )}
-
-      {optionEntries.length > 0 && (
-        <div class="vd-options">
-          <h3>Options et équipements</h3>
-          <div class="vd-options-grid">
-            {optionEntries.map(([cat, items]) => (
-              <details class="options-group">
-                <summary>{cat}</summary>
-                <div class="options-list">{items.map(o => <span>{o}</span>)}</div>
-              </details>
-            ))}
-          </div>
-        </div>
-      )}
-    </section>
   </div>
 
   <section class="financing-section">
@@ -374,11 +291,13 @@ const optionEntries = Object.entries(v.options).filter(([, items]) => items.leng
             {index === 0 && <span class="vd-popular">Le plus demandé</span>}
             <div class="vd-financing-label">{f.apport === 0 ? "0€ d'apport" : `${f.apport.toLocaleString('fr-FR')}€ d'apport`}</div>
             <div class="vd-financing-price"><span class="amount">{f.price}</span><span class="currency">€</span><span class="period">/mois</span></div>
-            <div class="vd-financing-meta"><span><Fragment set:html={specIcons.calendar} /> {baseDuree} mois</span><span><Fragment set:html={specIcons.road} /> Km illimité possible</span></div>
+            <div class="vd-financing-meta"><span><Fragment set:html={specIcons.calendar} /> {baseDuree} mois</span><span><Fragment set:html={specIcons.road} /> 20 000 km / an</span></div>
           </div>
         ))}
       </div>
-      <a href={`/simulation?vehicule=${encodeURIComponent(v.brand + ' ' + v.name)}`} class="vd-financing-cta btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Obtenir mon offre personnalisée</a>
+      <div class="vd-financing-cta-wrap">
+        <a href={`/simulation?vehicule=${encodeURIComponent(v.brand + ' ' + v.name)}`} class="vd-financing-cta btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing</a>
+      </div>
       <p class="vd-financing-proof">Gratuit · Sans engagement · Première réponse sous 24 à 48h ouvrées</p>
       <p class="financing-disclaimer">Exemples indicatifs. Le loyer définitif dépend du profil, du véhicule et des conditions du partenaire financier.</p>
     </div>
@@ -527,7 +446,7 @@ const optionEntries = Object.entries(v.options).filter(([, items]) => items.leng
 
   // magnetic CTA buttons (desktop only)
   if (!window.matchMedia('(pointer: coarse)').matches) {
-    document.querySelectorAll('.btn-primary').forEach(btn => {
+    document.querySelectorAll('.btn-primary:not(.vd-financing-cta)').forEach(btn => {
       btn.addEventListener('mousemove', (e) => {
         const r = btn.getBoundingClientRect();
         const x = e.clientX - r.left - r.width / 2;
@@ -893,11 +812,6 @@ const optionEntries = Object.entries(v.options).filter(([, items]) => items.leng
     position:absolute;top:14px;left:16px;z-index:3;color:#777982;font-size:10.5px;font-weight:600;
     letter-spacing:.015em;
   }
-  .vd-condition{
-    position:absolute;top:12px;right:12px;z-index:3;padding:6px 10px;border-radius:7px;
-    border:1px solid rgba(17,17,19,.08);background:rgba(255,255,255,.82);backdrop-filter:blur(8px);
-    color:#6b6c74;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
-  }
   .vd-carousel-arrow{
     position:absolute;top:50%;z-index:4;display:grid;place-items:center;width:42px;height:42px;padding:0;
     border:1px solid #e3e3e7;border-radius:50%;background:rgba(255,255,255,.94);box-shadow:0 6px 20px rgba(17,17,19,.12);
@@ -918,7 +832,9 @@ const optionEntries = Object.entries(v.options).filter(([, items]) => items.leng
     color:#fff;font-size:11px;font-weight:800;letter-spacing:.035em;text-transform:uppercase;box-shadow:0 5px 14px rgba(229,22,107,.18);
   }
   .vd-offer h1{margin-top:10px;font-size:clamp(29px,3.1vw,39px);line-height:1.04;letter-spacing:-.045em;}
-  .vd-offer h1 span{text-transform:uppercase;}
+  .vd-title-main > span{text-transform:uppercase;}
+  .vd-title-finish{font:inherit;font-size:1em;}
+  .vd-title-finish::before{content:' ';}
   .vd-hero-meta{margin-top:9px;color:var(--text-dim);font-size:15.5px;line-height:1.45;}
   .vd-price-card{
     margin-top:14px;padding:22px 24px 16px;border:1px solid #e2e2e6;border-radius:14px;background:#fff;
@@ -1003,7 +919,8 @@ const optionEntries = Object.entries(v.options).filter(([, items]) => items.leng
   .vd-financing-meta{display:flex;justify-content:center;gap:15px;margin-top:17px;color:#686973;font-size:10px;}
   .vd-financing-meta span{display:flex;align-items:center;gap:5px;}
   .vd-financing-meta :global(svg){width:15px;height:15px;color:var(--accent-1);}
-  .vd-financing-cta{display:flex;width:min(360px,100%);margin:14px auto 0;border-radius:7px;padding:12px 18px;}
+  .vd-financing-cta-wrap{display:flex;justify-content:center;width:100%;margin-top:14px;}
+  .vd-financing-cta{align-items:center;justify-content:center;width:min(360px,100%);border-radius:7px;padding:12px 18px;text-align:center;}
   .vd-financing-proof{text-align:center;margin-top:8px;color:#666771;font-size:10px;}
   .financing-disclaimer{text-align:center;margin-top:16px;color:#8a8b92;font-size:9.5px;}
 
@@ -1039,14 +956,21 @@ const optionEntries = Object.entries(v.options).filter(([, items]) => items.leng
   .vd-review-link{display:flex;align-items:center;justify-content:center;gap:10px;width:min(280px,100%);margin:12px auto 0;padding:9px 14px;border:1px solid rgba(255,0,127,.35);border-radius:7px;color:#34343a;font-size:11px;font-weight:650;}
   .vd-review-link:hover{border-color:var(--accent-1);color:var(--accent-1);}
 
-  .vd-faq-section{padding-top:32px;}
-  .vd-faq-list{display:grid;grid-template-columns:1fr 1fr;gap:7px 24px;max-width:none;}
-  .vd-faq-list .faq-item{padding:0 14px;border:1px solid #e8e8ec;border-radius:8px;background:#fff;}
-  .vd-faq-list .faq-item summary{min-height:43px;padding:10px 0;font-size:11.5px;font-weight:650;}
-  .vd-faq-list .faq-icon{width:14px;height:14px;}
-  .vd-faq-list .faq-icon::before{width:9px;}
-  .vd-faq-list .faq-icon::after{height:9px;}
-  .vd-faq-list .faq-content p{padding:0 18px 12px 0;font-size:10.5px;line-height:1.6;}
+  .vd-faq-section{padding-top:38px;}
+  .vd-faq-section .vd-section-head{margin-bottom:18px;text-align:center;}
+  .vd-faq-list{display:grid;grid-template-columns:1fr 1fr;align-items:start;gap:10px 14px;max-width:none;}
+  .vd-faq-list .faq-item{
+    align-self:start;padding:0 18px;border:1px solid #e5e5e9;border-radius:12px;background:#fff;
+    box-shadow:0 4px 14px rgba(17,17,19,.025);transition:border-color .22s ease,box-shadow .22s ease,background .22s ease;
+  }
+  .vd-faq-list .faq-item:hover{border-color:#dadade;box-shadow:0 7px 18px rgba(17,17,19,.045);}
+  .vd-faq-list .faq-item[open]{border-color:rgba(255,0,127,.22);background:linear-gradient(115deg,#fff 50%,#fff7fb 100%);box-shadow:0 8px 22px rgba(255,0,127,.055);}
+  .vd-faq-list .faq-item summary{min-height:54px;padding:12px 0;font-size:13px;font-weight:650;}
+  .vd-faq-list .faq-icon{width:28px;height:28px;border-radius:50%;background:#f6f6f8;transition:background .22s ease;}
+  .vd-faq-list .faq-item[open] .faq-icon{background:rgba(255,0,127,.08);}
+  .vd-faq-list .faq-icon::before{width:10px;}
+  .vd-faq-list .faq-icon::after{height:10px;}
+  .vd-faq-list .faq-content p{padding:0 40px 16px 0;color:#686973;font-size:12.5px;line-height:1.65;}
 
   .vd-similar-section{padding-top:30px;}
   .vd-similar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
@@ -1099,7 +1023,10 @@ const optionEntries = Object.entries(v.options).filter(([, items]) => items.leng
     .vd-thumbnails::-webkit-scrollbar{display:none;}
     .vd-thumbnails .photo-grid-item{min-width:66px;}
     .vd-offer{padding-top:0;}
-    .vd-offer h1{font-size:clamp(27px,8.6vw,34px);line-height:1.07;}
+    .vd-offer h1{font-size:inherit;line-height:1.05;}
+    .vd-title-main{display:block;font-size:clamp(23px,7vw,28px);letter-spacing:-.045em;white-space:nowrap;}
+    .vd-title-finish{display:block;margin-top:5px;font-size:clamp(17px,5.4vw,21px);line-height:1.12;letter-spacing:-.035em;}
+    .vd-title-finish::before{content:'';}
     .vd-hero-meta{font-size:13.5px;}
     .vd-price-card{padding:20px 18px 15px;}
     .vd-price .amount{font-size:52px;}
@@ -1138,7 +1065,10 @@ const optionEntries = Object.entries(v.options).filter(([, items]) => items.leng
     .vd-review-grid{display:flex;overflow-x:auto;margin:14px -18px 0;padding:0 18px 8px;scroll-snap-type:x mandatory;scrollbar-width:none;}
     .vd-review-grid::-webkit-scrollbar{display:none;}
     .vd-review{min-width:245px;scroll-snap-align:start;}
-    .vd-faq-list{grid-template-columns:1fr;gap:7px;}
+    .vd-faq-list{grid-template-columns:1fr;gap:8px;}
+    .vd-faq-list .faq-item{padding:0 15px;border-radius:11px;}
+    .vd-faq-list .faq-item summary{min-height:52px;font-size:12.5px;}
+    .vd-faq-list .faq-content p{padding:0 34px 15px 0;font-size:12px;}
     .vd-similar-grid{display:flex;overflow-x:auto;margin:0 -18px;padding:0 18px 10px;scroll-snap-type:x mandatory;scrollbar-width:none;}
     .vd-similar-grid::-webkit-scrollbar{display:none;}
     .vd-similar-card{min-width:310px;scroll-snap-align:start;}
