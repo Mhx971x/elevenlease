@@ -152,28 +152,43 @@ const faqSchema = {
   "mainEntity": [
     {
       "@type": "Question",
-      "name": "Comment fonctionne Eleven Lease ?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Vous décrivez votre projet en un seul formulaire, puis notre réseau de partenaires financiers identifie les offres de leasing (LOA/LLD) adaptées à votre budget et à votre profil. Un conseiller vous met ensuite en relation directement avec l'offre retenue." }
+      "name": "Leasing sans apport ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Oui. Selon votre profil, le véhicule et la solution de financement, certaines offres peuvent être proposées sans apport initial." }
     },
     {
       "@type": "Question",
-      "name": "Eleven Lease est-il un organisme de financement ?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Non. Eleven Lease n'est pas un établissement de crédit et ne finance aucun véhicule directement : nous mettons en relation votre projet avec un réseau de partenaires financiers qui étudient et financent le dossier." }
+      "name": "Dossier refusé, que faire ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Un refus ne signifie pas forcément la fin de votre projet. Lorsque c'est possible, votre dossier peut être étudié auprès d'autres partenaires ou orienté vers une solution plus adaptée." }
     },
     {
       "@type": "Question",
-      "name": "Combien coûte le service Eleven Lease pour le client ?",
-      "acceptedAnswer": { "@type": "Answer", "text": "La mise en relation est gratuite pour le client : aucun frais n'est facturé par Eleven Lease pour l'utilisation du service." }
+      "name": "Réponse en combien de temps ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Une première étude est généralement réalisée rapidement après réception des informations nécessaires. Notre objectif est de vous apporter une première réponse sous 24 à 48 h ouvrées." }
     },
     {
       "@type": "Question",
-      "name": "Sous quel délai suis-je recontacté après ma demande ?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Le délai moyen de mise en relation est de 24h après l'envoi de votre demande." }
+      "name": "Puis-je choisir mon véhicule ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Oui. Vous pouvez nous indiquer un modèle précis ou simplement vos critères : budget, marque, type de véhicule, motorisation ou équipement." }
     },
     {
       "@type": "Question",
-      "name": "Y a-t-il une limite de kilométrage avec Eleven Lease ?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Non. Notre offre de leasing est proposée avec un kilométrage illimité, aussi bien pour les particuliers que pour les professionnels : aucun forfait à respecter, aucune facturation de dépassement en fin de contrat." }
+      "name": "Neuf ou occasion ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Les deux. Eleven Lease peut vous accompagner sur des véhicules neufs comme d'occasion, selon les disponibilités de nos partenaires." }
+    },
+    {
+      "@type": "Question",
+      "name": "Quels documents fournir ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Cela dépend de votre profil. Nous pouvons notamment demander une pièce d'identité, un justificatif de domicile, des justificatifs de revenus et certains documents bancaires ou professionnels." }
+    },
+    {
+      "@type": "Question",
+      "name": "Kilométrage limité ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Cela dépend du contrat. Certaines offres prévoient un kilométrage défini, tandis que des solutions avec kilométrage élevé ou illimité peuvent être disponibles selon les partenaires." }
+    },
+    {
+      "@type": "Question",
+      "name": "Simulation gratuite ?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Oui. La demande de simulation et l'étude initiale sont gratuites et sans engagement. Vous restez libre d'accepter ou non la proposition reçue." }
     }
   ]
 };
@@ -728,24 +743,36 @@ const breadcrumbSchema = {
       </header>
       <div class="faq-list reveal reveal-stagger">
         <details class="faq-item">
-          <summary>Comment fonctionne Eleven Lease ?<span class="faq-icon"></span></summary>
-          <div class="faq-content"><p>Vous décrivez votre projet en un seul formulaire, puis notre réseau de partenaires financiers identifie les meilleures offres de leasing (LOA/LLD) adaptées à votre profil. Un conseiller vous met ensuite en relation directement avec l'offre retenue.</p></div>
+          <summary>Leasing sans apport ?<span class="faq-icon"></span></summary>
+          <div class="faq-content"><p>Oui. Selon votre profil, le véhicule et la solution de financement, certaines offres peuvent être proposées <strong>sans apport initial</strong>.</p></div>
         </details>
         <details class="faq-item">
-          <summary>Eleven Lease est-il un organisme de financement ?<span class="faq-icon"></span></summary>
-          <div class="faq-content"><p>Non. Eleven Lease n'est pas un établissement de crédit et ne finance aucun véhicule directement : nous mettons en relation votre projet avec un réseau de partenaires financiers qui étudient et financent le dossier.</p></div>
+          <summary>Dossier refusé, que faire ?<span class="faq-icon"></span></summary>
+          <div class="faq-content"><p>Un refus ne signifie pas forcément la fin de votre projet. Lorsque c'est possible, votre dossier peut être <strong>étudié auprès d'autres partenaires</strong> ou orienté vers une solution plus adaptée.</p></div>
         </details>
         <details class="faq-item">
-          <summary>Combien coûte le service Eleven Lease pour le client ?<span class="faq-icon"></span></summary>
-          <div class="faq-content"><p>La mise en relation est gratuite pour le client : aucun frais n'est facturé par Eleven Lease pour l'utilisation du service.</p></div>
+          <summary>Réponse en combien de temps ?<span class="faq-icon"></span></summary>
+          <div class="faq-content"><p>Une première étude est généralement réalisée rapidement après réception des informations nécessaires. Notre objectif est de vous apporter une <strong>première réponse sous 24 à 48 h ouvrées</strong>.</p></div>
         </details>
         <details class="faq-item">
-          <summary>Sous quel délai suis-je recontacté après ma demande ?<span class="faq-icon"></span></summary>
-          <div class="faq-content"><p>Le délai moyen de mise en relation est de 24h après l'envoi de votre demande.</p></div>
+          <summary>Puis-je choisir mon véhicule ?<span class="faq-icon"></span></summary>
+          <div class="faq-content"><p>Oui. Vous pouvez nous indiquer <strong>un modèle précis</strong> ou simplement vos critères : budget, marque, type de véhicule, motorisation ou équipement.</p></div>
         </details>
         <details class="faq-item">
-          <summary>Y a-t-il une limite de kilométrage ?<span class="faq-icon"></span></summary>
-          <div class="faq-content"><p>Non. Notre offre de leasing est proposée avec un kilométrage illimité, aussi bien pour les particuliers que pour les professionnels : aucun forfait à respecter, aucune facturation de dépassement en fin de contrat.</p></div>
+          <summary>Neuf ou occasion ?<span class="faq-icon"></span></summary>
+          <div class="faq-content"><p>Les deux. Eleven Lease peut vous accompagner sur des <strong>véhicules neufs comme d'occasion</strong>, selon les disponibilités de nos partenaires.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Quels documents fournir ?<span class="faq-icon"></span></summary>
+          <div class="faq-content"><p>Cela dépend de votre profil. Nous pouvons notamment demander une <strong>pièce d'identité, un justificatif de domicile, des justificatifs de revenus et certains documents bancaires ou professionnels</strong>.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Kilométrage limité ?<span class="faq-icon"></span></summary>
+          <div class="faq-content"><p>Cela dépend du contrat. Certaines offres prévoient un kilométrage défini, tandis que des solutions avec <strong>kilométrage élevé ou illimité</strong> peuvent être disponibles selon les partenaires.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Simulation gratuite ?<span class="faq-icon"></span></summary>
+          <div class="faq-content"><p>Oui. <strong>La demande de simulation et l'étude initiale sont gratuites et sans engagement.</strong> Vous restez libre d'accepter ou non la proposition reçue.</p></div>
         </details>
       </div>
     </div>
