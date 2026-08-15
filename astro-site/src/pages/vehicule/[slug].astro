@@ -300,11 +300,11 @@ const specIcons: Record<string, string> = {
       </div>
 
       <div class="vd-offer">
-        <div class="vd-offer-badge">Offre indicative</div>
         <h1><span class="vd-title-main"><span>{v.brand}</span> {v.name}</span>{v.finition && <small class="vd-title-finish">{v.finition}</small>}</h1>
         <p class="vd-hero-meta">{[v.fuel, v.transmission].filter(Boolean).join(' · ')}</p>
 
         <div class="vd-price-card">
+          <div class="vd-offer-badge">Offre indicative</div>
           <div class="vd-price-eyebrow">Dès</div>
           <div class="vd-price"><span class="amount">{v.price}</span><span class="currency">€</span><span class="period">/mois</span></div>
           <div class="vd-price-note">0€ d'apport possible</div>
@@ -898,13 +898,13 @@ const specIcons: Record<string, string> = {
   }
   .vd-share:hover{color:var(--accent-1);background:rgba(255,0,127,.05);}
 
-  .vd-hero{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(390px,.94fr);gap:32px;align-items:start;padding:22px 0 18px;}
-  .vd-media{min-width:0;}
+  .vd-hero{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(390px,.94fr);gap:32px;align-items:stretch;padding:22px 0 18px;}
+  .vd-media{display:grid;grid-template-rows:minmax(0,1fr) auto;min-width:0;min-height:0;}
   .vd-carousel{
-    position:relative;aspect-ratio:16/9;overflow:hidden;border:1px solid #ececf0;border-radius:14px;
+    position:relative;min-height:0;overflow:hidden;border:1px solid #ececf0;border-radius:14px;
     background:linear-gradient(145deg,#f4f5f7 0%,#fafafa 100%);
   }
-  .vd-carousel img{display:block;width:100%;height:100%;object-fit:contain;}
+  .vd-carousel img{display:block;width:100%;height:100%;object-fit:cover;}
   .vd-carousel .carousel-icon{display:grid;place-items:center;width:100%;height:100%;}
   .vd-carousel .carousel-icon :global(svg){width:58%;}
   .vd-visual-label{
@@ -927,8 +927,8 @@ const specIcons: Record<string, string> = {
 
   .vd-offer{padding-top:2px;}
   .vd-offer-badge{
-    display:inline-flex;padding:6px 10px;border-radius:6px;background:linear-gradient(105deg,#ff1f85,#d91769);
-    color:#fff;font-size:11px;font-weight:800;letter-spacing:.035em;text-transform:uppercase;box-shadow:0 5px 14px rgba(229,22,107,.18);
+    position:absolute;top:16px;right:18px;z-index:2;display:inline-flex;padding:4px 7px;border:1px solid #e6e6ea;border-radius:5px;
+    background:rgba(247,247,249,.92);color:#81828a;font-size:8.5px;font-weight:650;letter-spacing:.035em;text-transform:uppercase;
   }
   .vd-offer h1{margin-top:10px;font-size:clamp(29px,3.1vw,39px);line-height:1.04;letter-spacing:-.045em;}
   .vd-title-main{display:block;white-space:nowrap;}
@@ -936,7 +936,7 @@ const specIcons: Record<string, string> = {
   .vd-title-finish{display:block;margin-top:6px;font:inherit;font-size:.68em;line-height:1.12;letter-spacing:-.035em;}
   .vd-hero-meta{margin-top:9px;color:var(--text-dim);font-size:15.5px;line-height:1.45;}
   .vd-price-card{
-    margin-top:14px;padding:22px 24px 16px;border:1px solid #e2e2e6;border-radius:14px;background:#fff;
+    position:relative;margin-top:14px;padding:22px 24px 16px;border:1px solid #e2e2e6;border-radius:14px;background:#fff;
     box-shadow:0 8px 26px rgba(17,17,19,.045);
   }
   .vd-price-eyebrow{font-size:12px;font-weight:700;color:#55565e;}
@@ -1142,8 +1142,10 @@ const specIcons: Record<string, string> = {
     .breadcrumb{padding-top:106px;gap:6px;}
     .vd-share{font-size:0;padding:7px;}
     .vd-share :global(svg){width:18px;height:18px;}
-    .vd-hero{grid-template-columns:1fr;gap:16px;padding-top:10px;}
+    .vd-hero{grid-template-columns:1fr;align-items:start;gap:16px;padding-top:10px;}
+    .vd-media{display:block;}
     .vd-carousel{aspect-ratio:16/9;border-radius:12px;}
+    .vd-carousel img{object-fit:contain;}
     .vd-carousel-arrow{width:44px;height:44px;}
     .vd-thumbnails{gap:7px;margin-top:8px;overflow-x:auto;scrollbar-width:none;}
     .vd-thumbnails::-webkit-scrollbar{display:none;}
@@ -1155,6 +1157,7 @@ const specIcons: Record<string, string> = {
     .vd-title-finish::before{content:'';}
     .vd-hero-meta{font-size:13.5px;}
     .vd-price-card{padding:18px 18px 14px;}
+    .vd-offer-badge{top:13px;right:14px;}
     .vd-price .amount{font-size:52px;}
     .vd-price .currency{font-size:25px;}
     .vd-price .period{font-size:18px;}
