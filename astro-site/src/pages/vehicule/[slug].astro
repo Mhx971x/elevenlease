@@ -20,11 +20,41 @@ const { vehicle: v, allVehicles } = Astro.props as { vehicle: Vehicle; allVehicl
 const pageTitle = `${v.brand} ${v.name} — Leasing LOA/LLD | Eleven Lease`;
 const pageDescription = (v.description && v.description.trim())
   ? v.description.trim().slice(0, 155)
-  : `Découvrez le ${v.brand} ${v.name} en leasing (LOA/LLD) adapté à votre budget via le réseau de partenaires Eleven Lease. Kilométrage illimité, simulation en 2 minutes.`;
+  : `Découvrez le ${v.brand} ${v.name} en leasing avec une offre indicative adaptée à votre projet. Simulation gratuite en 2 minutes, kilométrage selon l'offre.`;
 const canonicalPath = `/vehicule/${v.slug}`;
 
 const photos = v.photos.length ? v.photos : [];
 const baseDuree = parseDureeMonths(v.duration);
+
+function getOptimizedImageUrl(
+  src: string,
+  width: number,
+  quality = 78,
+  height?: number,
+  resize: 'contain' | 'cover' = 'contain',
+): string {
+  try {
+    const url = new URL(src);
+    const publicObjectPath = '/storage/v1/object/public/';
+    if (!url.pathname.includes(publicObjectPath)) return src;
+    url.pathname = url.pathname.replace(publicObjectPath, '/storage/v1/render/image/public/');
+    url.searchParams.set('width', String(width));
+    if (height) url.searchParams.set('height', String(height));
+    url.searchParams.set('resize', resize);
+    url.searchParams.set('quality', String(quality));
+    return url.toString();
+  } catch {
+    return src;
+  }
+}
+
+const carouselPhotos = photos.map(original => ({
+  original,
+  src: getOptimizedImageUrl(original, 960, 82, 654, 'contain'),
+  srcset: [640, 960, 1280]
+    .map(width => `${getOptimizedImageUrl(original, width, 82, Math.round(width / 1.47), 'contain')} ${width}w`)
+    .join(', '),
+}));
 
 const canonicalUrl = `https://elevenlease.fr${canonicalPath}`;
 
@@ -61,7 +91,6 @@ const vehicleSchema: Record<string, unknown> = {
         unitText: 'MONTH',
       },
       businessFunction: 'http://purl.org/goodrelations/v1#LeaseOut',
-      availability: 'https://schema.org/InStock',
       seller: { '@type': 'Organization', name: 'Eleven Lease' },
     },
   }),
@@ -99,15 +128,34 @@ const vehicleFaq = [
     a: "Cela dépend de votre profil. Nous pouvons notamment demander une pièce d'identité, un justificatif de domicile, des justificatifs de revenus et certains documents bancaires ou professionnels.",
   },
   {
+    q: 'Kilométrage limité ?',
+    a: "Cela dépend du contrat. Les exemples présentés sur cette page sont calculés sur 20 000 km par an, tandis que des solutions avec un kilométrage différent, élevé ou illimité peuvent être disponibles selon les partenaires.",
+  },
+  {
     q: 'Simulation gratuite ?',
     a: "Oui. La demande de simulation et l'étude initiale sont gratuites et sans engagement. Vous restez libre d'accepter ou non la proposition reçue.",
   },
 ];
 
 const vehicleReviews = [
-  { name: 'Julien D.', text: 'Service rapide, clair et efficace. Je recommande !' },
-  { name: 'Sophie L.', text: "Excellent accompagnement du début à la fin. Je suis ravie de mon véhicule." },
-  { name: 'Thomas R.', text: 'Ma conseillère a été réactive, professionnelle et très disponible.' },
+  {
+    name: 'Sofiane M.',
+    initials: 'SM',
+    profile: 'Particulier · Audi A3',
+    text: "Réponse rapide et proposition cohérente avec mon budget. Tout m'a été expliqué clairement.",
+  },
+  {
+    name: 'Laura D.',
+    initials: 'LD',
+    profile: 'Professionnelle · Utilitaire',
+    text: "Je roule beaucoup pour mon activité. L'accompagnement m'a permis d'étudier une solution vraiment adaptée.",
+  },
+  {
+    name: 'Yanis B.',
+    initials: 'YB',
+    profile: 'Particulier · BMW X2',
+    text: "Mon dossier a été repris sérieusement et d'autres pistes ont été explorées avec moi.",
+  },
 ];
 
 const journeySteps = [
@@ -178,7 +226,15 @@ const specIcons: Record<string, string> = {
 };
 
 ---
-<BaseLayout title={pageTitle} description={pageDescription} path={canonicalPath} ogImage={photos[0]} active="vehicules">
+<BaseLayout
+  title={pageTitle}
+  description={pageDescription}
+  path={canonicalPath}
+  ogImage={photos[0]}
+  active="vehicules"
+  promoResponseLabel="Première réponse sous 24 à 48h"
+  promoResponseLabelCompact="Réponse 24 à 48h"
+>
 <Fragment slot="head">
   <script type="application/ld+json" set:html={JSON.stringify(vehicleSchema)} />
   <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
@@ -197,8 +253,21 @@ const specIcons: Record<string, string> = {
       <div class="vd-media">
         <div class="vd-carousel" id="carousel">
           <span class="vd-visual-label">Visuels d'illustration</span>
-          {photos.length
-            ? <img id="carouselImg" src={photos[0]} alt={`${v.brand} ${v.name}`} onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'carousel-icon',innerHTML:window.__vehCarIcon}))" />
+          {carouselPhotos.length
+            ? <img
+                id="carouselImg"
+                src={carouselPhotos[0].src}
+                srcset={carouselPhotos[0].srcset}
+                sizes="(max-width: 760px) calc(100vw - 36px), (max-width: 1000px) 50vw, 580px"
+                width="1920"
+                height="1080"
+                loading="eager"
+                decoding="async"
+                fetchpriority="high"
+                data-fallback={carouselPhotos[0].original}
+                alt={`${v.brand} ${v.name}`}
+                onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.srcset='';this.src=this.dataset.fallback;return;}this.replaceWith(Object.assign(document.createElement('div'),{className:'carousel-icon',innerHTML:window.__vehCarIcon}))"
+              />
             : <div class="carousel-icon"><Fragment set:html={carIcon} /></div>
           }
           {photos.length > 1 && (
@@ -212,7 +281,16 @@ const specIcons: Record<string, string> = {
           <div class="vd-thumbnails photo-grid">
             {photos.slice(0, 5).map((p, i) => (
               <button type="button" class={`photo-grid-item ${i === 0 ? 'active' : ''}`} data-index={i} aria-label={`Voir la photo ${i + 1}`}>
-                <img src={p} alt={`${v.brand} ${v.name} — photo ${i + 1}`} loading="lazy" />
+                <img
+                  src={getOptimizedImageUrl(p, 180, 68, 124, 'cover')}
+                  width="180"
+                  height="124"
+                  data-fallback={p}
+                  alt={`${v.brand} ${v.name} — photo ${i + 1}`}
+                  loading="lazy"
+                  decoding="async"
+                  onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;}"
+                />
               </button>
             ))}
           </div>
@@ -231,8 +309,8 @@ const specIcons: Record<string, string> = {
 
           <div class="vd-price-facts">
             <div class="vd-price-fact"><span><Fragment set:html={specIcons.calendar} /></span><strong>{baseDuree} mois</strong></div>
-            <div class="vd-price-fact"><span><Fragment set:html={specIcons.road} /></span><strong>Km illimité<br />possible</strong></div>
-            <div class="vd-price-fact"><span><Fragment set:html={specIcons.clock} /></span><strong>Réponse sous<br />24 à 48h</strong></div>
+            <div class="vd-price-fact"><span><Fragment set:html={specIcons.road} /></span><strong>Kilométrage<br />selon offre</strong></div>
+            <div class="vd-price-fact"><span><Fragment set:html={specIcons.clock} /></span><strong>1re réponse<br />24 à 48h ouvrées</strong></div>
           </div>
 
           <a href={`/simulation?vehicule=${encodeURIComponent(v.brand + ' ' + v.name)}`} class="vd-primary-cta btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing</a>
@@ -271,7 +349,7 @@ const specIcons: Record<string, string> = {
   <section class="financing-section">
     <div class="wrap">
       <header class="vd-section-head">
-        <h2>Votre financement en exemple</h2>
+        <h2>Votre financement en <span class="highlight-mark">exemple</span></h2>
         <p>Des solutions flexibles adaptées à votre budget.</p>
       </header>
       <div class="vd-financing-grid">
@@ -294,7 +372,7 @@ const specIcons: Record<string, string> = {
 
   <section class="vd-why-section">
     <div class="wrap">
-      <header class="vd-section-head"><h2>Pourquoi passer par Eleven Lease ?</h2></header>
+      <header class="vd-section-head"><h2>Pourquoi passer par <span class="highlight-mark">Eleven Lease ?</span></h2></header>
       <div class="vd-why-grid">
         <div><span><Fragment set:html={euroIcon} /></span><p><strong>Sans apport possible</strong><small>Financez votre véhicule sans payer d'avance.</small></p></div>
         <div><span><Fragment set:html={proIcon} /></span><p><strong>Plusieurs partenaires</strong><small>Nous recherchons la solution la plus adaptée.</small></p></div>
@@ -324,14 +402,24 @@ const specIcons: Record<string, string> = {
     <article class="vd-reviews-card">
       <div class="vd-reviews-head">
         <div class="vd-card-head"><h2>Ils nous <span class="highlight-mark">font confiance</span></h2><p><strong>4,9/5</strong> basé sur les retours de nos clients</p></div>
-        <div class="vd-rating-stars" aria-label="Note de 4,9 sur 5"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <div class="vd-rating-stars vd-star-tiles" role="img" aria-label="Note de 4,9 sur 5">
+          <span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span><span class="is-partial" aria-hidden="true">★</span>
+        </div>
       </div>
       <div class="vd-review-grid">
         {vehicleReviews.map(review => (
           <div class="vd-review">
-            <div class="vd-review-stars" aria-label="5 étoiles">★★★★★</div>
+            <div class="vd-review-top">
+              <span class="vd-review-quote" aria-hidden="true">“</span>
+              <div class="vd-review-stars vd-star-tiles" role="img" aria-label="5 étoiles">
+                <span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span><span aria-hidden="true">★</span>
+              </div>
+            </div>
             <p>“{review.text}”</p>
-            <strong>{review.name}</strong>
+            <footer class="vd-review-author">
+              <span class="vd-review-avatar" aria-hidden="true">{review.initials}</span>
+              <span><strong>{review.name}</strong><small>{review.profile}</small></span>
+            </footer>
           </div>
         ))}
       </div>
@@ -359,7 +447,16 @@ const specIcons: Record<string, string> = {
           <a class="vd-similar-card" href={`/vehicule/${sv.slug}`} aria-label={`Voir les détails : ${sv.brand} ${sv.name}`}>
             <div class="vd-similar-visual">
               {sv.photo
-                ? <img src={sv.photo} alt={`${sv.brand} ${sv.name}`} loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'), {innerHTML: window.__vehCarIcon}).firstElementChild)" />
+                ? <img
+                    src={getOptimizedImageUrl(sv.photo, 360, 72, 240, 'cover')}
+                    width="360"
+                    height="240"
+                    data-fallback={sv.photo}
+                    alt={`${sv.brand} ${sv.name}`}
+                    loading="lazy"
+                    decoding="async"
+                    onerror="if(this.dataset.fallback&&this.src!==this.dataset.fallback){this.src=this.dataset.fallback;return;}this.replaceWith(Object.assign(document.createElement('div'), {innerHTML: window.__vehCarIcon}).firstElementChild)"
+                  />
                 : <Fragment set:html={carIcon} />
               }
             </div>
@@ -367,7 +464,7 @@ const specIcons: Record<string, string> = {
               <strong>{sv.brand} {sv.name}</strong>
               <small>{[sv.fuel, sv.puissance ? `${sv.puissance} ch` : ''].filter(Boolean).join(' · ')}</small>
               <div class="vd-similar-price"><span>Dès</span><strong>{sv.price}€</strong><span>/mois</span></div>
-              <div class="vd-similar-meta"><span><Fragment set:html={specIcons.calendar} /> {parseDureeMonths(sv.duration)} mois</span><span><Fragment set:html={specIcons.road} /> Km illimité possible</span></div>
+              <div class="vd-similar-meta"><span><Fragment set:html={specIcons.calendar} /> {parseDureeMonths(sv.duration)} mois</span><span><Fragment set:html={specIcons.road} /> Kilométrage selon offre</span></div>
             </div>
             <span class="vd-similar-arrow" aria-hidden="true">›</span>
           </a>
@@ -394,7 +491,7 @@ const specIcons: Record<string, string> = {
 
 <div class="toast" id="toast">Lien copié</div>
 
-<script define:vars={{ carIcon, photos }}>
+<script define:vars={{ carIcon, carouselPhotos }}>
   window.__vehCarIcon = carIcon;
 
   const toast = document.getElementById('toast');
@@ -405,13 +502,15 @@ const specIcons: Record<string, string> = {
   }
 
   // carousel
-  if (photos.length > 1) {
+  if (carouselPhotos.length > 1) {
     let current = 0;
     const img = document.getElementById('carouselImg');
     const thumbs = Array.from(document.querySelectorAll('.photo-grid-item'));
     function showPhoto(i) {
-      current = (i + photos.length) % photos.length;
-      img.src = photos[current];
+      current = (i + carouselPhotos.length) % carouselPhotos.length;
+      img.src = carouselPhotos[current].src;
+      img.srcset = carouselPhotos[current].srcset;
+      img.dataset.fallback = carouselPhotos[current].original;
       thumbs.forEach((t, ti) => t.classList.toggle('active', ti === current));
     }
     thumbs.forEach(t => t.addEventListener('click', () => showPhoto(Number(t.dataset.index))));
@@ -796,7 +895,7 @@ const specIcons: Record<string, string> = {
     position:relative;aspect-ratio:1.47/1;overflow:hidden;border:1px solid #ececf0;border-radius:14px;
     background:linear-gradient(145deg,#f4f5f7 0%,#fafafa 100%);
   }
-  .vd-carousel img{display:block;width:100%;height:100%;object-fit:cover;}
+  .vd-carousel img{display:block;width:100%;height:100%;object-fit:contain;}
   .vd-carousel .carousel-icon{display:grid;place-items:center;width:100%;height:100%;}
   .vd-carousel .carousel-icon :global(svg){width:58%;}
   .vd-visual-label{
@@ -940,12 +1039,36 @@ const specIcons: Record<string, string> = {
   .vd-journey-step small{color:#74757d;font-size:9.5px;line-height:1.45;}
   .vd-reviews-head{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;text-align:center;}
   .vd-reviews-head p{margin-top:6px;color:#65666e;font-size:11px;text-align:center;}
-  .vd-rating-stars{display:flex;gap:2px;color:var(--accent-1);font-size:15px;white-space:nowrap;}
+  .vd-rating-stars{display:flex;gap:2px;white-space:nowrap;}
+  .vd-star-tiles{display:flex;gap:2px;white-space:nowrap;}
+  .vd-star-tiles span{
+    display:grid;place-items:center;width:16px;height:16px;
+    background-image:linear-gradient(90deg,#ff2b93 0%,#dc126b 52%,#a90949 100%);
+    background-size:88px 100%;background-position:var(--vd-star-offset) center;background-repeat:no-repeat;
+    color:#fff;font-size:10.5px;line-height:1;
+  }
+  .vd-star-tiles span:nth-child(1){--vd-star-offset:0px;}
+  .vd-star-tiles span:nth-child(2){--vd-star-offset:-18px;}
+  .vd-star-tiles span:nth-child(3){--vd-star-offset:-36px;}
+  .vd-star-tiles span:nth-child(4){--vd-star-offset:-54px;}
+  .vd-star-tiles span:nth-child(5){--vd-star-offset:-72px;}
+  .vd-star-tiles .is-partial{
+    background-image:
+      linear-gradient(90deg,transparent 0%,transparent 90%,#d9d9df 90%,#d9d9df 100%),
+      linear-gradient(90deg,#ff2b93 0%,#dc126b 52%,#a90949 100%);
+    background-size:100% 100%,88px 100%;background-position:0 0,var(--vd-star-offset) center;
+  }
   .vd-review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;}
-  .vd-review{display:flex;min-height:124px;flex-direction:column;padding:14px;border:1px solid #e8e8ec;border-radius:9px;background:#fff;}
-  .vd-review-stars{color:var(--accent-1);font-size:13px;letter-spacing:1px;}
+  .vd-review{display:flex;min-height:158px;flex-direction:column;padding:14px;border:1px solid #e8e8ec;border-radius:9px;background:#fff;}
+  .vd-review-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;min-height:22px;}
+  .vd-review-quote{height:21px;color:var(--accent-1);font-family:Georgia,serif;font-size:34px;font-weight:700;line-height:.9;}
+  .vd-review-stars{padding-top:1px;}
   .vd-review p{margin-top:9px;color:#575860;font-size:10.5px;line-height:1.5;}
-  .vd-review > strong{margin-top:auto;padding-top:10px;font-size:10.5px;}
+  .vd-review-author{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:10px;}
+  .vd-review-avatar{display:grid;place-items:center;flex:0 0 32px;width:32px;height:32px;border-radius:50%;background:linear-gradient(145deg,#f3f3f4,#e2e2e4);font-size:9.5px;font-weight:700;}
+  .vd-review-author > span:last-child{min-width:0;}
+  .vd-review-author strong{display:block;font-size:10.5px;line-height:1.3;}
+  .vd-review-author small{display:block;margin-top:1px;overflow:hidden;color:#85868e;font-size:8px;line-height:1.3;text-overflow:ellipsis;white-space:nowrap;}
   .vd-review-link{display:flex;align-items:center;justify-content:center;gap:10px;width:min(280px,100%);margin:12px auto 0;padding:9px 14px;border:1px solid rgba(255,0,127,.35);border-radius:7px;color:#34343a;font-size:11px;font-weight:650;}
   .vd-review-link:hover{border-color:var(--accent-1);color:var(--accent-1);}
 
@@ -980,7 +1103,7 @@ const specIcons: Record<string, string> = {
   .vd-similar-price{display:flex;align-items:baseline;gap:3px;margin-top:auto;}
   .vd-similar-price span{color:#73747c;font-size:8.5px;}
   .vd-similar-price strong{color:var(--accent-1);font-family:'Space Grotesk',sans-serif;font-size:19px;}
-  .vd-similar-meta{display:flex;gap:8px;margin-top:5px;color:#797a82;font-size:7.5px;}
+  .vd-similar-meta{display:flex;flex-wrap:wrap;gap:3px 8px;margin-top:5px;color:#797a82;font-size:7.5px;}
   .vd-similar-meta span{display:flex;align-items:center;gap:3px;}
   .vd-similar-meta :global(svg){width:10px;height:10px;color:var(--accent-1);}
   .vd-similar-arrow{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:28px;font-weight:300;color:#777982;}
@@ -1007,13 +1130,13 @@ const specIcons: Record<string, string> = {
 
   @media(max-width:760px){
     :global(body){padding-bottom:78px;}
-    .breadcrumb{padding-top:108px;gap:6px;}
+    .breadcrumb{padding-top:106px;gap:6px;}
     .vd-share{font-size:0;padding:7px;}
     .vd-share :global(svg){width:18px;height:18px;}
-    .vd-hero{grid-template-columns:1fr;gap:20px;padding-top:15px;}
-    .vd-carousel{aspect-ratio:1.34/1;border-radius:12px;}
-    .vd-carousel-arrow{width:38px;height:38px;}
-    .vd-thumbnails{gap:7px;overflow-x:auto;scrollbar-width:none;}
+    .vd-hero{grid-template-columns:1fr;gap:16px;padding-top:10px;}
+    .vd-carousel{aspect-ratio:1.43/1;border-radius:12px;}
+    .vd-carousel-arrow{width:44px;height:44px;}
+    .vd-thumbnails{gap:7px;margin-top:8px;overflow-x:auto;scrollbar-width:none;}
     .vd-thumbnails::-webkit-scrollbar{display:none;}
     .vd-thumbnails .photo-grid-item{min-width:66px;}
     .vd-offer{padding-top:0;}
@@ -1022,11 +1145,12 @@ const specIcons: Record<string, string> = {
     .vd-title-finish{display:block;margin-top:5px;font-size:clamp(17px,5.4vw,21px);line-height:1.12;letter-spacing:-.035em;}
     .vd-title-finish::before{content:'';}
     .vd-hero-meta{font-size:13.5px;}
-    .vd-price-card{padding:20px 18px 15px;}
+    .vd-price-card{padding:18px 18px 14px;}
     .vd-price .amount{font-size:52px;}
     .vd-price .currency{font-size:25px;}
     .vd-price .period{font-size:18px;}
     .vd-price-note{font-size:15px;}
+    .vd-price-facts{margin-top:14px;padding:12px 0;}
     .vd-price-fact{flex-direction:column;align-items:flex-start;gap:5px;padding:0 9px;}
     .vd-price-fact strong{font-size:10.5px;}
     .vd-price-fact > span :global(svg){width:20px;height:20px;}
@@ -1035,10 +1159,12 @@ const specIcons: Record<string, string> = {
     .vd-spec-item:nth-child(odd){border-right:1px solid #ececf0;}
     .vd-spec-item:nth-child(even){border-right:0;}
     .vd-spec-item:nth-last-child(-n+2){border-bottom:0;}
-    .vd-offer-overview{grid-template-columns:1fr;gap:12px;}
-    .vd-panel{padding:20px 18px;}
+    .vd-offer-overview{grid-template-columns:1fr;gap:12px;margin-top:16px;}
+    .vd-panel{padding:17px 15px;}
     .vd-check-grid{grid-template-columns:1fr;gap:10px;}
-    .vd-service-grid{gap:8px;}
+    .vd-service-grid{gap:8px;margin-top:14px;}
+    .vd-service-grid span{width:36px;height:36px;}
+    .vd-service-grid span :global(svg){width:27px;height:27px;}
     .vd-details{padding-top:36px;}
     .vd-main-specs{grid-template-columns:1fr 1fr;}
     .vd-main-spec{padding:12px 10px;}
@@ -1056,7 +1182,7 @@ const specIcons: Record<string, string> = {
     .vd-reviews-head{flex-direction:column;gap:8px;}
     .vd-review-grid{display:flex;overflow-x:auto;margin:14px -18px 0;padding:0 18px 8px;scroll-padding-inline:18px;scroll-snap-type:x mandatory;scrollbar-width:none;}
     .vd-review-grid::-webkit-scrollbar{display:none;}
-    .vd-review{min-width:245px;scroll-snap-align:start;}
+    .vd-review{min-width:265px;scroll-snap-align:start;}
     .vd-faq-list{grid-template-columns:1fr;gap:8px;}
     .vd-faq-list .faq-item{padding:0 15px;border-radius:11px;}
     .vd-faq-list .faq-item summary{min-height:52px;font-size:12.5px;}
@@ -1064,7 +1190,8 @@ const specIcons: Record<string, string> = {
     .vd-similar-grid{display:flex;overflow-x:auto;margin:0 -18px;padding:0 18px 10px;scroll-padding-inline:18px;scroll-snap-type:x mandatory;scrollbar-width:none;}
     .vd-similar-grid::-webkit-scrollbar{display:none;}
     .vd-similar-card{min-width:310px;scroll-snap-align:start;}
-    .vd-final-cta{align-items:flex-start;flex-direction:column;margin:24px 0 30px;padding:22px 20px;}
+    .vd-final-cta{align-items:flex-start;flex-direction:column;gap:14px;margin:22px 0 28px;padding:18px;}
+    .vd-final-cta h2{font-size:20px;}
     .vd-final-cta .btn-primary{width:100%;}
     .vd-sticky-bar{
       position:fixed;bottom:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:12px;

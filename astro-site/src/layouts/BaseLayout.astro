@@ -13,6 +13,8 @@ export interface Props {
   ogType?: 'website' | 'article';
   twitterCard?: 'summary' | 'summary_large_image';
   ctaHref?: string;
+  promoResponseLabel?: string;
+  promoResponseLabelCompact?: string;
   active?: 'contact' | 'loa' | 'vehicules' | 'articles';
   showProgressBar?: boolean;
 }
@@ -25,6 +27,8 @@ const {
   ogType = 'website',
   twitterCard = 'summary_large_image',
   ctaHref,
+  promoResponseLabel,
+  promoResponseLabelCompact,
   active,
   showProgressBar = false,
 } = Astro.props;
@@ -113,6 +117,7 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
     font-size:13px;font-weight:600;letter-spacing:.01em;white-space:nowrap;
   }
   .promo-dot{opacity:.6;}
+  .promo-response-compact{display:none;}
   body.scrolled .promo-bar{transform:translateY(-100%);opacity:0;pointer-events:none;}
 
   /* nav */
@@ -207,6 +212,8 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
   @media(max-width:480px){
     .promo-bar{padding:6px 12px;}
     .promo-bar-inner{font-size:11px;gap:6px;}
+    .promo-response-full{display:none;}
+    .promo-response-compact{display:inline;}
     .logo{gap:7px;}
     .site-header{top:40px;width:calc(100% - 24px);}
     .site-header.scrolled{top:7px;width:calc(100% - 18px);}
@@ -260,7 +267,7 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
 </style>
 </head>
 <body>
-  <Header ctaHref={ctaHref} active={active} showProgressBar={showProgressBar} />
+  <Header ctaHref={ctaHref} responseLabel={promoResponseLabel} responseLabelCompact={promoResponseLabelCompact} active={active} showProgressBar={showProgressBar} />
   <slot />
   <Footer />
   <Analytics />

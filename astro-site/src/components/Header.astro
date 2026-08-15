@@ -1,12 +1,22 @@
 ---
 export interface Props {
   ctaHref?: string;
+  /** Libellé du délai affiché dans la barre promotionnelle */
+  responseLabel?: string;
+  /** Variante courte utilisée sur les petits écrans */
+  responseLabelCompact?: string;
   /** Marque le lien nav correspondant comme actif */
   active?: 'contact' | 'loa' | 'vehicules' | 'articles';
   /** Affiche la barre de progression de scroll dans le header (pages de contenu long) */
   showProgressBar?: boolean;
 }
-const { ctaHref = '/simulation', active, showProgressBar = false } = Astro.props;
+const {
+  ctaHref = '/simulation',
+  responseLabel = 'Réponse sous 24h',
+  responseLabelCompact = responseLabel,
+  active,
+  showProgressBar = false,
+} = Astro.props;
 const cls = (key: string) => (active === key ? 'active' : undefined);
 ---
 <div class="promo-bar" id="promoBar">
@@ -15,7 +25,7 @@ const cls = (key: string) => (active === key ? 'active' : undefined);
     <span class="promo-dot" aria-hidden="true">·</span>
     <span>Auto &amp; Moto</span>
     <span class="promo-dot" aria-hidden="true">·</span>
-    <span>Réponse sous 24h</span>
+    <span><span class="promo-response-full">{responseLabel}</span><span class="promo-response-compact">{responseLabelCompact}</span></span>
   </div>
 </div>
 <header class="site-header">
