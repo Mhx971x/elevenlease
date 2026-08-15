@@ -314,7 +314,6 @@ const specIcons: Record<string, string> = {
           </div>
         ))}
       </div>
-      <div class="vd-journey-car" aria-hidden="true"><Fragment set:html={carIcon} /></div>
     </article>
 
     <article class="vd-reviews-card">
@@ -819,9 +818,9 @@ const specIcons: Record<string, string> = {
     color:#fff;font-size:11px;font-weight:800;letter-spacing:.035em;text-transform:uppercase;box-shadow:0 5px 14px rgba(229,22,107,.18);
   }
   .vd-offer h1{margin-top:10px;font-size:clamp(29px,3.1vw,39px);line-height:1.04;letter-spacing:-.045em;}
+  .vd-title-main{display:block;white-space:nowrap;}
   .vd-title-main > span{text-transform:uppercase;}
-  .vd-title-finish{font:inherit;font-size:1em;}
-  .vd-title-finish::before{content:' ';}
+  .vd-title-finish{display:block;margin-top:6px;font:inherit;font-size:.68em;line-height:1.12;letter-spacing:-.035em;}
   .vd-hero-meta{margin-top:9px;color:var(--text-dim);font-size:15.5px;line-height:1.45;}
   .vd-price-card{
     margin-top:14px;padding:22px 24px 16px;border:1px solid #e2e2e6;border-radius:14px;background:#fff;
@@ -925,14 +924,12 @@ const specIcons: Record<string, string> = {
   .vd-proof-section{display:grid;grid-template-columns:.78fr 1.22fr;gap:18px;padding-top:30px;}
   .vd-journey-card,.vd-reviews-card{position:relative;padding:24px;border:1px solid #e5e5e9;border-radius:13px;background:#fff;box-shadow:0 5px 16px rgba(17,17,19,.025);overflow:hidden;}
   .vd-journey-card h2,.vd-reviews-card h2{font-size:19px;letter-spacing:-.025em;}
-  .vd-journey-list{display:flex;flex-direction:column;gap:13px;margin-top:16px;max-width:78%;}
+  .vd-journey-list{display:flex;flex-direction:column;gap:13px;margin-top:16px;max-width:none;}
   .vd-journey-step{display:flex;align-items:flex-start;gap:10px;}
   .vd-journey-step > span{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#ff1d84,#d81869);color:#fff;font-size:12px;font-weight:750;flex:none;}
   .vd-journey-step p{display:flex;flex-direction:column;gap:3px;}
   .vd-journey-step strong{font-size:11.5px;}
   .vd-journey-step small{color:#74757d;font-size:9.5px;line-height:1.45;}
-  .vd-journey-car{position:absolute;right:14px;bottom:12px;width:115px;color:var(--accent-1);opacity:.78;}
-  .vd-journey-car :global(svg){width:100%;}
   .vd-reviews-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;}
   .vd-reviews-head p{margin-top:5px;color:#65666e;font-size:11px;}
   .vd-rating-stars{display:flex;gap:2px;color:var(--accent-1);font-size:15px;white-space:nowrap;}
@@ -1046,8 +1043,7 @@ const specIcons: Record<string, string> = {
     .vd-why-grid > div:last-child{grid-column:1/-1;max-width:230px;margin:auto;}
     .vd-proof-section{padding-top:22px;}
     .vd-journey-card,.vd-reviews-card{padding:20px 18px;}
-    .vd-journey-list{max-width:none;padding-right:62px;}
-    .vd-journey-car{width:88px;right:-5px;bottom:8px;}
+    .vd-journey-list{max-width:none;padding-right:0;}
     .vd-reviews-head{flex-direction:column;gap:8px;}
     .vd-review-grid{display:flex;overflow-x:auto;margin:14px -18px 0;padding:0 18px 8px;scroll-snap-type:x mandatory;scrollbar-width:none;}
     .vd-review-grid::-webkit-scrollbar{display:none;}
