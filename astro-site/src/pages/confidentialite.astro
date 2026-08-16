@@ -84,8 +84,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <style>
   .legal-hero{padding:150px 0 40px;border-bottom:1px solid var(--border);}
-  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);border:1px solid var(--border);padding:6px 14px;border-radius:100px;margin-bottom:24px;width:fit-content;}
-  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-1);}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);border:1px solid var(--border);padding:6px 14px;border-radius:var(--radius-pill);margin-bottom:24px;width:fit-content;}
+  .eyebrow .dot{width:6px;height:6px;border-radius:var(--radius-round);background:var(--accent-1);}
   .legal-hero h1{font-size:clamp(30px,5vw,48px);max-width:760px;}
   .legal-hero .updated{color:var(--text-faint);font-size:13.5px;margin-top:16px;}
 
@@ -101,7 +101,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .legal-content a.inline-link{color:var(--text);text-decoration:underline;text-underline-offset:3px;}
   .legal-content a.inline-link:hover{color:var(--accent-1);}
 
-  .data-table{border:1px solid var(--border);border-radius:16px;overflow:hidden;margin-top:16px;background:var(--surface);}
+  .data-table{border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-top:16px;background:var(--surface);}
   .data-row{display:grid;grid-template-columns:1fr 1.4fr;gap:16px;padding:16px 22px;border-bottom:1px solid var(--border);}
   .data-row:last-child{border-bottom:none;}
   .data-row .d-label{font-size:13px;color:var(--text-faint);text-transform:uppercase;letter-spacing:.05em;}
@@ -109,7 +109,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   @media(max-width:560px){ .data-row{grid-template-columns:1fr;gap:6px;} }
 
   .notice-box{
-    border:1px solid var(--border);border-radius:16px;padding:20px 24px;margin-top:20px;
+    border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 24px;margin-top:20px;
     background:radial-gradient(ellipse at 0% 0%, var(--surface), var(--bg));
     font-size:14px;color:var(--text-dim);line-height:1.7;
   }

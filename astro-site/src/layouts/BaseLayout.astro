@@ -75,6 +75,13 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
     --shadow-sm:0 1px 2px rgba(17,17,19,0.04), 0 1px 1px rgba(17,17,19,0.03);
     --shadow-md:0 12px 32px rgba(17,17,19,0.08), 0 2px 8px rgba(17,17,19,0.04);
     --shadow-lg:0 24px 56px rgba(17,17,19,0.12), 0 4px 12px rgba(17,17,19,0.05);
+    --radius-xs:6px;
+    --radius-sm:10px;
+    --radius-md:12px;
+    --radius-lg:16px;
+    --radius-xl:24px;
+    --radius-pill:999px;
+    --radius-round:50%;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -139,7 +146,7 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
     margin:0;
     padding:0 14px 0 22px;
     border:1px solid rgba(17,17,19,.05);
-    border-radius:24px;
+    border-radius:var(--radius-xl);
     background:rgba(255,255,255,.78);
     box-shadow:0 12px 34px rgba(17,17,19,.055),inset 0 1px 0 rgba(255,255,255,.94);
     backdrop-filter:blur(18px) saturate(1.25);
@@ -152,14 +159,14 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
   .site-header.scrolled{top:12px;width:calc(100% - 48px);}
   .site-header.scrolled .site-nav{
     height:60px;
-    border-radius:20px;
+    border-radius:var(--radius-xl);
     background:rgba(255,255,255,.86);
     box-shadow:0 10px 30px rgba(17,17,19,.07),inset 0 1px 0 rgba(255,255,255,.96);
     backdrop-filter:blur(24px) saturate(1.35);
     -webkit-backdrop-filter:blur(24px) saturate(1.35);
   }
   .site-header.scrolled .logo-icon{width:82px;height:34px;}
-  .progress-bar{position:absolute;bottom:1px;left:22px;height:1px;width:0%;max-width:calc(100% - 44px);border-radius:999px;background:var(--accent);transition:width .1s linear;}
+  .progress-bar{position:absolute;bottom:1px;left:22px;height:1px;width:0%;max-width:calc(100% - 44px);border-radius:var(--radius-pill);background:var(--accent);transition:width .1s linear;}
   .nav-links{display:flex;align-items:center;justify-content:center;gap:34px;color:#3f4047;font-size:15px;font-weight:500;white-space:nowrap;}
   .nav-links a{position:relative;padding:9px 3px;transition:color .2s ease;}
   .nav-links a::after{
@@ -169,7 +176,7 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
     bottom:1px;
     width:4px;
     height:4px;
-    border-radius:50%;
+    border-radius:var(--radius-round);
     background:var(--accent-1);
     opacity:0;
     transform:translate(-50%,4px) scale(.4);
@@ -187,7 +194,7 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
     padding:0 24px;
     color:#fff;
     border:1px solid rgba(255,255,255,.18);
-    border-radius:16px;
+    border-radius:var(--radius-sm);
     background:linear-gradient(135deg,#ed0574,#b50850);
     box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 8px 19px rgba(190,24,93,.14);
     font-size:13px;
@@ -206,8 +213,8 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
     .nav-links{display:none;}
     .site-header{top:46px;width:calc(100% - 24px);}
     .site-header.scrolled{top:8px;width:calc(100% - 20px);}
-    .site-nav{height:64px;padding:0 12px 0 17px;border-radius:20px;}
-    .site-header.scrolled .site-nav{height:58px;border-radius:18px;}
+    .site-nav{height:64px;padding:0 12px 0 17px;border-radius:var(--radius-xl);}
+    .site-header.scrolled .site-nav{height:58px;border-radius:var(--radius-lg);}
   }
   @media(max-width:480px){
     .promo-bar{padding:6px 12px;}
@@ -217,8 +224,8 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
     .logo{gap:7px;}
     .site-header{top:40px;width:calc(100% - 24px);}
     .site-header.scrolled{top:7px;width:calc(100% - 18px);}
-    .site-nav{height:64px;padding:0 18px;border-radius:21px;grid-template-columns:1fr auto;}
-    .site-header.scrolled .site-nav{height:58px;border-radius:19px;}
+    .site-nav{height:64px;padding:0 18px;border-radius:var(--radius-xl);grid-template-columns:1fr auto;}
+    .site-header.scrolled .site-nav{height:58px;border-radius:var(--radius-lg);}
     .logo-icon{width:88px;height:39px;}
     .site-header.scrolled .logo-icon{width:82px;height:35px;}
     .site-nav > .nav-right{grid-column:2;}

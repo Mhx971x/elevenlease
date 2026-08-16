@@ -74,7 +74,7 @@
     position:relative;
     overflow:hidden;
     border:1px solid rgba(255,255,255,.12);
-    border-radius:38px 38px 20px 20px;
+    border-radius:var(--radius-xl) var(--radius-xl) var(--radius-lg) var(--radius-lg);
     color:#fff;
     background:
       radial-gradient(circle at 75% 4%,rgba(255,0,127,.34),transparent 27%),
@@ -91,7 +91,7 @@
     aspect-ratio:1;
     right:-180px;
     top:-260px;
-    border-radius:50%;
+    border-radius:var(--radius-round);
     background:rgba(255,0,127,.22);
     filter:blur(90px);
     pointer-events:none;
@@ -148,7 +148,7 @@
     margin-top:25px;
     padding:13px 18px;
     border:1px solid rgba(255,255,255,.18);
-    border-radius:100px;
+    border-radius:var(--radius-pill);
     background:rgba(255,255,255,.07);
     color:#fff;
     font-size:13.5px;
@@ -170,7 +170,7 @@
     align-items:center;
     justify-content:center;
     border:1px solid rgba(255,255,255,.15);
-    border-radius:50%;
+    border-radius:var(--radius-round);
     color:rgba(255,255,255,.72);
     background:rgba(255,255,255,.04);
     transition:color .2s ease,border-color .2s ease,background .2s ease,transform .2s ease;
@@ -246,7 +246,7 @@
   }
   @media(max-width:640px){
     .site-footer{padding:8px;}
-    .footer-panel{border-radius:28px 28px 16px 16px;}
+    .footer-panel{border-radius:var(--radius-xl) var(--radius-xl) var(--radius-lg) var(--radius-lg);}
     .footer-inner{padding:44px 22px 24px;}
     .footer-top{grid-template-columns:1fr 1fr;gap:38px 26px;padding-bottom:60px;}
     .footer-brand{grid-column:1/-1;}
