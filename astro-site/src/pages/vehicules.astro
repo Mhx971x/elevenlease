@@ -112,8 +112,8 @@ const faqSchema = {
 <section class="page-hero">
   <div class="wrap">
     <div class="eyebrow"><span class="dot"></span> Catalogue indicatif</div>
-    <h1>Trouvez le véhicule adapté à votre <span class="highlight-mark">projet</span>.</h1>
-    <p>Une sélection parmi des milliers de véhicules recherchés sur mesure selon vos critères.</p>
+    <h1>Des milliers de véhicules. <span class="hero-mobile-break"><span class="highlight-mark">Pour vous</span>.</span></h1>
+    <p>Nous sélectionnons ceux qui correspondent à votre projet.</p>
   </div>
 </section>
 
@@ -409,7 +409,8 @@ const faqSchema = {
   .page-hero .wrap{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;}
   .page-hero .eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:18px;padding:6px 13px;border:1px solid #e7e7eb;border-radius:999px;background:rgba(255,255,255,.82);color:var(--text-dim);font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.075em;box-shadow:0 4px 14px rgba(17,17,19,.035);}
   .page-hero .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-1);box-shadow:0 0 0 4px rgba(255,0,127,.09);}
-  .page-hero h1{max-width:850px;font-size:clamp(36px,5vw,56px);letter-spacing:-.04em;}
+  .page-hero h1{max-width:1100px;font-size:clamp(36px,5vw,56px);letter-spacing:-.04em;}
+  .hero-mobile-break{display:inline;}
   .page-hero p{max-width:620px;margin-top:16px;color:var(--text-dim);font-size:16px;line-height:1.65;}
 
   /* catalogue tools */
@@ -526,6 +527,7 @@ const faqSchema = {
     .page-hero{padding:150px 0 45px;}
     .page-hero .eyebrow{margin-bottom:15px;font-size:10px;}
     .page-hero h1{font-size:clamp(32px,9.5vw,39px);line-height:1.08;}
+    .hero-mobile-break{display:block;margin-top:3px;}
     .page-hero p{max-width:355px;margin-top:13px;font-size:14px;line-height:1.55;}
     .catalogue{padding:18px 0 56px;}
     .catalogue-tools{top:72px;margin:0 -4px 18px;padding:11px;border-radius:16px;}
