@@ -24,6 +24,55 @@ const specIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><c
 const fuelIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 21V6a2 2 0 012-2h6a2 2 0 012 2v15M4 21h10M4 10h10" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 8l2.5 2.5A2 2 0 0117 12v5a1.5 1.5 0 003 0V9l-3-3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const roadIcon = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M4 21L9 3h6l5 18M9 15h6" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
+function getOptimizedImageUrl(
+  src: string,
+  width: number,
+  quality = 78,
+  height?: number,
+  resize: 'contain' | 'cover' = 'cover',
+): string {
+  try {
+    const url = new URL(src);
+    const publicObjectPath = '/storage/v1/object/public/';
+    if (!url.pathname.includes(publicObjectPath)) return src;
+    url.pathname = url.pathname.replace(publicObjectPath, '/storage/v1/render/image/public/');
+    url.searchParams.set('width', String(width));
+    if (height) url.searchParams.set('height', String(height));
+    url.searchParams.set('resize', resize);
+    url.searchParams.set('quality', String(quality));
+    return url.toString();
+  } catch {
+    return src;
+  }
+}
+
+function normalizeSearchValue(value: string): string {
+  return value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+}
+
+const catalogueFaq = [
+  {
+    q: "Le véhicule que je cherche n'est pas affiché, que faire ?",
+    a: "Indiquez-nous le modèle souhaité ou simplement vos critères. Les véhicules présentés sont des exemples : notre recherche est réalisée sur mesure auprès de notre réseau de partenaires.",
+  },
+  {
+    q: 'Puis-je choisir précisément mon véhicule ?',
+    a: 'Oui. Vous pouvez préciser la marque, le modèle, la motorisation, la finition, les équipements et le budget souhaités. Nous recherchons ensuite une solution cohérente avec votre projet.',
+  },
+  {
+    q: 'Les tarifs affichés sont-ils définitifs ?',
+    a: "Non. Il s'agit d'offres indicatives. Le loyer final dépend notamment du véhicule, de la durée, du kilométrage, de l'apport éventuel et de l'acceptation du dossier par un partenaire financier.",
+  },
+  {
+    q: 'Le kilométrage est-il limité ?',
+    a: 'Cela dépend du contrat sélectionné. Des solutions avec un kilométrage différent, élevé ou illimité peuvent être étudiées selon votre usage et les possibilités de nos partenaires.',
+  },
+  {
+    q: 'La simulation est-elle gratuite ?',
+    a: "Oui. La demande de simulation et l'étude initiale sont gratuites et sans engagement. Vous restez libre d'accepter ou non la proposition reçue.",
+  },
+];
+
 const collectionSchema = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
@@ -43,23 +92,16 @@ const collectionSchema = {
 const faqSchema = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: "Le véhicule que je cherche n'est pas dans le catalogue, que faire ?",
-      acceptedAnswer: { '@type': 'Answer', text: 'Décrivez votre projet, notre réseau de partenaires vous trouve la bonne offre : les modèles affichés sont présentés à titre d\'exemple, bien plus de véhicules sont disponibles via notre réseau.' },
-    },
-    {
-      '@type': 'Question',
-      name: 'Y a-t-il une limite de kilométrage sur ces véhicules ?',
-      acceptedAnswer: { '@type': 'Answer', text: 'Non, le kilométrage illimité est proposé selon contrat sur les véhicules du catalogue.' },
-    },
-  ],
+  mainEntity: catalogueFaq.map(item => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
 };
 ---
 <BaseLayout
-  title="Eleven Lease — Véhicules disponibles, toutes marques et budgets"
-  description="Citadines, SUV, électriques, toutes marques : découvrez les véhicules disponibles via le réseau de partenaires Eleven Lease et trouvez l'offre de leasing adaptée à votre budget. Kilométrage illimité inclus."
+  title="Catalogue de véhicules en leasing — Eleven Lease"
+  description="Découvrez une sélection indicative de véhicules en leasing et confiez-nous votre recherche sur mesure selon votre modèle, votre budget et votre usage."
   path="/vehicules"
   active="vehicules"
 >
@@ -69,96 +111,159 @@ const faqSchema = {
   </Fragment>
 <section class="page-hero">
   <div class="wrap">
-    <div class="eyebrow"><span class="dot"></span> Mis à jour régulièrement</div>
-    <h1>Véhicules disponibles via notre réseau.</h1>
-    <p>Ces modèles sont présentés à titre d'exemple. Bien plus de véhicules sont disponibles via notre réseau : chaque recherche est réalisée sur mesure selon vos besoins.</p>
-    <div class="unlimited-note"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6.5 8a4 4 0 100 8 4 4 0 003.2-1.6L12 12l2.3 2.4A4 4 0 1017.5 8a4 4 0 00-3.2 1.6L12 12l-2.3-2.4A4 4 0 006.5 8z" stroke="var(--accent-1)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> Kilométrage illimité selon contrat.</div>
+    <div class="eyebrow"><span class="dot"></span> Catalogue indicatif</div>
+    <h1>Trouvez le véhicule adapté à votre <span class="highlight-mark">projet</span>.</h1>
+    <p>Une sélection parmi des milliers de véhicules recherchés sur mesure selon vos critères.</p>
   </div>
 </section>
 
 <section class="catalogue">
   <div class="wrap">
-    <div class="filter-bar">
-      <input type="search" class="filter-search" id="filterSearch" placeholder="Rechercher une marque, un modèle…">
-      <select class="filter-select" id="filterType">
-        <option value="all">Tous les modèles</option>
-        <option value="citadine">Citadines</option>
-        <option value="berline">Berlines</option>
-        <option value="suv">SUV</option>
-        <option value="electrique">Électriques</option>
-      </select>
-      <select class="filter-select" id="filterCondition">
-        <option value="all">Neuf &amp; occasion</option>
-        <option value="neuf">Neuf</option>
-        <option value="occasion">Occasion</option>
-      </select>
-      <select class="filter-select" id="filterPrice">
-        <option value="all">Tous budgets</option>
-        <option value="0-250">Jusqu'à 250€/mois</option>
-        <option value="250-400">250€ – 400€/mois</option>
-        <option value="400-9999">400€ et plus</option>
-      </select>
-      <select class="filter-select" id="filterSort">
-        <option value="default">Trier par</option>
-        <option value="price-asc">Prix croissant</option>
-        <option value="price-desc">Prix décroissant</option>
-      </select>
-      <div class="filter-count" id="filterCount">{vehicles.length}{vehicles.length > 1 ? ' véhicules' : ' véhicule'}</div>
+    <div class="catalogue-tools" id="catalogueTools">
+      <div class="tools-topline">
+        <div class="filter-count" id="filterCount">{vehicles.length}{vehicles.length > 1 ? ' véhicules' : ' véhicule'}</div>
+        <button class="mobile-filter-toggle" id="mobileFilterToggle" type="button" aria-expanded="false" aria-controls="filterPanel">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+          Filtres <span id="mobileFilterBadge" hidden></span>
+        </button>
+        <label class="sort-wrap">
+          <span class="sr-only">Trier les véhicules</span>
+          <select class="filter-select filter-sort" id="filterSort">
+            <option value="default">Trier par</option>
+            <option value="price-asc">Prix croissant</option>
+            <option value="price-desc">Prix décroissant</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="filter-panel" id="filterPanel">
+        <label class="search-wrap">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="1.7"/><path d="M16 16l4 4" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          <span class="sr-only">Rechercher un véhicule</span>
+          <input type="search" class="filter-search" id="filterSearch" placeholder="Marque, modèle ou finition…">
+        </label>
+        <select class="filter-select" id="filterType" aria-label="Type de véhicule">
+          <option value="all">Tous les modèles</option>
+          <option value="citadine">Citadines</option>
+          <option value="berline">Berlines</option>
+          <option value="suv">SUV</option>
+          <option value="electrique">Électriques</option>
+        </select>
+        <select class="filter-select" id="filterPrice" aria-label="Budget mensuel">
+          <option value="all">Tous les budgets</option>
+          <option value="0-250">Jusqu'à 250 €/mois</option>
+          <option value="250-400">250 € – 400 €/mois</option>
+          <option value="400-9999">400 € et plus</option>
+        </select>
+        <button class="filter-reset" id="filterReset" type="button" hidden>Réinitialiser</button>
+      </div>
+      <div class="active-filters" id="activeFilters" aria-live="polite"></div>
     </div>
 
     <div class="veh-grid" id="vehGrid">
-      {vehicles.map(v => (
+      {vehicles.map((v, index) => {
+        const cardImage = v.photo ? getOptimizedImageUrl(v.photo, 720, 80, 470, 'cover') : '';
+        const cardSrcset = v.photo
+          ? [440, 720, 960].map(width => `${getOptimizedImageUrl(v.photo, width, 80, Math.round(width / 1.53), 'cover')} ${width}w`).join(', ')
+          : '';
+        const durationLabel = v.duration && !/mois/i.test(v.duration) ? `${v.duration} mois` : v.duration;
+        const cardSpecs = [v.fuel, v.transmission, durationLabel].filter(Boolean);
+        return (
         <a
           class="veh-card show"
           href={`/vehicule/${v.slug}`}
           data-type={v.type}
-          data-condition={v.condition}
           data-price={v.price}
-          data-search={`${v.brand} ${v.name} ${v.finition}`.toLowerCase()}
-          aria-label={`Voir les détails : ${v.brand} ${v.name}`}
+          data-search={normalizeSearchValue(`${v.brand} ${v.name} ${v.finition}`)}
+          aria-label={`Voir l'offre indicative : ${v.brand} ${v.name}`}
         >
           <div class="veh-visual">
-            <span class={`veh-badge ${v.condition === 'occasion' ? 'occasion' : ''}`}>{v.condition === 'neuf' ? 'Neuf' : 'Occasion'}</span>
+            <span class="veh-badge">Offre indicative</span>
             {v.photo
-              ? <img src={v.photo} alt={`${v.brand} ${v.name}`} loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('div'), {innerHTML: window.__vehCarIcon}).firstElementChild)" />
+              ? <img src={cardImage} srcset={cardSrcset} sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 980px) 50vw, 380px" width="720" height="470" alt={`${v.brand} ${v.name}`} loading={index < 3 ? 'eager' : 'lazy'} fetchpriority={index === 0 ? 'high' : undefined} decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('div'), {innerHTML: window.__vehCarIcon}).firstElementChild)" />
               : <Fragment set:html={carIcon} />
             }
           </div>
           <div class="veh-body">
             <div class="veh-brand">{v.brand}</div>
             <div class="veh-name">{v.name}</div>
+            {v.finition && <div class="veh-finition">{v.finition}</div>}
             <div class="veh-specs">
-              <span><Fragment set:html={fuelIcon} /> {v.fuel}</span>
-              <span><Fragment set:html={roadIcon} /> Kilométrage illimité</span>
-              <span><Fragment set:html={specIcon} /> {v.duration}</span>
+              {cardSpecs.map((spec, specIndex) => (
+                <span>
+                  <Fragment set:html={specIndex === 0 ? fuelIcon : specIcon} /> {spec}
+                </span>
+              ))}
             </div>
+            <div class="veh-mileage"><Fragment set:html={roadIcon} /> Kilométrage selon l'offre</div>
             <div class="veh-footer">
               <div class="veh-price">
-                <span class="period">dès </span>
-                <span class="amount">{v.price}€</span>
+                <span class="price-label">À partir de</span>
+                <span class="amount">{v.price} €</span>
                 <span class="period">/mois</span>
               </div>
-              <span class="veh-cta">Voir les détails →</span>
+              <span class="veh-cta">Voir l'offre <span aria-hidden="true">→</span></span>
             </div>
           </div>
         </a>
-      ))}
+      )})}
     </div>
 
     <div id="emptyState" class:list={['empty-state', { show: vehicles.length === 0 }]}>
       <h3>{vehicles.length === 0 ? 'Catalogue momentanément indisponible' : 'Aucun véhicule ne correspond à ces filtres'}</h3>
       <p>{vehicles.length === 0
-        ? "Impossible de charger les véhicules pour le moment. Contactez-nous directement pour connaître nos offres en cours."
+        ? "Impossible de charger les exemples pour le moment. Décrivez-nous votre projet pour lancer une recherche personnalisée."
         : "Essayez d'élargir votre recherche, ou contactez-nous directement pour un besoin spécifique."}</p>
+    </div>
+
+    <div class="reassurance-grid" aria-label="Les avantages Eleven Lease">
+      <div class="reassurance-item">
+        <span class="reassurance-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M17.2 7a6 7 0 100 10M4 10h9M4 14h8M4 4l16 16" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+        <span><strong>Apport adapté</strong><small>Selon votre projet</small></span>
+      </div>
+      <div class="reassurance-item">
+        <span class="reassurance-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M7 3v3m10-3v3M4 9h16M5 5h14a1 1 0 011 1v14H4V6a1 1 0 011-1zM8 13h3m2 0h3m-8 3h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span><strong>Étude gratuite</strong><small>Sans engagement</small></span>
+      </div>
+      <div class="reassurance-item">
+        <span class="reassurance-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
+        <span><strong>Réponse rapide</strong><small>Sous 24 à 48 h ouvrées</small></span>
+      </div>
+      <div class="reassurance-item">
+        <span class="reassurance-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M8.5 12a4 4 0 118 0v2.5a2 2 0 01-2 2H13M6 13v-1a6 6 0 0112 0v1M6 13H4.5v4H6m12-4h1.5v4H18" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span><strong>Conseiller dédié</strong><small>À chaque étape</small></span>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="wrap">
-  <div class="cta-band">
-    <h2>Le véhicule que vous cherchez n'est pas dans la liste ?</h2>
-    <p>Décrivez votre projet, notre réseau de partenaires vous trouve la bonne offre.</p>
-    <a href="/simulation" class="btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing</a>
+<section class="custom-search-section">
+  <div class="wrap">
+    <div class="cta-band">
+      <div class="cta-copy">
+        <span class="cta-eyebrow">Recherche personnalisée</span>
+        <h2>Vous ne trouvez pas votre <span class="highlight-mark">modèle</span> ?</h2>
+        <p>Indiquez-nous le véhicule souhaité ou simplement vos critères. Nous recherchons une solution adaptée auprès de notre réseau.</p>
+      </div>
+      <a href="/simulation" class="btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Décrire mon projet</a>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section">
+  <div class="wrap">
+    <header class="section-head">
+      <h2>Questions <span class="highlight-mark">fréquentes</span>.</h2>
+      <p>Les réponses utiles avant de lancer votre recherche.</p>
+    </header>
+    <div class="faq-list">
+      {catalogueFaq.map(item => (
+        <details class="faq-item">
+          <summary>{item.q}<span class="faq-icon" aria-hidden="true"></span></summary>
+          <div class="faq-content"><p>{item.a}</p></div>
+        </details>
+      ))}
+    </div>
   </div>
 </section>
 
@@ -171,10 +276,16 @@ const faqSchema = {
   const emptyState = document.getElementById('emptyState')!;
   const filterCount = document.getElementById('filterCount')!;
   const fType = document.getElementById('filterType') as HTMLSelectElement;
-  const fCondition = document.getElementById('filterCondition') as HTMLSelectElement;
   const fPrice = document.getElementById('filterPrice') as HTMLSelectElement;
   const fSort = document.getElementById('filterSort') as HTMLSelectElement;
   const fSearch = document.getElementById('filterSearch') as HTMLInputElement;
+  const filterReset = document.getElementById('filterReset') as HTMLButtonElement;
+  const activeFilters = document.getElementById('activeFilters')!;
+  const mobileFilterToggle = document.getElementById('mobileFilterToggle') as HTMLButtonElement;
+  const mobileFilterBadge = document.getElementById('mobileFilterBadge')!;
+  const catalogueTools = document.getElementById('catalogueTools')!;
+
+  if(grid && emptyState && filterCount && fType && fPrice && fSort && fSearch && filterReset && activeFilters && mobileFilterToggle && mobileFilterBadge && catalogueTools){
 
   function normalizeValue(s: string){
     return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
@@ -183,16 +294,45 @@ const faqSchema = {
   const allCards = Array.from(grid.querySelectorAll<HTMLAnchorElement>('.veh-card'));
   const totalLabel = (n: number) => n + (n > 1 ? ' véhicules' : ' véhicule');
 
+  function getActiveFilterLabels(){
+    const labels: { key: string; label: string }[] = [];
+    if(fType.value !== 'all') labels.push({ key: 'type', label: fType.options[fType.selectedIndex].text });
+    if(fPrice.value !== 'all') labels.push({ key: 'price', label: fPrice.options[fPrice.selectedIndex].text });
+    if(fSearch.value.trim()) labels.push({ key: 'search', label: `“${fSearch.value.trim()}”` });
+    return labels;
+  }
+
+  function clearFilter(key: string){
+    if(key === 'type') fType.value = 'all';
+    if(key === 'price') fPrice.value = 'all';
+    if(key === 'search') fSearch.value = '';
+    render();
+  }
+
+  function updateActiveFilters(){
+    const labels = getActiveFilterLabels();
+    activeFilters.replaceChildren(...labels.map(({ key, label }) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'active-filter';
+      button.textContent = `${label} ×`;
+      button.setAttribute('aria-label', `Supprimer le filtre ${label}`);
+      button.addEventListener('click', () => clearFilter(key));
+      return button;
+    }));
+    filterReset.hidden = labels.length === 0;
+    mobileFilterBadge.hidden = labels.length === 0;
+    mobileFilterBadge.textContent = String(labels.length);
+  }
+
   function render(){
     const type = fType.value;
-    const condition = fCondition.value;
     const priceRange = fPrice.value;
     const sort = fSort.value;
     const query = normalizeValue(fSearch.value.trim());
 
     let visible = allCards.filter(card => {
       if(type !== 'all' && card.dataset.type !== type) return false;
-      if(condition !== 'all' && card.dataset.condition !== condition) return false;
       if(priceRange !== 'all'){
         const [min, max] = priceRange.split('-').map(Number);
         const price = Number(card.dataset.price || 0);
@@ -218,138 +358,221 @@ const faqSchema = {
       emptyState.querySelector('p')!.textContent = "Essayez d'élargir votre recherche, ou contactez-nous directement pour un besoin spécifique.";
     }
     emptyState.classList.toggle('show', visible.length === 0);
+    updateActiveFilters();
   }
 
   if(allCards.length > 0){
-    [fType, fCondition, fPrice, fSort].forEach(el => el.addEventListener('change', render));
+    [fType, fPrice, fSort].forEach(el => el.addEventListener('change', render));
     let searchTimer: ReturnType<typeof setTimeout>;
     fSearch.addEventListener('input', () => {
       clearTimeout(searchTimer);
       searchTimer = setTimeout(render, 200);
     });
   }
+
+  filterReset.addEventListener('click', () => {
+    fType.value = 'all';
+    fPrice.value = 'all';
+    fSort.value = 'default';
+    fSearch.value = '';
+    render();
+  });
+
+  mobileFilterToggle.addEventListener('click', () => {
+    const isOpen = catalogueTools.classList.toggle('filters-open');
+    mobileFilterToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  }
+
+  document.querySelectorAll<HTMLDetailsElement>('.faq-item').forEach(item => {
+    item.addEventListener('toggle', () => {
+      if(!item.open) return;
+      document.querySelectorAll<HTMLDetailsElement>('.faq-item').forEach(other => {
+        if(other !== item) other.open = false;
+      });
+    });
+  });
 </script>
 
 <style>
-  /* page hero */
-  .page-hero{padding:104px 0 40px;border-bottom:1px solid var(--border);background:var(--surface);}
-  .page-hero .eyebrow{
-    display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);
-    border:1px solid var(--border);padding:6px 14px;border-radius:100px;margin-bottom:20px;width:fit-content;
-  }
-  .page-hero .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-1);}
-  .page-hero h1{font-size:clamp(32px,5vw,52px);max-width:700px;}
-  .page-hero p{color:var(--text-dim);font-size:16px;margin-top:14px;max-width:560px;}
-  .unlimited-note{display:inline-flex;align-items:center;gap:8px;margin-top:20px;padding:8px 16px;border:1px solid var(--border);border-radius:100px;font-size:13.5px;color:var(--text-dim);}
+  .sr-only{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;}
+  .highlight-mark{position:relative;display:inline-block;padding:0 4px;white-space:nowrap;isolation:isolate;}
+  .highlight-mark::before{content:'';position:absolute;left:-3px;right:-3px;top:.08em;bottom:.05em;background:rgba(255,0,127,.16);border-radius:8px;z-index:-1;}
 
-  /* filter bar */
-  .filter-bar{
-    display:flex;gap:12px;flex-wrap:wrap;align-items:center;
-    padding:20px 0;
+  /* hero */
+  .page-hero{
+    position:relative;overflow:hidden;padding:188px 0 66px;text-align:center;
+    border-bottom:1px solid rgba(17,17,19,.05);
+    background:radial-gradient(circle at 50% 0%,rgba(255,0,127,.055),transparent 36%),linear-gradient(180deg,#fff 0%,#fafafc 100%);
   }
-  .filter-select{
-    background:#fff;border:1px solid var(--border);color:var(--text);
-    padding:11px 16px;border-radius:100px;font-size:13.5px;font-family:'Inter',sans-serif;
-    cursor:pointer;box-shadow:var(--shadow-sm);transition:border-color .2s ease, box-shadow .2s ease;
-    -webkit-appearance:none;appearance:none;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239a9a9a' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-repeat:no-repeat;background-position:right 14px center;
-    padding-right:34px;
-  }
-  .filter-select:hover{border-color:#d8d8dd;box-shadow:var(--shadow-md);}
-  .filter-select:focus{outline:none;border-color:var(--accent-1);box-shadow:0 0 0 3px rgba(255,0,127,0.15);}
-  .filter-count{margin-left:auto;font-size:13.5px;color:var(--text-faint);}
-  @media(max-width:640px){ .filter-count{margin-left:0;width:100%;} }
+  .page-hero::after{content:'';position:absolute;left:50%;bottom:-170px;width:540px;height:240px;transform:translateX(-50%);border-radius:50%;background:rgba(255,0,127,.05);filter:blur(70px);pointer-events:none;}
+  .page-hero .wrap{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;}
+  .page-hero .eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:18px;padding:6px 13px;border:1px solid #e7e7eb;border-radius:999px;background:rgba(255,255,255,.82);color:var(--text-dim);font-size:11.5px;font-weight:600;text-transform:uppercase;letter-spacing:.075em;box-shadow:0 4px 14px rgba(17,17,19,.035);}
+  .page-hero .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-1);box-shadow:0 0 0 4px rgba(255,0,127,.09);}
+  .page-hero h1{max-width:850px;font-size:clamp(36px,5vw,56px);letter-spacing:-.04em;}
+  .page-hero p{max-width:620px;margin-top:16px;color:var(--text-dim);font-size:16px;line-height:1.65;}
 
-  .filter-search{
-    background:#fff;border:1px solid var(--border);color:var(--text);
-    padding:11px 18px;border-radius:100px;font-size:13.5px;font-family:'Inter',sans-serif;
-    flex:1;min-width:220px;box-shadow:var(--shadow-sm);transition:border-color .2s ease, box-shadow .2s ease;
-  }
+  /* catalogue tools */
+  .catalogue{padding:28px 0 72px;}
+  .catalogue-tools{position:sticky;top:82px;z-index:20;margin-bottom:26px;padding:16px;border:1px solid rgba(17,17,19,.07);border-radius:20px;background:rgba(255,255,255,.9);box-shadow:0 14px 34px rgba(17,17,19,.065);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);}
+  .tools-topline{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .filter-count{color:var(--text-dim);font-size:13px;font-weight:600;}
+  .sort-wrap{margin-left:auto;}
+  .filter-panel{display:grid;grid-template-columns:minmax(260px,1fr) auto auto auto;gap:10px;align-items:center;}
+  .search-wrap{position:relative;display:block;min-width:0;}
+  .search-wrap > svg{position:absolute;top:50%;left:15px;width:17px;height:17px;transform:translateY(-50%);color:var(--text-faint);pointer-events:none;}
+  .filter-search,.filter-select{width:100%;height:44px;border:1px solid #e3e3e8;border-radius:12px;background-color:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:13px;transition:border-color .2s ease,box-shadow .2s ease,background .2s ease;}
+  .filter-search{padding:0 16px 0 42px;}
   .filter-search::placeholder{color:var(--text-faint);}
-  .filter-search:hover{border-color:#d8d8dd;box-shadow:var(--shadow-md);}
-  .filter-search:focus{outline:none;border-color:var(--accent-1);box-shadow:0 0 0 3px rgba(255,0,127,0.15);}
-  @media(max-width:640px){ .filter-search{width:100%;flex:none;} }
+  .filter-select{min-width:162px;padding:0 38px 0 14px;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23787880' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+  .filter-sort{height:38px;min-width:150px;border-radius:10px;background-color:#fafafd;}
+  .filter-search:hover,.filter-select:hover{border-color:#d2d2d8;}
+  .filter-search:focus,.filter-select:focus{outline:none;border-color:rgba(255,0,127,.5);box-shadow:0 0 0 3px rgba(255,0,127,.1);}
+  .filter-reset{height:44px;padding:0 15px;border:0;border-radius:11px;background:transparent;color:var(--text-dim);font:600 12.5px 'Inter',sans-serif;cursor:pointer;}
+  .filter-reset:hover{background:var(--surface);color:var(--text);}
+  .filter-reset[hidden]{display:none;}
+  .active-filters{display:flex;gap:7px;flex-wrap:wrap;}
+  .active-filters:empty{display:none;}
+  .active-filters :global(.active-filter){padding:6px 10px;border:1px solid rgba(255,0,127,.13);border-radius:999px;background:rgba(255,0,127,.055);color:#a30a53;font:600 11.5px 'Inter',sans-serif;cursor:pointer;}
+  .active-filters :global(.active-filter:hover){background:rgba(255,0,127,.1);}
+  .mobile-filter-toggle{display:none;align-items:center;gap:7px;height:38px;padding:0 12px;border:1px solid #e3e3e8;border-radius:10px;background:#fff;color:var(--text);font:600 12.5px 'Inter',sans-serif;}
+  .mobile-filter-toggle svg{width:17px;height:17px;}
+  .mobile-filter-toggle span{display:grid;place-items:center;width:17px;height:17px;border-radius:50%;background:var(--accent-1);color:#fff;font-size:10px;}
+  .mobile-filter-toggle span[hidden]{display:none;}
 
-  /* catalogue grid */
-  .catalogue{padding:24px 0 70px;}
-  .veh-grid{
-    display:grid;grid-template-columns:repeat(3,1fr);gap:20px;
-  }
-  @media(max-width:980px){ .veh-grid{grid-template-columns:repeat(2,1fr);} }
-  @media(max-width:640px){ .veh-grid{grid-template-columns:1fr;} }
-
-  .veh-card{
-    background:#fff;border:1px solid var(--border);border-radius:18px;
-    overflow:hidden;
-    box-shadow:var(--shadow-sm);
-    transition:border-color .3s ease, box-shadow .3s ease, transform .3s ease;
-    display:flex;flex-direction:column;
-    cursor:pointer;
-  }
-  .veh-card:focus-visible{outline:2px solid var(--text);outline-offset:2px;}
-  .veh-card:hover{transform:translateY(-4px);border-color:#d8d8dd;box-shadow:var(--shadow-md);}
-  .veh-card:hover .veh-visual svg{transform:scale(1.06);}
-
-  .veh-visual{
-    position:relative;
-    aspect-ratio:16/9;
-    background:linear-gradient(180deg, var(--surface-2), var(--surface));
-    display:flex;align-items:center;justify-content:center;
-    border-bottom:1px solid var(--border);
-    overflow:hidden;
-  }
-  .veh-visual svg{width:64%;transition:transform .4s cubic-bezier(.16,1,.3,1);}
-  .veh-visual img{width:100%;height:100%;object-fit:cover;transition:transform .4s cubic-bezier(.16,1,.3,1);}
-  .veh-card:hover .veh-visual img{transform:scale(1.06);}
-  .veh-badge{
-    position:absolute;top:14px;left:14px;
-    font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;
-    padding:5px 10px;border-radius:100px;
-    background:var(--accent);color:#fff;
-  }
-  .veh-badge.occasion{background:transparent;border:1px solid var(--text-dim);color:var(--text-dim);}
-
-  .veh-body{padding:20px;flex:1;display:flex;flex-direction:column;}
-  .veh-brand{font-size:12px;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px;}
-  .veh-name{font-size:19px;margin-bottom:12px;}
-  .veh-specs{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--text-dim);margin-bottom:18px;}
-  .veh-specs span{display:flex;align-items:center;gap:5px;}
-  .veh-specs :global(svg){opacity:0.6;}
-
-  .veh-footer{
-    margin-top:auto;padding-top:16px;border-top:1px solid var(--border);
-    display:flex;justify-content:space-between;align-items:center;
-  }
-  .veh-price .amount{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:20px;}
-  .veh-price .period{font-size:12px;color:var(--text-faint);}
-  .veh-cta{
-    font-size:13px;font-weight:600;color:var(--text);
-    display:flex;align-items:center;gap:6px;
-    transition:gap .25s ease;
-  }
-  .veh-card:hover .veh-cta{gap:10px;}
-
-  .empty-state{
-    text-align:center;padding:80px 20px;color:var(--text-dim);
-    display:none;
-  }
+  /* cards */
+  .veh-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;}
+  .veh-card{display:flex;min-width:0;overflow:hidden;flex-direction:column;border:1px solid #e4e4e8;border-radius:20px;background:#fff;box-shadow:0 7px 22px rgba(17,17,19,.045);cursor:pointer;transition:transform .3s cubic-bezier(.16,1,.3,1),border-color .3s ease,box-shadow .3s ease;}
+  .veh-card:focus-visible{outline:3px solid rgba(255,0,127,.18);outline-offset:3px;}
+  .veh-card:hover{transform:translateY(-5px);border-color:#d6d6dc;box-shadow:0 18px 38px rgba(17,17,19,.09);}
+  .veh-visual{position:relative;display:flex;aspect-ratio:1.53/1;align-items:center;justify-content:center;overflow:hidden;border-bottom:1px solid rgba(17,17,19,.05);background:linear-gradient(180deg,#f4f4f6,#ededf0);}
+  .veh-visual > :global(svg){width:64%;transition:transform .5s cubic-bezier(.16,1,.3,1);}
+  .veh-visual img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .55s cubic-bezier(.16,1,.3,1);}
+  .veh-card:hover .veh-visual img,.veh-card:hover .veh-visual > :global(svg){transform:scale(1.035);}
+  .veh-badge{position:absolute;z-index:2;top:13px;left:13px;padding:5px 9px;border:1px solid rgba(17,17,19,.07);border-radius:999px;background:rgba(255,255,255,.88);box-shadow:0 3px 10px rgba(17,17,19,.05);backdrop-filter:blur(8px);color:#686870;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;}
+  .veh-body{display:flex;flex:1;flex-direction:column;padding:19px;}
+  .veh-brand{margin-bottom:3px;color:var(--text-faint);font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;}
+  .veh-name{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;line-height:1.15;letter-spacing:-.025em;}
+  .veh-finition{min-height:19px;margin-top:4px;overflow:hidden;color:var(--text-dim);font-size:12px;line-height:1.45;text-overflow:ellipsis;white-space:nowrap;}
+  .veh-specs{display:flex;gap:7px;flex-wrap:wrap;margin-top:15px;}
+  .veh-specs span{display:inline-flex;align-items:center;gap:5px;padding:6px 8px;border-radius:8px;background:#f7f7f9;color:#62626a;font-size:10.5px;line-height:1;}
+  .veh-specs :global(svg){width:12px;height:12px;opacity:.65;}
+  .veh-mileage{display:flex;align-items:center;gap:6px;margin:11px 1px 15px;color:var(--text-faint);font-size:10.5px;}
+  .veh-mileage :global(svg){width:12px;height:12px;}
+  .veh-footer{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin-top:auto;padding-top:15px;border-top:1px solid #ececf0;}
+  .veh-price{line-height:1;white-space:nowrap;}
+  .veh-price .price-label{display:block;margin-bottom:5px;color:var(--text-faint);font-size:10px;}
+  .veh-price .amount{font-family:'Space Grotesk',sans-serif;font-size:23px;font-weight:700;letter-spacing:-.035em;}
+  .veh-price .period{margin-left:3px;color:var(--text-dim);font-size:11px;}
+  .veh-cta{display:flex;align-items:center;gap:7px;padding-bottom:3px;color:var(--text);font-size:12px;font-weight:700;white-space:nowrap;transition:color .2s ease,gap .25s ease;}
+  .veh-card:hover .veh-cta{gap:10px;color:var(--accent-1);}
+  .empty-state{display:none;padding:84px 20px;text-align:center;color:var(--text-dim);}
   .empty-state.show{display:block;}
-  .empty-state h3{font-size:20px;margin-bottom:8px;color:var(--text);}
+  .empty-state h3{margin-bottom:8px;color:var(--text);font-size:20px;}
 
-  .cta-band{
-    border:1px solid var(--border);border-radius:24px;padding:40px 40px;text-align:center;
-    background:radial-gradient(ellipse at 50% 0%, var(--surface), var(--bg));
-    margin-top:42px;margin-bottom:56px;
+  /* reassurance */
+  .reassurance-grid{display:grid;grid-template-columns:repeat(4,1fr);margin-top:28px;overflow:hidden;border:1px solid #e5e5e9;border-radius:18px;background:#fff;box-shadow:0 7px 22px rgba(17,17,19,.035);}
+  .reassurance-item{position:relative;display:flex;align-items:center;justify-content:center;gap:11px;min-height:86px;padding:16px;}
+  .reassurance-item:not(:first-child)::before{content:'';position:absolute;top:21px;bottom:21px;left:0;width:1px;background:#ececf0;}
+  .reassurance-icon{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;border-radius:11px;background:rgba(255,0,127,.065);color:var(--accent-1);}
+  .reassurance-icon svg{width:19px;height:19px;}
+  .reassurance-item strong,.reassurance-item small{display:block;}
+  .reassurance-item strong{font-size:12.5px;line-height:1.35;}
+  .reassurance-item small{margin-top:2px;color:var(--text-faint);font-size:10px;line-height:1.35;}
+
+  /* custom search */
+  .custom-search-section{padding:0 0 72px;}
+  .cta-band{position:relative;display:flex;align-items:center;justify-content:space-between;gap:34px;overflow:hidden;padding:38px 42px;border:1px solid #e5e5e9;border-radius:24px;background:radial-gradient(circle at 84% 15%,rgba(255,0,127,.08),transparent 30%),linear-gradient(135deg,#fafafd,#fff);box-shadow:0 18px 44px rgba(17,17,19,.055);}
+  .cta-band::after{content:'';position:absolute;right:-80px;bottom:-120px;width:250px;height:250px;border-radius:50%;background:rgba(255,0,127,.06);filter:blur(42px);pointer-events:none;}
+  .cta-copy{position:relative;z-index:1;max-width:690px;}
+  .cta-eyebrow{display:block;margin-bottom:9px;color:var(--accent-1);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.09em;}
+  .cta-band h2{font-size:clamp(27px,3.4vw,37px);letter-spacing:-.035em;}
+  .cta-band p{max-width:660px;margin-top:11px;color:var(--text-dim);font-size:13.5px;line-height:1.65;}
+  .btn-primary{position:relative;z-index:1;flex:none;padding:14px 22px;border-radius:12px;background:var(--accent);color:#fff;font-size:13.5px;font-weight:600;box-shadow:0 10px 22px rgba(255,0,127,.17);transition:transform .2s ease,filter .2s ease,box-shadow .25s ease;}
+  .btn-primary:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 14px 30px rgba(255,0,127,.24);}
+
+  /* faq */
+  .faq-section{padding:72px 0 84px;border-top:1px solid rgba(17,17,19,.05);background:linear-gradient(180deg,#fafafc 0%,#fff 100%);}
+  .section-head{max-width:690px;margin:0 auto 30px;text-align:center;}
+  .section-head h2{font-size:clamp(32px,4.5vw,46px);letter-spacing:-.035em;}
+  .section-head p{margin-top:12px;color:var(--text-dim);font-size:15px;}
+  .faq-list{display:flex;max-width:900px;margin:0 auto;flex-direction:column;gap:9px;}
+  .faq-item{overflow:hidden;padding:0 23px;border:1px solid #e5e5e9;border-radius:15px;background:#fff;box-shadow:0 4px 15px rgba(17,17,19,.03);transition:border-color .25s ease,box-shadow .25s ease,transform .25s ease;}
+  .faq-item:hover{transform:translateY(-1px);border-color:#d9d9df;box-shadow:0 8px 20px rgba(17,17,19,.05);}
+  .faq-item[open]{border-color:rgba(255,0,127,.2);background:linear-gradient(115deg,#fff 45%,#fff9fc);}
+  .faq-item summary{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:19px 0;cursor:pointer;list-style:none;font-size:14.5px;font-weight:600;}
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary:focus-visible{outline:2px solid rgba(255,0,127,.2);outline-offset:-4px;border-radius:9px;}
+  .faq-icon{position:relative;flex:0 0 30px;width:30px;height:30px;border-radius:50%;background:#f5f5f7;transition:background .25s ease;}
+  .faq-icon::before,.faq-icon::after{content:'';position:absolute;top:50%;left:50%;background:var(--text-dim);transition:transform .3s cubic-bezier(.16,1,.3,1),background .2s ease;}
+  .faq-icon::before{width:11px;height:1.5px;transform:translate(-50%,-50%);}
+  .faq-icon::after{width:1.5px;height:11px;transform:translate(-50%,-50%);}
+  .faq-item[open] .faq-icon{background:rgba(255,0,127,.075);}
+  .faq-item[open] .faq-icon::after{transform:translate(-50%,-50%) rotate(90deg);}
+  .faq-item[open] .faq-icon::before,.faq-item[open] .faq-icon::after{background:var(--accent-1);}
+  .faq-content p{max-width:790px;padding:0 46px 19px 0;color:var(--text-dim);font-size:13.5px;line-height:1.72;}
+
+  @media(max-width:980px){
+    .filter-panel{grid-template-columns:1fr 1fr 1fr;}
+    .search-wrap{grid-column:1/-1;}
+    .veh-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .reassurance-grid{grid-template-columns:1fr 1fr;}
+    .reassurance-item:nth-child(3)::before{display:none;}
+    .reassurance-item:nth-child(n+3){border-top:1px solid #ececf0;}
+    .cta-band{align-items:flex-start;flex-direction:column;gap:22px;}
   }
-  .cta-band h2{font-size:clamp(24px,3.5vw,34px);margin-bottom:14px;}
-  .cta-band p{color:var(--text-dim);margin-bottom:28px;}
-  .btn-primary{
-    background:var(--accent);color:#fff;padding:15px 26px;border-radius:100px;
-    font-weight:600;font-size:14.5px;display:inline-block;
-    transition:transform .2s ease, filter .2s ease, box-shadow .3s ease;
+
+  @media(max-width:640px){
+    .page-hero{padding:150px 0 45px;}
+    .page-hero .eyebrow{margin-bottom:15px;font-size:10px;}
+    .page-hero h1{font-size:clamp(32px,9.5vw,39px);line-height:1.08;}
+    .page-hero p{max-width:355px;margin-top:13px;font-size:14px;line-height:1.55;}
+    .catalogue{padding:18px 0 56px;}
+    .catalogue-tools{top:72px;margin:0 -4px 18px;padding:11px;border-radius:16px;}
+    .tools-topline{margin:0;}
+    .filter-count{order:1;margin-right:auto;font-size:12px;}
+    .mobile-filter-toggle{display:flex;order:2;}
+    .sort-wrap{order:3;margin:0;}
+    .filter-sort{width:41px;min-width:41px;padding:0;border-radius:10px;background-position:center;background-color:#fff;color:transparent;}
+    .filter-sort option{color:var(--text);}
+    .filter-panel{display:none;grid-template-columns:1fr;gap:8px;margin-top:11px;padding-top:11px;border-top:1px solid #ececf0;}
+    .filters-open .filter-panel{display:grid;}
+    .filter-select,.filter-search{height:43px;}
+    .filter-reset{width:100%;height:39px;background:#f7f7f9;}
+    .active-filters{margin-top:9px;}
+    .veh-grid{grid-template-columns:1fr;gap:16px;}
+    .veh-card{border-radius:18px;}
+    .veh-visual{aspect-ratio:1.55/1;}
+    .veh-body{padding:17px;}
+    .veh-name{font-size:20px;}
+    .veh-finition{font-size:11.5px;}
+    .veh-price .amount{font-size:23px;}
+    .veh-cta{font-size:12px;}
+    .reassurance-grid{grid-template-columns:1fr 1fr;margin-top:21px;border-radius:16px;}
+    .reassurance-item{justify-content:flex-start;min-height:82px;padding:13px 12px;gap:9px;}
+    .reassurance-icon{flex-basis:32px;width:32px;height:32px;}
+    .reassurance-icon svg{width:17px;height:17px;}
+    .reassurance-item strong{font-size:11px;}
+    .reassurance-item small{font-size:9px;}
+    .custom-search-section{padding-bottom:56px;}
+    .cta-band{gap:21px;padding:28px 22px;border-radius:20px;text-align:center;}
+    .cta-copy{width:100%;}
+    .cta-band h2{font-size:28px;line-height:1.1;}
+    .cta-band p{font-size:13px;line-height:1.6;}
+    .btn-primary{width:100%;}
+    .faq-section{padding:56px 0 64px;}
+    .section-head{margin-bottom:22px;}
+    .section-head h2{font-size:34px;}
+    .section-head p{margin-top:10px;font-size:14px;}
+    .faq-list{gap:8px;}
+    .faq-item{padding:0 17px;border-radius:14px;}
+    .faq-item summary{padding:16px 0;font-size:13.5px;line-height:1.4;}
+    .faq-icon{flex-basis:28px;width:28px;height:28px;}
+    .faq-content p{padding:0 36px 17px 0;font-size:13px;}
   }
-  .btn-primary:hover{filter:brightness(1.12);transform:translateY(-2px);box-shadow:0 14px 32px rgba(255,0,127,0.22), 0 4px 10px rgba(255,0,127,0.16);}
-  .btn-primary:active{transform:scale(.96);box-shadow:0 4px 12px rgba(255,0,127,0.2);}
+
+  @media(prefers-reduced-motion:reduce){
+    .veh-card,.veh-visual img,.veh-visual > :global(svg),.faq-item,.btn-primary{transition:none;}
+  }
 </style>
 </BaseLayout>
