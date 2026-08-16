@@ -121,7 +121,7 @@ const faqSchema = {
   <div class="wrap">
     <div class="catalogue-tools" id="catalogueTools">
       <div class="tools-topline">
-        <div class="filter-count" id="filterCount">{vehicles.length}{vehicles.length > 1 ? ' véhicules' : ' véhicule'}</div>
+        <div class="filter-count" id="filterCount">Nos offres du moment</div>
         <button class="mobile-filter-toggle" id="mobileFilterToggle" type="button" aria-expanded="false" aria-controls="filterPanel">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M7 12h10M10 17h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
           Filtres <span id="mobileFilterBadge" hidden></span>
@@ -178,7 +178,7 @@ const faqSchema = {
           aria-label={`Voir l'offre indicative : ${v.brand} ${v.name}`}
         >
           <div class="veh-visual">
-            <span class="veh-badge">Offre indicative</span>
+            <span class="veh-badge">Exemple d'offre</span>
             {v.photo
               ? <img src={cardImage} srcset={cardSrcset} sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 980px) 50vw, 380px" width="720" height="470" alt={`${v.brand} ${v.name}`} loading={index < 3 ? 'eager' : 'lazy'} fetchpriority={index === 0 ? 'high' : undefined} decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('div'), {innerHTML: window.__vehCarIcon}).firstElementChild)" />
               : <Fragment set:html={carIcon} />
@@ -292,7 +292,7 @@ const faqSchema = {
   }
 
   const allCards = Array.from(grid.querySelectorAll<HTMLAnchorElement>('.veh-card'));
-  const totalLabel = (n: number) => n + (n > 1 ? ' véhicules' : ' véhicule');
+  const resultsLabel = (n: number) => n + (n > 1 ? ' offres correspondent' : ' offre correspond');
 
   function getActiveFilterLabels(){
     const labels: { key: string; label: string }[] = [];
@@ -351,7 +351,9 @@ const faqSchema = {
       grid.appendChild(card);
     });
 
-    filterCount.textContent = totalLabel(visible.length);
+    filterCount.textContent = getActiveFilterLabels().length > 0
+      ? resultsLabel(visible.length)
+      : 'Nos offres du moment';
 
     if(visible.length === 0 && allCards.length > 0){
       emptyState.querySelector('h3')!.textContent = 'Aucun véhicule ne correspond à ces filtres';
@@ -415,21 +417,21 @@ const faqSchema = {
 
   /* catalogue tools */
   .catalogue{padding:28px 0 72px;}
-  .catalogue-tools{position:sticky;top:82px;z-index:20;margin-bottom:26px;padding:16px;border:1px solid rgba(17,17,19,.07);border-radius:20px;background:rgba(255,255,255,.9);box-shadow:0 14px 34px rgba(17,17,19,.065);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);}
-  .tools-topline{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+  .catalogue-tools{position:sticky;top:82px;z-index:20;margin-bottom:20px;padding:12px 14px;border:1px solid rgba(17,17,19,.065);border-radius:16px;background:rgba(255,255,255,.9);box-shadow:0 10px 28px rgba(17,17,19,.052);backdrop-filter:blur(18px) saturate(1.2);-webkit-backdrop-filter:blur(18px) saturate(1.2);}
+  .tools-topline{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
   .filter-count{color:var(--text-dim);font-size:13px;font-weight:600;}
   .sort-wrap{margin-left:auto;}
-  .filter-panel{display:grid;grid-template-columns:minmax(260px,1fr) auto auto auto;gap:10px;align-items:center;}
+  .filter-panel{display:grid;grid-template-columns:minmax(260px,1fr) auto auto auto;gap:8px;align-items:center;}
   .search-wrap{position:relative;display:block;min-width:0;}
   .search-wrap > svg{position:absolute;top:50%;left:15px;width:17px;height:17px;transform:translateY(-50%);color:var(--text-faint);pointer-events:none;}
-  .filter-search,.filter-select{width:100%;height:44px;border:1px solid #e3e3e8;border-radius:12px;background-color:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:13px;transition:border-color .2s ease,box-shadow .2s ease,background .2s ease;}
+  .filter-search,.filter-select{width:100%;height:40px;border:1px solid #e3e3e8;border-radius:10px;background-color:#fff;color:var(--text);font-family:'Inter',sans-serif;font-size:12.5px;transition:border-color .2s ease,box-shadow .2s ease,background .2s ease;}
   .filter-search{padding:0 16px 0 42px;}
   .filter-search::placeholder{color:var(--text-faint);}
   .filter-select{min-width:162px;padding:0 38px 0 14px;cursor:pointer;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23787880' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
-  .filter-sort{height:38px;min-width:150px;border-radius:10px;background-color:#fafafd;}
+  .filter-sort{height:34px;min-width:146px;border-radius:9px;background-color:#fafafd;}
   .filter-search:hover,.filter-select:hover{border-color:#d2d2d8;}
   .filter-search:focus,.filter-select:focus{outline:none;border-color:rgba(255,0,127,.5);box-shadow:0 0 0 3px rgba(255,0,127,.1);}
-  .filter-reset{height:44px;padding:0 15px;border:0;border-radius:11px;background:transparent;color:var(--text-dim);font:600 12.5px 'Inter',sans-serif;cursor:pointer;}
+  .filter-reset{height:40px;padding:0 13px;border:0;border-radius:10px;background:transparent;color:var(--text-dim);font:600 12px 'Inter',sans-serif;cursor:pointer;}
   .filter-reset:hover{background:var(--surface);color:var(--text);}
   .filter-reset[hidden]{display:none;}
   .active-filters{display:flex;gap:7px;flex-wrap:wrap;}
@@ -450,7 +452,7 @@ const faqSchema = {
   .veh-visual > :global(svg){width:64%;transition:transform .5s cubic-bezier(.16,1,.3,1);}
   .veh-visual img{display:block;width:100%;height:100%;object-fit:cover;transition:transform .55s cubic-bezier(.16,1,.3,1);}
   .veh-card:hover .veh-visual img,.veh-card:hover .veh-visual > :global(svg){transform:scale(1.035);}
-  .veh-badge{position:absolute;z-index:2;top:13px;left:13px;padding:5px 9px;border:1px solid rgba(17,17,19,.07);border-radius:999px;background:rgba(255,255,255,.88);box-shadow:0 3px 10px rgba(17,17,19,.05);backdrop-filter:blur(8px);color:#686870;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;}
+  .veh-badge{position:absolute;z-index:2;top:12px;left:12px;padding:4px 8px;border:1px solid rgba(17,17,19,.055);border-radius:999px;background:rgba(255,255,255,.76);backdrop-filter:blur(7px);color:#77777f;font-size:9px;font-weight:600;letter-spacing:.015em;}
   .veh-body{display:flex;flex:1;flex-direction:column;padding:19px;}
   .veh-brand{margin-bottom:3px;color:var(--text-faint);font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;}
   .veh-name{font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:700;line-height:1.15;letter-spacing:-.025em;}
@@ -465,8 +467,8 @@ const faqSchema = {
   .veh-price .price-label{display:block;margin-bottom:5px;color:var(--text-faint);font-size:10px;}
   .veh-price .amount{font-family:'Space Grotesk',sans-serif;font-size:23px;font-weight:700;letter-spacing:-.035em;}
   .veh-price .period{margin-left:3px;color:var(--text-dim);font-size:11px;}
-  .veh-cta{display:flex;align-items:center;gap:7px;padding-bottom:3px;color:var(--text);font-size:12px;font-weight:700;white-space:nowrap;transition:color .2s ease,gap .25s ease;}
-  .veh-card:hover .veh-cta{gap:10px;color:var(--accent-1);}
+  .veh-cta{display:flex;align-items:center;gap:7px;padding:9px 11px;border-radius:10px;background:var(--text);color:#fff;font-size:11.5px;font-weight:700;line-height:1;white-space:nowrap;box-shadow:0 5px 12px rgba(17,17,19,.12);transition:background .22s ease,transform .22s ease,box-shadow .22s ease,gap .22s ease;}
+  .veh-card:hover .veh-cta{gap:9px;background:var(--accent-1);transform:translateY(-1px);box-shadow:0 7px 16px rgba(255,0,127,.2);}
   .empty-state{display:none;padding:84px 20px;text-align:center;color:var(--text-dim);}
   .empty-state.show{display:block;}
   .empty-state h3{margin-bottom:8px;color:var(--text);font-size:20px;}
@@ -530,16 +532,16 @@ const faqSchema = {
     .hero-mobile-break{display:block;margin-top:3px;}
     .page-hero p{max-width:355px;margin-top:13px;font-size:14px;line-height:1.55;}
     .catalogue{padding:18px 0 56px;}
-    .catalogue-tools{top:72px;margin:0 -4px 18px;padding:11px;border-radius:16px;}
+    .catalogue-tools{top:72px;margin:0 -4px 16px;padding:9px 10px;border-radius:14px;}
     .tools-topline{margin:0;}
     .filter-count{order:1;margin-right:auto;font-size:12px;}
     .mobile-filter-toggle{display:flex;order:2;}
     .sort-wrap{order:3;margin:0;}
     .filter-sort{width:41px;min-width:41px;padding:0;border-radius:10px;background-position:center;background-color:#fff;color:transparent;}
     .filter-sort option{color:var(--text);}
-    .filter-panel{display:none;grid-template-columns:1fr;gap:8px;margin-top:11px;padding-top:11px;border-top:1px solid #ececf0;}
+    .filter-panel{display:none;grid-template-columns:1fr;gap:7px;margin-top:9px;padding-top:9px;border-top:1px solid #ececf0;}
     .filters-open .filter-panel{display:grid;}
-    .filter-select,.filter-search{height:43px;}
+    .filter-select,.filter-search{height:40px;}
     .filter-reset{width:100%;height:39px;background:#f7f7f9;}
     .active-filters{margin-top:9px;}
     .veh-grid{grid-template-columns:1fr;gap:16px;}
@@ -549,7 +551,7 @@ const faqSchema = {
     .veh-name{font-size:20px;}
     .veh-finition{font-size:11.5px;}
     .veh-price .amount{font-size:23px;}
-    .veh-cta{font-size:12px;}
+    .veh-cta{padding:9px 11px;font-size:11.5px;}
     .reassurance-grid{grid-template-columns:1fr 1fr;margin-top:21px;border-radius:16px;}
     .reassurance-item{justify-content:flex-start;min-height:82px;padding:13px 12px;gap:9px;}
     .reassurance-icon{flex-basis:32px;width:32px;height:32px;}
