@@ -1,8 +1,9 @@
 ---
-title: "LOA pour auto-entrepreneur ou indépendant : ce qu'il faut savoir"
-description: "Revenus variables, absence de fiche de paie classique : la LOA pour un auto-entrepreneur ou un indépendant obéit à des règles particulières. Voici comment monter un dossier solide."
+title: "LOA auto-entrepreneur : préparer son dossier"
+description: "Revenus variables et absence de fiche de paie : les justificatifs utiles pour présenter un dossier LOA solide en tant qu'auto-entrepreneur."
 category: "Profils spécifiques"
 publishDate: 2026-07-22
+updatedDate: 2026-08-17
 readTime: "6 min"
 ---
 
@@ -56,6 +57,11 @@ Les grilles d'évaluation des indépendants varient beaucoup plus d'un organisme
 ## En résumé
 
 Le statut d'indépendant ou d'auto-entrepreneur ne ferme pas la porte à la LOA, mais impose de présenter un dossier différent, construit sur plusieurs exercices plutôt que sur une fiche de paie. Un dossier bien préparé, soumis au bon partenaire, se traite généralement aussi bien qu'un dossier salarié classique.
+
+## Sources officielles
+
+- [Urssaf — déclaration des revenus des indépendants](https://www.urssaf.fr/accueil/independant/declarer-vos-revenus/declaration-revenus-independants.html)
+- [Impots.gouv.fr — taxes sur les véhicules affectés à des fins économiques](https://www.impots.gouv.fr/professionnel/questions/comment-declarer-et-payer-ma-taxe-sur-les-vehicules-de-societes-tvs)
 
 ---
 

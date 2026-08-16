@@ -1,0 +1,20 @@
+---
+import LeasingLanding from '../components/LeasingLanding.astro';
+const cards = [
+  { title: 'Revenus documentés', text: "Les déclarations de chiffre d'affaires et avis fiscaux remplacent la fiche de paie classique." },
+  { title: 'Ancienneté expliquée', text: "La régularité de l'activité compte autant que le montant d'un seul mois." },
+  { title: 'Projet proportionné', text: 'Un véhicule et un loyer cohérents avec le revenu disponible renforcent la lisibilité du dossier.' },
+];
+const sections = [
+  { title: 'Un auto-entrepreneur peut-il obtenir un leasing ?', paragraphs: ["Oui, le statut d'auto-entrepreneur n'empêche pas de demander une LOA ou une LLD. L'étude diffère simplement de celle d'un salarié : le partenaire financier cherche à comprendre la régularité de l'activité, le chiffre d'affaires déclaré, les charges personnelles et le revenu réellement disponible.", "L'absence de fiche de paie n'est donc pas une anomalie. Elle doit être compensée par des documents cohérents, lisibles et suffisamment récents pour présenter l'évolution de l'activité."] },
+  { title: 'Quels justificatifs préparer ?', paragraphs: ["Selon le partenaire, le dossier peut comprendre une pièce d'identité, un justificatif de domicile, l'avis d'imposition, les déclarations Urssaf de chiffre d'affaires, des relevés bancaires et un justificatif d'immatriculation de l'activité. La liste exacte n'est confirmée qu'au moment de l'étude.", "Évitez les documents partiels ou contradictoires. Si le chiffre d'affaires varie fortement, expliquez la saisonnalité, les contrats récurrents ou tout changement récent susceptible d'aider à lire la trajectoire de l'entreprise."] },
+  { title: 'Comment augmenter la cohérence du projet ?', paragraphs: ["Commencez par un budget mensuel qui tient compte de vos charges personnelles et professionnelles. Un apport peut réduire le loyer, mais une solution sans apport peut aussi être recherchée lorsque la trésorerie doit rester disponible. Dans les deux cas, l'acceptation dépend du dossier.", "Choisissez ensuite un véhicule proportionné à l'activité et à l'usage réel. Pour un kilométrage élevé, prévoyez un forfait adapté ; le kilométrage illimité ne peut être étudié que comme une option dépendant du contrat et du partenaire."] },
+];
+const faqs = [
+  { q: "Faut-il une ancienneté minimale d'activité ?", a: "Il n'existe pas de règle unique pour tous les partenaires. L'ancienneté et la régularité des revenus sont appréciées avec l'ensemble du dossier." },
+  { q: "Quels revenus sont pris en compte ?", a: "Le partenaire analyse les justificatifs fiscaux et sociaux disponibles ainsi que les charges. Le chiffre d'affaires brut ne correspond pas toujours au revenu disponible." },
+  { q: 'Peut-on demander un leasing sans apport ?', a: "Oui, certaines offres peuvent être étudiées sans apport. Cela peut augmenter le loyer et reste soumis à l'acceptation du dossier." },
+  { q: 'La demande engage-t-elle mon entreprise ?', a: "Non. La simulation initiale est gratuite et sans engagement. Vous restez libre d'accepter ou non l'offre finale." },
+];
+---
+<LeasingLanding title="Leasing auto-entrepreneur | Eleven Lease" description="Justificatifs, revenus variables et ancienneté : préparez un dossier de leasing auto-entrepreneur clair et adapté à votre activité." path="/leasing-auto-entrepreneur" eyebrow="Profils indépendants" heading="Leasing auto-entrepreneur : présentez un dossier qui raconte votre activité." lead="Revenus variables, absence de fiche de paie, activité récente : nous vous aidons à structurer une demande lisible et à rechercher une offre proportionnée." directAnswer="Un auto-entrepreneur peut obtenir un leasing. Le partenaire étudie surtout la régularité de l'activité, les justificatifs disponibles et l'équilibre du budget." {cards} {sections} {faqs} sourceLabel="Urssaf — déclaration des revenus des indépendants" sourceUrl="https://www.urssaf.fr/accueil/independant/declarer-vos-revenus/declaration-revenus-independants.html" />

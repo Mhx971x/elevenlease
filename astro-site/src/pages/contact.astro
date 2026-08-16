@@ -8,7 +8,7 @@ const faqSchema = {
     {
       "@type": "Question",
       "name": "Sous quel délai vais-je recevoir une réponse ?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Le délai moyen de mise en relation est de 24h après l'envoi de votre message." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Notre objectif est de vous apporter une première réponse sous 24 à 48 h ouvrées après l'envoi de votre message." }
     },
     {
       "@type": "Question",
@@ -34,7 +34,7 @@ const breadcrumbSchema = {
 ---
 <BaseLayout
   title="Nous contacter | Eleven Lease"
-  description="Une question sur votre projet de leasing ? Contactez l'équipe Eleven Lease par formulaire ou WhatsApp, réponse sous 24h."
+  description="Une question sur votre projet de leasing ? Contactez Eleven Lease par formulaire ou WhatsApp. Première réponse sous 24 à 48 h ouvrées."
   path="/contact"
   ctaHref="/simulation"
   active="contact"
@@ -45,9 +45,9 @@ const breadcrumbSchema = {
   </Fragment>
   <section class="contact-hero">
     <div class="wrap">
-      <div class="eyebrow"><span class="dot"></span> Une réponse sous 24h</div>
+      <div class="eyebrow"><span class="dot"></span> Première réponse sous 24 à 48 h ouvrées</div>
       <h1>Une question ? Écrivez-nous.</h1>
-      <p>Pas le temps de faire la simulation complète ? Laissez-nous un message, un conseiller de notre réseau de partenaires vous répond sous 24h.</p>
+      <p>Pas le temps de faire la simulation complète ? Laissez-nous un message : un conseiller de notre réseau vous répond sous 24 à 48 h ouvrées.</p>
     </div>
   </section>
 
@@ -57,11 +57,11 @@ const breadcrumbSchema = {
         <form class="contact-form" id="contactForm" novalidate>
           <div class="field-item">
             <label for="cNom">Nom complet</label>
-            <input type="text" id="cNom" name="nom" autocomplete="name">
+            <input type="text" id="cNom" name="nom" autocomplete="name" aria-describedby="formError">
           </div>
           <div class="field-item">
             <label for="cEmail">Email</label>
-            <input type="email" id="cEmail" name="email" autocomplete="email">
+            <input type="email" id="cEmail" name="email" autocomplete="email" aria-describedby="formError">
           </div>
           <div class="field-item">
             <label for="cTelephone">Téléphone <span style="color:var(--text-faint);">(optionnel)</span></label>
@@ -69,17 +69,21 @@ const breadcrumbSchema = {
           </div>
           <div class="field-item">
             <label for="cMessage">Votre message</label>
-            <textarea id="cMessage" name="message" rows="5" placeholder="Décrivez votre projet ou votre question..."></textarea>
+            <textarea id="cMessage" name="message" rows="5" placeholder="Décrivez votre projet ou votre question..." aria-describedby="formError"></textarea>
           </div>
-          <p class="form-error" id="formError"></p>
+          <div class="website-field" aria-hidden="true">
+            <label for="cWebsite">Site internet</label>
+            <input type="text" id="cWebsite" name="website" tabindex="-1" autocomplete="off">
+          </div>
+          <p class="form-error" id="formError" role="alert" aria-live="assertive" tabindex="-1"></p>
           <button type="submit" class="btn-primary" id="contactSubmit">Envoyer mon message</button>
           <p class="form-note">En envoyant ce message, vous acceptez d'être recontacté par notre réseau de partenaires.</p>
         </form>
 
-        <div class="success-screen" id="successScreen">
+        <div class="success-screen" id="successScreen" role="status" aria-live="polite">
           <div class="success-icon">🎉</div>
-          <h2>Message envoyé !</h2>
-          <p>Merci, nous avons bien reçu votre message. Un conseiller de notre réseau vous répond sous 24h.</p>
+          <h2 id="successTitle" tabindex="-1">Message envoyé !</h2>
+          <p>Merci, nous avons bien reçu votre message. Un conseiller de notre réseau vous répond sous 24 à 48 h ouvrées.</p>
           <div class="success-contact">
             <p>📞 Besoin d'aller plus vite ?</p>
             <div class="success-actions">
@@ -102,7 +106,7 @@ const breadcrumbSchema = {
       <div class="faq-list">
         <details class="faq-item">
           <summary>Sous quel délai vais-je recevoir une réponse ?<span class="faq-icon"></span></summary>
-          <div class="faq-content"><p>Le délai moyen de mise en relation est de 24h après l'envoi de votre message.</p></div>
+          <div class="faq-content"><p>Notre objectif est de vous apporter une première réponse sous 24 à 48 h ouvrées après l'envoi de votre message.</p></div>
         </details>
         <details class="faq-item">
           <summary>Dois-je remplir la simulation complète pour poser une question ?<span class="faq-icon"></span></summary>
@@ -190,6 +194,8 @@ const breadcrumbSchema = {
   .btn-primary:disabled{opacity:0.6;cursor:not-allowed;transform:none;box-shadow:none;}
   .form-error{font-size:12.5px;color:var(--text-dim);display:none;margin-top:-6px;}
   .form-error.show{display:block;}
+  .website-field{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;}
+  .contact-form [aria-invalid="true"]{border-color:#b42318;box-shadow:0 0 0 3px rgba(180,35,24,.12);}
   .form-note{font-size:12.5px;color:var(--text-faint);text-align:center;margin-top:4px;}
 
   /* écran de succès */
@@ -280,82 +286,70 @@ const breadcrumbSchema = {
   }
 
   // ============================================================
-  // FORMULAIRE DE CONTACT SIMPLE : envoie chaque message vers le même
-  // Google Apps Script que le simulateur (avec formType:'contact', voir
-  // le commentaire de doc dans simulation.html pour le code doPost à
-  // jour) et vers Supabase (table `contact_messages`, lecture uniquement
-  // depuis l'espace admin via la fonction admin-leads).
+  // Le navigateur appelle uniquement la fonction serveur /api/contact.
+  // Elle valide, limite les abus et ne confirme le succès qu'après les
+  // deux écritures attendues (Supabase + notification opérationnelle).
   // ============================================================
-  const LEADS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbz4VdDWwJoaqpudvU3Y2pGNyBt0zkYRSYKaZ9syNELViJdWoIoeDtb9Axu0ecA5B4bU/exec";
-  const SUPABASE_URL = "https://syzlvsfhdmegmebsvscm.supabase.co";
-  const SUPABASE_ANON_KEY = "sb_publishable_aF6YEQBB5UrjOrNo9RTMjw_SM3MPKvM";
-
   interface ContactPayload {
     nom: string;
     email: string;
     telephone: string;
     message: string;
-    formType?: string;
-  }
-
-  function sendContactToSupabase(payload: ContactPayload){
-    fetch(SUPABASE_URL + '/rest/v1/contact_messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'apikey': SUPABASE_ANON_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY,
-        'Prefer': 'return=minimal'
-      },
-      body: JSON.stringify({
-        nom: payload.nom,
-        email: payload.email,
-        telephone: payload.telephone,
-        message: payload.message
-      })
-    }).catch(err => console.error('Erreur enregistrement Supabase (non bloquant) :', err));
+    website: string;
+    startedAt: number;
+    submissionId: string;
   }
 
   const contactForm = document.getElementById('contactForm') as HTMLFormElement;
   const contactSubmit = document.getElementById('contactSubmit') as HTMLButtonElement;
   const formError = document.getElementById('formError') as HTMLParagraphElement;
   const successScreen = document.getElementById('successScreen') as HTMLDivElement;
+  const successTitle = document.getElementById('successTitle') as HTMLHeadingElement;
   const sendAnotherBtn = document.getElementById('sendAnotherBtn') as HTMLButtonElement;
+  let formStartedAt = Date.now();
+  let submissionId = crypto.randomUUID();
 
-  function showError(message: string){
+  function showError(message: string, field?: HTMLElement){
     formError.textContent = message;
     formError.classList.add('show');
+    field?.setAttribute('aria-invalid', 'true');
+    (field || formError).focus();
   }
 
   contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     formError.classList.remove('show');
     formError.textContent = '';
+    contactForm.querySelectorAll('[aria-invalid="true"]').forEach(field => field.removeAttribute('aria-invalid'));
 
-    const nom = (document.getElementById('cNom') as HTMLInputElement).value.trim();
+    const nomEl = document.getElementById('cNom') as HTMLInputElement;
+    const nom = nomEl.value.trim();
     const emailEl = document.getElementById('cEmail') as HTMLInputElement;
     const email = emailEl.value.trim();
     const telephone = (document.getElementById('cTelephone') as HTMLInputElement).value.trim();
-    const message = (document.getElementById('cMessage') as HTMLTextAreaElement).value.trim();
+    const messageEl = document.getElementById('cMessage') as HTMLTextAreaElement;
+    const message = messageEl.value.trim();
+    const website = (document.getElementById('cWebsite') as HTMLInputElement).value.trim();
 
-    if(nom === '') return showError('Merci d\'indiquer votre nom.');
-    if(email === '' || !emailEl.checkValidity()) return showError('Merci d\'indiquer une adresse email valide.');
-    if(message === '') return showError('Merci d\'écrire votre message.');
+    if(nom === '') return showError('Merci d\'indiquer votre nom.', nomEl);
+    if(email === '' || !emailEl.checkValidity()) return showError('Merci d\'indiquer une adresse email valide.', emailEl);
+    if(message === '') return showError('Merci d\'écrire votre message.', messageEl);
 
     contactSubmit.disabled = true;
     contactSubmit.textContent = 'Envoi en cours…';
 
-    const payload: ContactPayload = { nom, email, telephone, message, formType: 'contact' };
+    const payload: ContactPayload = { nom, email, telephone, message, website, startedAt: formStartedAt, submissionId };
     try{
-      sendContactToSupabase(payload);
-      const res = await fetch(LEADS_SCRIPT_URL, {
+      const res = await fetch('/api/contact', {
         method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)
       });
-      if(!res.ok) throw new Error('HTTP ' + res.status);
+      const result = await res.json().catch(() => ({}));
+      if(!res.ok) throw new Error(result.error || 'HTTP ' + res.status);
       contactForm.style.display = 'none';
       successScreen.classList.add('show');
+      successTitle.focus();
     }catch(err){
       console.error('Erreur envoi formulaire de contact :', err);
       showError("Une erreur est survenue lors de l'envoi. Merci de réessayer, ou contactez-nous directement à contact@elevenlease.fr.");
@@ -365,11 +359,14 @@ const breadcrumbSchema = {
   });
 
   sendAnotherBtn.addEventListener('click', () => {
-    contactForm.reset();
+      contactForm.reset();
     contactForm.style.display = '';
     successScreen.classList.remove('show');
     contactSubmit.disabled = false;
-    contactSubmit.textContent = 'Envoyer mon message';
+      contactSubmit.textContent = 'Envoyer mon message';
+      submissionId = crypto.randomUUID();
+      formStartedAt = Date.now();
+      (document.getElementById('cNom') as HTMLInputElement).focus();
   });
 
   // faq accordion

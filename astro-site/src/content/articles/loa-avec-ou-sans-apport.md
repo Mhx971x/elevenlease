@@ -1,8 +1,9 @@
 ---
-title: "LOA avec ou sans apport : comment bien choisir ?"
-description: "Verser un apport en LOA n'est jamais obligatoire, mais cela change mécaniquement votre loyer mensuel. Voici comment arbitrer selon votre situation."
+title: "LOA avec ou sans apport : comment choisir ?"
+description: "L'apport réduit le loyer mais mobilise votre trésorerie. Comparez les deux scénarios pour choisir une LOA adaptée à votre budget."
 category: "Financement"
 publishDate: 2026-07-22
+updatedDate: 2026-08-17
 readTime: "6 min"
 ---
 
@@ -47,6 +48,10 @@ Quelques questions à se poser avant de décider :
 - Cette somme me serait-elle plus utile disponible ailleurs (épargne de précaution, autre projet) ?
 
 Il n'existe pas de réponse universelle : c'est un arbitrage entre trésorerie disponible et confort de mensualité, propre à chaque situation.
+
+## Source officielle
+
+- [DGCCRF — règles applicables à la LOA d'un véhicule](https://www.economie.gouv.fr/dgccrf/les-fiches-pratiques/location-avec-option-dachat-loa-dun-vehicule-quelles-sont-les-regles-connaitre)
 
 ---
 

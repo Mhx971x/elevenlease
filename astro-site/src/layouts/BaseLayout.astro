@@ -23,7 +23,7 @@ const {
   title,
   description,
   path,
-  ogImage = 'https://elevenlease.fr/eleven-lease-logo.png',
+  ogImage = 'https://elevenlease.fr/og-eleven-lease-1200x630.jpg',
   ogType = 'website',
   twitterCard = 'summary_large_image',
   ctaHref,
@@ -51,6 +51,9 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
 <meta property="og:title" content={title}>
 <meta property="og:description" content={description}>
 <meta property="og:image" content={ogImage}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Eleven Lease — Le leasing qui s'adapte à votre budget">
 <meta property="og:url" content={canonicalUrl}>
 <meta name="twitter:card" content={twitterCard}>
 <meta name="twitter:title" content={title}>
@@ -68,7 +71,7 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
     --border:#e4e4e8;
     --text:#111113;
     --text-dim:#5a5a62;
-    --text-faint:#96969e;
+    --text-faint:#6f7078;
     --accent-1:#ff007f;
     --accent-2:#8d0a32;
     --accent:linear-gradient(135deg,var(--accent-1),var(--accent-2));
@@ -231,30 +234,27 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
     .site-nav > .nav-right{grid-column:2;}
     .site-nav > .nav-right > .nav-cta{display:none!important;}
     .nav-right{gap:0;}
-    .menu-toggle{width:26px;height:20px;}
     .menu-toggle span{height:2.5px;}
-    .menu-toggle span:nth-child(2){top:8.75px;}
-    .menu-toggle span:nth-child(3){top:17.5px;}
-    .menu-toggle.active span:nth-child(1),.menu-toggle.active span:nth-child(3){top:8.75px;}
   }
 
   /* nav right group + mobile menu toggle */
   .nav-right{display:flex;align-items:center;gap:14px;}
-  .menu-toggle{display:none;position:relative;width:24px;height:18px;flex:none;background:none;border:none;cursor:pointer;padding:0;}
-  .menu-toggle span{position:absolute;left:0;width:100%;height:2px;background:var(--text);border-radius:2px;transition:transform .35s cubic-bezier(.16,1,.3,1), opacity .25s ease, top .35s cubic-bezier(.16,1,.3,1);}
-  .menu-toggle span:nth-child(1){top:0;}
-  .menu-toggle span:nth-child(2){top:8px;}
-  .menu-toggle span:nth-child(3){top:16px;}
-  .menu-toggle.active span:nth-child(1){top:8px;transform:rotate(45deg);}
+  .menu-toggle{display:none;position:relative;width:44px;height:44px;flex:none;background:none;border:none;border-radius:var(--radius-sm);cursor:pointer;padding:0;}
+  .menu-toggle span{position:absolute;left:9px;width:26px;height:2px;background:var(--text);border-radius:2px;transition:transform .35s cubic-bezier(.16,1,.3,1), opacity .25s ease, top .35s cubic-bezier(.16,1,.3,1);}
+  .menu-toggle span:nth-child(1){top:12px;}
+  .menu-toggle span:nth-child(2){top:21px;}
+  .menu-toggle span:nth-child(3){top:30px;}
+  .menu-toggle.active span:nth-child(1){top:21px;transform:rotate(45deg);}
   .menu-toggle.active span:nth-child(2){opacity:0;}
-  .menu-toggle.active span:nth-child(3){top:8px;transform:rotate(-45deg);}
+  .menu-toggle.active span:nth-child(3){top:21px;transform:rotate(-45deg);}
+  .menu-toggle:focus-visible,.mobile-menu-close:focus-visible{outline:3px solid rgba(255,0,127,.32);outline-offset:2px;}
   @media(max-width:980px){ .menu-toggle{display:block;} }
 
   /* full-screen mobile menu */
   .mobile-menu{position:fixed;inset:0;background:var(--bg);z-index:200;display:flex;flex-direction:column;opacity:0;visibility:hidden;transform:translateY(-14px);transition:opacity .4s cubic-bezier(.16,1,.3,1), transform .4s cubic-bezier(.16,1,.3,1), visibility 0s linear .4s;}
   .mobile-menu.open{opacity:1;visibility:visible;transform:translateY(0);transition:opacity .4s cubic-bezier(.16,1,.3,1), transform .4s cubic-bezier(.16,1,.3,1);}
   .mobile-menu-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--border);}
-  .mobile-menu-close{background:none;border:none;color:var(--text);cursor:pointer;padding:6px;display:flex;transition:transform .35s cubic-bezier(.16,1,.3,1);}
+  .mobile-menu-close{width:44px;height:44px;background:none;border:none;border-radius:var(--radius-sm);color:var(--text);cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center;transition:transform .35s cubic-bezier(.16,1,.3,1);}
   .mobile-menu-close:hover{transform:rotate(90deg);}
   .mobile-menu-list{flex:1;display:flex;flex-direction:column;overflow-y:auto;width:100%;max-width:none;margin:0;padding:0;justify-content:flex-start;align-items:stretch;}
   .mobile-menu-list a{display:block;width:100%;padding:15px 20px;font-size:19px;font-family:'Space Grotesk',sans-serif;font-weight:600;border-bottom:1px solid var(--border);color:var(--text-dim);text-align:center;opacity:0;transform:translateY(10px);transition:opacity .45s cubic-bezier(.16,1,.3,1), transform .45s cubic-bezier(.16,1,.3,1), color .2s ease, background .2s ease;}

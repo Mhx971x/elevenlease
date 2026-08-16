@@ -1,12 +1,13 @@
 ---
-title: "LOA ou LLD : quelle différence et comment choisir ?"
-description: "LOA et LLD sont les deux formules de leasing automobile les plus répandues en France. Voici leurs différences concrètes, et comment choisir la bonne pour votre projet."
+title: "LOA ou LLD : différences et choix"
+description: "Option d'achat, restitution, kilométrage et fiscalité : comparez LOA et LLD pour choisir la formule adaptée à votre projet automobile."
 category: "Guide"
 publishDate: 2026-07-22
+updatedDate: 2026-08-17
 readTime: "7 min"
 ---
 
-> **Chez Eleven Lease :** notre offre de leasing est proposée à kilométrage illimité, pour les particuliers comme pour les professionnels — contrairement au forfait kilométrique décrit ci-dessous, qui reste la norme du marché en LOA/LLD classique.
+> **Chez Eleven Lease :** le kilométrage illimité n'est pas inclus par défaut. Il peut être étudié comme une option, selon le contrat, le véhicule, le partenaire financier et votre usage.
 
 ## Quelle est la différence entre LOA et LLD en une phrase ?
 
@@ -47,16 +48,21 @@ Quelques repères simples pour orienter votre choix :
 
 - **Vous voulez garder la possibilité de devenir propriétaire ?** La LOA est faite pour ça.
 - **Vous changez de véhicule tous les 2 à 4 ans et ne voulez jamais vous soucier de la revente ?** La LLD simplifie la donne.
-- **Votre kilométrage annuel est difficile à anticiper précisément ?** En LOA/LLD classique, mieux vaut ajuster le forfait en cours de contrat plutôt que le sous-estimer. Avec le leasing à kilométrage illimité d'Eleven Lease, cette question ne se pose simplement plus.
+- **Votre kilométrage annuel est difficile à anticiper précisément ?** Mieux vaut ajuster le forfait en cours de contrat plutôt que le sous-estimer. Une option de kilométrage illimité peut aussi être étudiée lorsqu'un partenaire la propose.
 - **Vous êtes une entreprise ou un professionnel ?** En LLD, une partie de la TVA sur les loyers peut être récupérable selon le type de véhicule et son usage — un point à valider avec votre expert-comptable, la règle variant selon les cas.
 
 ## Qu'est-ce qui ne change pas entre les deux formules ?
 
-Que vous choisissiez LOA ou LLD, certains éléments restent identiques : l'entretien et la garantie constructeur sont généralement inclus dans le loyer, un forfait kilométrique est en général fixé dès la signature (avec facturation au kilomètre en cas de dépassement), et une assurance tous risques est quasi systématiquement exigée par l'organisme financier tant que le véhicule ne vous appartient pas. Ces règles, ainsi que les clauses considérées comme abusives dans ce type de contrat, font régulièrement l'objet de contrôles de la part de la DGCCRF. C'est justement ce forfait kilométrique qu'Eleven Lease a choisi de supprimer, en proposant un leasing à kilométrage illimité.
+Que vous choisissiez LOA ou LLD, le contrat précise notamment les services inclus, le forfait kilométrique éventuel et les garanties d'assurance demandées. Ces conditions varient d'une offre à l'autre et doivent être vérifiées avant signature. Les règles applicables et les clauses considérées comme abusives font régulièrement l'objet de contrôles de la part de la DGCCRF.
 
 ## En résumé
 
 Aucune des deux formules n'est meilleure dans l'absolu : tout dépend de votre rapport à la propriété du véhicule, de votre visibilité sur votre kilométrage, et de votre statut (particulier ou professionnel). C'est souvent en comparant plusieurs offres réelles, adaptées à votre profil, que la meilleure option devient évidente.
+
+## Sources officielles
+
+- [DGCCRF — règles applicables à la LOA d'un véhicule](https://www.economie.gouv.fr/dgccrf/les-fiches-pratiques/location-avec-option-dachat-loa-dun-vehicule-quelles-sont-les-regles-connaitre)
+- [Impots.gouv.fr — déduction de TVA sur les achats professionnels](https://www.impots.gouv.fr/professionnel/questions/comment-deduire-la-tva-sur-mes-achats)
 
 ---
 

@@ -1,12 +1,13 @@
 ---
-title: "Restitution du véhicule en fin de contrat : comment ça se passe et éviter les frais"
-description: "Rayures, usure, kilométrage : voici comment se déroule la restitution d'un véhicule en fin de contrat de leasing, et comment limiter les frais de remise en état."
+title: "Restitution LOA : éviter les frais"
+description: "État des lieux, usure, pneus et kilométrage : préparez la restitution de votre voiture en LOA et limitez les frais de remise en état."
 category: "Guide"
 publishDate: 2026-07-22
+updatedDate: 2026-08-17
 readTime: "6 min"
 ---
 
-> **Chez Eleven Lease :** notre offre de leasing est proposée à kilométrage illimité, pour les particuliers comme pour les professionnels. Le point sur le dépassement de kilométrage ci-dessous décrit le fonctionnement d'une LOA classique avec forfait — il ne s'applique pas aux contrats Eleven Lease, où aucun kilomètre parcouru n'est jamais facturé à la restitution.
+> **Chez Eleven Lease :** le kilométrage illimité reste une option dépendant du contrat, du véhicule et du partenaire financier. Les règles de dépassement ci-dessous concernent les offres avec forfait.
 
 ## Comment se déroule concrètement la restitution d'un véhicule en fin de contrat ?
 
@@ -26,7 +27,7 @@ L'usure normale correspond à la dégradation attendue d'un véhicule utilisé r
 
 Dans une LOA classique, oui, presque systématiquement : le forfait kilométrique est fixé dès la signature du contrat, et tout dépassement est facturé au kilomètre, à un tarif précisé dans le contrat. Ce tarif est généralement plus élevé que le coût réel d'un kilomètre supplémentaire intégré dès le départ dans un forfait plus large — d'où l'intérêt d'estimer large au moment de la simulation plutôt que de sous-estimer son kilométrage annuel pour obtenir un loyer plus bas.
 
-**Avec Eleven Lease, cette question ne se pose pas** : notre offre de leasing est à kilométrage illimité, sans forfait à respecter ni régularisation à prévoir en fin de contrat, quel que soit le nombre de kilomètres parcourus.
+**Avec Eleven Lease, une option de kilométrage illimité peut être étudiée** lorsqu'un partenaire et le contrat le permettent. Elle doit être confirmée dans l'offre finale ; à défaut, le forfait et les frais de dépassement prévus au contrat s'appliquent.
 
 ## Comment limiter les frais de remise en état avant restitution ?
 
@@ -48,8 +49,13 @@ Pas totalement, mais on peut les réduire fortement : un véhicule entretenu ré
 
 ## En résumé
 
-La restitution d'un véhicule en fin de contrat repose sur une grille de vétusté contractuelle qui distingue usure normale et dommages facturables. Anticiper l'état du véhicule quelques semaines avant l'échéance — réparations mineures, nettoyage, vérification des pneus — reste le moyen le plus simple d'éviter des frais de restitution évitables. Avec le leasing à kilométrage illimité d'Eleven Lease, la question du dépassement kilométrique ne fait tout simplement plus partie de l'équation.
+La restitution d'un véhicule en fin de contrat repose sur une grille de vétusté contractuelle qui distingue usure normale et dommages facturables. Anticiper l'état du véhicule quelques semaines avant l'échéance — réparations mineures, nettoyage, vérification des pneus — reste le moyen le plus simple d'éviter des frais évitables. Lorsque le kilométrage illimité est retenu en option dans le contrat, les conditions précises doivent être confirmées avant signature.
+
+## Sources officielles
+
+- [DGCCRF — enquête sur les frais et clauses des contrats de LOA](https://www.economie.gouv.fr/dgccrf/laction-de-la-dgccrf/les-enquetes/contrats-de-location-avec-option-dachat-focus-sur-les)
+- [DGCCRF — réglementation applicable à la location de véhicule](https://www.economie.gouv.fr/dgccrf/les-fiches-pratiques/location-de-vehicule-la-reglementation-applicable)
 
 ---
 
-Votre contrat arrive à échéance et vous cherchez votre prochain véhicule ? [Décrivez votre projet à Eleven Lease](/simulation) : notre réseau de partenaires financiers vous propose la suite, en leasing à kilométrage illimité, sans frais.
+Votre contrat arrive à échéance et vous cherchez votre prochain véhicule ? [Décrivez votre projet à Eleven Lease](/simulation) : notre réseau recherche une solution adaptée, avec kilométrage illimité en option selon le contrat.

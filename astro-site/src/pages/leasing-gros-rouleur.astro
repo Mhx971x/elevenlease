@@ -1,0 +1,20 @@
+---
+import LeasingLanding from '../components/LeasingLanding.astro';
+const cards = [
+  { title: 'Usage chiffré', text: 'Kilomètres annuels, trajets et durée permettent de dimensionner le contrat avec précision.' },
+  { title: 'Illimité en option', text: "Le kilométrage illimité n'est jamais présenté comme inclus : il dépend du contrat et du partenaire." },
+  { title: 'Coût global maîtrisé', text: 'Loyer, assurance, énergie, entretien et restitution doivent être étudiés ensemble.' },
+];
+const sections = [
+  { title: 'Quel leasing choisir quand on roule beaucoup ?', paragraphs: ["Un gros rouleur doit commencer par estimer son kilométrage réel, pas par choisir une mensualité. Relevez les kilomètres des derniers mois, distinguez les trajets professionnels et personnels, puis ajoutez une marge raisonnable pour éviter un forfait trop juste.", "Une LOA ou une LLD classique peut parfaitement convenir avec un forfait élevé correctement calibré. Sur certaines offres, une option de kilométrage illimité peut être étudiée. Elle n'est ni automatique ni incluse par défaut : sa disponibilité et son coût dépendent du véhicule, de l'usage et du partenaire financier."] },
+  { title: 'Quels éléments comparer au-delà du kilométrage ?', paragraphs: ["Le contrat doit être lu dans son ensemble : durée, entretien, pneumatiques, assistance, conditions de restitution et facturation d'un dépassement éventuel. Pour un usage intensif, l'assurance, la consommation et la fréquence d'entretien peuvent peser autant que le loyer.", "Le choix du véhicule compte également. Une motorisation cohérente avec vos trajets, une autonomie adaptée et un niveau de confort suffisant réduisent le coût d'usage et la fatigue au quotidien. Nous recherchons une solution sur mesure plutôt que de promettre la disponibilité d'un modèle précis."] },
+  { title: 'Comment présenter votre besoin ?', paragraphs: ["Indiquez un kilométrage annuel réaliste dans la simulation, votre type de trajets, la durée envisagée et votre budget complet. Si vous souhaitez l'illimité, sélectionnez-le comme option afin que le réseau vérifie les contrats qui le permettent.", "La proposition reçue doit ensuite confirmer noir sur blanc le kilométrage retenu, les éventuels frais de dépassement et les services inclus. Seul le contrat final fait foi."] },
+];
+const faqs = [
+  { q: 'Le kilométrage illimité est-il inclus ?', a: "Non. Il reste toujours une option à étudier selon le contrat, le véhicule et le partenaire financier. Certaines offres conservent un forfait annuel défini." },
+  { q: 'À partir de combien de kilomètres est-on gros rouleur ?', a: "Il n'existe pas de seuil contractuel unique. L'important est l'écart entre votre usage réel et le forfait prévu dans l'offre." },
+  { q: 'Peut-on modifier le forfait en cours de contrat ?', a: "Cela dépend du contrat et de l'organisme financier. Il faut vérifier les conditions de modification avant signature." },
+  { q: 'Les véhicules affichés sont-ils garantis disponibles ?', a: "Non. Le catalogue est une vitrine indicative ; la recherche et la disponibilité sont confirmées au cas par cas auprès du réseau." },
+];
+---
+<LeasingLanding title="Leasing gros rouleur | Eleven Lease" description="Forfait élevé ou kilométrage illimité en option : préparez un leasing adapté aux gros rouleurs et à votre usage réel avec Eleven Lease." path="/leasing-gros-rouleur" eyebrow="Kilométrage élevé" heading="Leasing gros rouleur : un contrat dimensionné pour votre usage." lead="Vous parcourez beaucoup de kilomètres chaque année ? Nous comparons les forfaits élevés et, lorsqu'elle existe, l'option de kilométrage illimité adaptée à votre projet." directAnswer="Pour un gros rouleur, le bon contrat repose sur un kilométrage réaliste. L'illimité peut être étudié en option, jamais promis comme standard." {cards} {sections} {faqs} sourceLabel="DGCCRF — règles applicables à la LOA" sourceUrl="https://www.economie.gouv.fr/dgccrf/les-fiches-pratiques/location-avec-option-dachat-loa-dun-vehicule-quelles-sont-les-regles-connaitre" />

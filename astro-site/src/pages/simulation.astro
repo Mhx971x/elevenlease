@@ -5,13 +5,13 @@ const webPageSchema = {
   "@type": "WebPage",
   "name": "Simulez votre leasing — Eleven Lease",
   "url": "https://elevenlease.fr/simulation",
-  "description": "Simulez votre leasing en 2 minutes : décrivez votre projet et votre budget, notre réseau de partenaires vous trouve l'offre LOA/LLD adaptée sous 24h.",
+  "description": "Simulez votre leasing en 2 minutes. Notre réseau recherche une offre adaptée à votre projet, avec une première réponse sous 24 à 48 h ouvrées.",
   "isPartOf": { "@type": "WebSite", "name": "Eleven Lease", "url": "https://elevenlease.fr/" }
 };
 ---
 <MinimalLayout
   title="Eleven Lease — Simulez votre leasing"
-  description="Simulez votre leasing en 2 minutes : décrivez votre projet et votre budget, notre réseau de partenaires vous trouve l'offre LOA/LLD adaptée sous 24h."
+  description="Simulez votre leasing en 2 minutes. Notre réseau recherche une offre adaptée à votre projet, avec une première réponse sous 24 à 48 h ouvrées."
   path="/simulation"
 >
 <script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />
@@ -32,7 +32,7 @@ const webPageSchema = {
         <h1>Obtenez votre offre de leasing en moins de 2 minutes.</h1>
         <div class="trust-badges">
           <span class="trust-badge">✓ Sans engagement</span>
-          <span class="trust-badge">✓ Réponse sous 24h</span>
+          <span class="trust-badge">✓ Première réponse sous 24 à 48 h ouvrées</span>
           <span class="trust-badge">✓ Réseau de partenaires spécialisés</span>
         </div>
         <p>Quelques questions rapides pour une offre sur-mesure de notre réseau de partenaires, sans engagement.</p>
@@ -120,7 +120,7 @@ const webPageSchema = {
                 <label class="radio-option"><input type="radio" name="kilometrageAnnuel" value="15 000 km/an"> 15 000 km/an</label>
                 <label class="radio-option"><input type="radio" name="kilometrageAnnuel" value="20 000 km/an"> 20 000 km/an</label>
                 <label class="radio-option"><input type="radio" name="kilometrageAnnuel" value="30 000 km/an"> 30 000 km/an</label>
-                <label class="radio-option"><input type="radio" name="kilometrageAnnuel" value="Kilométrage illimité (Crédit-bail)"> Kilométrage illimité (Crédit-bail)</label>
+                <label class="radio-option"><input type="radio" name="kilometrageAnnuel" value="Kilométrage illimité (en option)"> Kilométrage illimité (en option)</label>
               </div>
             </div>
             <div class="field-item" id="dureeContratField">

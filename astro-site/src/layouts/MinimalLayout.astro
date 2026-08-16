@@ -15,7 +15,7 @@ const {
   title,
   description,
   path,
-  ogImage = 'https://elevenlease.fr/eleven-lease-logo.png',
+  ogImage = 'https://elevenlease.fr/og-eleven-lease-1200x630.jpg',
 } = Astro.props;
 
 const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
@@ -36,6 +36,9 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
 <meta property="og:title" content={title}>
 <meta property="og:description" content={description}>
 <meta property="og:image" content={ogImage}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Eleven Lease — Le leasing qui s'adapte à votre budget">
 <meta property="og:url" content={canonicalUrl}>
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content={title}>
@@ -52,7 +55,7 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
     --border:#e4e4e8;
     --text:#111113;
     --text-dim:#5a5a62;
-    --text-faint:#96969e;
+    --text-faint:#6f7078;
     --accent-1:#ff007f;
     --accent-2:#8d0a32;
     --accent:linear-gradient(135deg,var(--accent-1),var(--accent-2));

@@ -233,8 +233,8 @@ const specIcons: Record<string, string> = {
   path={canonicalPath}
   ogImage={photos[0]}
   active="vehicules"
-  promoResponseLabel="Première réponse sous 24 à 48h"
-  promoResponseLabelCompact="Réponse 24 à 48h"
+  promoResponseLabel="Première réponse sous 24 à 48 h ouvrées"
+  promoResponseLabelCompact="Réponse 24–48 h"
 >
 <Fragment slot="head">
   <script type="application/ld+json" set:html={JSON.stringify(vehicleSchema)} />
@@ -312,7 +312,7 @@ const specIcons: Record<string, string> = {
           <div class="vd-price-facts">
             <div class="vd-price-fact"><span><Fragment set:html={specIcons.calendar} /></span><strong>{baseDuree} mois</strong></div>
             <div class="vd-price-fact"><span><Fragment set:html={specIcons.road} /></span><strong>Kilométrage<br />selon offre</strong></div>
-            <div class="vd-price-fact"><span><Fragment set:html={specIcons.clock} /></span><strong>1re réponse<br />24 à 48h ouvrées</strong></div>
+            <div class="vd-price-fact"><span><Fragment set:html={specIcons.clock} /></span><strong>1re réponse<br />24 à 48 h ouvrées</strong></div>
           </div>
 
           <a href={`/simulation?vehicule=${encodeURIComponent(v.brand + ' ' + v.name)}`} class="vd-primary-cta btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing</a>
@@ -367,7 +367,7 @@ const specIcons: Record<string, string> = {
       <div class="vd-financing-cta-wrap">
         <a href={`/simulation?vehicule=${encodeURIComponent(v.brand + ' ' + v.name)}`} class="vd-financing-cta btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing</a>
       </div>
-      <p class="vd-financing-proof">Gratuit · Sans engagement · Première réponse sous 24 à 48h ouvrées</p>
+      <p class="vd-financing-proof">Gratuit · Sans engagement · Première réponse sous 24 à 48 h ouvrées</p>
       <p class="financing-disclaimer">Exemples indicatifs. Le loyer définitif dépend du profil, du véhicule et des conditions du partenaire financier.</p>
     </div>
   </section>
@@ -379,7 +379,7 @@ const specIcons: Record<string, string> = {
         <div><span><Fragment set:html={euroIcon} /></span><p><strong>Sans apport possible</strong><small>Financez votre véhicule sans payer d'avance.</small></p></div>
         <div><span><Fragment set:html={proIcon} /></span><p><strong>Plusieurs partenaires</strong><small>Nous recherchons la solution la plus adaptée.</small></p></div>
         <div><span><Fragment set:html={checkIcon} /></span><p><strong>Étude gratuite</strong><small>Une première analyse sans engagement.</small></p></div>
-        <div><span><Fragment set:html={specIcons.clock} /></span><p><strong>Réponse rapide</strong><small>Un premier retour sous 24 à 48h ouvrées.</small></p></div>
+        <div><span><Fragment set:html={specIcons.clock} /></span><p><strong>Réponse rapide</strong><small>Un premier retour sous 24 à 48 h ouvrées.</small></p></div>
         <div><span><Fragment set:html={particulierIcon} /></span><p><strong>Conseiller dédié</strong><small>Un expert vous accompagne à chaque étape.</small></p></div>
       </div>
     </div>

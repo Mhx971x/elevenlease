@@ -1,8 +1,9 @@
 ---
-title: "Jeune conducteur : comment obtenir une LOA malgré un profil jugé à risque"
-description: "Manque d'ancienneté de permis, premier emploi, revenus encore modestes : voici pourquoi les jeunes conducteurs essuient souvent des refus en LOA, et comment mettre les chances de votre côté."
+title: "Jeune conducteur : réussir son dossier LOA"
+description: "Permis récent, premier emploi, revenus modestes : les pièces et choix de véhicule qui renforcent un dossier LOA de jeune conducteur."
 category: "Profils spécifiques"
 publishDate: 2026-07-22
+updatedDate: 2026-08-17
 readTime: "7 min"
 ---
 
@@ -44,6 +45,10 @@ Notre rôle chez Eleven Lease consiste précisément à orienter chaque dossier 
 ## En résumé
 
 Un refus de LOA en tant que jeune conducteur ne reflète pas la qualité réelle du dossier : il reflète la grille d'un organisme en particulier. Comparer plusieurs partenaires reste le levier le plus efficace pour transformer un profil jugé « à risque » par certains en dossier accepté par d'autres.
+
+## Source officielle
+
+- [DGCCRF — règles applicables à la LOA d'un véhicule](https://www.economie.gouv.fr/dgccrf/les-fiches-pratiques/location-avec-option-dachat-loa-dun-vehicule-quelles-sont-les-regles-connaitre)
 
 ---
 

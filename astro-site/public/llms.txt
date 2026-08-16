@@ -1,12 +1,16 @@
 # Eleven Lease
 
-> Eleven Lease est une equipe de mandataires auto basee en France, active depuis 2023. Elle met en relation particuliers et professionnels avec un reseau d'une dizaine de partenaires financiers pour trouver, toutes marques confondues, l'offre de leasing automobile (LOA/LLD) adaptee a leur budget. Kilometrage illimite, mise en relation gratuite, reponse sous 24h en moyenne.
+> Eleven Lease est une equipe de mandataires auto basee en France, active depuis 2023. Elle met en relation particuliers et professionnels avec un reseau d'une dizaine de partenaires financiers pour rechercher, toutes marques confondues, une offre de leasing automobile (LOA/LLD) adaptee a leur budget. Kilometrage illimite en option selon le contrat, mise en relation gratuite, premiere reponse sous 24 a 48 h ouvrees.
 
 Eleven Lease n'est pas un etablissement de credit et ne finance aucun vehicule directement : le role de l'entreprise est de mettre chaque projet en relation avec le partenaire financier le plus adapte au sein de son reseau.
 
 ## Pages principales
 
-- [Accueil](https://elevenlease.fr/) : presentation de l'offre, du fonctionnement en 4 etapes et des avantages (kilometrage illimite, 0 euro de frais client, reponse sous 24h).
+- [Accueil](https://elevenlease.fr/) : presentation de l'offre, du fonctionnement en 4 etapes et des avantages (kilometrage illimite en option, 0 euro de frais client, premiere reponse sous 24 a 48 h ouvrees).
+- [Leasing sans apport](https://elevenlease.fr/leasing-sans-apport) : fonctionnement, cout total et preparation du dossier.
+- [Leasing gros rouleur](https://elevenlease.fr/leasing-gros-rouleur) : forfait kilometrique eleve et option illimitee selon contrat.
+- [Leasing professionnel](https://elevenlease.fr/leasing-professionnel) : usages, justificatifs et points fiscaux.
+- [Leasing auto-entrepreneur](https://elevenlease.fr/leasing-auto-entrepreneur) : revenus variables, justificatifs et coherence du projet.
 - [Guide LOA](https://elevenlease.fr/loa) : definition de la LOA, fonctionnement, cout, eligibilite, fin de contrat, FAQ complete.
 - [Vehicules disponibles](https://elevenlease.fr/vehicules) : catalogue d'exemples de vehicules en leasing, toutes marques et budgets.
 - [Simulation](https://elevenlease.fr/simulation) : formulaire pour decrire un projet de leasing et recevoir une offre.

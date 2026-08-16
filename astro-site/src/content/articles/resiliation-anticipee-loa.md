@@ -1,8 +1,9 @@
 ---
-title: "Résilier une LOA avant la fin du contrat : est-ce possible et à quel prix ?"
-description: "Changement de situation, envie de changer de véhicule, difficultés financières : voici dans quels cas une résiliation anticipée de LOA est possible, et ce qu'elle coûte réellement."
+title: "Résiliation anticipée d'une LOA"
+description: "Indemnité, transfert ou rachat : découvrez les options à vérifier dans votre contrat avant de résilier une LOA de façon anticipée."
 category: "Guide"
 publishDate: 2026-07-22
+updatedDate: 2026-08-17
 readTime: "6 min"
 ---
 
@@ -48,6 +49,11 @@ Le meilleur levier reste en amont, au moment de la signature : choisir une duré
 ## En résumé
 
 Résilier une LOA avant son terme est possible dans la grande majorité des contrats, mais rarement sans coût : l'indemnité due dépend du contrat signé, du moment de la résiliation et de l'organisme concerné. Avant de résilier, il vaut souvent la peine d'examiner les alternatives (transfert, renégociation) et de vérifier précisément les clauses de sortie anticipée de votre contrat.
+
+## Sources officielles
+
+- [DGCCRF — règles applicables à la LOA d'un véhicule](https://www.economie.gouv.fr/dgccrf/les-fiches-pratiques/location-avec-option-dachat-loa-dun-vehicule-quelles-sont-les-regles-connaitre)
+- [DGCCRF — enquête sur les clauses abusives des contrats de LOA](https://www.economie.gouv.fr/dgccrf/laction-de-la-dgccrf/les-enquetes/contrats-de-location-avec-option-dachat-focus-sur-les)
 
 ---
 

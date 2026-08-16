@@ -1,12 +1,13 @@
 ---
-title: "LOA voiture électrique : ce qui change vraiment par rapport au thermique"
-description: "Batterie, autonomie, coût à l'usage : la LOA sur un véhicule électrique obéit aux mêmes règles générales qu'un modèle thermique, avec quelques différences concrètes à connaître."
+title: "LOA électrique : les points à vérifier"
+description: "Batterie, autonomie, recharge et valeur résiduelle : les points à contrôler avant de signer une LOA pour une voiture électrique."
 category: "Guide"
 publishDate: 2026-07-22
+updatedDate: 2026-08-17
 readTime: "6 min"
 ---
 
-> **Chez Eleven Lease :** notre offre de leasing est à kilométrage illimité, y compris sur les véhicules électriques — le forfait kilométrique mentionné plus bas décrit le fonctionnement d'une LOA classique, pas celui de nos contrats.
+> **Chez Eleven Lease :** le kilométrage illimité n'est pas inclus par défaut. Il peut être étudié comme une option sur certains contrats, y compris pour un véhicule électrique.
 
 ## La LOA est-elle adaptée aux véhicules électriques ?
 
@@ -47,6 +48,11 @@ La LOA garde un avantage particulier sur ce segment : elle protège contre l'inc
 ## En résumé
 
 La LOA sur un véhicule électrique suit les mêmes règles générales qu'un modèle thermique, avec quelques paramètres spécifiques à vérifier (garantie batterie, conditions de recharge, valeur résiduelle). Le dispositif public de leasing social reste une option à part, réservée à un public spécifique sous conditions de ressources.
+
+## Sources officielles
+
+- [Ministère de la Transition écologique — dispositif de leasing social 2026](https://www.ecologie.gouv.fr/leasing-social)
+- [DGCCRF — règles applicables à la LOA d'un véhicule](https://www.economie.gouv.fr/dgccrf/les-fiches-pratiques/location-avec-option-dachat-loa-dun-vehicule-quelles-sont-les-regles-connaitre)
 
 ---
 

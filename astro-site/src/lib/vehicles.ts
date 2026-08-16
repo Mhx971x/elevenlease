@@ -40,6 +40,8 @@ export interface Vehicle {
   co2: string;
   coffre: string;
   slug: string;
+  updatedAt: string;
+  createdAt: string;
 }
 
 interface VehicleRow {
@@ -72,6 +74,8 @@ interface VehicleRow {
   co2: string | null;
   coffre: string | null;
   slug: string;
+  updated_at: string | null;
+  created_at: string | null;
 }
 
 function stripAccents(s: unknown): string {
@@ -129,6 +133,8 @@ function toVehicle(r: VehicleRow): Vehicle {
     co2: r.co2 || '',
     coffre: r.coffre || '',
     slug: r.slug,
+    updatedAt: r.updated_at || '',
+    createdAt: r.created_at || '',
   };
 }
 

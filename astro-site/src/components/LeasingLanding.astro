@@ -1,0 +1,166 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Card {
+  title: string;
+  text: string;
+}
+
+interface Section {
+  title: string;
+  paragraphs: string[];
+}
+
+interface Faq {
+  q: string;
+  a: string;
+}
+
+export interface Props {
+  title: string;
+  description: string;
+  path: string;
+  eyebrow: string;
+  heading: string;
+  lead: string;
+  directAnswer: string;
+  cards: Card[];
+  sections: Section[];
+  faqs: Faq[];
+  sourceLabel: string;
+  sourceUrl: string;
+}
+
+const { title, description, path, eyebrow, heading, lead, directAnswer, cards, sections, faqs, sourceLabel, sourceUrl } = Astro.props;
+const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+};
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: heading,
+  description,
+  url: canonicalUrl,
+  provider: { '@type': 'Organization', name: 'Eleven Lease', url: 'https://elevenlease.fr/' },
+  areaServed: { '@type': 'Country', name: 'France' },
+};
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Accueil', item: 'https://elevenlease.fr/' },
+    { '@type': 'ListItem', position: 2, name: heading, item: canonicalUrl },
+  ],
+};
+---
+
+<BaseLayout title={title} description={description} path={path} showProgressBar>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
+  </Fragment>
+
+  <main>
+    <section class="landing-hero">
+      <div class="wrap hero-wrap">
+        <div class="hero-copy">
+          <div class="eyebrow"><span></span>{eyebrow}</div>
+          <h1>{heading}</h1>
+          <p>{lead}</p>
+          <div class="hero-actions">
+            <a href="/simulation" class="btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing</a>
+            <a href="/contact" class="btn-secondary">Poser une question</a>
+          </div>
+        </div>
+        <aside class="answer-card" aria-label="Réponse courte">
+          <span>En bref</span>
+          <p>{directAnswer}</p>
+          <small>Offre finale soumise à l'étude du dossier et aux conditions du partenaire financier.</small>
+        </aside>
+      </div>
+    </section>
+
+    <section class="landing-cards">
+      <div class="wrap cards-grid">
+        {cards.map((card, index) => (
+          <article class="benefit-card">
+            <span>0{index + 1}</span>
+            <h2>{card.title}</h2>
+            <p>{card.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="landing-content">
+      <div class="wrap content-grid">
+        <div class="content-main">
+          {sections.map((section) => (
+            <article class="content-section">
+              <h2>{section.title}</h2>
+              {section.paragraphs.map((paragraph) => <p>{paragraph}</p>)}
+            </article>
+          ))}
+          <p class="source-note">Source officielle : <a href={sourceUrl} target="_blank" rel="noopener">{sourceLabel}</a>.</p>
+        </div>
+        <aside class="process-card">
+          <span>Votre parcours</span>
+          <ol>
+            <li><strong>Décrivez votre besoin</strong><small>Budget, véhicule, usage et contraintes.</small></li>
+            <li><strong>Nous cadrons le dossier</strong><small>Les pièces utiles dépendent de votre profil.</small></li>
+            <li><strong>Le réseau étudie le projet</strong><small>Première réponse sous 24 à 48 h ouvrées.</small></li>
+            <li><strong>Vous choisissez librement</strong><small>Simulation gratuite et sans engagement.</small></li>
+          </ol>
+        </aside>
+      </div>
+    </section>
+
+    <section class="landing-faq">
+      <div class="wrap">
+        <div class="section-head">
+          <span>Questions fréquentes</span>
+          <h2>Les réponses utiles avant de commencer.</h2>
+        </div>
+        <div class="faq-list">
+          {faqs.map((item) => (
+            <details>
+              <summary>{item.q}<span aria-hidden="true">+</span></summary>
+              <p>{item.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-cta">
+      <div class="wrap cta-panel">
+        <div><span>Étude gratuite</span><h2>Un projet précis ? Décrivez-le en 2 minutes.</h2></div>
+        <a href="/simulation" class="btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Lancer ma simulation</a>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .landing-hero{padding:174px 0 86px;background:radial-gradient(circle at 82% 26%,rgba(255,0,127,.1),transparent 30%),linear-gradient(180deg,#fff,#fbfbfc);border-bottom:1px solid var(--border);}
+  .hero-wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(320px,.75fr);align-items:center;gap:70px;}
+  .hero-copy{max-width:710px;}.eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:22px;padding:7px 13px;border:1px solid var(--border);border-radius:var(--radius-pill);color:var(--text-dim);font-size:12.5px;font-weight:600;}.eyebrow span{width:6px;height:6px;border-radius:50%;background:var(--accent-1);}
+  h1{font-size:clamp(38px,5vw,62px);max-width:760px;}.hero-copy>p{max-width:650px;margin-top:22px;color:var(--text-dim);font-size:17px;line-height:1.72;}
+  .hero-actions{display:flex;align-items:center;gap:14px;margin-top:32px;flex-wrap:wrap;}.btn-primary,.btn-secondary{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 24px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;}.btn-primary{color:#fff;background:var(--accent);box-shadow:0 14px 30px rgba(190,24,93,.18);}.btn-secondary{border:1px solid var(--border);color:var(--text-dim);background:#fff;}
+  .answer-card{padding:30px;border:1px solid rgba(255,0,127,.16);border-radius:var(--radius-xl);background:rgba(255,255,255,.9);box-shadow:var(--shadow-md);}.answer-card>span,.process-card>span,.section-head>span,.cta-panel>div>span{color:var(--accent-1);font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;}.answer-card p{margin:15px 0 18px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:600;line-height:1.42;}.answer-card small{display:block;color:var(--text-dim);font-size:12px;line-height:1.6;}
+  .landing-cards{padding:74px 0;background:var(--surface);}.cards-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}.benefit-card{padding:30px;border:1px solid var(--border);border-radius:var(--radius-lg);background:#fff;}.benefit-card>span{color:var(--accent-1);font-size:12px;font-weight:700;}.benefit-card h2{margin-top:25px;font-size:21px;}.benefit-card p{margin-top:12px;color:var(--text-dim);font-size:14px;line-height:1.7;}
+  .landing-content{padding:88px 0;}.content-grid{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:80px;align-items:start;}.content-main{max-width:720px;}.content-section+ .content-section{margin-top:52px;padding-top:52px;border-top:1px solid var(--border);}.content-section h2{font-size:clamp(25px,3vw,34px);}.content-section p{margin-top:18px;color:var(--text-dim);font-size:16px;line-height:1.82;}.source-note{margin-top:48px;padding:16px 18px;border-left:3px solid var(--accent-1);background:var(--surface);color:var(--text-dim);font-size:13px;}.source-note a{color:var(--text);text-decoration:underline;text-decoration-color:var(--accent-1);text-underline-offset:3px;}
+  .process-card{position:sticky;top:95px;padding:28px;border:1px solid var(--border);border-radius:var(--radius-xl);background:#fff;box-shadow:var(--shadow-sm);}.process-card ol{list-style:none;margin-top:22px;counter-reset:steps;}.process-card li{position:relative;padding:0 0 23px 38px;counter-increment:steps;}.process-card li:not(:last-child)::after{content:'';position:absolute;left:12px;top:27px;bottom:4px;width:1px;background:var(--border);}.process-card li::before{content:counter(steps);position:absolute;left:0;top:0;width:25px;height:25px;display:grid;place-items:center;border-radius:50%;background:var(--surface);color:var(--accent-1);font-size:11px;font-weight:700;}.process-card strong,.process-card small{display:block;}.process-card strong{font-size:13.5px;}.process-card small{margin-top:4px;color:var(--text-dim);font-size:12px;line-height:1.5;}
+  .landing-faq{padding:82px 0;background:var(--surface);border-block:1px solid var(--border);}.section-head{max-width:640px;margin-bottom:34px;}.section-head h2{margin-top:10px;font-size:clamp(28px,4vw,40px);}.faq-list{max-width:820px;}.faq-list details{border-bottom:1px solid var(--border);}.faq-list summary{display:flex;justify-content:space-between;gap:20px;padding:22px 0;cursor:pointer;list-style:none;color:var(--text);font-weight:600;}.faq-list summary::-webkit-details-marker{display:none;}.faq-list summary span{color:var(--accent-1);font-size:22px;}.faq-list details[open] summary span{transform:rotate(45deg);}.faq-list details p{max-width:720px;padding:0 42px 22px 0;color:var(--text-dim);font-size:14.5px;line-height:1.75;}
+  .landing-cta{padding:80px 0;}.cta-panel{display:flex;align-items:center;justify-content:space-between;gap:32px;padding:40px 44px;border-radius:var(--radius-xl);color:#fff;background:radial-gradient(circle at 85% 0,rgba(255,0,127,.45),transparent 32%),#101014;}.cta-panel h2{max-width:650px;margin-top:8px;font-size:clamp(24px,3vw,34px);}.cta-panel .btn-primary{flex:none;}
+  @media(max-width:900px){.hero-wrap,.content-grid{grid-template-columns:1fr;gap:40px;}.answer-card{max-width:620px;}.cards-grid{grid-template-columns:1fr;}.process-card{position:static;max-width:620px;}.cta-panel{align-items:flex-start;flex-direction:column;}}
+  @media(max-width:640px){.landing-hero{padding:138px 0 58px;}.hero-copy>p{font-size:15px;}.hero-actions{align-items:stretch;flex-direction:column;}.hero-actions a{width:100%;}.landing-cards,.landing-content,.landing-faq,.landing-cta{padding-block:58px;}.benefit-card,.answer-card{padding:24px;}.content-section+ .content-section{margin-top:40px;padding-top:40px;}.content-section p{font-size:15px;}.cta-panel{padding:30px 24px;}.cta-panel .btn-primary{width:100%;}}
+</style>

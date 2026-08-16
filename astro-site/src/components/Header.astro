@@ -12,8 +12,8 @@ export interface Props {
 }
 const {
   ctaHref = '/simulation',
-  responseLabel = 'Réponse sous 24h',
-  responseLabelCompact = responseLabel,
+  responseLabel = 'Première réponse sous 24 à 48 h ouvrées',
+  responseLabelCompact = 'Réponse 24–48 h',
   active,
   showProgressBar = false,
 } = Astro.props;
@@ -48,7 +48,7 @@ const cls = (key: string) => (active === key ? 'active' : undefined);
   {showProgressBar && <div class="progress-bar" id="progressBar"></div>}
 </header>
 
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu" id="mobileMenu" aria-hidden="true" inert>
   <div class="mobile-menu-head">
     <div class="logo">
       <span class="logo-icon" role="img" aria-label="Eleven Lease"></span>
@@ -72,25 +72,51 @@ const cls = (key: string) => (active === key ? 'active' : undefined);
   const menuToggle = document.getElementById('menuToggle');
   const mobileMenu = document.getElementById('mobileMenu');
   const mobileMenuClose = document.getElementById('mobileMenuClose');
+  const mobileMenuFocusables = () => Array.from(mobileMenu.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'));
   function openMobileMenu(){
+    mobileMenu.removeAttribute('inert');
+    mobileMenu.setAttribute('aria-hidden', 'false');
     mobileMenu.classList.add('open');
     menuToggle.classList.add('active');
     menuToggle.setAttribute('aria-expanded', 'true');
     document.body.classList.add('menu-open');
+    window.requestAnimationFrame(() => mobileMenuClose?.focus());
   }
-  function closeMobileMenu(){
+  function closeMobileMenu({ restoreFocus = true } = {}){
     mobileMenu.classList.remove('open');
     menuToggle.classList.remove('active');
     menuToggle.setAttribute('aria-expanded', 'false');
     document.body.classList.remove('menu-open');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    mobileMenu.setAttribute('inert', '');
+    if(restoreFocus) menuToggle.focus();
   }
   if(menuToggle && mobileMenu){
     menuToggle.addEventListener('click', ()=>{
       mobileMenu.classList.contains('open') ? closeMobileMenu() : openMobileMenu();
     });
     if(mobileMenuClose) mobileMenuClose.addEventListener('click', closeMobileMenu);
-    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMobileMenu));
-    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeMobileMenu(); });
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => closeMobileMenu({ restoreFocus:false })));
+    document.addEventListener('keydown', (e)=>{
+      if(!mobileMenu.classList.contains('open')) return;
+      if(e.key === 'Escape'){
+        e.preventDefault();
+        closeMobileMenu();
+        return;
+      }
+      if(e.key !== 'Tab') return;
+      const focusables = mobileMenuFocusables();
+      if(focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if(e.shiftKey && document.activeElement === first){
+        e.preventDefault();
+        last.focus();
+      }else if(!e.shiftKey && document.activeElement === last){
+        e.preventDefault();
+        first.focus();
+      }
+    });
   }
 
   // header scroll state + barre de progression (pages avec showProgressBar)

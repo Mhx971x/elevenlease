@@ -1,0 +1,20 @@
+---
+import LeasingLanding from '../components/LeasingLanding.astro';
+const cards = [
+  { title: 'Budget lisible', text: 'Un loyer régulier facilite le suivi du coût automobile, sous réserve des services et taxes applicables.' },
+  { title: 'Véhicule adapté au métier', text: 'Utilitaire, véhicule de fonction ou déplacements intensifs : le besoin guide la recherche.' },
+  { title: 'Fiscalité à valider', text: "TVA et taxes varient selon le véhicule et l'activité ; votre expert-comptable reste l'interlocuteur de référence." },
+];
+const sections = [
+  { title: 'Pourquoi envisager un leasing professionnel ?', paragraphs: ["Le leasing permet à une entreprise ou à un professionnel de disposer d'un véhicule sans mobiliser immédiatement la totalité de son prix d'achat. Le contrat répartit le coût dans le temps et peut intégrer, selon l'offre, des services comme l'entretien ou l'assistance.", "LOA et LLD ne répondent pas exactement au même besoin. La LOA conserve une option d'achat, tandis que la LLD privilégie l'usage et la restitution. Le bon choix dépend de la durée de détention, du renouvellement souhaité, du kilométrage et de la stratégie comptable de l'activité."] },
+  { title: 'Quels critères structurent le dossier ?', paragraphs: ["Le partenaire financier peut demander des éléments sur l'ancienneté de l'entreprise, le chiffre d'affaires, les résultats, la trésorerie et les engagements existants. Une société récente n'est pas automatiquement exclue, mais le véhicule et le loyer doivent être proportionnés à sa capacité financière.", "Présentez également l'usage prévu : nombre de conducteurs, trajets, kilométrage, transport de matériel et contraintes d'accès. Ces informations évitent de retenir un véhicule séduisant mais inadapté au quotidien."] },
+  { title: 'Comment traiter la fiscalité du véhicule ?', paragraphs: ["Les règles de déduction de TVA et les taxes liées aux véhicules affectés à des fins économiques varient selon la catégorie du véhicule, sa motorisation et l'activité exercée. Eleven Lease peut vous aider à comparer les offres commerciales, mais ne remplace pas un conseil fiscal.", "Faites valider le traitement comptable et fiscal par votre expert-comptable avant signature. La décision doit reposer sur le coût total pour l'entreprise, pas uniquement sur le montant du loyer affiché."] },
+];
+const faqs = [
+  { q: 'Une entreprise récente peut-elle obtenir un leasing ?', a: "C'est possible selon le dossier, le véhicule et le partenaire. Des justificatifs complémentaires ou une configuration plus prudente peuvent être demandés." },
+  { q: 'La TVA est-elle toujours récupérable ?', a: "Non. Les règles dépendent notamment du type de véhicule et de l'activité. Faites valider votre situation par votre expert-comptable." },
+  { q: 'LOA ou LLD pour un professionnel ?', a: "La LOA garde une option d'achat ; la LLD privilégie la restitution. Le choix dépend de votre stratégie de renouvellement, de l'usage et du coût total." },
+  { q: 'Le kilométrage illimité est-il proposé aux professionnels ?', a: "Il peut être étudié en option sur certains contrats. Il n'est jamais garanti ni inclus par défaut." },
+];
+---
+<LeasingLanding title="Leasing professionnel | Eleven Lease" description="LOA ou LLD pour votre activité : comparez les usages, justificatifs, coûts et points fiscaux d'un leasing professionnel avec Eleven Lease." path="/leasing-professionnel" eyebrow="Entreprises et indépendants" heading="Leasing professionnel : un véhicule aligné avec votre activité." lead="Utilitaire, véhicule de fonction ou déplacements fréquents : nous cadrons votre besoin et recherchons une offre cohérente auprès de notre réseau financier." directAnswer="Un leasing professionnel doit être dimensionné sur l'usage, la capacité financière de l'activité et le coût total. La fiscalité doit être validée avec votre expert-comptable." {cards} {sections} {faqs} sourceLabel="Impots.gouv.fr — véhicules affectés à des fins économiques" sourceUrl="https://www.impots.gouv.fr/professionnel/questions/comment-declarer-et-payer-ma-taxe-sur-les-vehicules-de-societes-tvs" />

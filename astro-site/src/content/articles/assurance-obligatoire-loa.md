@@ -1,8 +1,9 @@
 ---
-title: "Quelle assurance est obligatoire pour une voiture en LOA ?"
-description: "Le véhicule ne vous appartient pas encore : voici pourquoi l'assurance exigée en LOA est plus stricte qu'en achat classique, et comment éviter les mauvaises surprises."
+title: "Assurance LOA : quelles garanties choisir ?"
+description: "Responsabilité civile, tous risques, perte financière : découvrez les garanties à vérifier pour assurer une voiture en LOA sans mauvaise surprise."
 category: "Guide"
 publishDate: 2026-07-22
+updatedDate: 2026-08-17
 readTime: "5 min"
 ---
 
@@ -41,6 +42,10 @@ Oui, et c'est un point souvent sous-estimé au moment de comparer des offres de 
 ## En résumé
 
 En LOA, l'assurance tous risques n'est pas une option mais une quasi-obligation imposée par l'organisme financier, propriétaire du véhicule jusqu'à la levée de l'option d'achat. Comparer plusieurs assureurs reste possible et recommandé, à condition de respecter précisément le niveau de garantie exigé par votre contrat.
+
+## Source officielle
+
+- [DGCCRF — règles applicables à la LOA d'un véhicule](https://www.economie.gouv.fr/dgccrf/les-fiches-pratiques/location-avec-option-dachat-loa-dun-vehicule-quelles-sont-les-regles-connaitre)
 
 ---
 

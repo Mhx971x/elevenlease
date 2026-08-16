@@ -29,20 +29,20 @@ const heroBrands = [
 ];
 
 const heroCarouselVehicles = [
-  { src: '/hero-premium-coupe-shadow-v3.png', model: 'BMW Série 4', price: '399 €/mois' },
-  { src: '/hero-cupra-formentor-shadow-v2.png', model: 'CUPRA Formentor', price: '359 €/mois' },
-  { src: '/hero-clio-alpine-black-shadow-v3.png', model: 'Renault Clio 5 Alpine', price: '289 €/mois' },
-  { src: '/hero-tesla-model-3-shadow-v2.png', model: 'Tesla Model 3', price: '429 €/mois' }
+  { src: '/hero-premium-coupe-shadow-v3.webp', model: 'BMW Série 4', price: '399 €/mois' },
+  { src: '/hero-cupra-formentor-shadow-v2.webp', model: 'CUPRA Formentor', price: '359 €/mois' },
+  { src: '/hero-clio-alpine-black-shadow-v3.webp', model: 'Renault Clio 5 Alpine', price: '289 €/mois' },
+  { src: '/hero-tesla-model-3-shadow-v2.webp', model: 'Tesla Model 3', price: '429 €/mois' }
 ];
 
 const clientReviews = [
   {
-    text: "Réponse en moins de 24 h et une proposition vraiment cohérente avec mon budget. C'était clair, rapide et sans détour.",
+    text: "Première réponse dans le délai annoncé et une proposition vraiment cohérente avec mon budget. C'était clair, rapide et sans détour.",
     name: 'Sofiane M.',
     profile: 'Particulier · Audi A3'
   },
   {
-    text: "Je roule énormément pour mon activité. Pouvoir avancer sur une solution avec kilométrage illimité a clairement fait la différence.",
+    text: "Je roule énormément pour mon activité. Pouvoir étudier l'option de kilométrage illimité a clairement fait la différence.",
     name: 'Laura D.',
     profile: 'Professionnelle · Utilitaire'
   },
@@ -203,7 +203,7 @@ const breadcrumbSchema = {
 ---
 <BaseLayout
   title="Eleven Lease — Le leasing qui s'adapte à votre budget"
-  description="Leasing auto sur-mesure, toutes marques : décrivez votre budget, notre réseau de partenaires vous trouve l'offre adaptée sous 24h. Kilométrage illimité inclus."
+  description="Leasing auto sur mesure, toutes marques, sans apport possible et kilométrage illimité en option. Première réponse sous 24 à 48 h ouvrées."
   path="/"
   showProgressBar
 >
@@ -322,12 +322,12 @@ const breadcrumbSchema = {
 
         <div class="hero-proof-row" aria-label="Les avantages Eleven Lease">
           <div class="hero-proof">
-            <strong>Illimité</strong>
-            <span>Kilométrage</span>
+            <strong>En option</strong>
+            <span>Km illimité</span>
           </div>
           <div class="hero-proof">
-            <strong>24h</strong>
-            <span>Réponse moyenne</span>
+            <strong>24–48 h</strong>
+            <span>Première réponse</span>
           </div>
           <div class="hero-proof">
             <strong>0 €</strong>
@@ -351,12 +351,14 @@ const breadcrumbSchema = {
           {heroCarouselVehicles.map((vehicle, index) => (
             <img
               class={`hero-car${index === 0 ? ' is-active is-initial' : ''}`}
-              src={vehicle.src}
-              alt={`${vehicle.model} disponible en leasing chez Eleven Lease`}
+              src={index === 0 ? vehicle.src : 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs='}
+              data-src={index === 0 ? undefined : vehicle.src}
+              alt={`${vehicle.model} présenté à titre indicatif par Eleven Lease`}
               width="1536"
               height="1024"
               fetchpriority={index === 0 ? 'high' : undefined}
-              decoding={index === 0 ? undefined : 'async'}
+              loading={index === 0 ? 'eager' : 'lazy'}
+              decoding="async"
               data-carousel-car
               data-model={vehicle.model}
               data-price={vehicle.price}
@@ -367,10 +369,6 @@ const breadcrumbSchema = {
           <strong class="hero-car-card-model">BMW Série 4</strong>
           <span class="hero-car-card-price">À partir de <b>399 €/mois</b></span>
         </div>
-        <picture class="hero-mobile-car">
-          <source media="(min-width: 981px)" srcset="/hero-premium-coupe-v2.png" width="1536" height="1024">
-          <img src="/hero-sport-compact.png" alt="Véhicule disponible en leasing chez Eleven Lease" width="1774" height="887" fetchpriority="high">
-        </picture>
       </div>
     </div>
 
@@ -379,7 +377,7 @@ const breadcrumbSchema = {
         <span class="project-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none"><path d="M9.828 9.172a4 4 0 1 0 0 5.656a10 10 0 0 0 2.172 -2.828a10 10 0 0 1 2.172 -2.828a4 4 0 1 1 0 5.656a10 10 0 0 1 -2.172 -2.828a10 10 0 0 0 -2.172 -2.828" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
-        <span class="project-text"><strong><span class="proof-full">Km illimité possible</span><span class="proof-compact">Km illimité</span></strong></span>
+        <span class="project-text"><strong><span class="proof-full">Km illimité en option</span><span class="proof-compact">Option km illimité</span></strong></span>
       </div>
       <div class="project-item">
         <span class="project-icon" aria-hidden="true">
@@ -391,7 +389,7 @@ const breadcrumbSchema = {
         <span class="project-icon" aria-hidden="true">
           <svg viewBox="0 0 24 24" fill="none"><path d="M7 3v3m10-3v3M4 9h16M5 5h14a1 1 0 011 1v14H4V6a1 1 0 011-1zM8 13h3m2 0h3m-8 3h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </span>
-        <span class="project-text"><strong><span class="proof-full">Réponse sous 24h</span><span class="proof-compact">Réponse 24h</span></strong></span>
+        <span class="project-text"><strong><span class="proof-full">Réponse sous 24 à 48 h</span><span class="proof-compact">Réponse 24–48 h</span></strong></span>
       </div>
       <div class="project-actions">
         <a href="/vehicules" class="project-stock-cta">Voir les véhicules <span aria-hidden="true">→</span></a>
@@ -424,8 +422,8 @@ const breadcrumbSchema = {
       <div class="fleet-head reveal">
         <h2>Nos offres <span class="highlight-mark">à la une</span>.</h2>
         <p class="fleet-subline">
-          <span class="fleet-subline-desktop">Une sélection parmi des milliers de véhicules disponibles.</span>
-          <span class="fleet-subline-mobile">Une sélection parmi +10 000 véhicules.</span>
+          <span class="fleet-subline-desktop">Des exemples indicatifs parmi des milliers de configurations possibles.</span>
+          <span class="fleet-subline-mobile">Des exemples indicatifs, recherche sur mesure.</span>
         </p>
       </div>
       <div class="fleet-carousel reveal">
@@ -527,10 +525,10 @@ const breadcrumbSchema = {
           </div>
           <ul class="compare-list">
             <li class="compare-list-strong"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> 0€ d'apport possible</li>
-            <li class="compare-list-strong"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> KM illimité possible</li>
+            <li class="compare-list-strong"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> KM illimité en option</li>
             <li class="compare-list-strong"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Accepté plus souvent</li>
             <li class="compare-hide-mobile"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Véhicules récents</li>
-            <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Réponse sous 24h</li>
+            <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Réponse sous 24 à 48 h</li>
             <li class="compare-hide-mobile"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Suivi de A à Z</li>
             <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Aucun frais caché</li>
           </ul>
@@ -667,7 +665,7 @@ const breadcrumbSchema = {
       <div class="accept-stats reveal reveal-stagger">
         <div class="accept-stat">
           <span class="accept-icon"><Fragment set:html={acceptPeopleIcon} /></span>
-          <span class="accept-stat-label">+15 partenaires</span>
+          <span class="accept-stat-label">Une dizaine de partenaires</span>
         </div>
         <div class="accept-stat">
           <span class="accept-icon"><Fragment set:html={acceptTrendIcon} /></span>
@@ -792,7 +790,7 @@ const breadcrumbSchema = {
           <div class="process-cta-proof">
             <span>Gratuit</span>
             <span>Sans engagement</span>
-            <span>Réponse sous 24h</span>
+            <span>Réponse sous 24 à 48 h ouvrées</span>
           </div>
         </div>
         <div class="process-car-carousel" data-vehicle-carousel data-process-car-carousel aria-hidden="true">
@@ -2582,6 +2580,12 @@ const breadcrumbSchema = {
     let cardSwapTimer = 0;
     let leavingTimers: number[] = [];
 
+    const hydrateCar = (car: HTMLElement | undefined) => {
+      if(!(car instanceof HTMLImageElement) || !car.dataset.src) return;
+      car.src = car.dataset.src;
+      delete car.dataset.src;
+    };
+
     const updateCarCard = (car: HTMLElement) => {
       if(!carCard || !cardModel || !cardPrice) return;
       window.clearTimeout(cardSwapTimer);
@@ -2599,6 +2603,7 @@ const breadcrumbSchema = {
       carGroups.forEach(cars => {
         const current = cars[currentIndex];
         const next = cars[nextIndex];
+        hydrateCar(next);
         current.classList.remove('is-active','is-initial');
         current.classList.add('is-leaving');
         next.classList.remove('is-leaving','is-initial');
@@ -2623,6 +2628,7 @@ const breadcrumbSchema = {
 
     window.setTimeout(() => carCard?.classList.remove('is-changing'), 1250);
     window.setTimeout(() => heroCars[0]?.classList.remove('is-initial'), 1450);
+    window.setTimeout(() => carGroups.forEach(cars => hydrateCar(cars[1])), 1400);
     startCarousel();
 
     document.addEventListener('visibilitychange', () => {
