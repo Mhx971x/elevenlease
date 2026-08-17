@@ -312,8 +312,8 @@ const specIcons: Record<string, string> = {
 
           <div class="vd-price-facts">
             <div class="vd-price-fact"><span><Fragment set:html={specIcons.calendar} /></span><strong>{baseDuree} mois</strong></div>
-            <div class="vd-price-fact"><span><Fragment set:html={specIcons.road} /></span><strong>20 000<br />km/an</strong></div>
-            <div class="vd-price-fact"><span><Fragment set:html={euroIcon} /></span><strong>Selon<br />apport</strong></div>
+            <div class="vd-price-fact"><span><Fragment set:html={specIcons.road} /></span><strong>20 000 km/an</strong></div>
+            <div class="vd-price-fact"><span><Fragment set:html={euroIcon} /></span><strong>Selon apport</strong></div>
           </div>
 
           <a href={`/simulation?vehicule=${encodeURIComponent(v.brand + ' ' + v.name)}`} class="vd-primary-cta btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing</a>
@@ -1164,8 +1164,8 @@ const specIcons: Record<string, string> = {
     .vd-price .period{font-size:18px;}
     .vd-price-note{font-size:15px;}
     .vd-price-facts{margin-top:14px;padding:12px 0;}
-    .vd-price-fact{flex-direction:column;align-items:flex-start;gap:5px;padding:0 9px;}
-    .vd-price-fact strong{font-size:10.5px;}
+    .vd-price-fact{flex-direction:column;align-items:center;gap:5px;padding:0 9px;text-align:center;}
+    .vd-price-fact strong{font-size:10.5px;white-space:nowrap;}
     .vd-price-fact > span :global(svg){width:20px;height:20px;}
     .vd-spec-strip{grid-template-columns:1fr 1fr;margin-top:2px;}
     .vd-spec-item{min-height:74px;padding:13px;border-bottom:1px solid #ececf0;}
