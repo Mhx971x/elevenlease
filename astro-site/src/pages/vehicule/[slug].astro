@@ -947,12 +947,11 @@ const specIcons: Record<string, string> = {
   .vd-price .period{margin-left:3px;font-size:22px;font-weight:650;}
   .vd-price-note{margin-top:5px;color:var(--accent-1);font-size:17px;font-weight:750;}
   .vd-price-facts{display:grid;grid-template-columns:repeat(3,1fr);margin-top:16px;padding:14px 0;border-top:1px solid #bfc0c5;}
-  .vd-price-fact{display:flex;align-items:center;gap:9px;min-width:0;padding:0 10px;border-right:1px solid #ececf0;}
-  .vd-price-fact:first-child{padding-left:0;}
-  .vd-price-fact:last-child{padding-right:0;border-right:0;}
+  .vd-price-fact{display:flex;align-items:center;justify-content:center;gap:9px;min-width:0;padding:0 10px;border-right:1px solid #ececf0;text-align:center;}
+  .vd-price-fact:last-child{border-right:0;}
   .vd-price-fact > span{display:grid;place-items:center;color:var(--accent-1);flex:none;}
   .vd-price-fact > span :global(svg){width:23px;height:23px;}
-  .vd-price-fact strong{font-size:12.5px;line-height:1.4;font-weight:600;}
+  .vd-price-fact strong{font-size:12.5px;line-height:1.4;font-weight:600;white-space:nowrap;}
   .vd-primary-cta{width:100%;margin-top:2px;border-radius:var(--radius-sm);padding:14px 20px;font-size:15px;}
   .vd-cta-proof{display:flex;justify-content:center;gap:0;margin-top:10px;color:var(--text-dim);font-size:11.5px;}
   .vd-cta-proof span+span::before{content:'·';padding:0 7px;color:#b1b1b8;}
