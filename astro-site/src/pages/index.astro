@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { fetchVehicles, type Vehicle } from '../lib/vehicles';
+import { fetchVehicles, getMinimumIndicativePrice, parseDureeMonths, type Vehicle } from '../lib/vehicles';
 
 let fleetVehicles: Vehicle[] = [];
 try {
@@ -430,7 +430,9 @@ const breadcrumbSchema = {
         <div class="fleet-track-wrap">
           <div class="fleet-track" id="fleetTrack">
             {fleetVehicles.length === 0 && <p class="fleet-loading">Catalogue momentanément indisponible.</p>}
-            {fleetVehicles.map(v => (
+            {fleetVehicles.map(v => {
+              const minimumMonthlyPrice = getMinimumIndicativePrice(v.price, parseDureeMonths(v.duration));
+              return (
               <a class="fleet-card" href={`/vehicule/${v.slug}`} aria-label={`Voir les détails : ${v.brand} ${v.name}`}>
                 <div class="fleet-visual">
                   {v.photo
@@ -443,12 +445,12 @@ const breadcrumbSchema = {
                   <div class="fleet-name">{v.name}</div>
                   <div class="fleet-chips" aria-label="Conditions indicatives">
                     <span class="fleet-chip">48 mois</span>
-                    <span class="fleet-chip">0€ d'apport</span>
+                    <span class="fleet-chip">0 € d'apport possible</span>
                   </div>
                   <div class="fleet-foot-row">
                     <div>
                       <div class="fleet-price-label">À partir de</div>
-                      <div class="fleet-price"><span class="amount">{v.price} €</span><span class="period">/mois</span></div>
+                      <div class="fleet-price"><span class="amount">{minimumMonthlyPrice} €</span><span class="period">/mois</span></div>
                     </div>
                     <span class="fleet-card-arrow" aria-hidden="true">
                       <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -456,7 +458,7 @@ const breadcrumbSchema = {
                   </div>
                 </div>
               </a>
-            ))}
+            )})}
           </div>
         </div>
         <div class="fleet-nav" aria-label="Navigation des véhicules à la une">

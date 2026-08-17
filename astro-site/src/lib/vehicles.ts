@@ -98,6 +98,19 @@ export function computeIndicativePrice(basePrice: number, baseDuree: number, dur
   return Math.round(price);
 }
 
+export const INDICATIVE_APPORT_STEPS = [0, 2000, 5000] as const;
+
+export function getIndicativeFinancingExamples(basePrice: number, baseDuree: number) {
+  return INDICATIVE_APPORT_STEPS.map(apport => ({
+    apport,
+    price: computeIndicativePrice(basePrice, baseDuree, baseDuree, apport),
+  }));
+}
+
+export function getMinimumIndicativePrice(basePrice: number, baseDuree: number): number {
+  return Math.min(...getIndicativeFinancingExamples(basePrice, baseDuree).map(example => example.price));
+}
+
 function toVehicle(r: VehicleRow): Vehicle {
   const photos = r.photos || [];
   return {

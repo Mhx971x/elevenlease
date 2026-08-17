@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { fetchVehicles, parseDureeMonths, computeIndicativePrice, type Vehicle } from '../../lib/vehicles';
+import { fetchVehicles, parseDureeMonths, getIndicativeFinancingExamples, type Vehicle } from '../../lib/vehicles';
 
 export async function getStaticPaths() {
   let vehicles: Vehicle[] = [];
@@ -25,14 +25,10 @@ const canonicalPath = `/vehicule/${v.slug}`;
 
 const photos = v.photos.length ? v.photos : [];
 const baseDuree = parseDureeMonths(v.duration);
-const APPORT_STEPS = [0, 2000, 5000];
 
 // Le prix admin reste la mensualité sans apport. Les autres scénarios et le
 // prix d'appel de la fiche sont toujours dérivés de cette valeur unique.
-const financingExamples = APPORT_STEPS.map(apport => ({
-  apport,
-  price: computeIndicativePrice(v.price, baseDuree, baseDuree, apport),
-}));
+const financingExamples = getIndicativeFinancingExamples(v.price, baseDuree);
 const minimumMonthlyPrice = Math.min(...financingExamples.map(example => example.price));
 const carouselSizes = '(max-width: 760px) calc(100vw - 36px), (max-width: 1000px) 50vw, 580px';
 

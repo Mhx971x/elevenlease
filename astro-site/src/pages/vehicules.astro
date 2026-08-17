@@ -1,6 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { fetchVehicles, type Vehicle } from '../lib/vehicles';
+import { fetchVehicles, getMinimumIndicativePrice, parseDureeMonths, type Vehicle } from '../lib/vehicles';
 
 let vehicles: Vehicle[] = [];
 try {
@@ -168,12 +168,13 @@ const faqSchema = {
           : '';
         const durationLabel = v.duration && !/mois/i.test(v.duration) ? `${v.duration} mois` : v.duration;
         const cardSpecs = [v.fuel, v.transmission, durationLabel].filter(Boolean);
+        const minimumMonthlyPrice = getMinimumIndicativePrice(v.price, parseDureeMonths(v.duration));
         return (
         <a
           class="veh-card show"
           href={`/vehicule/${v.slug}`}
           data-type={v.type}
-          data-price={v.price}
+          data-price={minimumMonthlyPrice}
           data-search={normalizeSearchValue(`${v.brand} ${v.name} ${v.finition}`)}
           aria-label={`Voir l'offre indicative : ${v.brand} ${v.name}`}
         >
@@ -199,7 +200,7 @@ const faqSchema = {
             <div class="veh-footer">
               <div class="veh-price">
                 <span class="price-label">À partir de</span>
-                <span class="amount">{v.price} €</span>
+                <span class="amount">{minimumMonthlyPrice} €</span>
                 <span class="period">/mois</span>
               </div>
               <span class="veh-cta">Voir l'offre <span aria-hidden="true">→</span></span>
