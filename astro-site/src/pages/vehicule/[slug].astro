@@ -25,6 +25,15 @@ const canonicalPath = `/vehicule/${v.slug}`;
 
 const photos = v.photos.length ? v.photos : [];
 const baseDuree = parseDureeMonths(v.duration);
+const APPORT_STEPS = [0, 2000, 5000];
+
+// Le prix admin reste la mensualité sans apport. Les autres scénarios et le
+// prix d'appel de la fiche sont toujours dérivés de cette valeur unique.
+const financingExamples = APPORT_STEPS.map(apport => ({
+  apport,
+  price: computeIndicativePrice(v.price, baseDuree, baseDuree, apport),
+}));
+const minimumMonthlyPrice = Math.min(...financingExamples.map(example => example.price));
 const carouselSizes = '(max-width: 760px) calc(100vw - 36px), (max-width: 1000px) 50vw, 580px';
 
 function getOptimizedImageUrl(
@@ -84,10 +93,10 @@ const vehicleSchema: Record<string, unknown> = {
       '@type': 'Offer',
       url: canonicalUrl,
       priceCurrency: 'EUR',
-      price: v.price,
+      price: minimumMonthlyPrice,
       priceSpecification: {
         '@type': 'UnitPriceSpecification',
-        price: v.price,
+        price: minimumMonthlyPrice,
         priceCurrency: 'EUR',
         unitText: 'MONTH',
       },
@@ -174,14 +183,6 @@ const faqSchema = {
     acceptedAnswer: { '@type': 'Answer', text: item.a },
   })),
 };
-
-const APPORT_STEPS = [0, 2000, 5000];
-
-// exemples de financement à durée native du véhicule (cohérent avec le prix catalogue)
-const financingExamples = APPORT_STEPS.slice(0, 3).map(apport => ({
-  apport,
-  price: computeIndicativePrice(v.price, baseDuree, baseDuree, apport),
-}));
 
 function getSimilarVehicles(current: Vehicle, all: Vehicle[]): Vehicle[] {
   const others = all.filter(o => o.slug !== current.slug);
@@ -306,13 +307,13 @@ const specIcons: Record<string, string> = {
         <div class="vd-price-card">
           <div class="vd-offer-badge">Offre indicative</div>
           <div class="vd-price-eyebrow">Dès</div>
-          <div class="vd-price"><span class="amount">{v.price}</span><span class="currency">€</span><span class="period">/mois</span></div>
-          <div class="vd-price-note">0€ d'apport possible</div>
+          <div class="vd-price"><span class="amount">{minimumMonthlyPrice}</span><span class="currency">€</span><span class="period">/mois</span></div>
+          <div class="vd-price-note">0 € d'apport possible</div>
 
           <div class="vd-price-facts">
             <div class="vd-price-fact"><span><Fragment set:html={specIcons.calendar} /></span><strong>{baseDuree} mois</strong></div>
-            <div class="vd-price-fact"><span><Fragment set:html={specIcons.road} /></span><strong>Kilométrage<br />selon offre</strong></div>
-            <div class="vd-price-fact"><span><Fragment set:html={specIcons.clock} /></span><strong>1re réponse<br />24 à 48 h ouvrées</strong></div>
+            <div class="vd-price-fact"><span><Fragment set:html={specIcons.road} /></span><strong>20 000<br />km/an</strong></div>
+            <div class="vd-price-fact"><span><Fragment set:html={euroIcon} /></span><strong>Selon<br />apport</strong></div>
           </div>
 
           <a href={`/simulation?vehicule=${encodeURIComponent(v.brand + ' ' + v.name)}`} class="vd-primary-cta btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing</a>
@@ -484,7 +485,7 @@ const specIcons: Record<string, string> = {
 
   <div class="vd-sticky-bar">
     <div class="vd-sticky-price">
-      <span class="amount">{v.price}€</span>
+      <span class="amount">{minimumMonthlyPrice}€</span>
       <span class="period"> /mois</span>
     </div>
     <a href={`/simulation?vehicule=${encodeURIComponent(v.brand + ' ' + v.name)}`} class="btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing</a>
