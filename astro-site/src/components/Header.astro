@@ -6,7 +6,7 @@ export interface Props {
   /** Variante courte utilisée sur les petits écrans */
   responseLabelCompact?: string;
   /** Marque le lien nav correspondant comme actif */
-  active?: 'contact' | 'loa' | 'vehicules' | 'articles';
+  active?: 'contact' | 'loa' | 'vehicules' | 'articles' | 'about';
   /** Affiche la barre de progression de scroll dans le header (pages de contenu long) */
   showProgressBar?: boolean;
 }
@@ -34,9 +34,11 @@ const cls = (key: string) => (active === key ? 'active' : undefined);
       <span class="logo-icon" role="img" aria-label="Eleven Lease"></span>
     </a>
     <div class="nav-links">
-      <a href="/vehicules" class={cls('vehicules')}>Nos offres</a>
-      <a href="/loa" class={cls('loa')}>Guide leasing</a>
-      <a href="/#avis">Avis</a>
+      <a href="/vehicules" class={cls('vehicules')}>Nos véhicules</a>
+      <a href="/loa" class={cls('loa')}>Guide LOA</a>
+      <a href="/articles" class={cls('articles')}>Articles</a>
+      <a href="/a-propos" class={cls('about')}>À propos</a>
+      <a href="/contact" class={cls('contact')}>Contact</a>
     </div>
     <div class="nav-right">
       <button class="menu-toggle" id="menuToggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobileMenu">
@@ -58,9 +60,10 @@ const cls = (key: string) => (active === key ? 'active' : undefined);
     </button>
   </div>
   <nav class="mobile-menu-list">
+    <a href="/vehicules" class={cls('vehicules')}>Nos véhicules</a>
     <a href="/loa" class={cls('loa')}>Guide LOA</a>
-    <a href="/vehicules" class={cls('vehicules')}>Nos offres</a>
     <a href="/articles" class={cls('articles')}>Articles</a>
+    <a href="/a-propos" class={cls('about')}>À propos</a>
     <a href="/contact" class={cls('contact')}>Contact</a>
   </nav>
   <div class="mobile-menu-cta">

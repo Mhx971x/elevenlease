@@ -15,7 +15,7 @@ export interface Props {
   ctaHref?: string;
   promoResponseLabel?: string;
   promoResponseLabelCompact?: string;
-  active?: 'contact' | 'loa' | 'vehicules' | 'articles';
+  active?: 'contact' | 'loa' | 'vehicules' | 'articles' | 'about';
   showProgressBar?: boolean;
 }
 
@@ -170,7 +170,7 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
   }
   .site-header.scrolled .logo-icon{width:82px;height:34px;}
   .progress-bar{position:absolute;bottom:1px;left:22px;height:1px;width:0%;max-width:calc(100% - 44px);border-radius:var(--radius-pill);background:var(--accent);transition:width .1s linear;}
-  .nav-links{display:flex;align-items:center;justify-content:center;gap:34px;color:#3f4047;font-size:15px;font-weight:500;white-space:nowrap;}
+  .nav-links{display:flex;align-items:center;justify-content:center;gap:24px;color:#3f4047;font-size:14px;font-weight:500;white-space:nowrap;}
   .nav-links a{position:relative;padding:9px 3px;transition:color .2s ease;}
   .nav-links a::after{
     content:'';
