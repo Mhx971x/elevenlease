@@ -468,6 +468,101 @@
   .analytics-error{color:#b42318;}
   .analytics-note{margin-top:14px;color:var(--text-faint);font-size:10px;line-height:1.6;}
 
+  /* Facturation clients */
+  .invoice-settings-card,.invoice-settings-form,.invoice-composer-card,.invoice-preview-card,.invoice-history-card{
+    border:1px solid var(--border);border-radius:18px;background:#fff;box-shadow:0 10px 30px rgba(24,24,27,.04);
+  }
+  .invoice-settings-card{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 22px;margin-bottom:16px;}
+  .invoice-settings-card h2{font-size:17px;margin-top:3px;}
+  .invoice-settings-card p{margin-top:4px;color:var(--text-dim);font-size:11.5px;}
+  .invoice-settings-card.ready{border-color:rgba(22,134,83,.28);}
+  .invoice-settings-card.ready #invoiceIssuerStatus{color:var(--crm-green);}
+  .invoice-settings-kicker{color:var(--accent-1);font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;}
+  .invoice-settings-form{display:none;padding:22px;margin-bottom:16px;}
+  .invoice-settings-form.open{display:block;animation:cardIn .35s cubic-bezier(.16,1,.3,1) both;}
+  .invoice-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:20px;}
+  .invoice-section-head h2{font-size:17px;}
+  .invoice-section-head p{margin-top:4px;color:var(--text-faint);font-size:10.5px;}
+  .invoice-close-btn{width:32px;height:32px;border:1px solid var(--border);border-radius:50%;background:#fff;color:var(--text-dim);font-size:20px;line-height:1;cursor:pointer;}
+  .invoice-form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px 14px;}
+  .invoice-form-grid .edit-field{margin:0;}
+  .invoice-form-grid .edit-field-wide{grid-column:1/-1;}
+  .invoice-form-grid .edit-field input,.invoice-form-grid .edit-field select,.invoice-form-grid .edit-field textarea{
+    width:100%;margin-top:6px;padding:11px 12px;border:1px solid var(--border);border-radius:10px;background:#fff;color:var(--text);font:400 12px/1.4 'Inter',sans-serif;
+  }
+  .invoice-form-grid .edit-field textarea{resize:vertical;}
+  .invoice-form-grid .edit-field input:focus,.invoice-form-grid .edit-field select:focus,.invoice-form-grid .edit-field textarea:focus{outline:none;border-color:var(--accent-1);box-shadow:0 0 0 3px rgba(255,0,127,.1);}
+  .invoice-form-actions{display:flex;align-items:center;justify-content:flex-end;gap:9px;margin-top:18px;flex-wrap:wrap;}
+  .invoice-form-message{margin-right:auto;color:var(--text-dim);font-size:11px;}
+  .invoice-form-message.success{color:var(--crm-green);}
+  .invoice-form-message.error{color:#b42318;}
+  .invoice-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.65fr);gap:16px;align-items:start;}
+  .invoice-composer-card{padding:23px;}
+  .invoice-block-title{margin:22px 0 12px;padding-top:18px;border-top:1px solid var(--border);font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;}
+  .invoice-block-title:first-of-type{margin-top:0;padding-top:0;border-top:0;}
+  .invoice-form-actions-main{padding-top:17px;border-top:1px solid var(--border);}
+  .invoice-preview-card{position:sticky;top:96px;overflow:hidden;}
+  .invoice-preview-top{height:67px;padding:16px 18px;display:flex;align-items:flex-end;justify-content:space-between;background:var(--crm-dark);color:#fff;border-bottom:3px solid var(--accent-1);}
+  .invoice-preview-top span{color:#8c8c95;font-size:8px;font-weight:800;letter-spacing:.12em;}
+  .invoice-preview-top strong{font-family:'Space Grotesk',sans-serif;font-size:18px;}
+  .invoice-preview-body{padding:22px 18px 18px;}
+  .invoice-preview-brand{font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;}
+  .invoice-preview-meta{margin-top:16px;display:flex;justify-content:space-between;color:var(--text-faint);font-size:9px;}
+  .invoice-preview-meta strong{color:var(--text-dim);font-size:9.5px;}
+  .invoice-preview-customer{display:flex;flex-direction:column;margin-top:22px;padding:13px;border-radius:10px;background:var(--surface);}
+  .invoice-preview-customer span{color:var(--text-faint);font-size:7.5px;font-weight:800;letter-spacing:.08em;}
+  .invoice-preview-customer strong{margin-top:5px;font-size:11px;}
+  .invoice-preview-customer small{margin-top:3px;color:var(--text-faint);font-size:8px;}
+  .invoice-preview-line{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-top:18px;padding:14px 0;border-bottom:1px solid var(--border);font-size:9.5px;}
+  .invoice-preview-line span{max-width:60%;color:var(--text-dim);}
+  .invoice-preview-line strong{white-space:nowrap;}
+  .invoice-preview-totals{display:flex;flex-direction:column;gap:8px;margin-top:13px;}
+  .invoice-preview-totals>span,.invoice-preview-totals>strong{display:flex;justify-content:space-between;gap:10px;}
+  .invoice-preview-totals>span{color:var(--text-faint);font-size:8.5px;font-weight:400;}
+  .invoice-preview-totals>strong{font-size:12px;}
+  .invoice-preview-card>p{padding:13px 18px;background:var(--surface);color:var(--text-faint);font-size:8.5px;line-height:1.55;}
+  .invoice-history-card{margin-top:16px;padding:22px;}
+  .invoice-history-head{align-items:center;}
+  .invoice-history-filters{display:flex;gap:8px;flex-wrap:wrap;}
+  .invoice-history-filters input,.invoice-history-filters select{padding:9px 11px;border:1px solid var(--border);border-radius:10px;background:#fff;color:var(--text);font:400 11px 'Inter',sans-serif;}
+  .invoice-history-list{display:flex;flex-direction:column;gap:8px;}
+  .invoice-history-item{display:grid;grid-template-columns:minmax(180px,1fr) minmax(160px,.8fr) auto auto;align-items:center;gap:14px;padding:14px 15px;border:1px solid var(--border);border-radius:12px;background:#fff;}
+  .invoice-history-main{min-width:0;}
+  .invoice-history-main strong{display:block;font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .invoice-history-main span,.invoice-history-date span{display:block;margin-top:3px;color:var(--text-faint);font-size:9.5px;}
+  .invoice-history-date{font-size:11px;color:var(--text-dim);}
+  .invoice-history-total{text-align:right;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:700;white-space:nowrap;}
+  .invoice-status{display:inline-flex;width:max-content;margin-top:5px;padding:4px 8px;border-radius:999px;background:var(--surface);color:var(--text-dim);font-size:8px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;}
+  .invoice-status.paid{background:rgba(22,134,83,.09);color:var(--crm-green);}
+  .invoice-status.issued{background:rgba(255,0,127,.07);color:var(--accent-1);}
+  .invoice-status.credited{background:#f0f0f2;color:#6b6b73;}
+  .invoice-history-actions{display:flex;justify-content:flex-end;gap:6px;flex-wrap:wrap;}
+  .invoice-action-btn{padding:7px 9px;border:1px solid var(--border);border-radius:9px;background:#fff;color:var(--text-dim);font:700 9px 'Inter',sans-serif;cursor:pointer;white-space:nowrap;}
+  .invoice-action-btn:hover{border-color:#a8a8b0;color:var(--text);}
+  .invoice-action-btn.danger:hover{border-color:#d8a4a4;color:#b42318;}
+
+  @media(max-width:1050px){
+    .invoice-layout{grid-template-columns:1fr;}
+    .invoice-preview-card{position:static;max-width:480px;}
+    .invoice-history-item{grid-template-columns:minmax(180px,1fr) auto auto;}
+    .invoice-history-date{display:none;}
+  }
+  @media(max-width:650px){
+    .invoice-settings-card{align-items:flex-start;flex-direction:column;padding:17px;}
+    .invoice-settings-form,.invoice-composer-card,.invoice-history-card{padding:16px 12px;border-radius:15px;}
+    .invoice-form-grid{grid-template-columns:1fr;}
+    .invoice-form-grid .edit-field-wide{grid-column:auto;}
+    .invoice-form-actions-main{align-items:stretch;flex-direction:column;}
+    .invoice-form-actions-main .invoice-form-message{width:100%;}
+    .invoice-form-actions-main button{width:100%;}
+    .invoice-history-head{align-items:flex-start;flex-direction:column;}
+    .invoice-history-filters{width:100%;}
+    .invoice-history-filters input,.invoice-history-filters select{width:100%;}
+    .invoice-history-item{grid-template-columns:1fr auto;gap:9px;}
+    .invoice-history-total{grid-column:2;grid-row:1;}
+    .invoice-history-actions{grid-column:1/-1;justify-content:flex-start;padding-top:9px;border-top:1px solid var(--border);}
+  }
+
   @media(max-width:1100px){
     .pipeline-overview{display:flex;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin;}
     .pipeline-step{min-width:98px;}
@@ -568,6 +663,9 @@
         </button>
         <button type="button" class="tab-btn" id="tabVehiclesBtn">
           <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 15 1.5-5h11l1.5 5"/><path d="M3 15h18v4H3z"/><circle cx="7" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg></span><span>Véhicules</span>
+        </button>
+        <button type="button" class="tab-btn" id="tabInvoicesBtn">
+          <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l3 3v15H6z"/><path d="M15 3v4h4"/><path d="M9 12h6M9 16h6"/></svg></span><span>Factures</span>
         </button>
         <button type="button" class="tab-btn" id="tabAnalyticsBtn">
           <span class="nav-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V9"/><path d="M10 19V5"/><path d="M16 19v-7"/><path d="M22 19V3"/><path d="M2 19h20"/></svg></span><span>Audience</span>
@@ -759,6 +857,111 @@
       <div class="lead-list" id="vehicleList" style="display:none;"></div>
     </div>
 
+    <div class="tab-panel" id="invoicesPanel">
+      <section class="invoice-settings-card" id="invoiceSettingsSummary">
+        <div>
+          <div class="invoice-settings-kicker">Émetteur de la facture</div>
+          <h2 id="invoiceIssuerName">Eleven Lease</h2>
+          <p id="invoiceIssuerStatus">Configuration à compléter avant la première émission.</p>
+        </div>
+        <button type="button" class="btn-ghost" id="toggleInvoiceSettingsBtn">Configurer l’émetteur</button>
+      </section>
+
+      <section class="invoice-settings-form" id="invoiceSettingsFormPanel">
+        <div class="invoice-section-head">
+          <div><h2>Paramètres de facturation</h2><p>Ces informations seront figées dans chaque facture émise.</p></div>
+          <button type="button" class="invoice-close-btn" id="closeInvoiceSettingsBtn" aria-label="Fermer">×</button>
+        </div>
+        <form id="invoiceSettingsForm">
+          <div class="invoice-form-grid">
+            <label class="edit-field"><span>Nom ou raison sociale *</span><input type="text" id="issuerBusinessName" required></label>
+            <label class="edit-field"><span>Statut</span><input type="text" id="issuerLegalStatus"></label>
+            <label class="edit-field edit-field-wide"><span>Adresse *</span><input type="text" id="issuerAddressLine1" required></label>
+            <label class="edit-field edit-field-wide"><span>Complément d’adresse</span><input type="text" id="issuerAddressLine2"></label>
+            <label class="edit-field"><span>Code postal *</span><input type="text" id="issuerPostalCode" required></label>
+            <label class="edit-field"><span>Ville *</span><input type="text" id="issuerCity" required></label>
+            <label class="edit-field"><span>Pays</span><input type="text" id="issuerCountry"></label>
+            <label class="edit-field"><span>SIRET</span><input type="text" id="issuerRegistrationNumber"></label>
+            <label class="edit-field"><span>RCS</span><input type="text" id="issuerRcs"></label>
+            <label class="edit-field"><span>Régime de TVA *</span><select id="issuerVatMode" required><option value="">À sélectionner</option><option value="exempt">TVA non applicable - art. 293 B</option><option value="standard">TVA applicable</option></select></label>
+            <label class="edit-field"><span>N° TVA intracommunautaire</span><input type="text" id="issuerVatNumber"></label>
+            <label class="edit-field"><span>Taux de TVA par défaut</span><input type="number" id="issuerDefaultVatRate" min="0" max="100" step="0.1"></label>
+            <label class="edit-field"><span>Email</span><input type="email" id="issuerEmail"></label>
+            <label class="edit-field"><span>Téléphone</span><input type="tel" id="issuerPhone"></label>
+            <label class="edit-field edit-field-wide"><span>IBAN</span><input type="text" id="issuerIban"></label>
+            <label class="edit-field"><span>BIC</span><input type="text" id="issuerBic"></label>
+            <label class="edit-field"><span>Délai de paiement par défaut</span><select id="issuerPaymentTerms"><option value="0">Paiement immédiat</option><option value="7">7 jours</option><option value="15">15 jours</option><option value="30">30 jours</option><option value="45">45 jours</option><option value="60">60 jours</option></select></label>
+          </div>
+          <div class="invoice-form-actions"><span class="invoice-form-message" id="invoiceSettingsMessage"></span><button type="submit" class="btn-primary" id="saveInvoiceSettingsBtn">Enregistrer les paramètres</button></div>
+        </form>
+      </section>
+
+      <div class="invoice-layout">
+        <section class="invoice-composer-card">
+          <div class="invoice-section-head">
+            <div><div class="invoice-settings-kicker">Nouvelle facture client</div><h2 id="invoiceFormTitle">Préparer une facture</h2><p>Le numéro définitif sera attribué uniquement lors de l’émission.</p></div>
+          </div>
+          <form id="invoiceForm">
+            <input type="hidden" id="invoiceDraftId">
+            <div class="invoice-block-title">Client</div>
+            <div class="invoice-form-grid">
+              <label class="edit-field edit-field-wide"><span>Dossier lié</span><select id="invoiceLeadSelect"><option value="">Saisie manuelle</option></select></label>
+              <label class="edit-field edit-field-wide"><span>Nom complet *</span><input type="text" id="invoiceCustomerName" required></label>
+              <label class="edit-field edit-field-wide"><span>Email</span><input type="email" id="invoiceCustomerEmail"></label>
+              <label class="edit-field edit-field-wide"><span>Adresse *</span><input type="text" id="invoiceCustomerAddressLine1" required></label>
+              <label class="edit-field edit-field-wide"><span>Complément d’adresse</span><input type="text" id="invoiceCustomerAddressLine2"></label>
+              <label class="edit-field"><span>Code postal *</span><input type="text" id="invoiceCustomerPostalCode" required></label>
+              <label class="edit-field"><span>Ville *</span><input type="text" id="invoiceCustomerCity" required></label>
+              <label class="edit-field edit-field-wide"><span>Pays</span><input type="text" id="invoiceCustomerCountry" value="France"></label>
+            </div>
+
+            <div class="invoice-block-title">Prestation</div>
+            <div class="invoice-form-grid">
+              <label class="edit-field edit-field-wide"><span>Type de prestation</span><select id="invoiceServicePreset"><option value="Frais de mise en relation">Frais de mise en relation</option><option value="Accompagnement commercial">Accompagnement commercial</option><option value="Frais de mise en relation et accompagnement commercial" selected>Mise en relation et accompagnement</option><option value="">Description personnalisée</option></select></label>
+              <label class="edit-field edit-field-wide"><span>Description sur la facture *</span><input type="text" id="invoiceServiceLabel" required></label>
+              <label class="edit-field"><span>Date d’émission *</span><input type="date" id="invoiceIssueDate" required></label>
+              <label class="edit-field"><span>Date de prestation *</span><input type="date" id="invoiceServiceDate" required></label>
+              <label class="edit-field"><span>Date d’échéance *</span><input type="date" id="invoiceDueDate" required></label>
+              <label class="edit-field"><span>Quantité</span><input type="number" id="invoiceQuantity" min="0.01" step="0.01" value="1"></label>
+              <label class="edit-field"><span>Montant unitaire HT *</span><input type="number" id="invoiceUnitPrice" min="0.01" step="0.01" placeholder="0,00" required></label>
+              <label class="edit-field"><span>TVA</span><select id="invoiceVatRate"><option value="20">20 %</option><option value="10">10 %</option><option value="5.5">5,5 %</option><option value="0">0 %</option></select></label>
+              <label class="edit-field edit-field-wide"><span>Mode de paiement</span><select id="invoicePaymentMethod"><option value="virement">Virement bancaire</option><option value="carte">Carte bancaire</option><option value="especes">Espèces</option><option value="cheque">Chèque</option><option value="autre">Autre</option></select></label>
+              <label class="edit-field edit-field-wide"><span>Note facultative</span><textarea id="invoiceNotes" rows="3" placeholder="Information complémentaire visible sur la facture"></textarea></label>
+            </div>
+            <div class="invoice-form-actions invoice-form-actions-main">
+              <span class="invoice-form-message" id="invoiceFormMessage"></span>
+              <button type="button" class="btn-ghost" id="resetInvoiceBtn">Réinitialiser</button>
+              <button type="button" class="btn-ghost" id="saveInvoiceDraftBtn">Enregistrer le brouillon</button>
+              <button type="submit" class="btn-primary" id="issueInvoiceBtn">Émettre et télécharger</button>
+            </div>
+          </form>
+        </section>
+
+        <aside class="invoice-preview-card">
+          <div class="invoice-preview-top"><span>APERÇU</span><strong id="invoicePreviewTitle">FACTURE</strong></div>
+          <div class="invoice-preview-body">
+            <div class="invoice-preview-brand" id="invoicePreviewIssuer">ELEVEN LEASE</div>
+            <div class="invoice-preview-meta"><span>Date</span><strong id="invoicePreviewDate">-</strong></div>
+            <div class="invoice-preview-customer"><span>FACTURÉ À</span><strong id="invoicePreviewCustomer">Client à renseigner</strong><small id="invoicePreviewAddress">Adresse de facturation</small></div>
+            <div class="invoice-preview-line"><span id="invoicePreviewService">Mise en relation et accompagnement</span><strong id="invoicePreviewHt">0,00 € HT</strong></div>
+            <div class="invoice-preview-totals"><span>TVA <b id="invoicePreviewVat">0,00 €</b></span><strong>Total TTC <b id="invoicePreviewTtc">0,00 €</b></strong></div>
+          </div>
+          <p>Le PDF final inclura les mentions légales, l’échéance et les coordonnées de paiement.</p>
+        </aside>
+      </div>
+
+      <section class="invoice-history-card">
+        <div class="invoice-section-head invoice-history-head">
+          <div><h2>Historique des factures</h2><p>Brouillons, factures émises, règlements et avoirs.</p></div>
+          <div class="invoice-history-filters"><input type="search" id="invoiceSearchInput" placeholder="Rechercher un client ou un numéro"><select id="invoiceStatusFilter"><option value="">Tous les statuts</option><option value="draft">Brouillons</option><option value="issued">Émises</option><option value="paid">Payées</option><option value="credited">Avec avoir</option></select></div>
+        </div>
+        <div class="loading-state" id="invoicesLoadingState" style="display:none;"><div class="spinner"></div>Chargement des factures…</div>
+        <div class="error-state" id="invoicesErrorState" style="display:none;"></div>
+        <div class="empty-state" id="invoicesEmptyState" style="display:none;">Aucune facture ne correspond à cette recherche.</div>
+        <div class="invoice-history-list" id="invoiceHistoryList"></div>
+      </section>
+    </div>
+
     <div class="tab-panel" id="analyticsPanel">
       <div class="analytics-toolbar">
         <div class="analytics-range" role="group" aria-label="Période des statistiques">
@@ -818,6 +1021,7 @@
 
 <script>
   import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
+  import { downloadInvoicePdf, type InvoicePdfData } from '../lib/invoice-pdf';
 
   // ============================================================
   // Configuration Supabase — à renseigner avec les valeurs de votre
@@ -829,6 +1033,7 @@
   const SUPABASE_ANON_KEY = "sb_publishable_aF6YEQBB5UrjOrNo9RTMjw_SM3MPKvM";
   const ADMIN_FUNCTION_URL = "https://syzlvsfhdmegmebsvscm.supabase.co/functions/v1/admin-leads";
   const ADMIN_VEHICLES_FUNCTION_URL = "https://syzlvsfhdmegmebsvscm.supabase.co/functions/v1/admin-vehicles";
+  const ADMIN_INVOICES_FUNCTION_URL = "https://syzlvsfhdmegmebsvscm.supabase.co/functions/v1/admin-invoices";
   const ADMIN_ANALYTICS_URL = "/api/admin-analytics";
 
   interface Lead {
@@ -874,6 +1079,21 @@
     autonomie_elec?: string; autonomie_cumulee?: string; recharge_dc?: string; recharge_ac?: string;
     temps_charge?: string; consommation?: string; co2?: string; coffre?: string;
     [key: string]: unknown;
+  }
+  interface InvoiceSettings {
+    id: number;
+    business_name: string; legal_status?: string | null;
+    address_line1?: string | null; address_line2?: string | null;
+    postal_code?: string | null; city?: string | null; country?: string | null;
+    registration_number?: string | null; rcs?: string | null;
+    vat_mode?: 'standard' | 'exempt' | null; vat_number?: string | null;
+    default_vat_rate?: number | null; email?: string | null; phone?: string | null;
+    iban?: string | null; bic?: string | null; payment_terms_days?: number | null;
+  }
+  interface InvoiceAdmin extends Omit<InvoicePdfData, 'status' | 'invoice_number'> {
+    status: 'draft' | 'issued' | 'paid' | 'credited';
+    lead_id?: string | null; related_invoice_id?: string | null;
+    invoice_number?: string | null; created_at?: string; paid_at?: string | null;
   }
   interface AnalyticsRow {
     label: string;
@@ -987,14 +1207,85 @@
   const photoFileInput = document.getElementById('photoFileInput') as HTMLInputElement;
   const photoPreviewGrid = document.getElementById('photoPreviewGrid') as HTMLElement;
 
+  const tabInvoicesBtn = document.getElementById('tabInvoicesBtn') as HTMLButtonElement;
+  const invoicesPanel = document.getElementById('invoicesPanel') as HTMLElement;
+  const invoiceSettingsSummary = document.getElementById('invoiceSettingsSummary') as HTMLElement;
+  const invoiceIssuerName = document.getElementById('invoiceIssuerName')!;
+  const invoiceIssuerStatus = document.getElementById('invoiceIssuerStatus')!;
+  const toggleInvoiceSettingsBtn = document.getElementById('toggleInvoiceSettingsBtn')!;
+  const closeInvoiceSettingsBtn = document.getElementById('closeInvoiceSettingsBtn')!;
+  const invoiceSettingsFormPanel = document.getElementById('invoiceSettingsFormPanel') as HTMLElement;
+  const invoiceSettingsForm = document.getElementById('invoiceSettingsForm') as HTMLFormElement;
+  const invoiceSettingsMessage = document.getElementById('invoiceSettingsMessage') as HTMLElement;
+  const saveInvoiceSettingsBtn = document.getElementById('saveInvoiceSettingsBtn') as HTMLButtonElement;
+  const issuerBusinessName = document.getElementById('issuerBusinessName') as HTMLInputElement;
+  const issuerLegalStatus = document.getElementById('issuerLegalStatus') as HTMLInputElement;
+  const issuerAddressLine1 = document.getElementById('issuerAddressLine1') as HTMLInputElement;
+  const issuerAddressLine2 = document.getElementById('issuerAddressLine2') as HTMLInputElement;
+  const issuerPostalCode = document.getElementById('issuerPostalCode') as HTMLInputElement;
+  const issuerCity = document.getElementById('issuerCity') as HTMLInputElement;
+  const issuerCountry = document.getElementById('issuerCountry') as HTMLInputElement;
+  const issuerRegistrationNumber = document.getElementById('issuerRegistrationNumber') as HTMLInputElement;
+  const issuerRcs = document.getElementById('issuerRcs') as HTMLInputElement;
+  const issuerVatMode = document.getElementById('issuerVatMode') as HTMLSelectElement;
+  const issuerVatNumber = document.getElementById('issuerVatNumber') as HTMLInputElement;
+  const issuerDefaultVatRate = document.getElementById('issuerDefaultVatRate') as HTMLInputElement;
+  const issuerEmail = document.getElementById('issuerEmail') as HTMLInputElement;
+  const issuerPhone = document.getElementById('issuerPhone') as HTMLInputElement;
+  const issuerIban = document.getElementById('issuerIban') as HTMLInputElement;
+  const issuerBic = document.getElementById('issuerBic') as HTMLInputElement;
+  const issuerPaymentTerms = document.getElementById('issuerPaymentTerms') as HTMLSelectElement;
+  const invoiceForm = document.getElementById('invoiceForm') as HTMLFormElement;
+  const invoiceFormTitle = document.getElementById('invoiceFormTitle')!;
+  const invoiceFormMessage = document.getElementById('invoiceFormMessage') as HTMLElement;
+  const invoiceDraftId = document.getElementById('invoiceDraftId') as HTMLInputElement;
+  const invoiceLeadSelect = document.getElementById('invoiceLeadSelect') as HTMLSelectElement;
+  const invoiceCustomerName = document.getElementById('invoiceCustomerName') as HTMLInputElement;
+  const invoiceCustomerEmail = document.getElementById('invoiceCustomerEmail') as HTMLInputElement;
+  const invoiceCustomerAddressLine1 = document.getElementById('invoiceCustomerAddressLine1') as HTMLInputElement;
+  const invoiceCustomerAddressLine2 = document.getElementById('invoiceCustomerAddressLine2') as HTMLInputElement;
+  const invoiceCustomerPostalCode = document.getElementById('invoiceCustomerPostalCode') as HTMLInputElement;
+  const invoiceCustomerCity = document.getElementById('invoiceCustomerCity') as HTMLInputElement;
+  const invoiceCustomerCountry = document.getElementById('invoiceCustomerCountry') as HTMLInputElement;
+  const invoiceServicePreset = document.getElementById('invoiceServicePreset') as HTMLSelectElement;
+  const invoiceServiceLabel = document.getElementById('invoiceServiceLabel') as HTMLInputElement;
+  const invoiceIssueDate = document.getElementById('invoiceIssueDate') as HTMLInputElement;
+  const invoiceServiceDate = document.getElementById('invoiceServiceDate') as HTMLInputElement;
+  const invoiceDueDate = document.getElementById('invoiceDueDate') as HTMLInputElement;
+  const invoiceQuantity = document.getElementById('invoiceQuantity') as HTMLInputElement;
+  const invoiceUnitPrice = document.getElementById('invoiceUnitPrice') as HTMLInputElement;
+  const invoiceVatRate = document.getElementById('invoiceVatRate') as HTMLSelectElement;
+  const invoicePaymentMethod = document.getElementById('invoicePaymentMethod') as HTMLSelectElement;
+  const invoiceNotes = document.getElementById('invoiceNotes') as HTMLTextAreaElement;
+  const saveInvoiceDraftBtn = document.getElementById('saveInvoiceDraftBtn') as HTMLButtonElement;
+  const issueInvoiceBtn = document.getElementById('issueInvoiceBtn') as HTMLButtonElement;
+  const resetInvoiceBtn = document.getElementById('resetInvoiceBtn') as HTMLButtonElement;
+  const invoicePreviewIssuer = document.getElementById('invoicePreviewIssuer')!;
+  const invoicePreviewDate = document.getElementById('invoicePreviewDate')!;
+  const invoicePreviewCustomer = document.getElementById('invoicePreviewCustomer')!;
+  const invoicePreviewAddress = document.getElementById('invoicePreviewAddress')!;
+  const invoicePreviewService = document.getElementById('invoicePreviewService')!;
+  const invoicePreviewHt = document.getElementById('invoicePreviewHt')!;
+  const invoicePreviewVat = document.getElementById('invoicePreviewVat')!;
+  const invoicePreviewTtc = document.getElementById('invoicePreviewTtc')!;
+  const invoiceSearchInput = document.getElementById('invoiceSearchInput') as HTMLInputElement;
+  const invoiceStatusFilter = document.getElementById('invoiceStatusFilter') as HTMLSelectElement;
+  const invoicesLoadingState = document.getElementById('invoicesLoadingState') as HTMLElement;
+  const invoicesErrorState = document.getElementById('invoicesErrorState') as HTMLElement;
+  const invoicesEmptyState = document.getElementById('invoicesEmptyState') as HTMLElement;
+  const invoiceHistoryList = document.getElementById('invoiceHistoryList') as HTMLElement;
+
   const cardEasing = 'cubic-bezier(.16,1,.3,1)';
   let allLeads: Lead[] = [];
   let allMessages: ContactMessage[] = [];
   let allVehicles: VehicleAdmin[] = [];
+  let allInvoices: InvoiceAdmin[] = [];
+  let currentInvoiceSettings: InvoiceSettings | null = null;
+  let invoicesLoaded = false;
   let analyticsLoaded = false;
   let analyticsRange = 7;
   let analyticsRefreshTimer: number | undefined;
-  let activeAdminTab: 'leads' | 'messages' | 'vehicles' | 'analytics' = 'leads';
+  let activeAdminTab: 'leads' | 'messages' | 'vehicles' | 'invoices' | 'analytics' = 'leads';
 
   const LEAD_STAGES = [
     { value: 'nouveau', label: 'Nouveau', short: 'Nouveau', color: '#f00078' },
@@ -1030,15 +1321,17 @@
     return options.join('');
   }
 
-  function setActiveTab(tab: 'leads' | 'messages' | 'vehicles' | 'analytics'){
+  function setActiveTab(tab: 'leads' | 'messages' | 'vehicles' | 'invoices' | 'analytics'){
     activeAdminTab = tab;
     tabLeadsBtn.classList.toggle('active', tab === 'leads');
     tabMessagesBtn.classList.toggle('active', tab === 'messages');
     tabVehiclesBtn.classList.toggle('active', tab === 'vehicles');
+    tabInvoicesBtn.classList.toggle('active', tab === 'invoices');
     tabAnalyticsBtn.classList.toggle('active', tab === 'analytics');
     leadsPanel.classList.toggle('active', tab === 'leads');
     messagesPanel.classList.toggle('active', tab === 'messages');
     vehiclesPanel.classList.toggle('active', tab === 'vehicles');
+    invoicesPanel.classList.toggle('active', tab === 'invoices');
     analyticsPanel.classList.toggle('active', tab === 'analytics');
     const copy = tab === 'leads'
       ? ['Dossiers clients', 'Suivez chaque demande, de la simulation à la livraison.']
@@ -1046,7 +1339,9 @@
         ? ['Messages de contact', 'Traitez rapidement les demandes reçues depuis le site.']
         : tab === 'vehicles'
           ? ['Catalogue véhicules', 'Gérez les véhicules visibles sur ElevenLease.fr.']
-          : ['Audience du site', 'Suivez les visites, leur provenance et la conversion en dossiers.'];
+          : tab === 'invoices'
+            ? ['Facturation clients', 'Créez, suivez et téléchargez vos factures Eleven Lease.']
+            : ['Audience du site', 'Suivez les visites, leur provenance et la conversion en dossiers.'];
     dashboardTitle.textContent = copy[0];
     dashboardSubtitle.textContent = copy[1];
     if(tab === 'analytics'){
@@ -1055,10 +1350,12 @@
     }else{
       stopAnalyticsRefresh();
     }
+    if(tab === 'invoices' && !invoicesLoaded) loadInvoices();
   }
   tabLeadsBtn.addEventListener('click', () => setActiveTab('leads'));
   tabMessagesBtn.addEventListener('click', () => setActiveTab('messages'));
   tabVehiclesBtn.addEventListener('click', () => setActiveTab('vehicles'));
+  tabInvoicesBtn.addEventListener('click', () => setActiveTab('invoices'));
   tabAnalyticsBtn.addEventListener('click', () => setActiveTab('analytics'));
 
   const compactNumber = new Intl.NumberFormat('fr-FR', { notation: 'compact', maximumFractionDigits: 1 });
@@ -1245,6 +1542,21 @@
 
   async function callAdminVehiclesFunction(body: Record<string, unknown>): Promise<any>{
     const res = await fetch(ADMIN_VEHICLES_FUNCTION_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_ANON_KEY
+      },
+      body: JSON.stringify(body)
+    });
+    const data = await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(data.error || ('HTTP ' + res.status));
+    return data;
+  }
+
+  async function callAdminInvoicesFunction(body: Record<string, unknown>): Promise<any>{
+    const res = await fetch(ADMIN_INVOICES_FUNCTION_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -2013,6 +2325,7 @@
     try{
       const data = await callAdminFunction({ ...authPayload() });
       allLeads = data.leads || [];
+      populateInvoiceLeadOptions();
       loadingState.style.display = 'none';
       lastRefresh.textContent = 'Actualisé à ' + new Date().toLocaleTimeString('fr-FR', { hour:'2-digit', minute:'2-digit' });
       renderLeads();
@@ -2501,10 +2814,403 @@
   vehiclesStatusFilter.addEventListener('change', renderVehicles);
   vehiclesSortSelect.addEventListener('change', renderVehicles);
 
+  // ============================================================
+  // Facturation clients - paramètres, brouillons, émission et PDF
+  // ============================================================
+
+  function localIsoDate(date = new Date()){
+    const offset = date.getTimezoneOffset() * 60_000;
+    return new Date(date.getTime() - offset).toISOString().slice(0, 10);
+  }
+
+  function addInvoiceDays(dateValue: string, days: number){
+    const date = new Date(dateValue + 'T12:00:00');
+    date.setDate(date.getDate() + days);
+    return localIsoDate(date);
+  }
+
+  function invoiceMoney(value: unknown){
+    return (Number(value) || 0).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' €';
+  }
+
+  function invoiceDateLabel(value?: string | null){
+    if(!value) return '-';
+    const date = new Date(value + 'T12:00:00');
+    return Number.isNaN(date.getTime()) ? value : date.toLocaleDateString('fr-FR');
+  }
+
+  function setInvoiceMessage(target: HTMLElement, message = '', type: 'success' | 'error' | '' = ''){
+    target.textContent = message;
+    target.classList.toggle('success', type === 'success');
+    target.classList.toggle('error', type === 'error');
+  }
+
+  function invoiceSettingsReady(settings = currentInvoiceSettings){
+    if(!settings) return false;
+    return Boolean(
+      settings.business_name && settings.address_line1 && settings.postal_code && settings.city &&
+      settings.registration_number && settings.vat_mode &&
+      (settings.vat_mode !== 'standard' || settings.vat_number)
+    );
+  }
+
+  function fillInvoiceSettingsForm(settings: InvoiceSettings){
+    issuerBusinessName.value = settings.business_name || 'Eleven Lease';
+    issuerLegalStatus.value = settings.legal_status || 'Société en cours d’immatriculation';
+    issuerAddressLine1.value = settings.address_line1 || '';
+    issuerAddressLine2.value = settings.address_line2 || '';
+    issuerPostalCode.value = settings.postal_code || '';
+    issuerCity.value = settings.city || '';
+    issuerCountry.value = settings.country || 'France';
+    issuerRegistrationNumber.value = settings.registration_number || 'SIRET en cours d’attribution';
+    issuerRcs.value = settings.rcs || '';
+    issuerVatMode.value = settings.vat_mode || '';
+    issuerVatNumber.value = settings.vat_number || '';
+    issuerDefaultVatRate.value = String(settings.default_vat_rate ?? 20);
+    issuerEmail.value = settings.email || 'contact@elevenlease.fr';
+    issuerPhone.value = settings.phone || '';
+    issuerIban.value = settings.iban || '';
+    issuerBic.value = settings.bic || '';
+    issuerPaymentTerms.value = String(settings.payment_terms_days ?? 0);
+    syncInvoiceVatMode();
+  }
+
+  function renderInvoiceSettings(settings: InvoiceSettings){
+    currentInvoiceSettings = settings;
+    const ready = invoiceSettingsReady(settings);
+    invoiceSettingsSummary.classList.toggle('ready', ready);
+    invoiceIssuerName.textContent = settings.business_name || 'Eleven Lease';
+    invoicePreviewIssuer.textContent = (settings.business_name || 'Eleven Lease').toUpperCase();
+    invoiceIssuerStatus.textContent = ready
+      ? [settings.registration_number, settings.vat_mode === 'exempt' ? 'TVA non applicable' : 'TVA applicable'].filter(Boolean).join(' · ')
+      : 'Configuration à compléter avant la première émission.';
+    issueInvoiceBtn.disabled = !ready;
+    fillInvoiceSettingsForm(settings);
+  }
+
+  function syncInvoiceVatMode(){
+    const exempt = issuerVatMode.value === 'exempt';
+    issuerVatNumber.disabled = exempt;
+    issuerDefaultVatRate.disabled = exempt;
+    if(exempt) issuerDefaultVatRate.value = '0';
+    else if(Number(issuerDefaultVatRate.value) === 0) issuerDefaultVatRate.value = '20';
+  }
+
+  function setInvoiceVatRate(value: number){
+    const normalized = String(value);
+    if(!Array.from(invoiceVatRate.options).some(option => option.value === normalized)){
+      invoiceVatRate.add(new Option(value.toLocaleString('fr-FR') + ' %', normalized));
+    }
+    invoiceVatRate.value = normalized;
+  }
+
+  function populateInvoiceLeadOptions(){
+    const selected = invoiceLeadSelect.value;
+    const rows = allLeads.slice().sort((a, b) => ((a.nom || '') + (a.prenom || '')).localeCompare((b.nom || '') + (b.prenom || ''), 'fr'));
+    invoiceLeadSelect.innerHTML = '<option value="">Saisie manuelle</option>' + rows.map(lead => {
+      const name = ((lead.prenom || '') + ' ' + (lead.nom || '')).trim() || 'Sans nom';
+      return '<option value="' + escapeHtml(String(lead.id)) + '">' + escapeHtml(name + (lead.email ? ' · ' + lead.email : '')) + '</option>';
+    }).join('');
+    if(rows.some(lead => String(lead.id) === selected)) invoiceLeadSelect.value = selected;
+  }
+
+  function resetInvoiceForm(){
+    invoiceForm.reset();
+    invoiceDraftId.value = '';
+    invoiceFormTitle.textContent = 'Préparer une facture';
+    invoiceCustomerCountry.value = 'France';
+    invoiceServicePreset.value = 'Frais de mise en relation et accompagnement commercial';
+    invoiceServiceLabel.value = invoiceServicePreset.value;
+    const today = localIsoDate();
+    invoiceIssueDate.value = today;
+    invoiceServiceDate.value = today;
+    invoiceDueDate.value = addInvoiceDays(today, Number(currentInvoiceSettings?.payment_terms_days || 0));
+    invoiceQuantity.value = '1';
+    setInvoiceVatRate(currentInvoiceSettings?.vat_mode === 'exempt' ? 0 : Number(currentInvoiceSettings?.default_vat_rate ?? 20));
+    invoiceVatRate.disabled = currentInvoiceSettings?.vat_mode === 'exempt';
+    invoicePaymentMethod.value = 'virement';
+    setInvoiceMessage(invoiceFormMessage);
+    updateInvoicePreview();
+  }
+
+  function invoiceFormPayload(){
+    return {
+      draftId: invoiceDraftId.value || undefined,
+      leadId: invoiceLeadSelect.value || undefined,
+      customerName: invoiceCustomerName.value.trim(),
+      customerEmail: invoiceCustomerEmail.value.trim(),
+      customerAddressLine1: invoiceCustomerAddressLine1.value.trim(),
+      customerAddressLine2: invoiceCustomerAddressLine2.value.trim(),
+      customerPostalCode: invoiceCustomerPostalCode.value.trim(),
+      customerCity: invoiceCustomerCity.value.trim(),
+      customerCountry: invoiceCustomerCountry.value.trim() || 'France',
+      serviceLabel: invoiceServiceLabel.value.trim(),
+      issueDate: invoiceIssueDate.value,
+      serviceDate: invoiceServiceDate.value,
+      dueDate: invoiceDueDate.value,
+      quantity: Number(invoiceQuantity.value || 1),
+      unitPriceHt: Number(invoiceUnitPrice.value),
+      vatRate: Number(invoiceVatRate.value || 0),
+      paymentMethod: invoicePaymentMethod.value,
+      notes: invoiceNotes.value.trim(),
+    };
+  }
+
+  function updateInvoicePreview(){
+    const quantity = Number(invoiceQuantity.value || 0);
+    const unitPrice = Number(invoiceUnitPrice.value || 0);
+    const totalHt = Math.round(quantity * unitPrice * 100) / 100;
+    const vatRate = Number(invoiceVatRate.value || 0);
+    const vat = Math.round(totalHt * vatRate) / 100;
+    const totalTtc = totalHt + vat;
+    invoicePreviewDate.textContent = invoiceDateLabel(invoiceIssueDate.value);
+    invoicePreviewCustomer.textContent = invoiceCustomerName.value.trim() || 'Client à renseigner';
+    invoicePreviewAddress.textContent = [invoiceCustomerAddressLine1.value.trim(), invoiceCustomerPostalCode.value.trim(), invoiceCustomerCity.value.trim()].filter(Boolean).join(', ') || 'Adresse de facturation';
+    invoicePreviewService.textContent = invoiceServiceLabel.value.trim() || 'Prestation à renseigner';
+    invoicePreviewHt.textContent = invoiceMoney(totalHt) + ' HT';
+    invoicePreviewVat.textContent = invoiceMoney(vat);
+    invoicePreviewTtc.textContent = invoiceMoney(totalTtc);
+  }
+
+  function invoiceStatusLabel(invoice: InvoiceAdmin){
+    if(invoice.document_type === 'credit_note') return 'Avoir émis';
+    const labels: Record<string, string> = { draft:'Brouillon', issued:'Émise', paid:'Payée', credited:'Avoir créé' };
+    return labels[invoice.status] || invoice.status;
+  }
+
+  function renderInvoices(){
+    const query = invoiceSearchInput.value.trim().toLowerCase();
+    const status = invoiceStatusFilter.value;
+    const rows = allInvoices.filter(invoice => {
+      if(status && invoice.status !== status) return false;
+      const haystack = [invoice.invoice_number, invoice.customer_name, invoice.customer_email, invoice.service_label].filter(Boolean).join(' ').toLowerCase();
+      return !query || haystack.includes(query);
+    });
+    invoicesEmptyState.style.display = rows.length ? 'none' : 'block';
+    invoiceHistoryList.style.display = rows.length ? 'flex' : 'none';
+    invoiceHistoryList.innerHTML = rows.map(invoice => {
+      const number = invoice.invoice_number || 'Brouillon';
+      const statusClass = invoice.document_type === 'credit_note' ? 'credited' : invoice.status;
+      const canDownload = invoice.status !== 'draft' && invoice.invoice_number;
+      const actions = invoice.status === 'draft'
+        ? '<button type="button" class="invoice-action-btn" data-action="edit" data-id="' + invoice.id + '">Reprendre</button>'
+        : (canDownload ? '<button type="button" class="invoice-action-btn" data-action="download" data-id="' + invoice.id + '">PDF</button>' : '') +
+          (invoice.document_type === 'invoice' && invoice.status === 'issued' ? '<button type="button" class="invoice-action-btn" data-action="paid" data-id="' + invoice.id + '">Marquer payée</button>' : '') +
+          (invoice.document_type === 'invoice' && ['issued','paid'].includes(invoice.status) ? '<button type="button" class="invoice-action-btn danger" data-action="credit" data-id="' + invoice.id + '">Créer un avoir</button>' : '');
+      return '<article class="invoice-history-item">' +
+        '<div class="invoice-history-main"><strong>' + escapeHtml(invoice.customer_name) + '</strong><span>' + escapeHtml(number) + ' · ' + escapeHtml(invoice.service_label) + '</span><span class="invoice-status ' + statusClass + '">' + invoiceStatusLabel(invoice) + '</span></div>' +
+        '<div class="invoice-history-date">Créée le ' + invoiceDateLabel(invoice.issue_date || invoice.created_at?.slice(0, 10)) + '<span>Échéance ' + invoiceDateLabel(invoice.due_date) + '</span></div>' +
+        '<div class="invoice-history-total">' + invoiceMoney(invoice.total_ttc) + '</div>' +
+        '<div class="invoice-history-actions">' + actions + '</div>' +
+      '</article>';
+    }).join('');
+
+    invoiceHistoryList.querySelectorAll<HTMLButtonElement>('[data-action]').forEach(button => {
+      button.addEventListener('click', () => handleInvoiceAction(button.dataset.action || '', button.dataset.id || '', button));
+    });
+  }
+
+  function loadInvoiceIntoForm(invoice: InvoiceAdmin){
+    if(invoice.status !== 'draft') return;
+    invoiceDraftId.value = invoice.id;
+    invoiceFormTitle.textContent = 'Modifier le brouillon';
+    invoiceLeadSelect.value = invoice.lead_id || '';
+    invoiceCustomerName.value = invoice.customer_name || '';
+    invoiceCustomerEmail.value = invoice.customer_email || '';
+    invoiceCustomerAddressLine1.value = invoice.customer_address_line1 || '';
+    invoiceCustomerAddressLine2.value = invoice.customer_address_line2 || '';
+    invoiceCustomerPostalCode.value = invoice.customer_postal_code || '';
+    invoiceCustomerCity.value = invoice.customer_city || '';
+    invoiceCustomerCountry.value = invoice.customer_country || 'France';
+    invoiceServicePreset.value = '';
+    invoiceServiceLabel.value = invoice.service_label || '';
+    invoiceIssueDate.value = invoice.issue_date || localIsoDate();
+    invoiceServiceDate.value = invoice.service_date || invoiceIssueDate.value;
+    invoiceDueDate.value = invoice.due_date || invoiceIssueDate.value;
+    invoiceQuantity.value = String(invoice.quantity || 1);
+    invoiceUnitPrice.value = String(invoice.unit_price_ht || '');
+    setInvoiceVatRate(Number(invoice.vat_rate || 0));
+    invoicePaymentMethod.value = invoice.payment_method || 'virement';
+    invoiceNotes.value = invoice.notes || '';
+    updateInvoicePreview();
+    invoiceForm.scrollIntoView({ behavior:'smooth', block:'start' });
+  }
+
+  async function handleInvoiceAction(action: string, id: string, button: HTMLButtonElement){
+    const invoice = allInvoices.find(item => item.id === id);
+    if(!invoice) return;
+    if(action === 'edit') return loadInvoiceIntoForm(invoice);
+    if(action === 'download'){
+      try{ await downloadInvoicePdf(invoice as InvoicePdfData); }
+      catch(err: any){ alert('Impossible de générer le PDF : ' + err.message); }
+      return;
+    }
+    const previousText = button.textContent || '';
+    try{
+      if(action === 'paid'){
+        if(!confirm('Confirmer que la facture ' + invoice.invoice_number + ' est réglée ?')) return;
+        button.disabled = true; button.textContent = 'Mise à jour…';
+        await callAdminInvoicesFunction({ ...authPayload(), action:'mark-paid', id });
+      }
+      if(action === 'credit'){
+        if(!confirm('Créer un avoir intégral pour la facture ' + invoice.invoice_number + ' ? Cette action est définitive.')) return;
+        button.disabled = true; button.textContent = 'Création…';
+        const result = await callAdminInvoicesFunction({ ...authPayload(), action:'credit', id, creditDate: localIsoDate() });
+        if(result.invoice) await downloadInvoicePdf(result.invoice as InvoicePdfData);
+      }
+      await loadInvoices(true);
+    }catch(err: any){
+      alert(err.message || 'Impossible de mettre à jour la facture.');
+    }finally{
+      button.disabled = false; button.textContent = previousText;
+    }
+  }
+
+  async function loadInvoices(silent = false){
+    if(isPartner()) return;
+    if(!silent){
+      invoicesLoadingState.style.display = 'block';
+      invoicesErrorState.style.display = 'none';
+    }
+    try{
+      const data = await callAdminInvoicesFunction({ ...authPayload(), action:'list' });
+      allInvoices = data.invoices || [];
+      renderInvoiceSettings(data.settings as InvoiceSettings);
+      populateInvoiceLeadOptions();
+      if(!invoiceDraftId.value) resetInvoiceForm();
+      renderInvoices();
+      invoicesLoaded = true;
+      invoicesLoadingState.style.display = 'none';
+      if(!invoiceSettingsReady()) invoiceSettingsFormPanel.classList.add('open');
+    }catch(err: any){
+      invoicesLoadingState.style.display = 'none';
+      invoicesErrorState.style.display = 'block';
+      invoicesErrorState.textContent = 'Erreur de chargement : ' + err.message;
+    }
+  }
+
+  toggleInvoiceSettingsBtn.addEventListener('click', () => invoiceSettingsFormPanel.classList.toggle('open'));
+  closeInvoiceSettingsBtn.addEventListener('click', () => invoiceSettingsFormPanel.classList.remove('open'));
+  issuerVatMode.addEventListener('change', syncInvoiceVatMode);
+
+  invoiceSettingsForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const settings = {
+      business_name: issuerBusinessName.value,
+      legal_status: issuerLegalStatus.value,
+      address_line1: issuerAddressLine1.value,
+      address_line2: issuerAddressLine2.value,
+      postal_code: issuerPostalCode.value,
+      city: issuerCity.value,
+      country: issuerCountry.value,
+      registration_number: issuerRegistrationNumber.value,
+      rcs: issuerRcs.value,
+      vat_mode: issuerVatMode.value,
+      vat_number: issuerVatNumber.value,
+      default_vat_rate: Number(issuerDefaultVatRate.value || 0),
+      email: issuerEmail.value,
+      phone: issuerPhone.value,
+      iban: issuerIban.value,
+      bic: issuerBic.value,
+      payment_terms_days: Number(issuerPaymentTerms.value || 0),
+    };
+    saveInvoiceSettingsBtn.disabled = true;
+    setInvoiceMessage(invoiceSettingsMessage, 'Enregistrement…');
+    try{
+      const data = await callAdminInvoicesFunction({ ...authPayload(), action:'save-settings', settings });
+      renderInvoiceSettings(data.settings as InvoiceSettings);
+      resetInvoiceForm();
+      setInvoiceMessage(invoiceSettingsMessage, 'Paramètres enregistrés.', 'success');
+      window.setTimeout(() => invoiceSettingsFormPanel.classList.remove('open'), 700);
+    }catch(err: any){
+      setInvoiceMessage(invoiceSettingsMessage, err.message || 'Impossible d’enregistrer les paramètres.', 'error');
+    }finally{
+      saveInvoiceSettingsBtn.disabled = false;
+    }
+  });
+
+  invoiceLeadSelect.addEventListener('change', () => {
+    const lead = allLeads.find(item => String(item.id) === invoiceLeadSelect.value);
+    if(lead){
+      invoiceCustomerName.value = ((lead.prenom || '') + ' ' + (lead.nom || '')).trim();
+      invoiceCustomerEmail.value = lead.email || '';
+    }
+    updateInvoicePreview();
+  });
+  invoiceServicePreset.addEventListener('change', () => {
+    if(invoiceServicePreset.value) invoiceServiceLabel.value = invoiceServicePreset.value;
+    updateInvoicePreview();
+  });
+  invoiceIssueDate.addEventListener('change', () => {
+    invoiceDueDate.value = addInvoiceDays(invoiceIssueDate.value || localIsoDate(), Number(currentInvoiceSettings?.payment_terms_days || 0));
+    updateInvoicePreview();
+  });
+  invoiceForm.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>('input,select,textarea').forEach(field => {
+    field.addEventListener('input', updateInvoicePreview);
+    field.addEventListener('change', updateInvoicePreview);
+  });
+  resetInvoiceBtn.addEventListener('click', resetInvoiceForm);
+  invoiceSearchInput.addEventListener('input', renderInvoices);
+  invoiceStatusFilter.addEventListener('change', renderInvoices);
+
+  saveInvoiceDraftBtn.addEventListener('click', async () => {
+    const payload = invoiceFormPayload();
+    if(!payload.customerName || !payload.serviceLabel || !payload.unitPriceHt){
+      setInvoiceMessage(invoiceFormMessage, 'Nom du client, prestation et montant requis pour le brouillon.', 'error');
+      return;
+    }
+    saveInvoiceDraftBtn.disabled = true;
+    setInvoiceMessage(invoiceFormMessage, 'Enregistrement du brouillon…');
+    try{
+      const data = await callAdminInvoicesFunction({ ...authPayload(), action:'save-draft', ...payload });
+      invoiceDraftId.value = data.invoice.id;
+      invoiceFormTitle.textContent = 'Modifier le brouillon';
+      setInvoiceMessage(invoiceFormMessage, 'Brouillon enregistré.', 'success');
+      await loadInvoices(true);
+    }catch(err: any){
+      setInvoiceMessage(invoiceFormMessage, err.message || 'Impossible d’enregistrer le brouillon.', 'error');
+    }finally{
+      saveInvoiceDraftBtn.disabled = false;
+    }
+  });
+
+  invoiceForm.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if(!invoiceSettingsReady()){
+      invoiceSettingsFormPanel.classList.add('open');
+      setInvoiceMessage(invoiceFormMessage, 'Complétez d’abord les paramètres de facturation.', 'error');
+      return;
+    }
+    if(!invoiceForm.reportValidity()) return;
+    if(!confirm('Émettre cette facture ? Son numéro et son contenu deviendront définitifs.')) return;
+    const payload = invoiceFormPayload();
+    issueInvoiceBtn.disabled = true;
+    setInvoiceMessage(invoiceFormMessage, 'Émission de la facture…');
+    try{
+      const data = await callAdminInvoicesFunction({ ...authPayload(), action:'issue', ...payload });
+      const invoice = data.invoice as InvoicePdfData;
+      try{
+        await downloadInvoicePdf(invoice);
+        setInvoiceMessage(invoiceFormMessage, 'Facture ' + invoice.invoice_number + ' émise et téléchargée.', 'success');
+      }catch(pdfError: any){
+        setInvoiceMessage(invoiceFormMessage, 'Facture émise. Le PDF peut être retéléchargé depuis l’historique.', 'error');
+        console.error(pdfError);
+      }
+      resetInvoiceForm();
+      await loadInvoices(true);
+    }catch(err: any){
+      setInvoiceMessage(invoiceFormMessage, err.message || 'Impossible d’émettre la facture.', 'error');
+    }finally{
+      issueInvoiceBtn.disabled = !invoiceSettingsReady();
+    }
+  });
+
   function applyRoleRestrictions(){
     const partner = isPartner();
     roleBadge.style.display = partner ? 'inline-flex' : 'none';
     addVehicleBtn.style.display = partner ? 'none' : 'inline-flex';
+    tabInvoicesBtn.style.display = partner ? 'none' : '';
+    if(partner && activeAdminTab === 'invoices') setActiveTab('leads');
   }
 
   function showDashboard(){
@@ -2550,6 +3256,10 @@
   refreshBtn.addEventListener('click', () => {
     if(activeAdminTab === 'analytics'){
       loadAnalytics();
+      return;
+    }
+    if(activeAdminTab === 'invoices'){
+      loadInvoices();
       return;
     }
     loadLeads();
