@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { LEGAL } from '../../config/legal';
 import { getCollection, render } from 'astro:content';
 
 export async function getStaticPaths() {
@@ -29,15 +30,13 @@ const articleSchema = {
   mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
   author: {
     '@type': 'Person',
-    name: 'Mehdi Djaffar',
+    name: LEGAL.operatorName,
     jobTitle: 'Fondateur, Eleven Lease',
     url: 'https://elevenlease.fr/a-propos',
     sameAs: ['https://www.linkedin.com/in/mehdielevenlease/'],
   },
   publisher: {
-    '@type': 'Organization',
-    name: 'Eleven Lease',
-    logo: { '@type': 'ImageObject', url: 'https://elevenlease.fr/eleven-lease-logo.png' },
+    '@id': `${LEGAL.siteUrl}/#organization`,
   },
 };
 
@@ -74,7 +73,7 @@ const modifiedDateLabel = entry.data.updatedDate?.toLocaleDateString('fr-FR', { 
       <div class="article-cat">{entry.data.category}</div>
       <h1>{entry.data.title}</h1>
       <div class="article-meta-row">
-        <span>Par <a href="/a-propos">Mehdi Djaffar</a></span>
+        <span>Par <a href="/a-propos">{LEGAL.operatorName}</a></span>
         <span class="dot-sep">·</span>
         <span>{dateLabel}</span>
         {modifiedDateLabel && <><span class="dot-sep">·</span><span>Mis à jour le {modifiedDateLabel}</span></>}
@@ -95,7 +94,7 @@ const modifiedDateLabel = entry.data.updatedDate?.toLocaleDateString('fr-FR', { 
   <section class="article-cta">
     <div class="wrap">
       <h2>Un projet de leasing en tête ?</h2>
-      <p>Décrivez-le en quelques minutes, notre réseau de partenaires financiers s'occupe du reste.</p>
+      <p>Décrivez-le en quelques minutes : ELEVEN LEASE qualifie votre besoin avant une éventuelle mise en relation. Le partenaire réalise seul l'étude définitive et décide.</p>
       <a href="/simulation" class="btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing</a>
     </div>
   </section>

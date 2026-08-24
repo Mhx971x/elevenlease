@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { LEGAL } from '../config/legal';
 ---
 <BaseLayout
   title="Mentions légales | Eleven Lease"
@@ -11,7 +12,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="wrap">
       <div class="eyebrow"><span class="dot"></span> Informations légales</div>
       <h1>Mentions légales</h1>
-      <div class="updated">Dernière mise à jour : juillet 2026</div>
+      <div class="updated">Dernière mise à jour : août 2026</div>
     </div>
   </section>
 
@@ -19,45 +20,40 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="wrap">
       <div class="legal-content">
 
-        <div class="notice-box">
-          <strong>À noter :</strong> la société éditrice de ce site est en cours d'immatriculation. Les informations d'identification légale ci-dessous (SIREN, RCS, capital social...) seront complétées dès l'obtention du numéro d'immatriculation.
-        </div>
-
         <h2>Éditeur du site</h2>
         <div class="id-table">
-          <div class="id-row"><span>Nom commercial</span><span>Eleven Lease</span></div>
-          <div class="id-row"><span>Forme juridique</span><span class="pending">À compléter</span></div>
-          <div class="id-row"><span>Capital social</span><span class="pending">À compléter</span></div>
-          <div class="id-row"><span>Siège social</span><span class="pending">À compléter</span></div>
-          <div class="id-row"><span>SIREN</span><span class="pending">À compléter</span></div>
-          <div class="id-row"><span>RCS</span><span class="pending">À compléter</span></div>
-          <div class="id-row"><span>N° TVA intracommunautaire</span><span class="pending">À compléter</span></div>
-          <div class="id-row"><span>N° ORIAS (le cas échéant)</span><span class="pending">À compléter</span></div>
-          <div class="id-row"><span>Contact</span><span>contact@elevenlease.fr</span></div>
+          <div class="id-row"><span>Nom commercial</span><span>{LEGAL.tradeName}</span></div>
+          <div class="id-row"><span>Exploitant</span><span>{LEGAL.operatorName}</span></div>
+          <div class="id-row"><span>Forme juridique</span><span>{LEGAL.legalForm}</span></div>
+          <div class="id-row"><span>Adresse</span><span>{LEGAL.fullAddress}</span></div>
+          <div class="id-row"><span>SIREN</span><span>{LEGAL.siren}</span></div>
+          <div class="id-row"><span>SIRET</span><span>{LEGAL.siret}</span></div>
+          <div class="id-row"><span>Contact</span><span>{LEGAL.email}</span></div>
         </div>
 
         <h2>Directeur de la publication</h2>
-        <p>Le directeur de la publication est le représentant légal de la société éditrice, dont l'identité sera précisée à cet emplacement dès l'immatriculation de la société.</p>
+        <p>Le directeur de la publication est {LEGAL.publicationDirector}, exploitant de {LEGAL.tradeName}.</p>
 
         <h2>Hébergement</h2>
-        <p>Le site elevenlease.fr est hébergé par :</p>
-        <p>Vercel Inc.<br>340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis<br><a class="inline-link" href="https://vercel.com" target="_blank" rel="noopener">vercel.com</a></p>
+        <p>Le site {LEGAL.domain} est hébergé par :</p>
+        <p>{LEGAL.hosting.name}<br>{LEGAL.hosting.address}<br><a class="inline-link" href={LEGAL.hosting.url} target="_blank" rel="noopener">vercel.com</a></p>
 
         <h2>Activité du site</h2>
-        <p>Eleven Lease est une plateforme de mise en relation entre particuliers et un réseau de partenaires financiers pour des projets de leasing automobile (LOA/LLD) et d'achat de véhicules neufs ou d'occasion.</p>
-        <p><strong style="color:var(--text);">Eleven Lease n'est ni propriétaire des véhicules présentés, ni organisme de crédit.</strong> La société agit en qualité d'apporteur d'affaires : elle met en relation l'utilisateur avec des partenaires financiers indépendants, qui restent seuls responsables des offres proposées, de l'étude des dossiers et des décisions d'acceptation. Les véhicules et les contrats de financement relèvent exclusivement des partenaires concernés.</p>
+        <p>{LEGAL.activity}</p>
+        <div class="notice-box"><strong>Rôle de {LEGAL.tradeName} :</strong> {LEGAL.roleDisclosure}</div>
+        <p>{LEGAL.tradeName} n'est ni propriétaire des véhicules présentés, ni établissement de crédit, ni prêteur. Les véhicules, disponibilités, tarifs, contrats et financements relèvent des partenaires concernés.</p>
 
         <h2>Propriété intellectuelle</h2>
         <p>L'ensemble des éléments composant ce site (textes, graphismes, logo, structure) est protégé par le droit de la propriété intellectuelle. Toute reproduction ou représentation, totale ou partielle, sans autorisation préalable, est interdite.</p>
 
         <h2>Limitation de responsabilité</h2>
-        <p>Eleven Lease s'efforce d'assurer l'exactitude des informations diffusées sur ce site, notamment concernant les offres de véhicules, mais ne peut garantir l'exhaustivité ou l'actualité de ces informations, celles-ci pouvant évoluer selon les partenaires. Les loyers et conditions affichés sont donnés à titre indicatif et sont soumis à l'acceptation du dossier par le partenaire financier concerné.</p>
+        <p>{LEGAL.tradeName} s'efforce d'assurer l'exactitude des informations diffusées sur ce site, notamment concernant les exemples de véhicules, mais ne peut garantir leur exhaustivité, leur actualité ou leur disponibilité. Les loyers, véhicules et conditions affichés sont purement indicatifs. Ils ne constituent ni une offre de financement, ni une promesse d'acceptation. Seules l'étude définitive et la proposition du partenaire sollicité peuvent engager ce dernier.</p>
 
         <h2>Données personnelles</h2>
         <p>Le traitement des données personnelles collectées via ce site est détaillé dans notre <a class="inline-link" href="/confidentialite">politique de confidentialité</a>.</p>
 
         <h2>Contact</h2>
-        <p>Pour toute question relative à ces mentions légales : <a class="inline-link" href="mailto:contact@elevenlease.fr">contact@elevenlease.fr</a></p>
+        <p>Pour toute question relative à ces mentions légales : <a class="inline-link" href={`mailto:${LEGAL.email}`}>{LEGAL.email}</a></p>
 
       </div>
     </div>

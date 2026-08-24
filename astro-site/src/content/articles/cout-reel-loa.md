@@ -103,4 +103,4 @@ Une simulation commerciale reste indicative. Seul le contrat final permet de con
 
 ---
 
-Vous souhaitez comparer plusieurs scénarios ? [Décrivez votre budget et votre usage à Eleven Lease](/simulation) pour recevoir une proposition détaillée, sous réserve d'étude et de disponibilité.
+Vous souhaitez comparer plusieurs scénarios ? [Décrivez votre budget et votre usage à Eleven Lease](/simulation) pour un pré-check commercial. Seul le partenaire sollicité peut ensuite établir une proposition, sous réserve de son étude et des disponibilités.

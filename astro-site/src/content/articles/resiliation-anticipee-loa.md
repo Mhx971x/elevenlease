@@ -57,4 +57,4 @@ Résilier une LOA avant son terme est possible dans la grande majorité des cont
 
 ---
 
-Un contrat de LOA en cours que vous souhaitez faire évoluer, ou un nouveau projet à monter ? [Décrivez-le à Eleven Lease](/simulation) : notre réseau de partenaires financiers étudie votre situation sans frais.
+Un contrat de LOA en cours que vous souhaitez faire évoluer, ou un nouveau projet à monter ? [Décrivez-le à Eleven Lease](/simulation) : nous pouvons qualifier votre besoin et vous orienter, mais seul l'organisme contractant peut confirmer les possibilités applicables.

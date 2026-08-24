@@ -136,12 +136,13 @@ export async function createInvoicePdf(invoice: InvoicePdfData, options: { logoD
   const issuerLines = [
     text(issuer.legal_status),
     ...addressLines(issuer),
-    text(issuer.registration_number),
+    text(issuer.siren) ? `SIREN ${text(issuer.siren)}` : '',
+    text(issuer.registration_number) ? `SIRET ${text(issuer.registration_number)}` : '',
     text(issuer.rcs) ? `RCS ${text(issuer.rcs)}` : '',
     text(issuer.vat_number) ? `TVA ${text(issuer.vat_number)}` : '',
     text(issuer.email),
   ].filter(Boolean);
-  issuerLines.slice(0, 7).forEach((line, index) => doc.text(line, 16, 61 + index * 3.8));
+  issuerLines.slice(0, 8).forEach((line, index) => doc.text(line, 16, 61 + index * 3.35));
 
   const customerLines = [
     invoice.customer_address_line1,
@@ -244,7 +245,7 @@ export async function createInvoicePdf(invoice: InvoicePdfData, options: { logoD
     ? 'TVA non applicable, art. 293 B du CGI. Aucun escompte pour paiement anticipé.'
     : 'Montants exprimés en euros. Aucun escompte pour paiement anticipé.';
   doc.text(vatNotice, 16, 263);
-  doc.text(`${text(issuer.business_name) || 'Eleven Lease'} - ${text(issuer.registration_number)}`, 16, 268);
+  doc.text(`${text(issuer.business_name) || 'ELEVEN LEASE'} - SIREN ${text(issuer.siren)} - SIRET ${text(issuer.registration_number)}`, 16, 268);
   doc.text('Page 1 / 1', 194, 268, { align: 'right' });
   doc.setTextColor(...PINK);
   doc.setFont('helvetica', 'bold');

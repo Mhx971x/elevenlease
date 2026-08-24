@@ -1,17 +1,18 @@
 ---
 import MinimalLayout from '../layouts/MinimalLayout.astro';
+import { LEGAL } from '../config/legal';
 const webPageSchema = {
   "@context": "https://schema.org",
   "@type": "WebPage",
   "name": "Simulez votre leasing — Eleven Lease",
   "url": "https://elevenlease.fr/simulation",
-  "description": "Simulez votre leasing en 2 minutes. Notre réseau recherche une offre adaptée à votre projet, avec une première réponse sous 24 à 48 h ouvrées.",
+  "description": "Décrivez votre projet en 2 minutes pour un pré-check commercial et une éventuelle mise en relation avec un partenaire automobile.",
   "isPartOf": { "@type": "WebSite", "name": "Eleven Lease", "url": "https://elevenlease.fr/" }
 };
 ---
 <MinimalLayout
   title="Eleven Lease — Simulez votre leasing"
-  description="Simulez votre leasing en 2 minutes. Notre réseau recherche une offre adaptée à votre projet, avec une première réponse sous 24 à 48 h ouvrées."
+  description="Décrivez votre projet en 2 minutes pour un pré-check commercial et une éventuelle mise en relation avec un partenaire automobile."
   path="/simulation"
 >
 <script type="application/ld+json" set:html={JSON.stringify(webPageSchema)} />
@@ -29,13 +30,13 @@ const webPageSchema = {
   <div class="wrap">
     <div class="contact-panel">
       <div class="contact-intro" id="contactIntro">
-        <h1>Obtenez votre offre de leasing en moins de 2 minutes.</h1>
+        <h1>Décrivez votre projet de leasing en moins de 2 minutes.</h1>
         <div class="trust-badges">
           <span class="trust-badge">✓ Sans engagement</span>
           <span class="trust-badge">✓ Première réponse sous 24 à 48 h ouvrées</span>
           <span class="trust-badge">✓ Réseau de partenaires spécialisés</span>
         </div>
-        <p>Quelques questions rapides pour une offre sur-mesure de notre réseau de partenaires, sans engagement.</p>
+        <p>Quelques questions pour qualifier votre besoin avant une éventuelle mise en relation, sans engagement et sans garantie d'acceptation.</p>
       </div>
       <form id="leadForm" class="lead-form" novalidate>
         <div class="honeypot-field" aria-hidden="true">
@@ -287,7 +288,7 @@ const webPageSchema = {
           <div class="project-summary" id="projectSummary"></div>
           <label class="consent-option">
             <input type="checkbox" id="fConsent" name="consentRecontact">
-            <span>J'accepte d'être recontacté par Eleven Lease et ses partenaires.</span>
+            <span>J'accepte d'être recontacté par {LEGAL.tradeName} et, si mon projet le nécessite, que les informations utiles soient transmises au partenaire sollicité pour son étude définitive. <a href="/confidentialite" target="_blank" rel="noopener">Politique de confidentialité</a>.</span>
           </label>
         </div>
 
@@ -305,10 +306,10 @@ const webPageSchema = {
         <div class="success-screen" id="successScreen">
           <div class="success-icon" aria-hidden="true">✓</div>
           <h2>Votre demande a bien été enregistrée</h2>
-          <p>Dernière étape : confirmez votre demande sur WhatsApp afin qu’un conseiller puisse l’étudier.</p>
+          <p>Dernière étape : confirmez votre demande sur WhatsApp afin qu’un conseiller {LEGAL.tradeName} puisse réaliser le pré-check commercial.</p>
           <p class="success-email-notice" id="successEmailNotice" hidden>Un email de confirmation vient de vous être envoyé.</p>
           <div class="success-contact">
-            <p class="success-reassurance">Aucun paiement requis. Un conseiller étudiera votre demande et vous répondra directement sur WhatsApp.</p>
+            <p class="success-reassurance">Aucun paiement requis. {LEGAL.tradeName} qualifie votre besoin ; seul le partenaire sollicité réalise l'étude définitive et décide, sans garantie d'acceptation.</p>
             <div class="success-actions">
               <a class="whatsapp-btn" id="whatsappCta" href="#" target="_blank" rel="noopener noreferrer">
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 6.32A8.86 8.86 0 0012.05 4c-4.9 0-8.9 4-8.9 8.9 0 1.57.42 3.1 1.2 4.44L3 22l4.8-1.26a8.9 8.9 0 004.25 1.08h0c4.9 0 8.9-4 8.9-8.9 0-2.38-.93-4.62-2.35-6.6zm-5.55 13.7h0a7.4 7.4 0 01-3.77-1.03l-.27-.16-2.8.74.75-2.73-.18-.28a7.38 7.38 0 01-1.13-3.94c0-4.08 3.32-7.4 7.4-7.4 1.98 0 3.84.77 5.24 2.17a7.35 7.35 0 012.16 5.23c0 4.08-3.32 7.4-7.4 7.4zm4.06-5.54c-.22-.11-1.31-.65-1.52-.72-.2-.08-.35-.11-.5.11-.15.22-.57.72-.7.87-.13.15-.26.16-.48.05-.22-.11-.94-.35-1.79-1.1-.66-.6-1.1-1.33-1.24-1.55-.13-.22-.01-.34.1-.45.1-.1.22-.26.33-.39.11-.13.15-.22.22-.37.07-.15.04-.28-.02-.39-.06-.11-.5-1.21-.69-1.66-.18-.43-.36-.38-.5-.38h-.43c-.15 0-.39.05-.59.28-.2.22-.78.76-.78 1.86s.8 2.16.91 2.31c.11.15 1.57 2.4 3.81 3.36.53.23.95.37 1.27.47.53.17 1.02.15 1.4.09.43-.06 1.31-.53 1.49-1.05.18-.51.18-.95.13-1.05-.05-.1-.2-.16-.42-.27z"/></svg>
@@ -320,7 +321,7 @@ const webPageSchema = {
           <button type="button" class="restart-link" id="restartWizardSuccess">← Faire une nouvelle simulation</button>
         </div>
 
-        <p class="form-note" id="formNote" style="display:none;">Vos informations sont utilisées uniquement pour traiter cette demande et organiser votre rappel.</p>
+        <p class="form-note" id="formNote" style="display:none;">Vos informations servent au pré-check, au suivi et, avec votre accord, à la mise en relation. <a href="/confidentialite" target="_blank" rel="noopener">En savoir plus</a>.</p>
       </form>
     </div>
   </div>
@@ -328,7 +329,7 @@ const webPageSchema = {
 
 <footer>
   <div class="wrap footer-bottom">
-    © 2026 Eleven Lease. Les véhicules et loyers affichés sont donnés à titre indicatif et soumis à acceptation du dossier par nos partenaires financiers.
+    © 2026 {LEGAL.tradeName} · {LEGAL.operatorName} – Entrepreneur individuel · SIREN {LEGAL.siren}. Pré-check commercial uniquement : {LEGAL.tradeName} n'accorde aucun financement et ne garantit aucune acceptation ; l'étude définitive et la décision appartiennent au partenaire.
   </div>
 </footer>
 
@@ -1075,6 +1076,7 @@ Je souhaite poursuivre ma demande sur WhatsApp.`;
     line-height:1.45;cursor:pointer;background:#fff;
   }
   .lead-form .consent-option input{width:17px;height:17px;flex:none;margin-top:1px;accent-color:var(--accent-1);}
+  .consent-option a,.form-note a{text-decoration:underline;text-underline-offset:2px;}
   @media(max-width:520px){
     .field-stack{gap:18px;}
     .compact-choice-grid{gap:8px;}

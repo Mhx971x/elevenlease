@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { fetchVehicles, getMinimumIndicativePrice, parseDureeMonths, type Vehicle } from '../lib/vehicles';
+import { LEGAL } from '../config/legal';
 
 let fleetVehicles: Vehicle[] = [];
 try {
@@ -103,29 +104,6 @@ const acceptTrendIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentCol
 const acceptXIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>`;
 const acceptCheckIcon = `<svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
-const orgSchema = {
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Eleven Lease",
-  "url": "https://elevenlease.fr/",
-  "logo": "https://elevenlease.fr/eleven-lease-logo.png",
-  "email": "contact@elevenlease.fr",
-  "telephone": "+33638014986",
-  "foundingDate": "2023",
-  "description": "Eleven Lease connecte particuliers et professionnels à un réseau de partenaires financiers pour trouver, toutes marques confondues, le leasing automobile adapté à leur budget, partout en France.",
-  "founder": {
-    "@type": "Person",
-    "name": "Mehdi Djaffar",
-    "jobTitle": "Fondateur",
-    "sameAs": ["https://www.linkedin.com/in/mehdielevenlease/"]
-  },
-  "sameAs": [
-    "https://www.instagram.com/elevenlease",
-    "https://www.tiktok.com/@elevenlease",
-    "https://www.linkedin.com/company/elevenlease/"
-  ]
-};
-
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
@@ -137,12 +115,12 @@ const howToSchema = {
   "@context": "https://schema.org",
   "@type": "HowTo",
   "name": "Comment obtenir un leasing avec Eleven Lease",
-  "description": "Les quatre étapes du parcours Eleven Lease, de la description du projet à la livraison du véhicule.",
+  "description": "Les quatre étapes du parcours Eleven Lease, de la qualification commerciale à la décision du partenaire.",
   "step": [
     { "@type": "HowToStep", "position": 1, "name": "Décrivez votre projet", "text": "Véhicule, budget et besoins : quelques informations suffisent." },
-    { "@type": "HowToStep", "position": 2, "name": "Nous étudions votre dossier", "text": "Votre situation est analysée pour identifier les solutions adaptées." },
-    { "@type": "HowToStep", "position": 3, "name": "Recevez votre offre", "text": "Un conseiller vous présente une proposition claire et personnalisée." },
-    { "@type": "HowToStep", "position": 4, "name": "Validez et prenez la route", "text": "Contrat, démarches et livraison : votre expert s'occupe du reste." }
+    { "@type": "HowToStep", "position": 2, "name": "Pré-check commercial", "text": "Eleven Lease qualifie votre besoin et vérifie la cohérence des informations transmises." },
+    { "@type": "HowToStep", "position": 3, "name": "Mise en relation", "text": "Avec votre accord, votre projet est transmis au partenaire susceptible de l'étudier." },
+    { "@type": "HowToStep", "position": 4, "name": "Étude définitive", "text": "Le partenaire analyse le dossier, décide et fixe seul les conditions de son éventuelle proposition." }
   ]
 };
 
@@ -163,7 +141,7 @@ const faqSchema = {
     {
       "@type": "Question",
       "name": "Réponse en combien de temps ?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Une première étude est généralement réalisée rapidement après réception des informations nécessaires. Notre objectif est de vous apporter une première réponse sous 24 à 48 h ouvrées." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Notre objectif est de vous apporter un premier retour commercial sous 24 à 48 h ouvrées. Ce délai ne préjuge ni du délai d'étude définitive du partenaire, ni de sa décision." }
     },
     {
       "@type": "Question",
@@ -188,7 +166,7 @@ const faqSchema = {
     {
       "@type": "Question",
       "name": "Simulation gratuite ?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Oui. La demande de simulation et l'étude initiale sont gratuites et sans engagement. Vous restez libre d'accepter ou non la proposition reçue." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Oui. La demande de simulation et le pré-check commercial initial sont gratuits et sans engagement. Ils ne constituent ni une offre de financement ni une garantie d'acceptation." }
     }
   ]
 };
@@ -208,7 +186,6 @@ const breadcrumbSchema = {
   showProgressBar
 >
   <Fragment slot="head">
-    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(howToSchema)} />
     <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
@@ -331,7 +308,7 @@ const breadcrumbSchema = {
           </div>
           <div class="hero-proof">
             <strong>0 €</strong>
-            <span>Frais client</span>
+            <span>Pré-check initial</span>
           </div>
         </div>
       </div>
@@ -528,11 +505,11 @@ const breadcrumbSchema = {
           <ul class="compare-list">
             <li class="compare-list-strong"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> 0€ d'apport possible</li>
             <li class="compare-list-strong"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> KM illimité en option</li>
-            <li class="compare-list-strong"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Accepté plus souvent</li>
+            <li class="compare-list-strong"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Besoin pré-qualifié</li>
             <li class="compare-hide-mobile"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Véhicules récents</li>
             <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Réponse sous 24 à 48 h</li>
             <li class="compare-hide-mobile"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Suivi de A à Z</li>
-            <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Aucun frais caché</li>
+            <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="10" fill="var(--accent-1)"/><path d="M6 10.2l2.4 2.4L14.2 7" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> Pré-check gratuit</li>
           </ul>
           <a href="/simulation" class="btn-primary cta-with-calculator compare-cta"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing</a>
         </div>
@@ -578,8 +555,8 @@ const breadcrumbSchema = {
   <section id="acceptation">
     <div class="wrap">
       <div class="section-head accept-head reveal">
-        <h2>+ de chances <span class="highlight-mark">d'être accepté</span>.</h2>
-        <p class="accept-intro">Un dossier, plusieurs partenaires.<br>Plus de possibilités d'acceptation.</p>
+        <h2>Pré-check et <span class="highlight-mark">mise en relation</span>.</h2>
+        <p class="accept-intro">Eleven Lease qualifie le besoin.<br>Le partenaire réalise l'étude définitive et décide.</p>
       </div>
 
       <div class="accept-diagram" id="acceptDiagram">
@@ -641,7 +618,7 @@ const breadcrumbSchema = {
             <div class="accept-partner accept-partner-accepted" data-accept-node>
               <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
               <span class="accept-partner-name">Partenaire D</span>
-              <span class="accept-status accept-status-accepted"><Fragment set:html={acceptCheckIcon} />Accord</span>
+              <span class="accept-status accept-status-accepted"><Fragment set:html={acceptCheckIcon} />À étudier</span>
             </div>
           </div>
           <div class="accept-partners-mobile">
@@ -658,7 +635,7 @@ const breadcrumbSchema = {
             <div class="accept-partner accept-partner-compact accept-partner-accepted" data-accept-node>
               <span class="accept-icon"><Fragment set:html={acceptBankIcon} /></span>
               <span class="accept-partner-name">Partenaire C</span>
-              <span class="accept-status accept-status-accepted"><Fragment set:html={acceptCheckIcon} />Accord</span>
+              <span class="accept-status accept-status-accepted"><Fragment set:html={acceptCheckIcon} />À étudier</span>
             </div>
           </div>
         </div>
@@ -671,13 +648,13 @@ const breadcrumbSchema = {
         </div>
         <div class="accept-stat">
           <span class="accept-icon"><Fragment set:html={acceptTrendIcon} /></span>
-          <span class="accept-stat-label">Taux d'acceptation + élevé</span>
+          <span class="accept-stat-label">Décision par le partenaire</span>
         </div>
       </div>
 
       <div class="accept-note reveal">
         <span class="accept-note-icon"><Fragment set:html={acceptShieldIcon} /></span>
-        Un refus ne bloque pas forcément votre projet.
+        Aucune acceptation n'est garantie par {LEGAL.tradeName}.
       </div>
     </div>
   </section>
@@ -686,7 +663,7 @@ const breadcrumbSchema = {
     <div class="wrap reviews-layout reveal">
       <header class="reviews-intro">
         <h2>Ils nous ont <span class="highlight-mark">fait confiance</span>.</h2>
-        <p>Sans apport, sans frais cachés, sans perte de temps.</p>
+        <p>Un besoin qualifié, un accompagnement clair, sans perte de temps.</p>
 
         <div class="reviews-rating" aria-label="Note moyenne de 4,9 sur 5">
           <div class="reviews-rating-stars review-star-tiles" aria-hidden="true">
@@ -752,7 +729,7 @@ const breadcrumbSchema = {
         </details>
         <details class="faq-item">
           <summary>Réponse en combien de temps ?<span class="faq-icon"></span></summary>
-          <div class="faq-content"><p>Une première étude est généralement réalisée rapidement après réception des informations nécessaires. Notre objectif est de vous apporter une <strong>première réponse sous 24 à 48 h ouvrées</strong>.</p></div>
+          <div class="faq-content"><p>Notre objectif est de vous apporter un <strong>premier retour commercial sous 24 à 48 h ouvrées</strong>. Ce délai ne préjuge ni de l'étude définitive du partenaire, ni de sa décision.</p></div>
         </details>
         <details class="faq-item">
           <summary>Puis-je choisir mon véhicule ?<span class="faq-icon"></span></summary>
@@ -772,7 +749,7 @@ const breadcrumbSchema = {
         </details>
         <details class="faq-item">
           <summary>Simulation gratuite ?<span class="faq-icon"></span></summary>
-          <div class="faq-content"><p>Oui. <strong>La demande de simulation et l'étude initiale sont gratuites et sans engagement.</strong> Vous restez libre d'accepter ou non la proposition reçue.</p></div>
+          <div class="faq-content"><p>Oui. <strong>La demande de simulation et le pré-check commercial initial sont gratuits et sans engagement.</strong> Ils ne constituent ni une offre de financement ni une garantie d'acceptation.</p></div>
         </details>
       </div>
     </div>
@@ -787,7 +764,7 @@ const breadcrumbSchema = {
         <div class="process-cta-content">
           <div class="process-cta-eyebrow">Votre prochain véhicule</div>
           <h3>Votre projet<br><span class="process-cta-accent">commence ici.</span></h3>
-          <p>Décrivez votre besoin en quelques minutes. Un conseiller revient vers vous avec une solution adaptée.</p>
+          <p>Décrivez votre besoin en quelques minutes. Un conseiller revient vers vous pour le qualifier et organiser, si pertinent, une mise en relation.</p>
           <a href="/simulation" class="btn-primary cta-with-calculator process-cta-btn"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing <span aria-hidden="true">→</span></a>
           <div class="process-cta-proof">
             <span>Gratuit</span>

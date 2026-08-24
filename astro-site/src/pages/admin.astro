@@ -881,8 +881,9 @@
             <label class="edit-field"><span>Code postal *</span><input type="text" id="issuerPostalCode" required></label>
             <label class="edit-field"><span>Ville *</span><input type="text" id="issuerCity" required></label>
             <label class="edit-field"><span>Pays</span><input type="text" id="issuerCountry"></label>
-            <label class="edit-field"><span>SIRET</span><input type="text" id="issuerRegistrationNumber"></label>
-            <label class="edit-field"><span>RCS</span><input type="text" id="issuerRcs"></label>
+            <label class="edit-field"><span>SIREN *</span><input type="text" id="issuerSiren" required></label>
+            <label class="edit-field"><span>SIRET *</span><input type="text" id="issuerRegistrationNumber" required></label>
+            <label class="edit-field"><span>RCS (si applicable)</span><input type="text" id="issuerRcs"></label>
             <label class="edit-field"><span>Régime de TVA *</span><select id="issuerVatMode" required><option value="">À sélectionner</option><option value="exempt">TVA non applicable - art. 293 B</option><option value="standard">TVA applicable</option></select></label>
             <label class="edit-field"><span>N° TVA intracommunautaire</span><input type="text" id="issuerVatNumber"></label>
             <label class="edit-field"><span>Taux de TVA par défaut</span><input type="number" id="issuerDefaultVatRate" min="0" max="100" step="0.1"></label>
@@ -1085,7 +1086,7 @@
     business_name: string; legal_status?: string | null;
     address_line1?: string | null; address_line2?: string | null;
     postal_code?: string | null; city?: string | null; country?: string | null;
-    registration_number?: string | null; rcs?: string | null;
+    siren?: string | null; registration_number?: string | null; rcs?: string | null;
     vat_mode?: 'standard' | 'exempt' | null; vat_number?: string | null;
     default_vat_rate?: number | null; email?: string | null; phone?: string | null;
     iban?: string | null; bic?: string | null; payment_terms_days?: number | null;
@@ -1225,6 +1226,7 @@
   const issuerPostalCode = document.getElementById('issuerPostalCode') as HTMLInputElement;
   const issuerCity = document.getElementById('issuerCity') as HTMLInputElement;
   const issuerCountry = document.getElementById('issuerCountry') as HTMLInputElement;
+  const issuerSiren = document.getElementById('issuerSiren') as HTMLInputElement;
   const issuerRegistrationNumber = document.getElementById('issuerRegistrationNumber') as HTMLInputElement;
   const issuerRcs = document.getElementById('issuerRcs') as HTMLInputElement;
   const issuerVatMode = document.getElementById('issuerVatMode') as HTMLSelectElement;
@@ -2849,24 +2851,26 @@
     if(!settings) return false;
     return Boolean(
       settings.business_name && settings.address_line1 && settings.postal_code && settings.city &&
-      settings.registration_number && settings.vat_mode &&
+      settings.siren && settings.registration_number && settings.vat_mode &&
+      settings.default_vat_rate != null &&
       (settings.vat_mode !== 'standard' || settings.vat_number)
     );
   }
 
   function fillInvoiceSettingsForm(settings: InvoiceSettings){
-    issuerBusinessName.value = settings.business_name || 'Eleven Lease';
-    issuerLegalStatus.value = settings.legal_status || 'Société en cours d’immatriculation';
-    issuerAddressLine1.value = settings.address_line1 || '';
+    issuerBusinessName.value = settings.business_name || 'ELEVEN LEASE';
+    issuerLegalStatus.value = settings.legal_status || 'DJAFFAR Mehdi – Entrepreneur individuel / micro-entreprise';
+    issuerAddressLine1.value = settings.address_line1 || '60 rue François 1er';
     issuerAddressLine2.value = settings.address_line2 || '';
-    issuerPostalCode.value = settings.postal_code || '';
-    issuerCity.value = settings.city || '';
+    issuerPostalCode.value = settings.postal_code || '75008';
+    issuerCity.value = settings.city || 'Paris';
     issuerCountry.value = settings.country || 'France';
-    issuerRegistrationNumber.value = settings.registration_number || 'SIRET en cours d’attribution';
+    issuerSiren.value = settings.siren || '931 287 908';
+    issuerRegistrationNumber.value = settings.registration_number || '931 287 908 00020';
     issuerRcs.value = settings.rcs || '';
     issuerVatMode.value = settings.vat_mode || '';
     issuerVatNumber.value = settings.vat_number || '';
-    issuerDefaultVatRate.value = String(settings.default_vat_rate ?? 20);
+    issuerDefaultVatRate.value = settings.vat_mode ? String(settings.default_vat_rate ?? '') : '';
     issuerEmail.value = settings.email || 'contact@elevenlease.fr';
     issuerPhone.value = settings.phone || '';
     issuerIban.value = settings.iban || '';
@@ -2891,9 +2895,10 @@
   function syncInvoiceVatMode(){
     const exempt = issuerVatMode.value === 'exempt';
     issuerVatNumber.disabled = exempt;
+    issuerVatNumber.required = !exempt;
     issuerDefaultVatRate.disabled = exempt;
+    issuerDefaultVatRate.required = !exempt;
     if(exempt) issuerDefaultVatRate.value = '0';
-    else if(Number(issuerDefaultVatRate.value) === 0) issuerDefaultVatRate.value = '20';
   }
 
   function setInvoiceVatRate(value: number){
@@ -3103,11 +3108,12 @@
       postal_code: issuerPostalCode.value,
       city: issuerCity.value,
       country: issuerCountry.value,
+      siren: issuerSiren.value,
       registration_number: issuerRegistrationNumber.value,
       rcs: issuerRcs.value,
       vat_mode: issuerVatMode.value,
       vat_number: issuerVatNumber.value,
-      default_vat_rate: Number(issuerDefaultVatRate.value || 0),
+      default_vat_rate: issuerDefaultVatRate.value,
       email: issuerEmail.value,
       phone: issuerPhone.value,
       iban: issuerIban.value,

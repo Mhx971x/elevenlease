@@ -58,4 +58,4 @@ La restitution d'un véhicule en fin de contrat repose sur une grille de vétust
 
 ---
 
-Votre contrat arrive à échéance et vous cherchez votre prochain véhicule ? [Décrivez votre projet à Eleven Lease](/simulation) : notre réseau recherche une solution adaptée, avec kilométrage illimité en option selon le contrat.
+Votre contrat arrive à échéance et vous cherchez votre prochain véhicule ? [Décrivez votre projet à Eleven Lease](/simulation) : nous qualifions votre besoin avant une éventuelle mise en relation. Le partenaire confirme seul les disponibilités et options contractuelles.

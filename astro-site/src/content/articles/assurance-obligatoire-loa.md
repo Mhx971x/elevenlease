@@ -49,4 +49,4 @@ En LOA, l'assurance tous risques n'est pas une option mais une quasi-obligation 
 
 ---
 
-Un projet de LOA en préparation et des questions sur l'assurance à prévoir ? [Décrivez votre projet à Eleven Lease](/simulation) : notre réseau de partenaires financiers vous accompagne sans frais.
+Un projet de LOA en préparation et des questions sur l'assurance à prévoir ? [Décrivez votre projet à Eleven Lease](/simulation) : nous qualifions votre besoin avant une éventuelle mise en relation ; les garanties exigées sont confirmées par le partenaire et le contrat.

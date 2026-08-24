@@ -65,4 +65,4 @@ Le statut d'indépendant ou d'auto-entrepreneur ne ferme pas la porte à la LOA,
 
 ---
 
-Vous êtes indépendant ou auto-entrepreneur et souhaitez estimer votre éligibilité ? [Décrivez votre projet à Eleven Lease](/simulation) : notre réseau de partenaires financiers étudie chaque dossier au cas par cas, sans frais.
+Vous êtes indépendant ou auto-entrepreneur ? [Décrivez votre projet à Eleven Lease](/simulation) : nous qualifions votre besoin avant une éventuelle mise en relation. Le partenaire réalise seul l'étude définitive et décide, sans garantie d'acceptation.

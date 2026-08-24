@@ -13,6 +13,7 @@
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import JSZip from 'npm:jszip@3.10.1'
 import { authenticate } from '../_shared/auth.ts'
+import { BUSINESS, EMAIL_SENDER, emailLegalFooter } from '../_shared/business.ts'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -23,7 +24,6 @@ const DOCUMENT_BUCKET = 'lead-documents'
 const DOCUMENT_PORTAL_URL = 'https://elevenlease.fr/dossier-documents'
 const DOCUMENT_PORTAL_DURATION_MS = 30 * 24 * 60 * 60 * 1000
 const BREVO_ENDPOINT = 'https://api.brevo.com/v3/smtp/email'
-const EMAIL_SENDER = { name: 'Eleven Lease', email: 'contact@elevenlease.fr' }
 const MAX_ZIP_SOURCE_SIZE = 80 * 1024 * 1024
 const DOCUMENT_ARCHIVE_LABELS: Record<string, string> = {
   piece_identite: 'Piece-identite',
@@ -228,12 +228,12 @@ function documentRequestEmailHtml(lead: Record<string, unknown>, portalUrl: stri
             </tr>
             <tr>
               <td style="padding:24px 34px 36px;">
-                <div style="margin-bottom:10px;color:#ff007f;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;">Finalisation de votre dossier</div>
+                <div style="margin-bottom:10px;color:#ff007f;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;">Préparation de votre demande</div>
                 <h1 style="margin:0 0 18px;font-size:27px;line-height:1.18;letter-spacing:-.5px;">Vos documents sont nécessaires.</h1>
                 <p style="margin:0 0 12px;font-size:16px;line-height:1.65;">Bonjour ${firstName},</p>
                 <p style="margin:0 0 22px;color:#55555d;font-size:15px;line-height:1.65;">
-                  Afin de poursuivre l’étude de votre dossier pour <strong style="color:#17171a;">${vehicle}</strong>,
-                  merci d’ajouter vos justificatifs dans votre espace privé Eleven Lease.
+                  Afin de finaliser le pré-check commercial de votre projet pour <strong style="color:#17171a;">${vehicle}</strong>,
+                  merci d’ajouter vos justificatifs dans votre espace privé ${BUSINESS.tradeName}.
                 </p>
                 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:0 0 26px;padding:16px 19px;background:#f7f7f9;border-radius:14px;">
                   <tr><td style="padding-bottom:7px;color:#17171a;font-size:13px;font-weight:700;">Documents généralement demandés</td></tr>
@@ -245,11 +245,15 @@ function documentRequestEmailHtml(lead: Record<string, unknown>, portalUrl: stri
                 <p style="margin:18px 0 0;color:#77777f;font-size:12px;line-height:1.55;">
                   Ce lien personnel est valable 30 jours. Ne le partagez pas. Les formats PDF et photo sont acceptés.
                 </p>
+                <p style="margin:12px 0 0;color:#77777f;font-size:12px;line-height:1.55;">
+                  Les documents utiles peuvent ensuite être transmis au partenaire sollicité, qui réalise seul l’étude définitive et décide sans garantie d’acceptation.
+                </p>
               </td>
             </tr>
             <tr>
               <td style="padding:20px 34px;background:#17171a;color:#b8b8bd;font-size:11px;line-height:1.55;">
-                Eleven Lease · <a href="mailto:contact@elevenlease.fr" style="color:#fff;text-decoration:none;">contact@elevenlease.fr</a><br>
+                ${emailLegalFooter()}<br>
+                <a href="mailto:${BUSINESS.email}" style="color:#fff;text-decoration:none;">${BUSINESS.email}</a> · <a href="${BUSINESS.siteUrl}/confidentialite" style="color:#fff;text-decoration:none;">Confidentialité</a><br>
                 Une question ? Répondez simplement à cet email.
               </td>
             </tr>
@@ -265,14 +269,16 @@ function documentRequestEmailText(lead: Record<string, unknown>, portalUrl: stri
   return [
     `Bonjour ${String(lead.prenom || '')},`,
     '',
-    'Afin de poursuivre l’étude de votre dossier Eleven Lease, merci d’ajouter vos justificatifs dans votre espace privé :',
+    `Afin de finaliser le pré-check commercial de votre demande ${BUSINESS.tradeName}, merci d’ajouter vos justificatifs dans votre espace privé :`,
     portalUrl,
     '',
     'Ce lien personnel est valable 30 jours. Ne le partagez pas.',
     'Les formats PDF et photo sont acceptés.',
+    'Les documents utiles peuvent être transmis au partenaire sollicité, qui réalise seul l’étude définitive et décide sans garantie d’acceptation.',
     '',
-    'L’équipe Eleven Lease',
-    'contact@elevenlease.fr',
+    emailLegalFooter(),
+    BUSINESS.email,
+    `${BUSINESS.siteUrl}/confidentialite`,
   ].join('\n')
 }
 

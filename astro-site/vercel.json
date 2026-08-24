@@ -1,5 +1,12 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/cgv",
+      "destination": "/cgu",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

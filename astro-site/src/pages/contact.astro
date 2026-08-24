@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { LEGAL } from '../config/legal';
 
 const faqSchema = {
   "@context": "https://schema.org",
@@ -47,7 +48,7 @@ const breadcrumbSchema = {
     <div class="wrap">
       <div class="eyebrow"><span class="dot"></span> Première réponse sous 24 à 48 h ouvrées</div>
       <h1>Une question ? Écrivez-nous.</h1>
-      <p>Pas le temps de faire la simulation complète ? Laissez-nous un message : un conseiller de notre réseau vous répond sous 24 à 48 h ouvrées.</p>
+      <p>Pas le temps de faire la simulation complète ? Laissez-nous un message : un conseiller {LEGAL.tradeName} vous répond sous 24 à 48 h ouvrées.</p>
     </div>
   </section>
 
@@ -77,13 +78,13 @@ const breadcrumbSchema = {
           </div>
           <p class="form-error" id="formError" role="alert" aria-live="assertive" tabindex="-1"></p>
           <button type="submit" class="btn-primary" id="contactSubmit">Envoyer mon message</button>
-          <p class="form-note">En envoyant ce message, vous acceptez d'être recontacté par notre réseau de partenaires.</p>
+          <p class="form-note">Ces informations sont utilisées par {LEGAL.tradeName} pour répondre à votre message. <a href="/confidentialite">Politique de confidentialité</a>.</p>
         </form>
 
         <div class="success-screen" id="successScreen" role="status" aria-live="polite">
           <div class="success-icon">🎉</div>
           <h2 id="successTitle" tabindex="-1">Message envoyé !</h2>
-          <p>Merci, nous avons bien reçu votre message. Un conseiller de notre réseau vous répond sous 24 à 48 h ouvrées.</p>
+          <p>Merci, nous avons bien reçu votre message. Un conseiller {LEGAL.tradeName} vous répond sous 24 à 48 h ouvrées.</p>
           <div class="success-contact">
             <p>📞 Besoin d'aller plus vite ?</p>
             <div class="success-actions">
@@ -197,6 +198,7 @@ const breadcrumbSchema = {
   .website-field{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;}
   .contact-form [aria-invalid="true"]{border-color:#b42318;box-shadow:0 0 0 3px rgba(180,35,24,.12);}
   .form-note{font-size:12.5px;color:var(--text-faint);text-align:center;margin-top:4px;}
+  .form-note a{text-decoration:underline;text-underline-offset:2px;}
 
   /* écran de succès */
   .success-screen{display:none;text-align:center;}

@@ -61,7 +61,7 @@ const catalogueFaq = [
   },
   {
     q: 'Les tarifs affichés sont-ils définitifs ?',
-    a: "Non. Il s'agit d'offres indicatives. Le loyer final dépend notamment du véhicule, de la durée, du kilométrage, de l'apport éventuel et de l'acceptation du dossier par un partenaire financier.",
+    a: "Non. Il s'agit d'exemples indicatifs sans valeur d'offre. Le loyer et les conditions définitives sont fixés par le partenaire après son étude, sans garantie d'acceptation.",
   },
   {
     q: 'Le kilométrage est-il limité ?',
@@ -69,7 +69,7 @@ const catalogueFaq = [
   },
   {
     q: 'La simulation est-elle gratuite ?',
-    a: "Oui. La demande de simulation et l'étude initiale sont gratuites et sans engagement. Vous restez libre d'accepter ou non la proposition reçue.",
+    a: "Oui. La demande et le pré-check commercial initial sont gratuits et sans engagement. Ils ne constituent ni une offre de financement ni une garantie d'acceptation.",
   },
 ];
 
@@ -179,7 +179,7 @@ const faqSchema = {
           aria-label={`Voir l'offre indicative : ${v.brand} ${v.name}`}
         >
           <div class="veh-visual">
-            <span class="veh-badge">Exemple d'offre</span>
+            <span class="veh-badge">Exemple indicatif</span>
             {v.photo
               ? <img src={cardImage} srcset={cardSrcset} sizes="(max-width: 640px) calc(100vw - 40px), (max-width: 980px) 50vw, 380px" width="720" height="470" alt={`${v.brand} ${v.name}`} loading={index < 3 ? 'eager' : 'lazy'} fetchpriority={index === 0 ? 'high' : undefined} decoding="async" onerror="this.replaceWith(Object.assign(document.createElement('div'), {innerHTML: window.__vehCarIcon}).firstElementChild)" />
               : <Fragment set:html={carIcon} />
@@ -203,7 +203,7 @@ const faqSchema = {
                 <span class="amount">{minimumMonthlyPrice} €</span>
                 <span class="period">/mois</span>
               </div>
-              <span class="veh-cta">Voir l'offre <span aria-hidden="true">→</span></span>
+              <span class="veh-cta">Voir l'exemple <span aria-hidden="true">→</span></span>
             </div>
           </div>
         </a>
@@ -224,7 +224,7 @@ const faqSchema = {
       </div>
       <div class="reassurance-item">
         <span class="reassurance-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M7 3v3m10-3v3M4 9h16M5 5h14a1 1 0 011 1v14H4V6a1 1 0 011-1zM8 13h3m2 0h3m-8 3h3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        <span><strong>Étude gratuite</strong><small>Sans engagement</small></span>
+        <span><strong>Pré-check gratuit</strong><small>Sans engagement</small></span>
       </div>
       <div class="reassurance-item">
         <span class="reassurance-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>

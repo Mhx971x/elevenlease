@@ -56,4 +56,4 @@ La LOA sur un véhicule électrique suit les mêmes règles générales qu'un mo
 
 ---
 
-Un projet de LOA sur un véhicule électrique ? [Décrivez-le à Eleven Lease](/simulation) : notre réseau de partenaires financiers vous propose des offres adaptées, sans frais.
+Un projet de LOA sur un véhicule électrique ? [Décrivez-le à Eleven Lease](/simulation) : nous qualifions votre besoin avant une éventuelle mise en relation. Le partenaire fixe seul les conditions de son éventuelle proposition.

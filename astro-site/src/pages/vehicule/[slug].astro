@@ -84,22 +84,6 @@ const vehicleSchema: Record<string, unknown> = {
       enginePower: { '@type': 'QuantitativeValue', value: v.puissance, unitCode: 'HUR' },
     },
   }),
-  ...(v.price && {
-    offers: {
-      '@type': 'Offer',
-      url: canonicalUrl,
-      priceCurrency: 'EUR',
-      price: minimumMonthlyPrice,
-      priceSpecification: {
-        '@type': 'UnitPriceSpecification',
-        price: minimumMonthlyPrice,
-        priceCurrency: 'EUR',
-        unitText: 'MONTH',
-      },
-      businessFunction: 'http://purl.org/goodrelations/v1#LeaseOut',
-      seller: { '@type': 'Organization', name: 'Eleven Lease' },
-    },
-  }),
 };
 
 const breadcrumbSchema = {
@@ -123,7 +107,7 @@ const vehicleFaq = [
   },
   {
     q: 'Réponse en combien de temps ?',
-    a: "Une première étude est généralement réalisée rapidement après réception des informations nécessaires. Notre objectif est de vous apporter une première réponse sous 24 à 48 h ouvrées.",
+    a: "Notre objectif est de vous apporter un premier retour commercial sous 24 à 48 h ouvrées. Le délai d'étude définitive et la décision appartiennent au partenaire.",
   },
   {
     q: 'Puis-je choisir mon véhicule ?',
@@ -139,7 +123,7 @@ const vehicleFaq = [
   },
   {
     q: 'Simulation gratuite ?',
-    a: "Oui. La demande de simulation et l'étude initiale sont gratuites et sans engagement. Vous restez libre d'accepter ou non la proposition reçue.",
+    a: "Oui. La demande et le pré-check commercial initial sont gratuits et sans engagement. Ils ne constituent ni une offre de financement ni une garantie d'acceptation.",
   },
 ];
 
@@ -166,8 +150,8 @@ const vehicleReviews = [
 
 const journeySteps = [
   { number: '1', title: 'Faites votre simulation', text: 'Indiquez vos besoins et votre budget en quelques clics.' },
-  { number: '2', title: 'Nous étudions votre dossier', text: 'Votre projet est présenté aux partenaires les plus adaptés.' },
-  { number: '3', title: 'Recevez votre proposition', text: 'Vous validez librement une offre claire et personnalisée.' },
+  { number: '2', title: 'Pré-check commercial', text: 'Eleven Lease qualifie votre besoin et organise la mise en relation.' },
+  { number: '3', title: 'Étude du partenaire', text: 'Le partenaire décide et fixe seul les conditions de son éventuelle proposition.' },
 ];
 
 const faqSchema = {
@@ -301,7 +285,7 @@ const specIcons: Record<string, string> = {
         <p class="vd-hero-meta">{[v.fuel, v.transmission].filter(Boolean).join(' · ')}</p>
 
         <div class="vd-price-card">
-          <div class="vd-offer-badge">Offre indicative</div>
+          <div class="vd-offer-badge">Exemple indicatif</div>
           <div class="vd-price-eyebrow">Dès</div>
           <div class="vd-price"><span class="amount">{minimumMonthlyPrice}</span><span class="currency">€</span><span class="period">/mois</span></div>
           <div class="vd-price-note">0 € d'apport possible</div>
@@ -323,7 +307,7 @@ const specIcons: Record<string, string> = {
       <div class="vd-spec-item"><span><Fragment set:html={specIcons.fuel} /></span><p><small>Motorisation</small><strong>{v.fuel || 'Selon modèle'}</strong></p></div>
       <div class="vd-spec-item"><span><Fragment set:html={specIcons.gear} /></span><p><small>Boîte</small><strong>{v.transmission || 'Selon modèle'}</strong></p></div>
       <div class="vd-spec-item"><span><Fragment set:html={specIcons.gauge} /></span><p><small>Finition</small><strong>{v.finition || v.name}</strong></p></div>
-      <div class="vd-spec-item"><span><Fragment set:html={euroIcon} /></span><p><small>Offre</small><strong>Sur étude de dossier</strong></p></div>
+      <div class="vd-spec-item"><span><Fragment set:html={euroIcon} /></span><p><small>Conditions</small><strong>Fixées par le partenaire</strong></p></div>
       <div class="vd-spec-item"><span><Fragment set:html={particulierIcon} /></span><p><small>Profils</small><strong>Particulier et professionnel</strong></p></div>
       <div class="vd-spec-item"><span><Fragment set:html={specIcons.calendar} /></span><p><small>Visuels</small><strong>Photos à titre indicatif</strong></p></div>
     </section>
@@ -365,7 +349,7 @@ const specIcons: Record<string, string> = {
         <a href={`/simulation?vehicule=${encodeURIComponent(v.brand + ' ' + v.name)}`} class="vd-financing-cta btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing</a>
       </div>
       <p class="vd-financing-proof">Gratuit · Sans engagement · Première réponse sous 24 à 48 h ouvrées</p>
-      <p class="financing-disclaimer">Exemples indicatifs. Le loyer définitif dépend du profil, du véhicule et des conditions du partenaire financier.</p>
+      <p class="financing-disclaimer">Exemples indicatifs, sans valeur d'offre. ELEVEN LEASE réalise uniquement un pré-check commercial. Le loyer, l'étude définitive, la décision et les conditions relèvent exclusivement du partenaire ; aucune acceptation n'est garantie.</p>
     </div>
   </section>
 
@@ -374,9 +358,9 @@ const specIcons: Record<string, string> = {
       <header class="vd-section-head"><h2>Pourquoi passer par <span class="highlight-mark">Eleven Lease ?</span></h2></header>
       <div class="vd-why-grid">
         <div><span><Fragment set:html={euroIcon} /></span><p><strong>Sans apport possible</strong><small>Financez votre véhicule sans payer d'avance.</small></p></div>
-        <div><span><Fragment set:html={proIcon} /></span><p><strong>Plusieurs partenaires</strong><small>Nous recherchons la solution la plus adaptée.</small></p></div>
-        <div><span><Fragment set:html={checkIcon} /></span><p><strong>Étude gratuite</strong><small>Une première analyse sans engagement.</small></p></div>
-        <div><span><Fragment set:html={specIcons.clock} /></span><p><strong>Réponse rapide</strong><small>Un premier retour sous 24 à 48 h ouvrées.</small></p></div>
+        <div><span><Fragment set:html={proIcon} /></span><p><strong>Mise en relation</strong><small>Votre besoin est orienté vers un partenaire susceptible de l'étudier.</small></p></div>
+        <div><span><Fragment set:html={checkIcon} /></span><p><strong>Pré-check gratuit</strong><small>Une qualification commerciale sans engagement.</small></p></div>
+        <div><span><Fragment set:html={specIcons.clock} /></span><p><strong>Réponse rapide</strong><small>Un premier retour commercial sous 24 à 48 h ouvrées.</small></p></div>
         <div><span><Fragment set:html={particulierIcon} /></span><p><strong>Conseiller dédié</strong><small>Un expert vous accompagne à chaque étape.</small></p></div>
       </div>
     </div>
@@ -474,7 +458,7 @@ const specIcons: Record<string, string> = {
 
   <section class="wrap">
     <div class="vd-final-cta">
-      <div><h2>Votre projet peut commencer ici.</h2><p>Simulez votre leasing gratuitement et recevez une proposition personnalisée.</p></div>
+      <div><h2>Votre projet peut commencer ici.</h2><p>Décrivez gratuitement votre besoin pour demander un pré-check commercial et, si pertinent, une mise en relation.</p></div>
       <a href={`/simulation?vehicule=${encodeURIComponent(v.brand + ' ' + v.name)}`} class="btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Simuler mon leasing</a>
     </div>
   </section>

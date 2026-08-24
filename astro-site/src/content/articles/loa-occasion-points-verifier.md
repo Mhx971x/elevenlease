@@ -89,4 +89,4 @@ Si vous pensez déjà racheter la voiture, intégrez immédiatement le montant d
 
 ---
 
-Vous recherchez une voiture neuve ou d'occasion en leasing ? [Décrivez votre projet à Eleven Lease](/simulation) : nous recherchons une offre disponible et adaptée, sans promettre un véhicule avant confirmation du partenaire.
+Vous recherchez une voiture neuve ou d'occasion en leasing ? [Décrivez votre projet à Eleven Lease](/simulation) : nous qualifions votre besoin et pouvons organiser la mise en relation, sans promettre un véhicule ni une acceptation avant confirmation du partenaire.

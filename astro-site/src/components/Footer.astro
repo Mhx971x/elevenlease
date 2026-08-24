@@ -1,3 +1,6 @@
+---
+import { LEGAL } from '../config/legal';
+---
 <footer class="site-footer">
   <div class="footer-panel">
     <div class="footer-inner">
@@ -51,17 +54,18 @@
           <h4>Informations</h4>
           <a href="/mentions-legales">Mentions légales</a>
           <a href="/confidentialite">Confidentialité</a>
-          <a href="/cgu">Conditions d'utilisation</a>
-          <a href="mailto:contact@elevenlease.fr">contact@elevenlease.fr</a>
-          <a href="tel:+33638014986">06 38 01 49 86</a>
+          <a href="/cgu">Conditions générales</a>
+          <a href={`mailto:${LEGAL.email}`}>{LEGAL.email}</a>
+          <a href={`tel:${LEGAL.phoneInternational}`}>{LEGAL.phoneDisplay}</a>
         </div>
       </div>
 
       <div class="footer-wordmark" aria-hidden="true">Eleven Lease</div>
 
       <div class="footer-bottom">
-        <span>© 2026 Eleven Lease. Tous droits réservés.</span>
-        <span>Eleven Lease n'est pas un établissement de crédit et ne finance aucun véhicule directement.</span>
+        <span>© 2026 {LEGAL.tradeName}. Tous droits réservés.</span>
+        <span>{LEGAL.operatorName} – Entrepreneur individuel · SIREN {LEGAL.siren}</span>
+        <span>Pré-check commercial uniquement : financement et décision relèvent du partenaire.</span>
       </div>
     </div>
   </div>

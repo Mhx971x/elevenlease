@@ -1,43 +1,27 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { LEGAL, ORGANIZATION_SCHEMA } from '../config/legal';
 
 const aboutSchema = {
   "@context": "https://schema.org",
   "@type": "AboutPage",
   "name": "À propos d'Eleven Lease",
   "url": "https://elevenlease.fr/a-propos",
-  "mainEntity": {
-    "@type": "Organization",
-    "name": "Eleven Lease",
-    "foundingDate": "2023",
-    "description": "Eleven Lease est une équipe de mandataires auto active depuis 2023, qui aide chaque client à trouver un leasing adapté à son budget grâce à un réseau d'une dizaine de partenaires financiers en France.",
-    "url": "https://elevenlease.fr/",
-    "founder": {
-      "@type": "Person",
-      "name": "Mehdi Djaffar",
-      "jobTitle": "Fondateur",
-      "sameAs": ["https://www.linkedin.com/in/mehdielevenlease/"]
-    },
-    "sameAs": [
-      "https://www.instagram.com/elevenlease",
-      "https://www.tiktok.com/@elevenlease",
-      "https://www.linkedin.com/company/elevenlease/"
-    ]
-  }
+  "mainEntity": { ...ORGANIZATION_SCHEMA, "@context": undefined }
 };
 
 const checkIcon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
 const reasons = [
-  'Un service gratuit pour le client — aucun frais facturé par Eleven Lease.',
+  'Une demande en ligne et un pré-check commercial initial gratuits et sans engagement.',
   'Une première réponse sous 24 à 48 h ouvrées après votre demande.',
-  'Un réseau de partenaires financiers présents partout en France.',
-  'Une équipe qui connaît à la fois le véhicule et le financement.',
+  'Une mise en relation avec des partenaires du secteur automobile.',
+  'Un pré-check commercial avant toute étude définitive du partenaire.',
 ];
 ---
 <BaseLayout
-  title="À propos | Eleven Lease, mandataires auto depuis 2023"
-  description="Découvrez Eleven Lease, équipe de mandataires auto active depuis 2023 : expertise automobile, financement et réseau de partenaires partout en France."
+  title="À propos | ELEVEN LEASE, accompagnement automobile"
+  description="Découvrez ELEVEN LEASE : qualification des besoins, pré-check commercial, mise en relation et apport d'affaires dans le secteur automobile."
   path="/a-propos"
   ctaHref="/simulation"
   active="about"
@@ -49,8 +33,8 @@ const reasons = [
   <section class="about-hero">
     <div class="wrap">
       <div class="eyebrow"><span class="dot"></span> Qui sommes-nous</div>
-      <h1>Des mandataires auto,<br><em>pas un algorithme.</em></h1>
-      <p>Eleven Lease est une équipe de mandataires auto basée en France, active depuis 2023. Notre métier : comparer les offres de leasing (LOA/LLD) de notre réseau de partenaires financiers pour trouver celle qui correspond réellement à votre projet.</p>
+      <h1>Un accompagnement humain,<br><em>pas un algorithme.</em></h1>
+      <p>{LEGAL.tradeName} accompagne les projets automobiles : qualification du besoin, pré-check commercial, mise en relation et apport d'affaires. L'étude définitive et toute décision de financement appartiennent au partenaire sollicité.</p>
     </div>
   </section>
 
@@ -59,11 +43,11 @@ const reasons = [
       <div class="founder-card">
         <div class="founder-avatar" aria-hidden="true">MD</div>
         <div class="founder-info">
-          <div class="founder-name">Mehdi Djaffar</div>
+          <div class="founder-name">{LEGAL.operatorName}</div>
           <div class="founder-role">Fondateur d'Eleven Lease</div>
-          <p class="founder-bio">Issu du secteur automobile et du secteur financier, il a fondé Eleven Lease en 2023 pour connecter chaque projet de leasing au partenaire le plus adapté.</p>
+          <p class="founder-bio">Il a fondé Eleven Lease pour qualifier chaque projet automobile et organiser la mise en relation avec un partenaire susceptible de l'étudier.</p>
         </div>
-        <a class="founder-linkedin" href="https://www.linkedin.com/in/mehdielevenlease/" target="_blank" rel="noopener" aria-label="Profil LinkedIn de Mehdi Djaffar">
+        <a class="founder-linkedin" href="https://www.linkedin.com/in/mehdielevenlease/" target="_blank" rel="noopener" aria-label={`Profil LinkedIn de ${LEGAL.operatorName}`}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a2 2 0 11-4-.002 2 2 0 014 .002zM7 8.48H3V21h4V8.48zm6.32 0H9.34V21h3.94v-6.57c0-3.66 4.77-3.96 4.77 0V21H22v-7.93c0-6.17-7.06-5.94-8.68-2.91V8.48z"/></svg>
           LinkedIn
         </a>
@@ -84,7 +68,7 @@ const reasons = [
         </div>
         <div class="stat-item">
           <div class="stat-value">Une dizaine</div>
-          <div class="stat-label">Partenaires financiers</div>
+          <div class="stat-label">Partenaires automobiles</div>
         </div>
       </div>
     </div>
@@ -93,13 +77,13 @@ const reasons = [
   <section class="about-body">
     <div class="wrap">
       <div class="about-block">
-        <h2>Le double regard auto et financement.</h2>
-        <p>Avant de fonder Eleven Lease, nous avons travaillé dans le secteur automobile et dans le secteur financier. Cette double expérience nous permet de comprendre un dossier de leasing des deux côtés : ce que recherche un client face à un véhicule, et ce qu'étudie un organisme financier avant d'accepter un dossier. C'est ce qui nous permet d'orienter chaque demande vers le partenaire le plus adapté, plutôt que de multiplier les refus.</p>
+        <h2>Qualifier le projet avant la mise en relation.</h2>
+        <p>Notre rôle consiste à comprendre le véhicule recherché, l'usage, le budget et les contraintes du client afin de présenter un besoin commercial clair. Ce pré-check ne remplace pas l'étude définitive du partenaire et ne préjuge jamais de sa décision.</p>
       </div>
 
       <div class="about-block">
         <h2>Un réseau, pas un guichet unique.</h2>
-        <p>Nous travaillons avec une dizaine de partenaires financiers spécialisés dans le leasing automobile. Plutôt que de dépendre d'un seul organisme — avec ses critères et ses refus — nous orientons chaque dossier vers celui qui correspond le mieux au profil du client.</p>
+        <p>Nous travaillons avec des partenaires du secteur automobile susceptibles de répondre au projet. Avec l'accord du client, les informations utiles sont transmises au partenaire sollicité, qui applique ses propres critères, réalise l'étude définitive et décide seul.</p>
       </div>
 
       <div class="about-block">

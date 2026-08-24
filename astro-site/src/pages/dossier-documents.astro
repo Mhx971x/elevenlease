@@ -1,6 +1,7 @@
 ---
 // Portail privé accessible uniquement avec un jeton dans le fragment de l'URL.
 // Cette page est volontairement absente du menu et du sitemap.
+import { LEGAL } from '../config/legal';
 ---
 <!DOCTYPE html>
 <html lang="fr">
@@ -50,7 +51,7 @@
           <div class="eyebrow">Finalisation de votre demande</div>
           <h1 id="welcomeTitle">Complétez votre dossier</h1>
           <p class="intro-copy">
-            Ajoutez les justificatifs demandés pour permettre à notre équipe de préparer votre dossier.
+            Ajoutez les justificatifs demandés pour permettre à {LEGAL.tradeName} de préparer la mise en relation avec le partenaire chargé de l'étude définitive.
           </p>
           <div class="project-line" id="projectLine" hidden></div>
           <div class="progress-block">
@@ -71,8 +72,8 @@
             <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
           <div>
-            <strong>Vos documents restent privés.</strong>
-            <p>Ils sont accessibles uniquement à l’équipe en charge de votre dossier. Ne partagez pas ce lien.</p>
+            <strong>Vos documents sont en accès restreint.</strong>
+            <p>Ils sont accessibles aux personnes habilitées par {LEGAL.tradeName} et peuvent être transmis au partenaire sollicité pour son étude définitive. Ne partagez pas ce lien.</p>
           </div>
         </section>
       </aside>
@@ -82,7 +83,7 @@
           <div class="complete-icon" aria-hidden="true">✓</div>
           <div>
             <strong>Votre dossier est complet.</strong>
-            <p>Merci, notre équipe peut maintenant poursuivre son étude.</p>
+            <p>Merci, {LEGAL.tradeName} peut finaliser le pré-check et préparer la transmission au partenaire. Celui-ci reste seul décisionnaire.</p>
           </div>
         </section>
 
@@ -126,9 +127,13 @@
 
   <footer>
     <span>Besoin d’aide ?</span>
-    <a href="mailto:contact@elevenlease.fr">contact@elevenlease.fr</a>
+    <a href={`mailto:${LEGAL.email}`}>{LEGAL.email}</a>
     <span class="footer-separator">·</span>
     <a href="https://taap.it/elevenleasewhatsapp" target="_blank" rel="noopener">WhatsApp</a>
+    <span class="footer-separator">·</span>
+    <a href="/confidentialite" target="_blank" rel="noopener">Confidentialité</a>
+    <br>
+    <span>{LEGAL.operatorName} – Entrepreneur individuel · SIREN {LEGAL.siren}</span>
   </footer>
 
   <script>

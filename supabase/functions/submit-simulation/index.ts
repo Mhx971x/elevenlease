@@ -9,6 +9,7 @@
 //   BREVO_API_KEY
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
+import { BUSINESS, EMAIL_SENDER, emailLegalFooter } from '../_shared/business.ts'
 
 const ALLOWED_ORIGINS = new Set([
   'https://elevenlease.fr',
@@ -20,7 +21,6 @@ const ALLOWED_ORIGINS = new Set([
 const GOOGLE_LEADS_SCRIPT_URL =
   'https://script.google.com/macros/s/AKfycbz4VdDWwJoaqpudvU3Y2pGNyBt0zkYRSYKaZ9syNELViJdWoIoeDtb9Axu0ecA5B4bU/exec'
 const BREVO_ENDPOINT = 'https://api.brevo.com/v3/smtp/email'
-const SENDER = { name: 'Eleven Lease', email: 'contact@elevenlease.fr' }
 const RATE_LIMIT_MAX = 5
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000
 
@@ -405,7 +405,7 @@ function emailHtml(payload: LeadPayload) {
                 </h1>
                 <p style="margin:0 0 12px;font-size:16px;line-height:1.65;">Bonjour ${firstName},</p>
                 <p style="margin:0 0 24px;color:#55555d;font-size:15px;line-height:1.65;">
-                  Merci pour votre demande. Notre équipe étudie votre projet et un conseiller Eleven Lease vous recontactera sous 24h.
+                  Merci pour votre demande. ${BUSINESS.tradeName} va réaliser un pré-check commercial et vous recontactera sous 24 à 48 h ouvrées.
                 </p>
 
                 <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin:0 0 26px;padding:17px 20px;background:#f7f7f9;border-radius:14px;">
@@ -418,9 +418,9 @@ function emailHtml(payload: LeadPayload) {
                 </table>
 
                 <div style="margin:0 0 10px;font-size:15px;font-weight:700;">Et maintenant ?</div>
-                <p style="margin:0 0 7px;color:#55555d;font-size:14px;line-height:1.55;">1. Nous analysons les informations transmises.</p>
-                <p style="margin:0 0 7px;color:#55555d;font-size:14px;line-height:1.55;">2. Nous recherchons l’offre la plus adaptée.</p>
-                <p style="margin:0 0 28px;color:#55555d;font-size:14px;line-height:1.55;">3. Un conseiller vous appelle sous 24h.</p>
+                <p style="margin:0 0 7px;color:#55555d;font-size:14px;line-height:1.55;">1. ${BUSINESS.tradeName} qualifie votre besoin lors d’un pré-check commercial.</p>
+                <p style="margin:0 0 7px;color:#55555d;font-size:14px;line-height:1.55;">2. Avec votre accord, les informations utiles peuvent être transmises au partenaire sollicité.</p>
+                <p style="margin:0 0 28px;color:#55555d;font-size:14px;line-height:1.55;">3. Le partenaire réalise l’étude définitive et décide seul, sans garantie d’acceptation.</p>
 
                 <a href="https://taap.it/elevenleasewhatsapp" style="display:inline-block;padding:13px 22px;border-radius:999px;background:#ff007f;color:#fff;font-size:14px;font-weight:700;text-decoration:none;">
                   Une question ? Écrivez-nous
@@ -429,8 +429,9 @@ function emailHtml(payload: LeadPayload) {
             </tr>
             <tr>
               <td style="padding:20px 34px;background:#17171a;color:#b8b8bd;font-size:11px;line-height:1.55;">
-                Eleven Lease · <a href="mailto:contact@elevenlease.fr" style="color:#fff;text-decoration:none;">contact@elevenlease.fr</a><br>
-                Cet email confirme uniquement la réception de votre demande de simulation.
+                ${emailLegalFooter()}<br>
+                <a href="mailto:${BUSINESS.email}" style="color:#fff;text-decoration:none;">${BUSINESS.email}</a> · <a href="${BUSINESS.siteUrl}/confidentialite" style="color:#fff;text-decoration:none;">Confidentialité</a><br>
+                Cet email confirme uniquement la réception de votre demande. ${BUSINESS.tradeName} n’accorde aucun financement et ne garantit aucune acceptation.
               </td>
             </tr>
           </table>
@@ -446,7 +447,8 @@ function emailText(payload: LeadPayload) {
     `Bonjour ${payload.prenom},`,
     '',
     'Votre demande de leasing a bien été reçue.',
-    'Notre équipe étudie votre projet et un conseiller Eleven Lease vous recontactera sous 24h.',
+    `${BUSINESS.tradeName} va réaliser un pré-check commercial et vous recontactera sous 24 à 48 h ouvrées.`,
+    'Le partenaire sollicité réalise seul l’étude définitive et décide, sans garantie d’acceptation.',
     '',
     `Véhicule recherché : ${projectVehicle(payload)}`,
     `État : ${payload.neufOccasion}`,
@@ -458,8 +460,9 @@ function emailText(payload: LeadPayload) {
     '',
     'Une question ? Répondez simplement à cet email.',
     '',
-    'L’équipe Eleven Lease',
-    'contact@elevenlease.fr',
+    emailLegalFooter(),
+    BUSINESS.email,
+    `${BUSINESS.siteUrl}/confidentialite`,
   ].join('\n')
 }
 
@@ -475,9 +478,9 @@ async function sendBrevoConfirmation(payload: LeadPayload) {
       'content-type': 'application/json',
     },
     body: JSON.stringify({
-      sender: SENDER,
+      sender: EMAIL_SENDER,
       to: [{ email: payload.email, name: `${payload.prenom} ${payload.nom}` }],
-      replyTo: SENDER,
+      replyTo: EMAIL_SENDER,
       subject: 'Votre demande Eleven Lease a bien été reçue',
       htmlContent: emailHtml(payload),
       textContent: emailText(payload),

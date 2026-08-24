@@ -66,4 +66,4 @@ Aucune des deux formules n'est meilleure dans l'absolu : tout dépend de votre r
 
 ---
 
-Vous hésitez encore entre LOA et LLD pour votre projet ? [Décrivez-le à Eleven Lease](/simulation) : notre réseau de partenaires financiers vous propose la formule la plus adaptée à votre situation, sans frais et sans engagement de votre part.
+Vous hésitez encore entre LOA et LLD pour votre projet ? [Décrivez-le à Eleven Lease](/simulation) : nous qualifions votre besoin et pouvons organiser une mise en relation. Le partenaire confirme seul les formules et conditions disponibles.

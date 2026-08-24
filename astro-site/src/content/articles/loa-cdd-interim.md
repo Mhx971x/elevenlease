@@ -89,4 +89,4 @@ Une demande claire et proportionnée est plus solide qu'un projet construit sur 
 
 ---
 
-Vous êtes en CDD, en intérim ou en période d'essai ? [Présentez votre situation à Eleven Lease](/simulation) : votre projet sera étudié au cas par cas, sans promesse d'acceptation.
+Vous êtes en CDD, en intérim ou en période d'essai ? [Présentez votre situation à Eleven Lease](/simulation) : nous réalisons un pré-check commercial avant une éventuelle mise en relation ; le partenaire étudie et décide seul, sans garantie d'acceptation.

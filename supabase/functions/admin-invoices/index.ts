@@ -5,6 +5,7 @@
 
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2'
 import { authenticate } from '../_shared/auth.ts'
+import { BUSINESS } from '../_shared/business.ts'
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
@@ -14,7 +15,7 @@ const corsHeaders = {
 
 const SETTINGS_FIELDS = [
   'business_name', 'legal_status', 'address_line1', 'address_line2', 'postal_code',
-  'city', 'country', 'registration_number', 'rcs', 'vat_mode', 'vat_number',
+  'city', 'country', 'siren', 'registration_number', 'rcs', 'vat_mode', 'vat_number',
   'default_vat_rate', 'email', 'phone', 'iban', 'bic', 'payment_terms_days',
 ] as const
 
@@ -30,6 +31,7 @@ function cleanText(value: unknown) {
 }
 
 function money(value: unknown) {
+  if (value == null || String(value).trim() === '') return NaN
   const parsed = Number(value)
   return Number.isFinite(parsed) ? Math.round(parsed * 100) / 100 : NaN
 }
@@ -45,9 +47,11 @@ function validateSettings(settings: Record<string, unknown>) {
   if (!cleanText(settings.address_line1)) missing.push('adresse')
   if (!cleanText(settings.postal_code)) missing.push('code postal')
   if (!cleanText(settings.city)) missing.push('ville')
-  if (!cleanText(settings.registration_number)) missing.push('SIRET ou mention en cours d’attribution')
+  if (!cleanText(settings.siren)) missing.push('SIREN')
+  if (!cleanText(settings.registration_number)) missing.push('SIRET')
   if (!['standard', 'exempt'].includes(cleanText(settings.vat_mode))) missing.push('régime de TVA')
   if (settings.vat_mode === 'standard' && !cleanText(settings.vat_number)) missing.push('numéro de TVA')
+  if (settings.default_vat_rate == null || !Number.isFinite(Number(settings.default_vat_rate))) missing.push('taux de TVA')
   if (missing.length) throw new Error(`Paramètres de facturation incomplets : ${missing.join(', ')}`)
 }
 
@@ -125,7 +129,7 @@ Deno.serve(async (request) => {
       for (const field of SETTINGS_FIELDS) {
         if (field === 'default_vat_rate') {
           const rate = money(raw[field])
-          values[field] = Number.isFinite(rate) && rate >= 0 ? rate : 20
+          values[field] = Number.isFinite(rate) && rate >= 0 ? rate : null
         } else if (field === 'payment_terms_days') {
           const days = Math.max(0, Math.min(120, Math.round(Number(raw[field]) || 0)))
           values[field] = days
@@ -133,12 +137,20 @@ Deno.serve(async (request) => {
           values[field] = cleanText(raw[field]) || null
         }
       }
-      values.business_name = values.business_name || 'Eleven Lease'
-      values.legal_status = values.legal_status || 'Société en cours d’immatriculation'
-      values.country = values.country || 'France'
-      values.registration_number = values.registration_number || 'SIRET en cours d’attribution'
-      values.email = values.email || 'contact@elevenlease.fr'
+      values.business_name = values.business_name || BUSINESS.tradeName
+      values.legal_status = values.legal_status || BUSINESS.legalIdentity
+      values.address_line1 = values.address_line1 || BUSINESS.addressLine1
+      values.postal_code = values.postal_code || BUSINESS.postalCode
+      values.city = values.city || BUSINESS.city
+      values.country = values.country || BUSINESS.country
+      values.siren = values.siren || BUSINESS.siren
+      values.registration_number = values.registration_number || BUSINESS.siret
+      values.email = values.email || BUSINESS.email
       if (!['standard', 'exempt'].includes(String(values.vat_mode || ''))) values.vat_mode = null
+      if (values.vat_mode === 'exempt') values.default_vat_rate = 0
+      if (values.vat_mode === 'standard' && (values.default_vat_rate == null || !Number.isFinite(Number(values.default_vat_rate)))) {
+        throw new Error('Le taux de TVA doit être confirmé')
+      }
 
       const { data, error } = await supabase.from('invoice_settings').upsert(values).select().single()
       if (error) throw error

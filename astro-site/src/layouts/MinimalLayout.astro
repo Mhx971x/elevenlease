@@ -1,6 +1,7 @@
 ---
 import Analytics from '@vercel/analytics/astro';
 import SpeedInsights from '@vercel/speed-insights/astro';
+import { LEGAL, ORGANIZATION_SCHEMA } from '../config/legal';
 
 // Layout minimal pour les pages autonomes qui n'utilisent pas le
 // header/nav/footer du site principal (ex. bio.html, page "link-in-bio").
@@ -18,7 +19,7 @@ const {
   ogImage = 'https://elevenlease.fr/og-eleven-lease-1200x630.jpg',
 } = Astro.props;
 
-const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
+const canonicalUrl = new URL(path, LEGAL.siteUrl).toString();
 ---
 <!DOCTYPE html>
 <html lang="fr">
@@ -44,6 +45,7 @@ const canonicalUrl = new URL(path, 'https://elevenlease.fr').toString();
 <meta name="twitter:title" content={title}>
 <meta name="twitter:description" content={description}>
 <meta name="twitter:image" content={ogImage}>
+<script type="application/ld+json" set:html={JSON.stringify(ORGANIZATION_SCHEMA)} />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">

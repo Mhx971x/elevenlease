@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { LEGAL } from '../config/legal';
 
 interface Card {
   title: string;
@@ -48,7 +49,7 @@ const serviceSchema = {
   name: heading,
   description,
   url: canonicalUrl,
-  provider: { '@type': 'Organization', name: 'Eleven Lease', url: 'https://elevenlease.fr/' },
+  provider: { '@id': `${LEGAL.siteUrl}/#organization` },
   areaServed: { '@type': 'Country', name: 'France' },
 };
 const breadcrumbSchema = {
@@ -83,7 +84,7 @@ const breadcrumbSchema = {
         <aside class="answer-card" aria-label="Réponse courte">
           <span>En bref</span>
           <p>{directAnswer}</p>
-          <small>Offre finale soumise à l'étude du dossier et aux conditions du partenaire financier.</small>
+          <small>Pré-check commercial par ELEVEN LEASE. Étude définitive, décision et conditions exclusivement fixées par le partenaire, sans garantie d'acceptation.</small>
         </aside>
       </div>
     </section>
@@ -115,8 +116,8 @@ const breadcrumbSchema = {
           <span>Votre parcours</span>
           <ol>
             <li><strong>Décrivez votre besoin</strong><small>Budget, véhicule, usage et contraintes.</small></li>
-            <li><strong>Nous cadrons le dossier</strong><small>Les pièces utiles dépendent de votre profil.</small></li>
-            <li><strong>Le réseau étudie le projet</strong><small>Première réponse sous 24 à 48 h ouvrées.</small></li>
+            <li><strong>Nous qualifions le besoin</strong><small>Pré-check commercial des informations utiles.</small></li>
+            <li><strong>Le partenaire étudie</strong><small>Il réalise l'étude définitive et décide seul.</small></li>
             <li><strong>Vous choisissez librement</strong><small>Simulation gratuite et sans engagement.</small></li>
           </ol>
         </aside>
@@ -142,7 +143,7 @@ const breadcrumbSchema = {
 
     <section class="landing-cta">
       <div class="wrap cta-panel">
-        <div><span>Étude gratuite</span><h2>Un projet précis ? Décrivez-le en 2 minutes.</h2></div>
+        <div><span>Pré-check gratuit</span><h2>Un projet précis ? Décrivez-le en 2 minutes.</h2></div>
         <a href="/simulation" class="btn-primary cta-with-calculator"><span class="cta-calculator-icon" aria-hidden="true"></span>Lancer ma simulation</a>
       </div>
     </section>

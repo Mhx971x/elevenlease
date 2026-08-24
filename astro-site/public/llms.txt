@@ -1,21 +1,21 @@
 # Eleven Lease
 
-> Eleven Lease est une equipe de mandataires auto basee en France, active depuis 2023. Elle met en relation particuliers et professionnels avec un reseau d'une dizaine de partenaires financiers pour rechercher, toutes marques confondues, une offre de leasing automobile (LOA/LLD) adaptee a leur budget. Kilometrage illimite en option selon le contrat, mise en relation gratuite, premiere reponse sous 24 a 48 h ouvrees.
+> ELEVEN LEASE est le nom commercial exploite par DJAFFAR Mehdi, entrepreneur individuel / micro-entreprise (SIREN 931 287 908, SIRET 931 287 908 00020), 60 rue Francois 1er, 75008 Paris. Son activite est l'accompagnement commercial, la qualification des besoins clients, la mise en relation et l'apport d'affaires dans le secteur automobile.
 
-Eleven Lease n'est pas un etablissement de credit et ne finance aucun vehicule directement : le role de l'entreprise est de mettre chaque projet en relation avec le partenaire financier le plus adapte au sein de son reseau.
+ELEVEN LEASE realise un pre-check commercial puis met le client en relation avec un partenaire. ELEVEN LEASE n'accorde aucun financement et ne garantit aucune acceptation. L'etude definitive et la decision appartiennent exclusivement au partenaire sollicite.
 
 ## Pages principales
 
-- [Accueil](https://elevenlease.fr/) : presentation de l'offre, du fonctionnement en 4 etapes et des avantages (kilometrage illimite en option, 0 euro de frais client, premiere reponse sous 24 a 48 h ouvrees).
+- [Accueil](https://elevenlease.fr/) : presentation du service, du fonctionnement en 4 etapes et des avantages (kilometrage illimite en option selon le partenaire, pre-check commercial initial gratuit, premiere reponse sous 24 a 48 h ouvrees).
 - [Leasing sans apport](https://elevenlease.fr/leasing-sans-apport) : fonctionnement, cout total et preparation du dossier.
 - [Leasing gros rouleur](https://elevenlease.fr/leasing-gros-rouleur) : forfait kilometrique eleve et option illimitee selon contrat.
 - [Leasing professionnel](https://elevenlease.fr/leasing-professionnel) : usages, justificatifs et points fiscaux.
 - [Leasing auto-entrepreneur](https://elevenlease.fr/leasing-auto-entrepreneur) : revenus variables, justificatifs et coherence du projet.
 - [Guide LOA](https://elevenlease.fr/loa) : definition de la LOA, fonctionnement, cout, eligibilite, fin de contrat, FAQ complete.
 - [Vehicules disponibles](https://elevenlease.fr/vehicules) : catalogue d'exemples de vehicules en leasing, toutes marques et budgets.
-- [Simulation](https://elevenlease.fr/simulation) : formulaire pour decrire un projet de leasing et recevoir une offre.
+- [Simulation](https://elevenlease.fr/simulation) : formulaire pour decrire un projet, demander un pre-check commercial et consentir a une eventuelle mise en relation ; il ne s'agit pas d'une offre de financement.
 - [Articles](https://elevenlease.fr/articles) : guides thematiques (LOA vs LLD, jeune conducteur, auto-entrepreneur, vehicule electrique, resiliation anticipee, restitution, assurance, apport).
-- [A propos](https://elevenlease.fr/a-propos) : presentation d'Eleven Lease et de son fondateur, Mehdi Djaffar.
+- [A propos](https://elevenlease.fr/a-propos) : presentation d'ELEVEN LEASE et de son exploitant, DJAFFAR Mehdi.
 - [Contact](https://elevenlease.fr/contact) : formulaire de contact, email, telephone, WhatsApp.
 
 ## A eviter
