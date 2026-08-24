@@ -248,6 +248,9 @@ function documentRequestEmailHtml(lead: Record<string, unknown>, portalUrl: stri
                 <p style="margin:12px 0 0;color:#77777f;font-size:12px;line-height:1.55;">
                   Les documents utiles peuvent ensuite être transmis au partenaire sollicité, qui réalise seul l’étude définitive et décide sans garantie d’acceptation.
                 </p>
+                <p style="margin:12px 0 0;color:#77777f;font-size:12px;line-height:1.55;">
+                  Le dépôt de vos documents ne déclenche aucun paiement. Le prix et les conditions de toute prestation payante ${BUSINESS.tradeName} doivent vous être communiqués et acceptés par écrit. Les honoraires ne deviennent exigibles qu’après acceptation définitive par le partenaire et réception du véhicule.
+                </p>
               </td>
             </tr>
             <tr>
@@ -275,6 +278,7 @@ function documentRequestEmailText(lead: Record<string, unknown>, portalUrl: stri
     'Ce lien personnel est valable 30 jours. Ne le partagez pas.',
     'Les formats PDF et photo sont acceptés.',
     'Les documents utiles peuvent être transmis au partenaire sollicité, qui réalise seul l’étude définitive et décide sans garantie d’acceptation.',
+    'Le dépôt de vos documents ne déclenche aucun paiement. Le prix et les conditions de toute prestation payante ELEVEN LEASE doivent être communiqués et acceptés par écrit. Les honoraires ne deviennent exigibles qu’après acceptation définitive par le partenaire et réception du véhicule.',
     '',
     emailLegalFooter(),
     BUSINESS.email,

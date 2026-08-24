@@ -422,6 +422,8 @@ function emailHtml(payload: LeadPayload) {
                 <p style="margin:0 0 7px;color:#55555d;font-size:14px;line-height:1.55;">2. Avec votre accord, les informations utiles peuvent être transmises au partenaire sollicité.</p>
                 <p style="margin:0 0 28px;color:#55555d;font-size:14px;line-height:1.55;">3. Le partenaire réalise l’étude définitive et décide seul, sans garantie d’acceptation.</p>
 
+                <p style="margin:0 0 28px;padding:14px 16px;border-radius:12px;background:#f7f7f9;color:#55555d;font-size:13px;line-height:1.55;">Aucun paiement n’est requis pour cette demande initiale. Si un dossier est lancé, le prix et les conditions de la prestation ${BUSINESS.tradeName} sont communiqués et acceptés par écrit. Les honoraires ne deviennent exigibles qu’après acceptation définitive par le partenaire et réception du véhicule.</p>
+
                 <a href="https://taap.it/elevenleasewhatsapp" style="display:inline-block;padding:13px 22px;border-radius:999px;background:#ff007f;color:#fff;font-size:14px;font-weight:700;text-decoration:none;">
                   Une question ? Écrivez-nous
                 </a>
@@ -449,6 +451,7 @@ function emailText(payload: LeadPayload) {
     'Votre demande de leasing a bien été reçue.',
     `${BUSINESS.tradeName} va réaliser un pré-check commercial et vous recontactera sous 24 à 48 h ouvrées.`,
     'Le partenaire sollicité réalise seul l’étude définitive et décide, sans garantie d’acceptation.',
+    'Aucun paiement n’est requis pour cette demande initiale. Si un dossier est lancé, le prix et les conditions de la prestation ELEVEN LEASE sont communiqués et acceptés par écrit. Les honoraires ne deviennent exigibles qu’après acceptation définitive par le partenaire et réception du véhicule.',
     '',
     `Véhicule recherché : ${projectVehicle(payload)}`,
     `État : ${payload.neufOccasion}`,

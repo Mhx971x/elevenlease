@@ -28,6 +28,7 @@ import { LEGAL } from '../config/legal';
           <div class="id-row"><span>Adresse</span><span>{LEGAL.fullAddress}</span></div>
           <div class="id-row"><span>SIREN</span><span>{LEGAL.siren}</span></div>
           <div class="id-row"><span>SIRET</span><span>{LEGAL.siret}</span></div>
+          <div class="id-row"><span>Régime de TVA</span><span>{LEGAL.vatRegime} — {LEGAL.vatInvoiceNotice}</span></div>
           <div class="id-row"><span>Contact</span><span>{LEGAL.email}</span></div>
         </div>
 
@@ -42,6 +43,10 @@ import { LEGAL } from '../config/legal';
         <p>{LEGAL.activity}</p>
         <div class="notice-box"><strong>Rôle de {LEGAL.tradeName} :</strong> {LEGAL.roleDisclosure}</div>
         <p>{LEGAL.tradeName} n'est ni propriétaire des véhicules présentés, ni établissement de crédit, ni prêteur. Les véhicules, disponibilités, tarifs, contrats et financements relèvent des partenaires concernés.</p>
+
+        <h2>Prestation et facturation</h2>
+        <p>{LEGAL.serviceFeeDisclosure}</p>
+        <p>À défaut d'acceptation définitive du dossier par le partenaire ou de réception effective du véhicule, aucun honoraire lié à cette prestation n'est exigible. La facture émise par {LEGAL.tradeName} est distincte du contrat et des sommes dues au partenaire automobile ou financier.</p>
 
         <h2>Propriété intellectuelle</h2>
         <p>L'ensemble des éléments composant ce site (textes, graphismes, logo, structure) est protégé par le droit de la propriété intellectuelle. Toute reproduction ou représentation, totale ou partielle, sans autorisation préalable, est interdite.</p>

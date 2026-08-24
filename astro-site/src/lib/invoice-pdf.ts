@@ -1,4 +1,5 @@
 import { jsPDF } from 'jspdf';
+import { LEGAL } from '../config/legal';
 
 export interface InvoicePdfData {
   id: string;
@@ -242,7 +243,7 @@ export async function createInvoicePdf(invoice: InvoicePdfData, options: { logoD
   doc.setFontSize(7.4);
   doc.setTextColor(...GREY);
   const vatNotice = text(issuer.vat_mode) === 'exempt'
-    ? 'TVA non applicable, art. 293 B du CGI. Aucun escompte pour paiement anticipé.'
+    ? `${LEGAL.vatInvoiceNotice}. Aucun escompte pour paiement anticipé.`
     : 'Montants exprimés en euros. Aucun escompte pour paiement anticipé.';
   doc.text(vatNotice, 16, 263);
   doc.text(`${text(issuer.business_name) || 'ELEVEN LEASE'} - SIREN ${text(issuer.siren)} - SIRET ${text(issuer.registration_number)}`, 16, 268);

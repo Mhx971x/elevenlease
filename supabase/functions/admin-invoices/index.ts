@@ -146,7 +146,7 @@ Deno.serve(async (request) => {
       values.siren = values.siren || BUSINESS.siren
       values.registration_number = values.registration_number || BUSINESS.siret
       values.email = values.email || BUSINESS.email
-      if (!['standard', 'exempt'].includes(String(values.vat_mode || ''))) values.vat_mode = null
+      if (!['standard', 'exempt'].includes(String(values.vat_mode || ''))) values.vat_mode = BUSINESS.vatMode
       if (values.vat_mode === 'exempt') values.default_vat_rate = 0
       if (values.vat_mode === 'standard' && (values.default_vat_rate == null || !Number.isFinite(Number(values.default_vat_rate)))) {
         throw new Error('Le taux de TVA doit être confirmé')

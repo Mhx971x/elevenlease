@@ -900,7 +900,7 @@
       <div class="invoice-layout">
         <section class="invoice-composer-card">
           <div class="invoice-section-head">
-            <div><div class="invoice-settings-kicker">Nouvelle facture client</div><h2 id="invoiceFormTitle">Préparer une facture</h2><p>Le numéro définitif sera attribué uniquement lors de l’émission.</p></div>
+            <div><div class="invoice-settings-kicker">Nouvelle facture client</div><h2 id="invoiceFormTitle">Préparer une facture</h2><p>Émettre uniquement après acceptation définitive du dossier par le partenaire et réception du véhicule. Le numéro définitif sera attribué lors de l’émission.</p></div>
           </div>
           <form id="invoiceForm">
             <input type="hidden" id="invoiceDraftId">
@@ -2868,9 +2868,9 @@
     issuerSiren.value = settings.siren || '931 287 908';
     issuerRegistrationNumber.value = settings.registration_number || '931 287 908 00020';
     issuerRcs.value = settings.rcs || '';
-    issuerVatMode.value = settings.vat_mode || '';
+    issuerVatMode.value = settings.vat_mode || 'exempt';
     issuerVatNumber.value = settings.vat_number || '';
-    issuerDefaultVatRate.value = settings.vat_mode ? String(settings.default_vat_rate ?? '') : '';
+    issuerDefaultVatRate.value = settings.vat_mode === 'standard' ? String(settings.default_vat_rate ?? '') : '0';
     issuerEmail.value = settings.email || 'contact@elevenlease.fr';
     issuerPhone.value = settings.phone || '';
     issuerIban.value = settings.iban || '';
